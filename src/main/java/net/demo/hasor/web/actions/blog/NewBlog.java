@@ -20,12 +20,11 @@ import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.Params;
 import net.hasor.restful.api.Valid;
 import org.more.fileupload.real.FileItemStream;
-import org.more.fileupload.real.FileUploadBase;
-import org.more.fileupload.real.servlet.ServletFileUpload;
+import org.more.fileupload.real.FileUpload;
 import org.more.fileupload.real.util.Streams;
+import org.more.util.io.IOUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 /**
  * OAuth : 服务器获取 AccessToken
  * @version : 2016年1月1日
@@ -36,11 +35,11 @@ public class NewBlog extends Action {
     //
     public void execute(@Valid("AccessToken") @Params LoginCallBackForm loginForm) throws IOException {
         loginForm.getCode();
-        boolean isMultipart = ServletFileUpload.isMultipartContent(this.getRequest());
+        boolean isMultipart = FileUpload.isMultipartContent(this.getRequest());
         // Create a new file upload handler
-        ServletFileUpload upload = new ServletFileUpload();
+        FileUpload upload = new FileUpload();
         // Parse the request
-        FileUploadBase.FileItemIteratorImpl iter = upload.getItemIterator(this.getRequest());
+        FileUpload.FileItemIteratorImpl iter = upload.getItemIterator(this.getRequest());
         while (iter.hasNext()) {
             FileItemStream item = iter.next();
             String name = item.getFieldName();
@@ -48,8 +47,14 @@ public class NewBlog extends Action {
             if (item.isFormField()) {
                 System.out.println("Form field " + name + " with value " + Streams.asString(stream) + " detected.");
             } else {
+                String fileDir = this.getAppContext().getEnvironment().evalString("%HASOR_TEMP_PATH%");
+                File f = new File(fileDir, item.getName());
+                f.getParentFile().mkdirs();
+                OutputStream ostream = new FileOutputStream(f);
+                IOUtils.copy(stream, ostream);
+                ostream.flush();
+                ostream.close();
                 System.out.println("File field " + name + " with file name " + item.getName() + " detected.");
-                // Process the input stream
             }
         }
     }

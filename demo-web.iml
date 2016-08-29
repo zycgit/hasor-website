@@ -27,7 +27,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: net.hasor:hasor-core:2.4.3" level="project" />
+    <orderEntry type="module" module-name="hasor-core" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.12" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: connect.qq.com:sdk4j:1.0">

@@ -1,0 +1,22 @@
+.w100px {
+    width: 100px !important;
+    display: block;
+    text-align: right;
+}
+
+.w150px {
+    width: 150px !important;
+}
+
+.w300px {
+    width: 300px !important;
+}
+
+.flowRight {
+    float: right;
+}
+
+.g-option-tal {
+    width: 100px !important;
+    text-align: left;
+}

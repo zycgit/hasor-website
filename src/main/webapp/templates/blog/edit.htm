@@ -1,0 +1,312 @@
+${rootData.put('pageTitle','Blog')}
+<!-- semantic-ui -->
+<link href="//files.hasor.net/static/javascript/semantic-ui/2.2.3/semantic.min.css" rel="stylesheet">
+<script src="//files.hasor.net/static/javascript/semantic-ui/2.2.3/semantic.js"></script>
+<!-- editor.md -->
+<script src="//files.hasor.net/static/javascript/editor.md/1.5.0/editormd.min.js"></script>
+<link href="//files.hasor.net/static/javascript/editor.md/1.5.0/css/editormd.min.css" rel="stylesheet"/>
+<!-- dateRangePicker -->
+<script src="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/moment.min.js"></script>
+<script src="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/daterangepicker.js"></script>
+<link href="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/daterangepicker.css" rel="stylesheet"/>
+<link rel="stylesheet" href="${ctx_path}/static/css/editer.css">
+
+<script type="text/javascript">
+    var testEditor;
+    /* 实现编辑器最小高度的功能,使用Timeout方式,实时计算 */
+    function echoHeight(exitFull) {
+        //
+        var watchHeight = 270;
+        var height = testEditor.codeEditor.display.sizer.clientHeight;
+        if (height < watchHeight && testEditor.settings.autoHeight) {
+            $("#blogEditor").height(watchHeight + 35);
+            testEditor.settings.autoHeight = false;
+            testEditor.cm.setSize("100%", "100%");
+        } else if (exitFull || ( height > watchHeight && !testEditor.settings.autoHeight)) {
+            testEditor.settings.autoHeight = true;
+            $('#blogEditor').css('height', '');
+            testEditor.cm.setSize("100%", "100%");
+            testEditor.resize();
+        }
+        window.setTimeout(function () {
+            echoHeight();
+        }, 100);
+    }
+
+    /*编辑器初始化*/
+    function initEditor(markdownData) {
+        testEditor = editormd("blogEditor", {
+            width: "100%",
+            height: "100%",
+            path: '//files.hasor.net/static/javascript/editor.md/1.5.0/lib/',
+            markdown: markdownData,
+            toolbarAutoFixed: true,         // 工具栏锁定在上方
+            toolbarIcons: function () {
+                return [
+                    "bold", "italic", "del", "|",
+                    "h1", "h2", "h3", "|",
+                    "list-ul", "list-ol", "hr", "quote", "link", "reference-link", "image", "|",
+                    "code", "code-block", "table", "html-entities", "||",
+                    "watch"//, "fullscreen"
+                ]
+            },
+            autoHeight: true,               // 自动高
+            autoCloseBrackets: false,       // 
+            fontSize: "14px",               // 
+            saveHTMLToTextarea: true,       // 保存 HTML 到 Textarea
+            searchReplace: true,
+            watch: false,                   // 关闭实时预览
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "./php/upload.php",
+            placeholder: "开始你的Blog之路吧!",
+            onload: function () {
+                echoHeight();
+            },
+            onfullscreenExit: function () {
+                echoHeight(true);
+            },
+            onfullscreen: function () {
+                //echoHeight(true);
+            }
+        });
+    }
+
+    function initDateRangePicker(elementID, startStr, endStr) {
+        $('#' + elementID).daterangepicker({
+            format: 'YYYY-MM-DD hh:mm:ss',
+            startDate: startStr,
+            endDate: endStr,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            drops: "up",
+            locale: {
+                applyLabel: '确认',
+                cancelLabel: '取消',
+                fromLabel: '从',
+                toLabel: '到',
+                weekLabel: 'W',
+                customRangeLabel: 'Custom Range',
+                daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            }
+        }, function (start, end, label) {
+            //console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+        });
+    }
+
+    function dropdownShow(target) {
+        $(target).children('.ui.dropdown').focus();
+    }
+
+
+    $(function () {
+        initEditor("");
+        initDateRangePicker("blog_drp", "08/19/2016", "08/25/2016");
+        $('.ui.dropdown').dropdown();
+        $('.ui.checkbox').checkbox();
+        $('.ui.sticky').sticky({
+            context: '#attrForms'
+        });
+    });
+</script>
+<form>
+
+    <!-- 标题 & 分类-->
+    <div class="ui form">
+        <div class="fields">
+            <div class="twelve wide field">
+                <div class="ui massive transparent fluid input">
+                    <input type="text" placeholder="内容文章标题...">
+                </div>
+            </div>
+            <div class="four wide field" style="z-index: 2000;">
+                <div class="ui search selection dropdown">
+                    <input type="hidden" name="country">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">请选择分类</div>
+                    <div class="menu">
+                        <div class="item" data-value="af"><i class="af flag"></i>Afghanistan</div>
+                        <div class="item" data-value="ax"><i class="ax flag"></i>Aland Islands</div>
+                        <div class="item" data-value="al"><i class="al flag"></i>Albania</div>
+                        <div class="item" data-value="dz"><i class="dz flag"></i>Algeria</div>
+                        <div class="item" data-value="as"><i class="as flag"></i>American Samoa</div>
+                        <div class="item" data-value="ad"><i class="ad flag"></i>Andorra</div>
+                        <div class="item" data-value="ao"><i class="ao flag"></i>Angola</div>
+                        <div class="item" data-value="ai"><i class="ai flag"></i>Anguilla</div>
+                        <div class="item" data-value="ag"><i class="ag flag"></i>Antigua</div>
+                        <div class="item" data-value="ar"><i class="ar flag"></i>Argentina</div>
+                        <div class="item" data-value="am"><i class="am flag"></i>Armenia</div>
+                        <div class="item" data-value="aw"><i class="aw flag"></i>Aruba</div>
+                        <div class="item" data-value="au"><i class="au flag"></i>Australia</div>
+                        <div class="item" data-value="at"><i class="at flag"></i>Austria</div>
+                        <div class="item" data-value="az"><i class="az flag"></i>Azerbaijan</div>
+                        <div class="item" data-value="bs"><i class="bs flag"></i>Bahamas</div>
+                        <div class="item" data-value="bh"><i class="bh flag"></i>Bahrain</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑器 -->
+    <div id="blogEditor" style="z-index: 1999;">
+        <textarea id="blogContent" style="display: none;">#aaaa</textarea>
+    </div>
+
+    <!-- 文章发布按钮 -->
+    <div class="ui sticky" style="float: right;z-index: 9999;">
+        <div class="ui submit button">保存</div>
+        <div class="ui submit button">发布</div>
+    </div>
+
+    <!-- 文章属性 -->
+    <div id="attrForms" class="ui form">
+        <div class="inline fields">
+            <label class="w100px">文章类型:</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="type" class="hidden">
+                    <label>首发</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="type" class="hidden" checked="checked">
+                    <label>原创</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="type" class="hidden">
+                    <label>转载</label>
+                </div>
+            </div>
+            <div class="field">
+                <input name="extAuthor" type="text" placeholder="作者">
+            </div>
+            <div class="field">
+                <input name="extOirURL" type="text" placeholder="原文连接">
+            </div>
+        </div>
+        <div class="inline fields">
+            <label class="w100px">公开程度:</label>
+            <div class="field">
+                <div class="ui radio checkbox g-option-tal">
+                    <input type="radio" name="public" class="hidden" checked="checked">
+                    <label>所有人可见</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="public" class="hidden">
+                    <label onclick="dropdownShow(this)">订阅(
+                        <div class="ui inline dropdown">
+                            <div class="text">???</div>
+                            <div class="menu">
+                                <div class="header">请选择话题</div>
+                                <div class="item" data-text="Hasor">Hasor</div>
+                                <div class="item" data-text="RSF">RSF</div>
+                            </div>
+                        </div>
+                        )的人可见</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox g-option-tal">
+                    <input type="radio" name="public" class="hidden">
+                    <label>仅自己可见</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline fields">
+            <label class="w100px">是否允许评论:</label>
+            <div class="field">
+                <div class="ui checked checkbox">
+                    <input type="checkbox" checked="checked">
+                    <label></label>
+                </div>
+            </div>
+        </div>
+        <div class="inline fields">
+            <label class="w100px">是否置顶:</label>
+            <div class="field">
+                <div class="ui checked checkbox">
+                    <input type="checkbox">
+                    <label></label>
+                </div>
+            </div>
+        </div>
+        <div class="inline fields">
+            <label class="w100px">推送到站外:</label>
+            <div class="field">
+                <div class="ui checked checkbox g-option-tal">
+                    <input type="checkbox" checked="checked">
+                    <label>OSchina</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checked checkbox g-option-tal">
+                    <input type="checkbox" checked="checked">
+                    <label>CSDN</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checked checkbox g-option-tal">
+                    <input type="checkbox" checked="checked">
+                    <label>博客园</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline fields">
+            <label class="w100px">站内平台:</label>
+            <div class="field">
+                <div class="ui checked checkbox g-option-tal">
+                    <input type="checkbox" checked="checked">
+                    <label>无线</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checked checkbox g-option-tal">
+                    <input type="checkbox" checked="checked">
+                    <label>PC</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checked checkbox g-option-tal">
+                    <input type="checkbox" checked="checked">
+                    <label>客户端</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checked checkbox g-option-tal">
+                    <input type="checkbox" checked="checked">
+                    <label>RSS</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline fields">
+            <label class="w100px">有效时间:</label>
+            <div class="field">
+                <div class="ui icon input w300px">
+                    <input id="blog_drp" type="text" placeholder="Enter weight..">
+                    <i class="calendar icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checked checkbox">
+                    <input type="checkbox">
+                    <label>定时发布</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checked checkbox">
+                    <input type="checkbox">
+                    <label>定时下线</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 遮罩 -->
+</form>

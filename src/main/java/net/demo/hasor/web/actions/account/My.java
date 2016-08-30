@@ -36,7 +36,7 @@ public class My extends Action {
     public void execute(RenderData data) throws IOException {
         //
         if (!isLogin()) {
-            String ctx_path = data.getAppContext().getServletContext().getContextPath();
+            String ctx_path = data.getHttpRequest().getContextPath();
             data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/account/my.htm");
         }
         //

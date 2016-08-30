@@ -66,7 +66,6 @@ public class FreemarkerRender implements RenderEngine {
         }
         //
         // - 环境变量
-        this.configuration.setSharedVariable("ctx_path", appContext.getServletContext().getContextPath());
     }
     @Override
     public void process(RenderData renderData, Writer writer) throws Throwable {
@@ -76,6 +75,7 @@ public class FreemarkerRender implements RenderEngine {
         for (String key : renderData.keySet()) {
             data.put(key, renderData.get(key));
         }
+        data.put("ctx_path", renderData.getHttpRequest().getContextPath());
         //
         temp.process(data, writer);
     }

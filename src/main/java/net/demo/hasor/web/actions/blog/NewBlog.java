@@ -16,15 +16,13 @@
 package net.demo.hasor.web.actions.blog;
 import net.demo.hasor.core.Action;
 import net.demo.hasor.web.forms.LoginCallBackForm;
+import net.hasor.restful.FileItem;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.Params;
 import net.hasor.restful.api.Valid;
-import org.more.fileupload.real.FileItemStream;
-import org.more.fileupload.real.FileUpload;
-import org.more.fileupload.real.util.Streams;
-import org.more.util.io.IOUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 /**
  * OAuth : 服务器获取 AccessToken
  * @version : 2016年1月1日
@@ -34,28 +32,20 @@ import java.io.*;
 public class NewBlog extends Action {
     //
     public void execute(@Valid("AccessToken") @Params LoginCallBackForm loginForm) throws IOException {
-        loginForm.getCode();
-        boolean isMultipart = FileUpload.isMultipartContent(this.getRequest());
-        // Create a new file upload handler
-        FileUpload upload = new FileUpload();
-        // Parse the request
-        FileUpload.FileItemIteratorImpl iter = upload.getItemIterator(this.getRequest());
-        while (iter.hasNext()) {
-            FileItemStream item = iter.next();
-            String name = item.getFieldName();
-            InputStream stream = item.openStream();
-            if (item.isFormField()) {
-                System.out.println("Form field " + name + " with value " + Streams.asString(stream) + " detected.");
-            } else {
-                String fileDir = this.getAppContext().getEnvironment().evalString("%HASOR_TEMP_PATH%");
-                File f = new File(fileDir, item.getName());
-                f.getParentFile().mkdirs();
-                OutputStream ostream = new FileOutputStream(f);
-                IOUtils.copy(stream, ostream);
-                ostream.flush();
-                ostream.close();
-                System.out.println("File field " + name + " with file name " + item.getName() + " detected.");
-            }
+        //
+        FileItem fileItem = this.getOneMultipart("sss");
+        if (fileItem == null) {
+            return;
         }
+        //
+        if (fileItem.isFormField()) {
+            System.out.println("Form field " + fileItem.getFieldName() + " with value " + fileItem.getString() + " detected.");
+        } else {
+            String fileName = fileItem.getName();
+            String fileDir = this.getAppContext().getEnvironment().getPluginDir(NewBlog.class);
+            fileItem.writeTo(new File(fileDir, fileName));
+            System.out.println("File field " + fileItem.getFieldName() + " with file name " + fileName + " detected.");
+        }
+        fileItem.deleteOrSkip();
     }
 }

@@ -47,7 +47,7 @@ public class Login extends Action {
             // - 登录页面
             data.clearValidErrors();//清空验证信息,避免瞎显示
             if (this.isLogin()) {
-                String ctx_path = data.getAppContext().getServletContext().getContextPath();
+                String ctx_path = data.getHttpRequest().getContextPath();
                 data.getHttpResponse().sendRedirect(ctx_path + "/account/my.htm");
             }
         }

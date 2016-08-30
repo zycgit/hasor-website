@@ -43,7 +43,4 @@ public class EnvironmentConfig {
     public String getEnvType() {
         return envType;
     }
-    public String getHostPath() {
-        return hostName + this.servletContext.getContextPath();
-    }
 }

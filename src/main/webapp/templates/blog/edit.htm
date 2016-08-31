@@ -316,8 +316,13 @@ ${rootData.put('pageTitle','Blog')}
     <!-- 遮罩 -->
 </form>
 <!-- 文件上传 -->
-<form id="uploadfiles" action="${ctx_path}/blog/save.do" class="dropzone">
+<form id="uploadfiles" action="${ctx_path}/blog/save.do" method="post" enctype="multipart/form-data" class="dropzone">
     <div class="fallback">
-        <input name="sss" type="file" multiple/>
+        <input name="sss" type="file" multipart/>
     </div>
+</form>
+<!-- 文件上传 -->
+<form action="${ctx_path}/blog/save.do" method="post" enctype="multipart/form-data">
+    <input name="sss" type="file"/>
+    <input type="submit"/>
 </form>

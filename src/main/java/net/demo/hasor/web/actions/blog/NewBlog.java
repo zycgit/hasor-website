@@ -17,6 +17,7 @@ package net.demo.hasor.web.actions.blog;
 import net.demo.hasor.core.Action;
 import net.demo.hasor.web.forms.LoginCallBackForm;
 import net.hasor.restful.FileItem;
+import net.hasor.restful.api.Async;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.Params;
 import net.hasor.restful.api.Valid;
@@ -28,10 +29,11 @@ import java.io.IOException;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
+@Async
 @MappingTo("/blog/save.do")
 public class NewBlog extends Action {
     //
-    public void execute(@Valid("AccessToken") @Params LoginCallBackForm loginForm) throws IOException {
+    public void execute() throws IOException {
         //
         FileItem fileItem = this.getOneMultipart("sss");
         if (fileItem == null) {

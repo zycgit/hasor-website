@@ -9,6 +9,10 @@ ${rootData.put('pageTitle','Blog')}
 <script src="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/moment.min.js"></script>
 <script src="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/daterangepicker.js"></script>
 <link href="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/daterangepicker.css" rel="stylesheet"/>
+<!-- dropzone -->
+<script src="//files.hasor.net/static/javascript/dropzone/4.3.0/dropzone.js"></script>
+<link href="//files.hasor.net/static/javascript/dropzone/4.3.0/dropzone.css" rel="stylesheet"/>
+
 <link rel="stylesheet" href="${ctx_path}/static/css/editer.css">
 
 <script type="text/javascript">
@@ -109,6 +113,7 @@ ${rootData.put('pageTitle','Blog')}
         $('.ui.sticky').sticky({
             context: '#attrForms'
         });
+        $("#uploadfiles").dropzone();
     });
 </script>
 <form>
@@ -309,4 +314,10 @@ ${rootData.put('pageTitle','Blog')}
         </div>
     </div>
     <!-- 遮罩 -->
+</form>
+<!-- 文件上传 -->
+<form id="uploadfiles" action="${ctx_path}/blog/save.do" class="dropzone">
+    <div class="fallback">
+        <input name="sss" type="file" multiple/>
+    </div>
 </form>

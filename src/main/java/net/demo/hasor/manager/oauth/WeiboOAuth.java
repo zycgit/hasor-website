@@ -96,7 +96,6 @@ public class WeiboOAuth extends AbstractOAuth {
         try {
             String redirectURI = this.getRedirectURI() + "?" + WeiboOAuth.URL_DATA + "&redirectURI=" + redirectTo;
             return "https://api.weibo.com/oauth2/authorize?response_type=code" //
-                    + "&forcelogin=true" //
                     + "&display=default" //
                     + "&client_id=" + this.appID //
                     + "&redirect_uri=" + URLEncoder.encode(redirectURI, "utf-8") //

@@ -1,0 +1,64 @@
+<div class="inline fields">
+    <label class="w100px">有效时间:</label>
+    <div class="field">
+        <div class="ui icon input w300px">
+            <input id="blog_drp" type="text" placeholder="Enter weight..">
+            <i class="calendar icon"></i>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui checked checkbox">
+            <input type="checkbox">
+            <label>定时发布</label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui checked checkbox">
+            <input type="checkbox">
+            <label>定时下线</label>
+        </div>
+    </div>
+</div>
+
+<!-- dropzone -->
+<script src="//files.hasor.net/static/javascript/dropzone/4.3.0/dropzone.js"></script>
+<link href="//files.hasor.net/static/javascript/dropzone/4.3.0/dropzone.css" rel="stylesheet"/>
+
+<!-- 文件上传 -->
+<form id="uploadfiles" action="${ctx_path}/uploader/upload_to_temp.do" method="post" class="dropzone">
+    <div class="fallback">
+        <input name="file" type="file"/>
+    </div>
+</form>
+<hr/>
+<form action="${ctx_path}/uploader/upload_to_temp.do" method="post" enctype="multipart/form-data">
+    <input type="file" name="sss"/>
+    <input type="submit"/>
+</form>
+
+function initDateRangePicker(elementID, startStr, endStr) {
+$('#' + elementID).daterangepicker({
+format: 'YYYY-MM-DD hh:mm:ss',
+startDate: startStr,
+endDate: endStr,
+timePicker: true,
+timePicker24Hour: true,
+timePickerIncrement: 5,
+drops: "up",
+locale: {
+applyLabel: '确认',
+cancelLabel: '取消',
+fromLabel: '从',
+toLabel: '到',
+weekLabel: 'W',
+customRangeLabel: 'Custom Range',
+daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+}
+}, function (start, end, label) {
+//console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+});
+}
+
+
+initDateRangePicker("blog_drp", "08/19/2016", "08/25/2016");

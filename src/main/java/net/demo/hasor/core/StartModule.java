@@ -29,7 +29,8 @@ public class StartModule extends WebModule {
     @Override
     public void loadModule(WebApiBinder apiBinder) throws Throwable {
         //
-        apiBinder.installModule(new DataSourceModule());
+        apiBinder.installModule(new DataSourceModule());    // 数据库
+        apiBinder.installModule(new AliyunModule());        // 阿里云
         apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
         //
         // .Webs

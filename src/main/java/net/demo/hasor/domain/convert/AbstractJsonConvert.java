@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.demo.hasor.datadao.convert;
-import net.demo.hasor.domain.oauth.AccessInfo;
+package net.demo.hasor.domain.convert;
 import net.demo.hasor.utils.JsonUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -31,10 +30,11 @@ import java.sql.SQLException;
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public class AccessInfoConvert extends BaseTypeHandler<AccessInfo> {
-    private static Logger logger = LoggerFactory.getLogger(AccessInfoConvert.class);
+public abstract class AbstractJsonConvert<T> extends BaseTypeHandler<T> {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected abstract Class<T> getConvertType();
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, AccessInfo parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
         String jsonData = "";
         if (parameter != null) {
             jsonData = JsonUtils.toJsonStringSingleLine(parameter);
@@ -42,24 +42,19 @@ public class AccessInfoConvert extends BaseTypeHandler<AccessInfo> {
         ps.setString(i, jsonData);
     }
     @Override
-    public AccessInfo getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String jsonData = rs.getString(columnName);
         if (StringUtils.isBlank(jsonData)) {
             return null;
         }
-        String provider = JsonUtils.toMap(jsonData).get("provider").toString();
-        Class<? extends AccessInfo> infoType = AccessInfo.getTypeByProvider(provider);
-        if (infoType == null) {
-            return null;
-        }
-        return JsonUtils.toObject(jsonData, infoType);
+        return JsonUtils.toObject(jsonData, getConvertType());
     }
     @Override
-    public AccessInfo getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         throw new SQLException("not support");
     }
     @Override
-    public AccessInfo getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         throw new SQLException("not support");
     }
 }

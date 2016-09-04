@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.demo.hasor.datadao.convert;
-import net.demo.hasor.domain.enums.UserStatus;
+package net.demo.hasor.domain.convert;
+import net.demo.hasor.domain.GeneralEnumParsing;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.slf4j.Logger;
@@ -29,27 +29,32 @@ import java.sql.SQLException;
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UserStatusConvert extends BaseTypeHandler<UserStatus> {
-    private static Logger logger = LoggerFactory.getLogger(UserStatusConvert.class);
+public abstract class AbstractEnumByTypeConvert<T extends Enum<?>> extends BaseTypeHandler<T> {
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    protected abstract GeneralEnumParsing<T> getConvertType();
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, UserStatus parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
         if (parameter != null) {
-            ps.setInt(i, parameter.getType());
+            if (parameter instanceof GeneralEnumParsing) {
+                ps.setInt(i, ((GeneralEnumParsing) parameter).getType());
+                return;
+            }
+            throw new IllegalStateException("parameter is not impl GeneralEnumParsing.");
         } else {
             throw new IllegalStateException("UserStatus is null.");
         }
     }
     @Override
-    public UserStatus getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        int status = rs.getInt(columnName);
-        return UserStatus.formType(status);
+    public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
+        int typeValue = rs.getInt(columnName);
+        return getConvertType().formType(typeValue);
     }
     @Override
-    public UserStatus getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         throw new SQLException("not support");
     }
     @Override
-    public UserStatus getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         throw new SQLException("not support");
     }
 }

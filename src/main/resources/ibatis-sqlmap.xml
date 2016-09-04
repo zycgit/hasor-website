@@ -4,5 +4,6 @@
     <mappers>
         <mapper resource="META-INF/sqlmap/user_info_sqlmap.xml"/>
         <mapper resource="META-INF/sqlmap/user_source_sqlmap.xml"/>
+        <mapper resource="META-INF/sqlmap/content_category_sqlmap.xml"/>
     </mappers>
 </configuration>

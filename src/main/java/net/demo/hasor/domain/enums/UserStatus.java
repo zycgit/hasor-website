@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package net.demo.hasor.domain.enums;
+import net.demo.hasor.domain.GeneralEnumParsing;
+import org.more.util.StringUtils;
 /**
  * 用户状态
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public enum UserStatus {
+public enum UserStatus implements GeneralEnumParsing<UserStatus> {
     Normal(0, "正常"),
     Invalid(1, "失效"),
     Destroy(2, "销毁"),;
@@ -37,9 +39,17 @@ public enum UserStatus {
         return desc;
     }
     //
-    public static UserStatus formType(int type) {
+    public UserStatus formType(int type) {
         for (UserStatus item : UserStatus.values()) {
             if (item.getType() == type) {
+                return item;
+            }
+        }
+        return null;
+    }
+    public UserStatus formName(String name) {
+        for (UserStatus item : UserStatus.values()) {
+            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
                 return item;
             }
         }

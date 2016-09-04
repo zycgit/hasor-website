@@ -4,7 +4,7 @@ create table `USER_INFO` (
 	`email`		          VARCHAR(150)	NULL				            COMMENT 'Email',
 	`mobile_phone`			VARCHAR(100)	NULL				            COMMENT '电话',
 	`password`			    TEXT	        NOT NULL				        COMMENT '密码(非明文)',
-	`type`			        INT 	        NOT NULL					      COMMENT '状态',
+	`type`			        INT 	        NOT NULL					      COMMENT '类型',
 	
 	`nick`			        VARCHAR(100)	NULL					          COMMENT '昵称',
 	`gender`			      VARCHAR(10)	  NULL					          COMMENT '用户性别 - 男 女',

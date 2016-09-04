@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package net.demo.hasor.domain.enums;
+import net.demo.hasor.domain.GeneralEnumParsing;
+import org.more.util.StringUtils;
 /**
  * 帐号类型
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public enum UserType {
+public enum UserType implements GeneralEnumParsing<UserType> {
     /**本地帐号*/
     Master(1, "主帐号"),
     /**临时帐号*/
@@ -38,9 +40,17 @@ public enum UserType {
         return desc;
     }
     //
-    public static UserType formType(int type) {
+    public UserType formType(int type) {
         for (UserType item : UserType.values()) {
             if (item.getType() == type) {
+                return item;
+            }
+        }
+        return null;
+    }
+    public UserType formName(String name) {
+        for (UserType item : UserType.values()) {
+            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
                 return item;
             }
         }

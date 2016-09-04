@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.demo.hasor.datadao.convert;
-import net.demo.hasor.domain.futures.UserContactInfo;
-import net.demo.hasor.utils.JsonUtils;
+package net.demo.hasor.domain.convert;
+import net.demo.hasor.domain.GeneralEnumParsing;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.more.util.StringUtils;
@@ -31,30 +30,27 @@ import java.sql.SQLException;
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UserContactInfoConvert extends BaseTypeHandler<UserContactInfo> {
-    private static Logger logger = LoggerFactory.getLogger(UserContactInfoConvert.class);
+public abstract class AbstractEnumByNameConvert<T extends Enum<?>> extends BaseTypeHandler<T> {
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    protected abstract GeneralEnumParsing<T> getConvertType();
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, UserContactInfo parameter, JdbcType jdbcType) throws SQLException {
-        String jsonData = "";
-        if (parameter != null) {
-            jsonData = JsonUtils.toJsonStringSingleLine(parameter);
-        }
-        ps.setString(i, jsonData);
+    public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
+        ps.setString(i, parameter.name());
     }
     @Override
-    public UserContactInfo getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        String jsonData = rs.getString(columnName);
-        if (StringUtils.isBlank(jsonData)) {
+    public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
+        String valueName = rs.getString(columnName);
+        if (StringUtils.isBlank(valueName)) {
             return null;
         }
-        return JsonUtils.toObject(jsonData, UserContactInfo.class);
+        return getConvertType().formName(valueName);
     }
     @Override
-    public UserContactInfo getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         throw new SQLException("not support");
     }
     @Override
-    public UserContactInfo getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         throw new SQLException("not support");
     }
 }

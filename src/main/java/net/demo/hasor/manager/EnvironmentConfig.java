@@ -18,6 +18,7 @@ import net.demo.hasor.core.Service;
 import net.hasor.core.Inject;
 import net.hasor.core.InjectSettings;
 import net.hasor.core.Singleton;
+import org.more.util.StringUtils;
 
 import javax.servlet.ServletContext;
 /**
@@ -34,13 +35,58 @@ public class EnvironmentConfig {
     private String         envType;
     @InjectSettings("appExample.hostName")
     private String         hostName;
+    @InjectSettings("aliyun.bucketPath")
+    private String         bucketPath;
+    @InjectSettings("aliyun.bucketName")
+    private String         bucketName;
+    @InjectSettings("uploader.maxSize")
+    private int            maxSize;
     @Inject
     private ServletContext servletContext;
     //
+    /**当前软件最近版本*/
     public String getCurentVersion() {
-        return curentVersion;
+        return this.curentVersion;
     }
+    //
+    /**当前所属环境*/
     public String getEnvType() {
-        return envType;
+        return this.envType;
+    }
+    //
+    /**是否为日常开发环境*/
+    public boolean isDaily() {
+        return StringUtils.equalsBlankIgnoreCase("daily", this.envType);
+    }
+    //
+    /**主机地址*/
+    public String getHostName() {
+        return this.hostName;
+    }
+    //
+    /**Bucket名称*/
+    public String getBucketName() {
+        return this.bucketName;
+    }
+    //
+    /**保存上传文件的基础地址*/
+    public String getBucketPath() {
+        return this.bucketPath;
+    }
+    //
+    /**获取静态文件host地址*/
+    public String getStaticFilesHost() {
+        if (this.isDaily()) {
+            //
+            return "//files.hasor.net";
+        } else {
+            //
+            return "//files.hasor.net";
+        }
+    }
+    //
+    /**文件上传最大大小*/
+    public int getMaxSize() {
+        return this.maxSize;
     }
 }

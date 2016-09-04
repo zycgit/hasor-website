@@ -73,7 +73,7 @@ public class DataSourceModule implements LifeModule {
         jdbcTemplate.loadSQL("UTF-8", "/META-INF/sqlinner/ddl_sql_version_info.sql");
         jdbcTemplate.loadSQL("UTF-8", "/META-INF/sqlinner/init_sql_version_info.sql");
         //
-        // .日常环境下特殊处理
+        // .日常环境下自动初始化数据库
         EnvironmentConfig config = appContext.getInstance(EnvironmentConfig.class);
         if (StringUtils.equalsIgnoreCase("daily", config.getEnvType())) {
             logger.info("loadSQL for daily.");
@@ -82,6 +82,10 @@ public class DataSourceModule implements LifeModule {
             Map<String, String> loadMapper = new HashMap<String, String>();
             loadMapper.put("USER_INFO", "/META-INF/sqlddl/ddl_sql_user_info.sql");
             loadMapper.put("USER_SOURCE", "/META-INF/sqlddl/ddl_sql_user_source.sql");
+            loadMapper.put("CONTENT_CATEGORY", "/META-INF/sqlddl/ddl_sql_content_category.sql");
+            loadMapper.put("CONTENT_INFO", "/META-INF/sqlddl/ddl_sql_content_info.sql");
+            loadMapper.put("PROJECT_INFO", "/META-INF/sqlddl/ddl_sql_project_info.sql");
+            loadMapper.put("PROJECT_VERSION", "/META-INF/sqlddl/ddl_sql_project_version.sql");
             //
             List<String> tables = dailyTemplate.queryForList("SHOW TABLES LIKE '%';", String.class);
             for (String tableName : tables) {

@@ -36,7 +36,23 @@
         <userPassword>${jdbc.password}</userPassword>
     </jdbcSettings>
 
+    <uploader>
+        <!-- 上传文件最大大小 500KB -->
+        <maxSize>512000</maxSize>
+    </uploader>
+
     <!-- ========================================================= -->
+    <!-- 阿里云 -->
+    <aliyun>
+        <accessKey>${aliyun.accessKey}</accessKey>
+        <accessKeySecret>${aliyun.accessKeySecret}</accessKeySecret>
+        <bucketPath>${aliyun.bucketPath}</bucketPath>
+        <bucketName>${aliyun.bucketName}</bucketName>
+        <!-- 接入点(选择最近的接入点) -->
+        <endpoint>
+            <oss>${aliyun.oss_endpoint}</oss>
+        </endpoint>
+    </aliyun>
     <!--
         腾讯产品接入
         http://connect.qq.com/intro/login 

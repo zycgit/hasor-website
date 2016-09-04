@@ -8,15 +8,15 @@
         <result property="email"            column="email"/>
         <result property="mobilePhone"      column="mobile_phone"/>
         <result property="password"         column="password"/>
-        <result property="type"             column="type"           typeHandler="net.demo.hasor.datadao.convert.UserTypeConvert"/>
+        <result property="type"             column="type"           typeHandler="net.demo.hasor.domain.convert.UserTypeConvert"/>
 
         <result property="nick"             column="nick"/>
-        <result property="gender"           column="gender"         typeHandler="net.demo.hasor.datadao.convert.GenderTypeConvert"/>
+        <result property="gender"           column="gender"         typeHandler="net.demo.hasor.domain.convert.GenderTypeConvert"/>
         <result property="avatar"           column="avatar"/>
 
-        <result property="contactInfo"      column="contact_info"   typeHandler="net.demo.hasor.datadao.convert.UserContactInfoConvert"/>
-        <result property="futures"          column="futures"        typeHandler="net.demo.hasor.datadao.convert.UserFuturesConvert"/>
-        <result property="status"           column="status"         typeHandler="net.demo.hasor.datadao.convert.UserStatusConvert"/>
+        <result property="contactInfo"      column="contact_info"   typeHandler="net.demo.hasor.domain.convert.UserContactInfoConvert"/>
+        <result property="futures"          column="futures"        typeHandler="net.demo.hasor.domain.convert.UserFuturesConvert"/>
+        <result property="status"           column="status"         typeHandler="net.demo.hasor.domain.convert.UserStatusConvert"/>
         <result property="loginCount"       column="login_count"/>
         
         <result property="firstLoginTime"   column="first_login_time"/>
@@ -67,13 +67,13 @@
             #{email},
             #{mobilePhone},
             #{password},
-            #{type, typeHandler=net.demo.hasor.datadao.convert.UserTypeConvert},
+            #{type, typeHandler=net.demo.hasor.domain.convert.UserTypeConvert},
             #{nick},
-            #{gender, typeHandler=net.demo.hasor.datadao.convert.GenderTypeConvert},
+            #{gender, typeHandler=net.demo.hasor.domain.convert.GenderTypeConvert},
             #{avatar},
-            #{contactInfo, typeHandler=net.demo.hasor.datadao.convert.UserContactInfoConvert},
-            #{futures, typeHandler=net.demo.hasor.datadao.convert.UserFuturesConvert},
-            #{status, typeHandler=net.demo.hasor.datadao.convert.UserStatusConvert},
+            #{contactInfo, typeHandler=net.demo.hasor.domain.convert.UserContactInfoConvert},
+            #{futures, typeHandler=net.demo.hasor.domain.convert.UserFuturesConvert},
+            #{status, typeHandler=net.demo.hasor.domain.convert.UserStatusConvert},
             0,
             now(),
             now()
@@ -87,12 +87,12 @@
     <update id="user_updateInfo">
         update USER_INFO set
             nick          = #{userInfo.nick},
-            gender        = #{userInfo.gender, typeHandler=net.demo.hasor.datadao.convert.GenderTypeConvert},
+            gender        = #{userInfo.gender, typeHandler=net.demo.hasor.domain.convert.GenderTypeConvert},
             avatar        = #{userInfo.avatar},
-            contact_info  = #{userInfo.contactInfo, typeHandler=net.demo.hasor.datadao.convert.UserContactInfoConvert},
-            futures       = #{userInfo.futures, typeHandler=net.demo.hasor.datadao.convert.UserFuturesConvert},
-            status        = #{userInfo.status, typeHandler=net.demo.hasor.datadao.convert.UserStatusConvert},
-            type          = #{userInfo.type, typeHandler=net.demo.hasor.datadao.convert.UserTypeConvert},
+            contact_info  = #{userInfo.contactInfo, typeHandler=net.demo.hasor.domain.convert.UserContactInfoConvert},
+            futures       = #{userInfo.futures, typeHandler=net.demo.hasor.domain.convert.UserFuturesConvert},
+            status        = #{userInfo.status, typeHandler=net.demo.hasor.domain.convert.UserStatusConvert},
+            type          = #{userInfo.type, typeHandler=net.demo.hasor.domain.convert.UserTypeConvert},
             modify_time   = now()
         where 
             id = #{userID} and status = 0

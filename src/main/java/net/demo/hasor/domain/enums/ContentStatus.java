@@ -17,20 +17,18 @@ package net.demo.hasor.domain.enums;
 import net.demo.hasor.domain.GeneralEnumParsing;
 import org.more.util.StringUtils;
 /**
- * 性别
+ * 帖子状态
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public enum GenderType implements GeneralEnumParsing<GenderType> {
-    None(0, "未知"),
-    Male(1, "男性"),
-    Female(2, "女性"),
-    Neutral(3, "中性"),
-    Secret(4, "秘密"),;
+public enum ContentStatus implements GeneralEnumParsing<ContentStatus> {
+    OK(0, "正常"),
+    Delete(1, "删除"),
+    Draft(2, "草稿"),;
     //
     private int    type;
     private String desc;
-    GenderType(int type, String desc) {
+    ContentStatus(int type, String desc) {
         this.type = type;
         this.desc = desc;
     }
@@ -41,16 +39,17 @@ public enum GenderType implements GeneralEnumParsing<GenderType> {
         return desc;
     }
     //
-    public GenderType formType(int type) {
-        for (GenderType item : GenderType.values()) {
+    public ContentStatus formType(int type) {
+        for (ContentStatus item : ContentStatus.values()) {
             if (item.getType() == type) {
                 return item;
             }
         }
         return null;
     }
-    public GenderType formName(String name) {
-        for (GenderType item : GenderType.values()) {
+    @Override
+    public ContentStatus formName(String name) {
+        for (ContentStatus item : ContentStatus.values()) {
             if (StringUtils.equalsIgnoreCase(item.name(), name)) {
                 return item;
             }

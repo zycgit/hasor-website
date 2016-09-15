@@ -17,7 +17,6 @@ import net.demo.hasor.datadao.UserDAO;
 import net.demo.hasor.datadao.UserSourceDAO;
 import net.demo.hasor.domain.UserDO;
 import net.demo.hasor.domain.UserSourceDO;
-import net.demo.hasor.utils.LogUtils;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
 import net.hasor.db.Transactional;

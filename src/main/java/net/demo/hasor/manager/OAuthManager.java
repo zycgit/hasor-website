@@ -18,7 +18,6 @@ import net.demo.hasor.domain.oauth.AccessInfo;
 import net.demo.hasor.domain.UserDO;
 import net.demo.hasor.domain.enums.ErrorCodes;
 import net.demo.hasor.manager.oauth.AbstractOAuth;
-import net.demo.hasor.utils.LogUtils;
 import net.demo.hasor.utils.OAuthUtils;
 import net.hasor.core.AppContext;
 import net.hasor.core.AppContextAware;

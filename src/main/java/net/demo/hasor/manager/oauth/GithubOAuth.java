@@ -27,7 +27,6 @@ import net.demo.hasor.domain.futures.UserFutures;
 import net.demo.hasor.domain.oauth.AccessInfo;
 import net.demo.hasor.domain.oauth.GithubAccessInfo;
 import net.demo.hasor.utils.JsonUtils;
-import net.demo.hasor.utils.LogUtils;
 import net.demo.hasor.utils.OAuthUtils;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.InjectSettings;

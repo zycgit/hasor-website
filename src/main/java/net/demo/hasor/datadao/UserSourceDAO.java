@@ -16,7 +16,7 @@
 package net.demo.hasor.datadao;
 import net.demo.hasor.core.AbstractDao;
 import net.demo.hasor.domain.UserSourceDO;
-import net.demo.hasor.utils.LogUtils;
+import org.more.bizcommon.log.LogUtils;
 
 import java.sql.SQLException;
 import java.util.HashMap;

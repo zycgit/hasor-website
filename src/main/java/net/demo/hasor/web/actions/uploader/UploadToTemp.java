@@ -19,7 +19,6 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.PutObjectResult;
 import net.demo.hasor.core.Action;
 import net.demo.hasor.manager.EnvironmentConfig;
-import net.demo.hasor.utils.LogUtils;
 import net.hasor.core.Inject;
 import net.hasor.restful.FileItem;
 import net.hasor.restful.api.Async;

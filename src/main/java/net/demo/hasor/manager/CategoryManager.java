@@ -16,9 +16,9 @@
 package net.demo.hasor.manager;
 import net.demo.hasor.datadao.ContentCategoryDAO;
 import net.demo.hasor.domain.ContentCategoryDO;
-import net.demo.hasor.utils.LogUtils;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
+import org.more.bizcommon.log.LogUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

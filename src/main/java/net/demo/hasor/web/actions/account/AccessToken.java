@@ -20,7 +20,6 @@ import net.demo.hasor.domain.UserDO;
 import net.demo.hasor.domain.enums.ErrorCodes;
 import net.demo.hasor.manager.OAuthManager;
 import net.demo.hasor.manager.UserManager;
-import net.demo.hasor.utils.LogUtils;
 import net.demo.hasor.web.forms.LoginCallBackForm;
 import net.hasor.core.Inject;
 import net.hasor.restful.api.MappingTo;

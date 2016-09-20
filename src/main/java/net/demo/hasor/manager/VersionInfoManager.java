@@ -20,6 +20,7 @@ import net.demo.hasor.domain.VersionInfoDO;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
 import net.hasor.db.jdbc.core.JdbcTemplate;
+import org.more.bizcommon.log.LogUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -38,6 +38,7 @@ import net.hasor.core.InjectSettings;
 import net.hasor.core.Settings;
 import net.hasor.core.Singleton;
 import org.more.bizcommon.ResultDO;
+import org.more.bizcommon.log.LogUtils;
 import org.more.util.ExceptionUtils;
 import org.more.util.StringUtils;
 

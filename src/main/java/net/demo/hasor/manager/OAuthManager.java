@@ -26,6 +26,7 @@ import net.hasor.core.Singleton;
 import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
+import org.more.bizcommon.log.LogUtils;
 import org.more.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

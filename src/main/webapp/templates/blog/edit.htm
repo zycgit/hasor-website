@@ -2,9 +2,6 @@ ${rootData.put('pageTitle','Blog')}
 <!-- semantic-ui -->
 <link href="//files.hasor.net/static/javascript/semantic-ui/2.2.3/semantic.min.css" rel="stylesheet">
 <script src="//files.hasor.net/static/javascript/semantic-ui/2.2.3/semantic.js"></script>
-<!-- editor.md -->
-<script src="//files.hasor.net/static/javascript/editor.md/1.5.0/editormd.min.js"></script>
-<link href="//files.hasor.net/static/javascript/editor.md/1.5.0/css/editormd.min.css" rel="stylesheet"/>
 <!-- dateRangePicker -->
 <script src="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/moment.min.js"></script>
 <script src="//files.hasor.net/static/javascript/bootstrap.plugins/daterangepicker/2.1.24/daterangepicker.js"></script>
@@ -39,9 +36,7 @@ ${rootData.put('pageTitle','Blog')}
     </div>
 
     <!-- 编辑器 -->
-    <div id="blogEditor">
-        <textarea id="blogContent">#aaaa</textarea>
-    </div>
+    <#include "/control/editor_md.htm"/>
 
     <!-- 文章发布按钮 -->
     <div class="ui sticky" style="float: right;z-index: 9999;">

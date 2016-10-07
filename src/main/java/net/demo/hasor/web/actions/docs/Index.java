@@ -15,7 +15,7 @@
  */
 package net.demo.hasor.web.actions.docs;
 import net.demo.hasor.core.Action;
-import net.demo.hasor.domain.VersionInfoDO;
+import net.demo.hasor.manager.VersionInfoDO;
 import net.demo.hasor.manager.EnvironmentConfig;
 import net.demo.hasor.manager.VersionInfoManager;
 import net.hasor.core.Inject;

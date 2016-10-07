@@ -18,5 +18,5 @@ create table `PROJECT_INFO` (
 	`create_time`	      DATETIME		  NOT NULL			    	    COMMENT '创建时间',
 	`modify_time`	      DATETIME		  NOT NULL					      COMMENT '修改时间',
 	PRIMARY KEY (`id`),
-  unique index(`organization_id`,`name`)
+  index(`owner_id`)
 );

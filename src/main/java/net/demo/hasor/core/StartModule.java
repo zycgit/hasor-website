@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package net.demo.hasor.core;
+import net.demo.hasor.domain.AppConstant;
 import net.demo.hasor.manager.oauth.GithubOAuth;
 import net.demo.hasor.manager.oauth.TencentOAuth;
 import net.demo.hasor.manager.oauth.WeiboOAuth;
@@ -29,9 +30,11 @@ public class StartModule extends WebModule {
     @Override
     public void loadModule(WebApiBinder apiBinder) throws Throwable {
         //
+        String contextPath = apiBinder.getServletContext().getContextPath();
         apiBinder.installModule(new DataSourceModule());    // 数据库
         apiBinder.installModule(new AliyunModule());        // 阿里云
         apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
+        apiBinder.bindType(String.class).nameWith(AppConstant.VAR_CONTEXT_PATH).toInstance(contextPath);
         //
         // .Webs
         apiBinder.filter("/*").through(0, new EncodingFilter());

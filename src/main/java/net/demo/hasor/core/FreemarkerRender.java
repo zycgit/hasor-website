@@ -18,6 +18,7 @@ import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import net.demo.hasor.domain.AppConstant;
 import net.hasor.restful.Render;
 import net.hasor.restful.RenderData;
 import net.hasor.restful.RenderEngine;
@@ -38,6 +39,7 @@ import java.util.Set;
 @Render({"html", "htm"})
 public class FreemarkerRender implements RenderEngine {
     protected Configuration configuration;
+    private   String        ctxPath;
     @Override
     public void initEngine(WebAppContext appContext) throws Throwable {
         String realPath = appContext.getEnvironment().getServletContext().getRealPath("/");
@@ -66,6 +68,7 @@ public class FreemarkerRender implements RenderEngine {
         }
         //
         // - 环境变量
+        this.ctxPath = appContext.findBindingBean(AppConstant.VAR_CONTEXT_PATH, String.class);
     }
     @Override
     public void process(RenderData renderData, Writer writer) throws Throwable {
@@ -75,7 +78,7 @@ public class FreemarkerRender implements RenderEngine {
         for (String key : renderData.keySet()) {
             data.put(key, renderData.get(key));
         }
-        data.put("ctx_path", renderData.getHttpRequest().getContextPath());
+        data.put(AppConstant.VAR_CONTEXT_PATH, this.ctxPath);
         //
         temp.process(data, writer);
     }

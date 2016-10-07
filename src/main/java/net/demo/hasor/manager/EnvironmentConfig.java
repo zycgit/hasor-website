@@ -15,9 +15,11 @@
  */
 package net.demo.hasor.manager;
 import net.demo.hasor.core.Service;
+import net.demo.hasor.domain.AppConstant;
 import net.hasor.core.Inject;
 import net.hasor.core.InjectSettings;
 import net.hasor.core.Singleton;
+import net.hasor.core.Type;
 import org.more.util.StringUtils;
 
 import javax.servlet.ServletContext;
@@ -41,6 +43,8 @@ public class EnvironmentConfig {
     private String         bucketName;
     @InjectSettings("uploader.maxSize")
     private int            maxSize;
+    @Inject(value = AppConstant.VAR_CONTEXT_PATH, byType = Type.ByName)
+    private String         contextPath;
     @Inject
     private ServletContext servletContext;
     //

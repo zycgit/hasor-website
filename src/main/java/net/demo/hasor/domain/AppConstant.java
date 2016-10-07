@@ -28,4 +28,6 @@ public interface AppConstant {
     public static final String SESSION_KEY_CSRF_TOKEN   = "csrfTokenString";
     //
     public static final String REQ_PARAM_KEY_CSRF_TOKEN = "csrfToken";
+    //
+    public static final String VAR_CONTEXT_PATH         = "ctx_path";
 }

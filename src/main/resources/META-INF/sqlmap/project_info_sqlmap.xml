@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sp_project_info_space">
 
-    <resultMap id="projectInfoDOMap" type="net.demo.hasor.domain.ProjectInfoDO">
+    <resultMap id="projectInfoDOMap" type="net.hasor.website.domain.ProjectInfoDO">
         <result property="id"               column="id"/>
         <result property="ownerID"          column="owner_id"/>
         <result property="organizationID"   column="organization_id"/>
@@ -10,14 +10,14 @@
         <result property="name"             column="name"/>
         <result property="subtitle"         column="subtitle"/>
         <result property="present"          column="present"/>
-        <result property="contentFormat"    column="present_format" typeHandler="net.demo.hasor.domain.convert.ContentFormatConvert"/>
+        <result property="contentFormat"    column="present_format" typeHandler="net.hasor.website.domain.convert.ContentFormatConvert"/>
 
         <result property="homePage"         column="home_page"/>
         <result property="downPage"         column="down_page"/>
-        <result property="sourceType"       column="type"           typeHandler="net.demo.hasor.domain.convert.SourceTypeConvert"/>
+        <result property="sourceType"       column="type"           typeHandler="net.hasor.website.domain.convert.SourceTypeConvert"/>
         <result property="language"         column="language"/>
         <result property="license"          column="license"/>
-        <result property="futures"          column="futures"        typeHandler="net.demo.hasor.domain.convert.ProjectFuturesConvert"/>
+        <result property="futures"          column="futures"        typeHandler="net.hasor.website.domain.convert.ProjectFuturesConvert"/>
 
         <result property="createTime"       column="create_time"/>
         <result property="modifyTime"       column="modify_time"/>
@@ -42,7 +42,7 @@
 	</sql>
 
     <!-- 新增外部登录 -->
-    <insert id="projectInfo_insert" parameterType="net.demo.hasor.domain.ProjectInfoDO">
+    <insert id="projectInfo_insert" parameterType="net.hasor.website.domain.ProjectInfoDO">
         insert into PROJECT_INFO(
             owner_id,
             organization_id,
@@ -64,13 +64,13 @@
             #{name},
             #{subtitle},
             #{present},
-            #{contentFormat, typeHandler=net.demo.hasor.domain.convert.ContentFormatConvert},
+            #{contentFormat, typeHandler=net.hasor.website.domain.convert.ContentFormatConvert},
             #{homePage},
             #{downPage},
-            #{sourceType, typeHandler=net.demo.hasor.domain.convert.SourceTypeConvert},
+            #{sourceType, typeHandler=net.hasor.website.domain.convert.SourceTypeConvert},
             #{language},
             #{license},
-            #{sourceType, typeHandler=net.demo.hasor.domain.convert.ProjectFuturesConvert},
+            #{sourceType, typeHandler=net.hasor.website.domain.convert.ProjectFuturesConvert},
             now(),
             now()
         );

@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sp_project_version_space">
 
-    <resultMap id="projectVersionDOMap" type="net.demo.hasor.domain.ProjectVersionDO">
+    <resultMap id="projectVersionDOMap" type="net.hasor.website.domain.ProjectVersionDO">
         <result property="id"               column="id"/>
         <result property="projectID"        column="project_id"/>
         <result property="releaseTime"      column="release_time"/>
         <result property="version"          column="version"/>
         <result property="subtitle"         column="subtitle"/>
         <result property="changelog"        column="changelog"/>
-        <result property="changelogFormat"  column="changelog_format"   typeHandler="net.demo.hasor.domain.convert.ContentFormatConvert"/>
-        <result property="futures"          column="futures"            typeHandler="net.demo.hasor.domain.convert.ProjectVersionFuturesConvert"/>
+        <result property="changelogFormat"  column="changelog_format"   typeHandler="net.hasor.website.domain.convert.ContentFormatConvert"/>
+        <result property="futures"          column="futures"            typeHandler="net.hasor.website.domain.convert.ProjectVersionFuturesConvert"/>
         <result property="createTime"       column="create_time"/>
         <result property="modifyTime"       column="modify_time"/>
     </resultMap>
@@ -27,6 +27,5 @@
         create_time,
         modify_time
 	</sql>
-
 
 </mapper>

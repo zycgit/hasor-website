@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sp_user_source_space">
 
-    <resultMap id="userSourceDOMap" type="net.demo.hasor.domain.UserSourceDO">
+    <resultMap id="userSourceDOMap" type="net.hasor.website.domain.UserSourceDO">
         <result property="sourceID"         column="id"/>
         <result property="provider"         column="provider"/>
         <result property="uniqueID"         column="unique_id"/>
         <result property="userID"           column="user_id"/>
         <result property="status"           column="status"/>
-        <result property="accessInfo"       column="access_info"    typeHandler="net.demo.hasor.domain.convert.AccessInfoConvert"/>
+        <result property="accessInfo"       column="access_info"    typeHandler="net.hasor.website.domain.convert.AccessInfoConvert"/>
         <result property="loginCount"       column="login_count"/>
         <result property="firstLoginTime"   column="first_login_time"/>
         <result property="lastLoginTime"    column="last_login_time"/>
@@ -31,7 +31,7 @@
 	</sql>
 
     <!-- 新增外部登录 -->
-    <insert id="userSource_insert" parameterType="net.demo.hasor.domain.UserSourceDO">
+    <insert id="userSource_insert" parameterType="net.hasor.website.domain.UserSourceDO">
         insert into USER_SOURCE(
             provider,
             unique_id,
@@ -46,7 +46,7 @@
             #{uniqueID},
             #{userID},
             #{status},
-            #{accessInfo, typeHandler=net.demo.hasor.domain.convert.AccessInfoConvert},
+            #{accessInfo, typeHandler=net.hasor.website.domain.convert.AccessInfoConvert},
             #{loginCount},
             now(),
             now()
@@ -73,7 +73,7 @@
         update USER_SOURCE set
             unique_id     = #{sourceInfo.uniqueID},
             status        = #{sourceInfo.status},
-            access_info   = #{sourceInfo.accessInfo, typeHandler=net.demo.hasor.domain.convert.AccessInfoConvert},
+            access_info   = #{sourceInfo.accessInfo, typeHandler=net.hasor.website.domain.convert.AccessInfoConvert},
             modify_time   = now()
         where 
             provider = #{provider} and user_id = #{userID}

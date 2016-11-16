@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.net.demo.hasor;
-import net.hasor.website.core.DataSourceModule;
-import net.hasor.website.core.FreemarkerRender;
-import net.hasor.core.ApiBinder;
-import net.hasor.core.Module;
-import net.hasor.restful.RenderEngine;
+package net.hasor.website.domain;
 /**
- * 单元测试
- * @version : 2015年12月25日
+ *
+ * @version : 2016年1月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UnitTestModule implements Module {
-    @Override
-    public void loadModule(ApiBinder apiBinder) throws Throwable {
-        //
-        apiBinder.installModule(new DataSourceModule());
-        apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
-        //
-        // .Tencent
-    }
+public interface GeneralEnumParsing<T> {
+    public int getType();
+
+    public T formType(int type);
+
+    public T formName(String name);
+
+    public String name();
 }

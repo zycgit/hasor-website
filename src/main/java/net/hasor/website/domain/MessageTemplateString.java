@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.net.demo.hasor;
-import net.hasor.website.core.DataSourceModule;
-import net.hasor.website.core.FreemarkerRender;
-import net.hasor.core.ApiBinder;
-import net.hasor.core.Module;
-import net.hasor.restful.RenderEngine;
+package net.hasor.website.domain;
+import org.more.bizcommon.MessageTemplate;
 /**
- * 单元测试
- * @version : 2015年12月25日
+ * 消息。
+ * @version : 2014年10月25日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UnitTestModule implements Module {
-    @Override
-    public void loadModule(ApiBinder apiBinder) throws Throwable {
-        //
-        apiBinder.installModule(new DataSourceModule());
-        apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
-        //
-        // .Tencent
+public class MessageTemplateString implements MessageTemplate {
+    private static final long serialVersionUID = -4678293554961623796L;
+    private String messageTemplate;
+    private int    messageType;
+    public MessageTemplateString(int messageType, String messageTemplate) {
+        this.messageTemplate = messageTemplate;
+        this.messageType = messageType;
+    }
+    public String getMessageTemplate() {
+        return this.messageTemplate;
+    }
+    public int getMessageType() {
+        return this.messageType;
     }
 }

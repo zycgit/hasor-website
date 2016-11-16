@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.net.demo.hasor;
-import net.hasor.website.core.DataSourceModule;
-import net.hasor.website.core.FreemarkerRender;
-import net.hasor.core.ApiBinder;
-import net.hasor.core.Module;
-import net.hasor.restful.RenderEngine;
+package net.hasor.website.domain;
 /**
- * 单元测试
- * @version : 2015年12月25日
+ *
+ * @version : 2016年1月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UnitTestModule implements Module {
-    @Override
-    public void loadModule(ApiBinder apiBinder) throws Throwable {
-        //
-        apiBinder.installModule(new DataSourceModule());
-        apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
-        //
-        // .Tencent
-    }
+public interface AppConstant {
+    public static final String DB_HSQL                  = "HSQL";
+    public static final String DB_MYSQL                 = "MYSQL";
+    //
+    public static final String SESSION_KEY_USER_ID      = "user_id";
+    public static final String SESSION_KEY_USER_NICK    = "user_nick";
+    public static final String SESSION_KEY_CSRF_TOKEN   = "csrfTokenString";
+    //
+    public static final String REQ_PARAM_KEY_CSRF_TOKEN = "csrfToken";
+    //
+    public static final String VAR_CONTEXT_PATH         = "ctx_path";
 }

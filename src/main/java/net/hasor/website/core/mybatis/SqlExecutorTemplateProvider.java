@@ -13,24 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.net.demo.hasor;
-import net.hasor.website.core.DataSourceModule;
-import net.hasor.website.core.FreemarkerRender;
-import net.hasor.core.ApiBinder;
-import net.hasor.core.Module;
-import net.hasor.restful.RenderEngine;
+package net.hasor.website.core.mybatis;
+import net.hasor.core.Provider;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import javax.sql.DataSource;
 /**
- * 单元测试
- * @version : 2015年12月25日
+ * @version : 2014年7月17日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UnitTestModule implements Module {
-    @Override
-    public void loadModule(ApiBinder apiBinder) throws Throwable {
-        //
-        apiBinder.installModule(new DataSourceModule());
-        apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
-        //
-        // .Tencent
+public class SqlExecutorTemplateProvider implements Provider<SqlExecutorTemplate> {
+    private DataSource        dataSource;
+    private SqlSessionFactory sessionFactory;
+    public SqlExecutorTemplateProvider(SqlSessionFactory sessionFactory, final DataSource dataSource) {
+        this.dataSource = dataSource;
+        this.sessionFactory = sessionFactory;
+    }
+    public SqlExecutorTemplate get() {
+        return new SqlExecutorTemplate(this.sessionFactory, this.dataSource);
     }
 }

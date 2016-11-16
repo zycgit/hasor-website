@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sp_user_space">
     
-    <resultMap id="contentCategoryDOMap" type="net.demo.hasor.domain.ContentCategoryDO">
+    <resultMap id="contentCategoryDOMap" type="net.hasor.website.domain.ContentCategoryDO">
         <result property="id"           column="id"/>
         <result property="userID"       column="user_id"/>
         <result property="name"         column="name"/>
         <result property="orderIndex"   column="order_index"/>
 
-        <result property="status"       column="status"  typeHandler="net.demo.hasor.domain.convert.DataStatusConvert"/>
-        <result property="futures"      column="futures" typeHandler="net.demo.hasor.domain.convert.ContentCategoryFuturesConvert"/>
+        <result property="status"       column="status"  typeHandler="net.hasor.website.domain.convert.DataStatusConvert"/>
+        <result property="futures"      column="futures" typeHandler="net.hasor.website.domain.convert.ContentCategoryFuturesConvert"/>
         
         <result property="createTime"   column="create_time"/>
         <result property="modifyTime"   column="modify_time"/>
@@ -27,7 +27,7 @@
 	</sql>
     
     <!-- 新增分类 -->
-    <insert id="contentCategory_insert" parameterType="net.demo.hasor.domain.ContentCategoryDO">
+    <insert id="contentCategory_insert" parameterType="net.hasor.website.domain.ContentCategoryDO">
         insert into CONTENT_CATEGORY(
             user_id,
             name,
@@ -40,8 +40,8 @@
             #{userID},
             #{name},
             #{orderIndex},
-            #{status, typeHandler=net.demo.hasor.domain.convert.DataStatusConvert},
-            #{futures, typeHandler=net.demo.hasor.domain.convert.ContentCategoryFuturesConvert},
+            #{status, typeHandler=net.hasor.website.domain.convert.DataStatusConvert},
+            #{futures, typeHandler=net.hasor.website.domain.convert.ContentCategoryFuturesConvert},
             now(),
             now()
         );
@@ -67,8 +67,8 @@
         update CONTENT_CATEGORY set
             name        = #{category.name},
             order_index = #{category.orderIndex},
-            status      = #{category.status, typeHandler=net.demo.hasor.domain.convert.DataStatusConvert},
-            futures     = #{category.futures, typeHandler=net.demo.hasor.domain.convert.ContentCategoryFuturesConvert},
+            status      = #{category.status, typeHandler=net.hasor.website.domain.convert.DataStatusConvert},
+            futures     = #{category.futures, typeHandler=net.hasor.website.domain.convert.ContentCategoryFuturesConvert},
             modify_time = now()
         where
             id      = #{category.categoryID} and

@@ -3,9 +3,9 @@
     <!-- 框架配置 -->
     <hasor>
         <!-- 包扫描路径 -->
-        <loadPackages>net.demo.hasor.*</loadPackages>
+        <loadPackages>net.hasor.website.*</loadPackages>
         <!-- 程序启动入口 -->
-        <startup>net.demo.hasor.core.StartModule</startup>
+        <startup>net.hasor.website.core.StartModule</startup>
         <!-- 环境变量 -->
         <environmentVar>
             <!-- Daily -->

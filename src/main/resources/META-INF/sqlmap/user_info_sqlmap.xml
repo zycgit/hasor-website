@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sp_user_space">
     
-    <resultMap id="userDOMap" type="net.demo.hasor.domain.UserDO">
+    <resultMap id="userDOMap" type="net.hasor.website.domain.UserDO">
         <result property="userID"           column="id"/>
         <result property="account"          column="account"/>
         <result property="email"            column="email"/>
         <result property="mobilePhone"      column="mobile_phone"/>
         <result property="password"         column="password"/>
-        <result property="type"             column="type"           typeHandler="net.demo.hasor.domain.convert.UserTypeConvert"/>
+        <result property="type"             column="type"           typeHandler="net.hasor.website.domain.convert.UserTypeConvert"/>
 
         <result property="nick"             column="nick"/>
-        <result property="gender"           column="gender"         typeHandler="net.demo.hasor.domain.convert.GenderTypeConvert"/>
+        <result property="gender"           column="gender"         typeHandler="net.hasor.website.domain.convert.GenderTypeConvert"/>
         <result property="avatar"           column="avatar"/>
 
-        <result property="contactInfo"      column="contact_info"   typeHandler="net.demo.hasor.domain.convert.UserContactInfoConvert"/>
-        <result property="futures"          column="futures"        typeHandler="net.demo.hasor.domain.convert.UserFuturesConvert"/>
-        <result property="status"           column="status"         typeHandler="net.demo.hasor.domain.convert.UserStatusConvert"/>
+        <result property="contactInfo"      column="contact_info"   typeHandler="net.hasor.website.domain.convert.UserContactInfoConvert"/>
+        <result property="futures"          column="futures"        typeHandler="net.hasor.website.domain.convert.UserFuturesConvert"/>
+        <result property="status"           column="status"         typeHandler="net.hasor.website.domain.convert.UserStatusConvert"/>
         <result property="loginCount"       column="login_count"/>
         
         <result property="firstLoginTime"   column="first_login_time"/>
@@ -46,7 +46,7 @@
 	</sql>
     
     <!-- 新增用户 -->
-    <insert id="user_insert" parameterType="net.demo.hasor.domain.UserDO">
+    <insert id="user_insert" parameterType="net.hasor.website.domain.UserDO">
         insert into USER_INFO(
             account,
             email,
@@ -67,13 +67,13 @@
             #{email},
             #{mobilePhone},
             #{password},
-            #{type, typeHandler=net.demo.hasor.domain.convert.UserTypeConvert},
+            #{type, typeHandler=net.hasor.website.domain.convert.UserTypeConvert},
             #{nick},
-            #{gender, typeHandler=net.demo.hasor.domain.convert.GenderTypeConvert},
+            #{gender, typeHandler=net.hasor.website.domain.convert.GenderTypeConvert},
             #{avatar},
-            #{contactInfo, typeHandler=net.demo.hasor.domain.convert.UserContactInfoConvert},
-            #{futures, typeHandler=net.demo.hasor.domain.convert.UserFuturesConvert},
-            #{status, typeHandler=net.demo.hasor.domain.convert.UserStatusConvert},
+            #{contactInfo, typeHandler=net.hasor.website.domain.convert.UserContactInfoConvert},
+            #{futures, typeHandler=net.hasor.website.domain.convert.UserFuturesConvert},
+            #{status, typeHandler=net.hasor.website.domain.convert.UserStatusConvert},
             0,
             now(),
             now()
@@ -87,12 +87,12 @@
     <update id="user_updateInfo">
         update USER_INFO set
             nick          = #{userInfo.nick},
-            gender        = #{userInfo.gender, typeHandler=net.demo.hasor.domain.convert.GenderTypeConvert},
+            gender        = #{userInfo.gender, typeHandler=net.hasor.website.domain.convert.GenderTypeConvert},
             avatar        = #{userInfo.avatar},
-            contact_info  = #{userInfo.contactInfo, typeHandler=net.demo.hasor.domain.convert.UserContactInfoConvert},
-            futures       = #{userInfo.futures, typeHandler=net.demo.hasor.domain.convert.UserFuturesConvert},
-            status        = #{userInfo.status, typeHandler=net.demo.hasor.domain.convert.UserStatusConvert},
-            type          = #{userInfo.type, typeHandler=net.demo.hasor.domain.convert.UserTypeConvert},
+            contact_info  = #{userInfo.contactInfo, typeHandler=net.hasor.website.domain.convert.UserContactInfoConvert},
+            futures       = #{userInfo.futures, typeHandler=net.hasor.website.domain.convert.UserFuturesConvert},
+            status        = #{userInfo.status, typeHandler=net.hasor.website.domain.convert.UserStatusConvert},
+            type          = #{userInfo.type, typeHandler=net.hasor.website.domain.convert.UserTypeConvert},
             modify_time   = now()
         where 
             id = #{userID} and status = 0

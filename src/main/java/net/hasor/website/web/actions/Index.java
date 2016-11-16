@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.net.demo.hasor;
-import net.hasor.website.core.DataSourceModule;
-import net.hasor.website.core.FreemarkerRender;
-import net.hasor.core.ApiBinder;
-import net.hasor.core.Module;
-import net.hasor.restful.RenderEngine;
+package net.hasor.website.web.actions;
+import net.hasor.website.core.Action;
+import net.hasor.restful.RenderData;
+import net.hasor.restful.api.MappingTo;
 /**
- * 单元测试
- * @version : 2015年12月25日
+ *
+ * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UnitTestModule implements Module {
-    @Override
-    public void loadModule(ApiBinder apiBinder) throws Throwable {
+@MappingTo("/index.htm")
+public class Index extends Action {
+    //
+    public void execute(RenderData data) {
         //
-        apiBinder.installModule(new DataSourceModule());
-        apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
-        //
-        // .Tencent
     }
 }

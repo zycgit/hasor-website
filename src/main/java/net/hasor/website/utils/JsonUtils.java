@@ -13,24 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.net.demo.hasor;
-import net.hasor.website.core.DataSourceModule;
-import net.hasor.website.core.FreemarkerRender;
-import net.hasor.core.ApiBinder;
-import net.hasor.core.Module;
-import net.hasor.restful.RenderEngine;
+package net.hasor.website.utils;
+import com.alibaba.fastjson.JSON;
+
+import java.util.Map;
 /**
- * 单元测试
- * @version : 2015年12月25日
+ * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UnitTestModule implements Module {
-    @Override
-    public void loadModule(ApiBinder apiBinder) throws Throwable {
-        //
-        apiBinder.installModule(new DataSourceModule());
-        apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
-        //
-        // .Tencent
+public class JsonUtils {
+    //
+    /** json结果输出在一行中 */
+    public static String toJsonStringSingleLine(Object obj) {
+        return JSON.toJSONString(obj);
+    }
+    //
+    /**  */
+    public static <T> T toObject(String jsonData, Class<T> targetClass) {
+        return JSON.parseObject(jsonData, targetClass);
+    }
+    /**  */
+    public static Map<String, Object> toMap(String jsonData) {
+        return JSON.parseObject(jsonData);
     }
 }

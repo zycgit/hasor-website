@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 package net.hasor.website.core;
-import net.hasor.website.core.mybatis.SqlExecutorOperations;
-import net.hasor.website.core.mybatis.SqlExecutorTemplate;
-import net.hasor.website.domain.AppConstant;
 import net.hasor.core.Inject;
-import net.hasor.db.jdbc.core.JdbcTemplate;
+import net.hasor.db.jdbc.JdbcOperations;
+import net.hasor.plugins.mybatis.SqlExecutorOperations;
+import net.hasor.website.domain.AppConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -28,15 +27,15 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractDao<T> {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     @Inject(AppConstant.DB_MYSQL)
-    private JdbcTemplate        jdbcTemplate;
+    private JdbcOperations        jdbcTemplate;
     @Inject()
-    private SqlExecutorTemplate executorTemplate;
+    private SqlExecutorOperations executorTemplate;
     //
     protected SqlExecutorOperations getSqlExecutor() {
         return this.executorTemplate;
     }
     //
-    protected JdbcTemplate getJdbcTemplate() {
+    protected JdbcOperations getJdbcTemplate() {
         return this.jdbcTemplate;
     }
 }

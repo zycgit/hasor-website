@@ -1,7 +1,7 @@
 Hasor首页项目
 
 == 打包部署
-    1. example 项目通过 mvn pacakge 产出 war 包。
+    1. website 项目通过 mvn pacakge 产出 war 包。
     2. 无论是线上、预发、日常、开发机。都使用该 war包,无需替换 war 包中配置文件。
     3. 不同的环境配置通过 env.config 属性文件传递给程序。
 

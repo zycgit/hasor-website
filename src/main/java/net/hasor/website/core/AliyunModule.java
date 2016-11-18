@@ -22,7 +22,7 @@ import net.hasor.core.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
- * 阿里云
+ * 阿里云 OSS
  * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)
  */

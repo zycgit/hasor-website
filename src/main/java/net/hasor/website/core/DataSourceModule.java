@@ -15,23 +15,18 @@
  */
 package net.hasor.website.core;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import net.hasor.website.core.mybatis.SqlExecutorTemplate;
-import net.hasor.website.core.mybatis.SqlExecutorTemplateProvider;
-import net.hasor.website.domain.AppConstant;
-import net.hasor.website.manager.EnvironmentConfig;
 import net.hasor.core.*;
 import net.hasor.db.DBModule;
 import net.hasor.db.jdbc.core.JdbcTemplate;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import net.hasor.plugins.mybatis.MyBatisModule;
+import net.hasor.website.domain.AppConstant;
+import net.hasor.website.manager.EnvironmentConfig;
 import org.more.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,12 +53,7 @@ public class DataSourceModule implements LifeModule {
         //
         DataSource mysqlDataSource = createDataSource(driverString, urlString, userString, pwdString);
         apiBinder.installModule(new DBModule(AppConstant.DB_MYSQL, mysqlDataSource));
-        //
-        // .绑定myBatis接口实现(数据源二)
-        Reader reader = Resources.getResourceAsReader("ibatis-sqlmap.xml");
-        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
-        apiBinder.bindType(SqlExecutorTemplate.class).toProvider(new SqlExecutorTemplateProvider(sessionFactory, mysqlDataSource));
-        //
+        apiBinder.installModule(new MyBatisModule(AppConstant.DB_MYSQL, "ibatis-sqlmap.xml"));//MyBatis使用数据源2
     }
     @Override
     public void onStart(AppContext appContext) throws Throwable {

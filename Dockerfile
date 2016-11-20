@@ -1,4 +1,4 @@
-FROM java:7
+FROM openjdk:7-jdk
 MAINTAINER ZhaoYongChun "zyc@hasor.net"
 
 # maven

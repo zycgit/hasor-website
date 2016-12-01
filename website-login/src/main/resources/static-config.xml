@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://project.hasor.net/hasor/schema/hasor-website-oauth">
+
+    <!-- OAuth 配置 -->
+    <website-oauth>
+        <config>
+            <!-- 主机名称 -->
+            <hostName>${APP_HOST}</hostName>
+            <!-- OAuth登录回调地址 -->
+            <redirectURI>${APP_PROTOCOL}:////${APP_HOST}/${APP_REDIRECT_URI}</redirectURI>
+        </config>
+
+        <!--
+            腾讯产品接入
+            http://connect.qq.com/intro/login
+        -->
+        <tencent enable="true">
+            <!-- QQ登录接入,域名所有权 -->
+            <admins>${TENCENT_ADMINS}</admins>
+            <!-- 应用ID -->
+            <app_id>${TENCENT_APP_ID}</app_id>
+            <!-- 应用Key -->
+            <app_key>${TENCENT_APP_KEY}</app_key>
+            <!-- 计划获取的权限 -->
+            <oauth_scope>get_user_info,get_info,add_t,add_pic_t,get_repost_list,get_other_info,get_fanslist,get_idollist,add_idol</oauth_scope>
+        </tencent>
+        <!--
+            GitHub 接入
+            https://developer.github.com/v3/oauth/
+        -->
+        <github enable="true">
+            <!-- 应用ID -->
+            <app_id>${GITHUB_APP_ID}</app_id>
+            <!-- 应用Key -->
+            <app_key>${GITHUB_APP_KEY}</app_key>
+            <!-- 计划获取的权限 -->
+            <oauth_scope>user,user:email,user:follow,public_repo,repo,repo:status,notifications,read:org,read:public_key,read:gpg_key</oauth_scope>
+        </github>
+        <!--
+            weibo 接入
+            http://open.weibo.com/apps
+            http://open.weibo.com/wiki/index.php/API%E6%96%87%E6%A1%A3
+            http://open.weibo.com/wiki/2/users/show
+        -->
+        <weibo enable="true">
+            <!-- 微博登录接入,域名所有权 -->
+            <admins>${WEIBO_ADMINS}</admins>
+            <!-- 应用ID -->
+            <app_id>${WEIBO_APP_ID}</app_id>
+            <!-- 应用Key -->
+            <app_key>${WEIBO_APP_KEY}</app_key>
+            <!-- 计划获取的权限 -->
+            <oauth_scope>email,friendships_groups_read,statuses_to_me_read,follow_app_official_microblog</oauth_scope>
+        </weibo>
+    </website-oauth>
+</config>

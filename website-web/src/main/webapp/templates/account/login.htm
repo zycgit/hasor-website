@@ -1,0 +1,59 @@
+${rootData.put('pageTitle','登录')}
+${rootData.put('navIndex',7)}
+<link rel="stylesheet" href="${ctx_path}/static/website/css/login.css">
+<div style="width:500px; margin:0 auto; ">
+    <h1>登录</h1>
+    <form id="login" class="form-horizontal" method="post" action="${ctx_path}/account/login.do" >
+        <input type="hidden" name="redirectURI" value="${req_redirectURI}"/>
+        <#if validData["login"]?? >
+            <#assign acc_hasError="has-error"/>
+        </#if>
+        <div class="form-group ${acc_hasError}">
+            <label for="inputLogin" class="col-sm-2 control-label">Login</label>
+            <div class="col-sm-10">
+                <input name="login" type="login" class="form-control" id="inputLogin" placeholder="Email、tel、account" value="${loginForm.login}">
+            </div>
+            <!-- 帐号的验证结果 -->
+            <#if validData["login"]?? >
+                <div class="text-danger" style="float:right;">${escapeHtml.escapeHtml(validData["login"]?join(","))}</div>
+            </#if>
+        </div>
+        <#if validData["password"]?? >
+            <#assign pwd_hasError="has-error"/>
+        </#if>
+        <div class="form-group ${pwd_hasError}">
+            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div>
+            <!-- 密码的验证结果 -->
+            <#if validData["password"]?? >
+                <div class="text-danger" style="float:right;">${escapeHtml.escapeHtml(validData["password"]?join(","))}</div>
+            </#if>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <a class="btn btn-default" onclick="$('#login').submit();">Sign in</a>
+            </div>
+            <div class="third-part">
+                <#assign oauth_status="info"/>
+                <a id="aa" class="tencent" href="${oauth.evalLoginURL('tencent',oauth_status,req_redirectURI)}" target="_blank"></a>
+                <!-- 
+                <a class="baidu" href="javascript:void(0);"></a>
+                <a class="wechat" href="javascript:void(0);"></a>
+                -->
+                <a id="bb" class="weibo" href="${oauth.evalLoginURL('weibo',oauth_status,req_redirectURI)}" target="_blank"></a>
+                <a id="cc" class="github" href="${oauth.evalLoginURL('github',oauth_status,req_redirectURI)}" target="_blank"></a>
+            </div>
+        </div>
+    </form>
+</div>

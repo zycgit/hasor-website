@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://project.hasor.net/hasor/schema/hasor-website-core">
+    <!-- 框架配置 -->
+    <appExample>
+        <!-- 当前最新版本 -->
+        <curentVersion>2.4.3</curentVersion>
+        <!-- 所属环境:daily、online -->
+        <envType>${APP_ENV_TYPE}</envType>
+        <!-- 主机名称 -->
+        <hostName>${APP_HOST}</hostName>
+    </appExample>
+
+    <!-- 数据库链接配置,真实配置通过 '${...}' 方式连接到 'env.config' 配置文件 -->
+    <jdbcSettings>
+        <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
+        <jdbcURL>jdbc:mysql://${JDBC_DB_HOST}:${JDBC_DB_PORT}/${JDBC_DB_NAME}?useUnicode=true&amp;characterEncoding=utf-8</jdbcURL>
+        <userName>${JDBC_USER_NAME}</userName>
+        <userPassword>${JDBC_USER_PWD}</userPassword>
+    </jdbcSettings>
+
+    <uploader>
+        <!-- 上传文件最大大小 500KB -->
+        <maxSize>512000</maxSize>
+    </uploader>
+
+    <!-- 阿里云 -->
+    <aliyun>
+        <accessKey>${ALIYUN_ACCESS_KEY}</accessKey>
+        <accessKeySecret>${ALIYUN_ACCESS_SECRET}</accessKeySecret>
+        <bucketPath>${ALIYUN_OSS_BUCKET_PATH}</bucketPath>
+        <bucketName>${ALIYUN_OSS_BUCKET_NAME}</bucketName>
+        <!-- 接入点(选择最近的接入点) -->
+        <endpoint>
+            <oss>${ALIYUN_OSS_ENDPOINT}</oss>
+        </endpoint>
+    </aliyun>
+
+</config>

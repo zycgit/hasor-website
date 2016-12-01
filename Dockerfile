@@ -23,7 +23,6 @@ RUN set -x && \
 	tar -xvf tomcat.tar.gz --strip-components=1 && \
 	rm bin/*.bat && \
 	rm tomcat.tar.gz*
-
 #
 # work
 ENV EXAMPLE_HOME /home/example

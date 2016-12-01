@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://project.hasor.net/hasor/schema/main">
+    <!-- 框架配置 -->
+    <hasor>
+        <!-- 包扫描路径 -->
+        <loadPackages>net.hasor.website.*</loadPackages>
+        <!-- 模块 -->
+        <modules>
+            <module>net.hasor.website.web.core.StartModule</module>
+        </modules>
+        <!-- 环境变量 -->
+        <environmentVar>
+            <!-- Daily -->
+            <!-- 下面环境变量为本机调试的配置,正式环境下由 dockfile 在系统环境中声明,并且覆盖程序中的配置 -->
+            <WORK_HOME>%HASOR_WEBROOT%/WEB-INF/classes/daily_home</WORK_HOME>
+
+
+            <APP_REDIRECT_URI>/account/callback.do</APP_REDIRECT_URI>
+            <APP_PROTOCOL>http</APP_PROTOCOL>
+            <APP_ENV_TYPE>daily</APP_ENV_TYPE>
+
+            <!-- 阿里云 OSS -->
+            <ALIYUN_OSS_ENDPOINT>http://oss-cn-hangzhou.aliyuncs.com</ALIYUN_OSS_ENDPOINT>
+            <ALIYUN_OSS_BUCKET_PATH>/uploader_daily/</ALIYUN_OSS_BUCKET_PATH>
+            <ALIYUN_OSS_BUCKET_NAME>www-hasor</ALIYUN_OSS_BUCKET_NAME>
+
+        </environmentVar>
+    </hasor>
+
+    <website-oauth>
+        <tencent enable="true"/>
+        <tencent enable="true"/>
+        <tencent enable="true"/>
+    </website-oauth>
+</config>

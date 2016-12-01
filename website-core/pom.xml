@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.hasor</groupId>
+        <artifactId>website-root</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <!-- Maven Info -->
+    <groupId>net.hasor.website</groupId>
+    <artifactId>website-core</artifactId>
+    <version>${website.version}</version>
+    <packaging>jar</packaging>
+
+    <!-- 引用依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>net.hasor.website</groupId>
+            <artifactId>website-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.hasor.website</groupId>
+            <artifactId>website-login</artifactId>
+        </dependency>
+
+        <!-- Hasor -->
+        <dependency>
+            <groupId>net.hasor</groupId>
+            <artifactId>hasor-core</artifactId>
+        </dependency>
+        <!-- RSF -->
+        <dependency>
+            <groupId>net.hasor</groupId>
+            <artifactId>hasor-rsf</artifactId>
+        </dependency>
+
+        <!-- aliyun OSS -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+
+        <!-- markdown : begin -->
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-yaml-front-matter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-tables</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-autolink</artifactId>
+        </dependency>
+        <!-- markdown : end -->
+
+        <!-- DB begin -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+        </dependency>
+        <!-- DB end -->
+    </dependencies>
+</project>

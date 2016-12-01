@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sp_user_space">
+    
+    <resultMap id="contentCategoryDOMap" type="net.hasor.website.domain.ContentCategoryDO">
+        <result property="id"           column="id"/>
+        <result property="userID"       column="user_id"/>
+        <result property="name"         column="name"/>
+        <result property="orderIndex"   column="order_index"/>
+
+        <result property="status"       column="status"  typeHandler="net.hasor.website.datadao.convert.DataStatusConvert"/>
+        <result property="futures"      column="futures" typeHandler="net.hasor.website.datadao.convert.ContentCategoryFuturesConvert"/>
+        
+        <result property="createTime"   column="create_time"/>
+        <result property="modifyTime"   column="modify_time"/>
+    </resultMap>
+
+    <sql id="contentCategoryDO_allColumns">
+        id,
+        user_id,
+        name,
+        order_index,
+        status,
+        futures,
+        create_time,
+        modify_time
+	</sql>
+    
+    <!-- 新增分类 -->
+    <insert id="contentCategory_insert" parameterType="net.hasor.website.domain.ContentCategoryDO">
+        insert into CONTENT_CATEGORY(
+            user_id,
+            name,
+            order_index,
+            status,
+            futures,
+            create_time,
+            modify_time
+        ) values(
+            #{userID},
+            #{name},
+            #{orderIndex},
+            #{status,  typeHandler=net.hasor.website.datadao.convert.DataStatusConvert},
+            #{futures, typeHandler=net.hasor.website.datadao.convert.ContentCategoryFuturesConvert},
+            now(),
+            now()
+        );
+        <selectKey keyProperty="id" resultType="long">
+            select LAST_INSERT_ID() as value
+        </selectKey>
+    </insert>
+
+    <!-- 删除文章分类 -->
+    <update id="contentCategory_delete">
+        update CONTENT_CATEGORY set
+            status         = -1,
+            modify_time    = now()
+        where
+            id      = #{categoryID} and
+            user_id = #{userID} and
+            status  = 0
+        limit 1
+    </update>
+    
+    <!-- 更新文章分类信息 -->
+    <update id="contentCategory_update">
+        update CONTENT_CATEGORY set
+            name        = #{category.name},
+            order_index = #{category.orderIndex},
+            status      = #{category.status, typeHandler=net.hasor.website.datadao.convert.DataStatusConvert},
+            futures     = #{category.futures, typeHandler=net.hasor.website.datadao.convert.ContentCategoryFuturesConvert},
+            modify_time = now()
+        where
+            id      = #{category.categoryID} and
+            user_id = #{category.userID} and
+            status  = 0
+        limit 1
+    </update>
+
+    <!-- 根据ID查询(无论是否有效) -->
+    <select id="contentCategory_queryById" resultMap="contentCategoryDOMap">
+        select
+            <include refid="contentCategoryDO_allColumns"/>
+        from
+            CONTENT_CATEGORY
+        where
+            id = #{categoryID}
+        limit 1
+    </select>
+
+    <!-- 根据用户ID查询,用户文章分类列表(列出有效的) -->
+    <select id="contentCategory_queryByUser" resultMap="contentCategoryDOMap">
+        select
+            <include refid="contentCategoryDO_allColumns"/>
+        from
+            CONTENT_CATEGORY
+        where
+            user_id = #{userID} and
+            status  = 0
+        order by
+          order_index asc
+    </select>
+</mapper>

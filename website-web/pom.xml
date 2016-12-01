@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.hasor</groupId>
+        <artifactId>website-root</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <!-- Maven Info -->
+    <groupId>net.hasor.website</groupId>
+    <artifactId>website-web</artifactId>
+    <version>${website.version}</version>
+    <packaging>war</packaging>
+
+    <!-- 引用依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>net.hasor.website</groupId>
+            <artifactId>website-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.hasor.website</groupId>
+            <artifactId>website-login</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.hasor.website</groupId>
+            <artifactId>website-core</artifactId>
+        </dependency>
+
+        <!-- freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!-- servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- logger -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+    </dependencies>
+</project>

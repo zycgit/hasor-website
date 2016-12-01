@@ -42,6 +42,20 @@ public class UserDAO extends AbstractDao {
         }
     }
     //
+    /** 根据用户登陆信息查询用户 */
+    public UserDO queryByLogin(String login) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("login", login);
+            UserDO result = this.getSqlExecutor().selectOne("user_queryByLogin", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
+                    .addString("user_dao : queryByLogin error -> " + e.getMessage()).toJson());
+            throw e;
+        }
+    }
+    //
     /** 新增用户 */
     public int insertUser(UserDO userDO) throws SQLException {
         try {

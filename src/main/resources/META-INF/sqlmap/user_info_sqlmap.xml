@@ -122,4 +122,19 @@
         limit 1
     </select>
 
+    <!-- 根据登陆信息查询用户 -->
+    <select id="user_queryByLogin" resultMap="userDOMap">
+        select
+            <include refid="userDO_allColumns"/>
+        from
+            USER_INFO
+        where 1=1
+            and status     = 0
+            and type       = 1
+            and ( account  = #{login} or
+              email        = #{login} or
+              mobile_phone = #{login}
+            )              = true
+        limit 1
+    </select>
 </mapper>

@@ -28,7 +28,7 @@ public abstract class AbstractDao<T> {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     @Inject(AppConstant.DB_MYSQL)
     private JdbcOperations        jdbcTemplate;
-    @Inject()
+    @Inject(AppConstant.DB_MYSQL)
     private SqlExecutorOperations executorTemplate;
     //
     protected SqlExecutorOperations getSqlExecutor() {

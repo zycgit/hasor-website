@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.account;
-import net.hasor.website.core.Action;
-import net.hasor.website.web.forms.LoginForm;
+import net.hasor.core.Inject;
 import net.hasor.restful.RenderData;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.Params;
 import net.hasor.restful.api.PathParam;
 import net.hasor.restful.api.Valid;
+import net.hasor.website.core.Action;
+import net.hasor.website.domain.AppConstant;
+import net.hasor.website.domain.UserDO;
+import net.hasor.website.manager.UserManager;
+import net.hasor.website.web.forms.LoginForm;
 import org.more.util.StringUtils;
 
 import java.io.IOException;
@@ -31,25 +35,35 @@ import java.io.IOException;
  */
 @MappingTo("/account/login.{action}")
 public class Login extends Action {
+    @Inject
+    private UserManager userManager;
     //
     public void execute(@PathParam("action") String action, @Valid("SignIn") @Params LoginForm loginForm, RenderData data) throws IOException {
+        String ctx_path = data.getHttpRequest().getContextPath();
+        //
+        // - 登录请求
         if (StringUtils.equalsIgnoreCase("do", action)) {
-            //
-            // - 登录请求
             this.putData("loginForm", loginForm);
-            if (!data.isValid()) {
-                renderTo("htm", "/account/login.htm");//验证失败
-            } else {
-                renderTo("htm", "/account/login.htm");//验证通过
+            if (data.isValid()) {
+                UserDO userDO = this.userManager.queryByLogin(loginForm.getLogin());
+                if (userDO != null && StringUtils.equals(userDO.getPassword(), loginForm.getPassword())) {
+                    this.setSessionAttr(AppConstant.SESSION_KEY_USER_ID, userDO.getUserID());
+                    this.setSessionAttr(AppConstant.SESSION_KEY_USER_NICK, userDO.getNick());
+                    this.userManager.loginUpdate(userDO, null);
+                    data.getHttpResponse().sendRedirect(ctx_path + "/account/my.htm");
+                    return;
+                }
             }
-        } else {
             //
-            // - 登录页面
-            data.clearValidErrors();//清空验证信息,避免瞎显示
-            if (this.isLogin()) {
-                String ctx_path = data.getHttpRequest().getContextPath();
-                data.getHttpResponse().sendRedirect(ctx_path + "/account/my.htm");
-            }
+            // - 验证失败
+            renderTo("htm", "/account/login.htm");
+            return;
+        }
+        //
+        // - 登录页面
+        data.clearValidErrors();//清空验证信息,避免瞎显示
+        if (this.isLogin()) {
+            data.getHttpResponse().sendRedirect(ctx_path + "/account/my.htm");
         }
     }
 }

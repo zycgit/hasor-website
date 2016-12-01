@@ -13,14 +13,15 @@
  * limitations under the License.
  */
 package net.hasor.website.manager;
+import net.hasor.core.Inject;
+import net.hasor.core.Singleton;
+import net.hasor.db.Transactional;
 import net.hasor.website.datadao.UserDAO;
 import net.hasor.website.datadao.UserSourceDAO;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.UserSourceDO;
-import net.hasor.core.Inject;
-import net.hasor.core.Singleton;
-import net.hasor.db.Transactional;
 import org.more.bizcommon.log.LogUtils;
+import org.more.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +60,19 @@ public class UserManager {
         } catch (Exception e) {
             logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
                     .addString("UserManager : getUserByID error -> " + e.getMessage()).toJson());
+            return null;
+        }
+    }
+    //
+    public UserDO queryByLogin(String login) {
+        if (StringUtils.isBlank(login)) {
+            return null;
+        }
+        try {
+            return this.userDAO.queryByLogin(login);
+        } catch (Exception e) {
+            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
+                    .addString("UserManager : queryByLogin error -> " + e.getMessage()).toJson());
             return null;
         }
     }
@@ -107,7 +121,9 @@ public class UserManager {
     public void loginUpdate(UserDO userDO, String provider) {
         try {
             this.userDAO.loginUpdate(userDO.getUserID());
-            this.userSourceDAO.loginUpdateByUserID(provider, userDO.getUserID());
+            if (StringUtils.isNotBlank(provider)) {
+                this.userSourceDAO.loginUpdateByUserID(provider, userDO.getUserID());
+            }
         } catch (Exception e) {
             logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
                     .addString("loginUpdate : " + e.getMessage()).toJson());

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 package net.hasor.website.web.valids;
-import net.hasor.website.web.forms.LoginForm;
 import net.hasor.restful.ValidErrors;
 import net.hasor.restful.Validation;
+import net.hasor.website.web.forms.LoginForm;
 import org.more.util.StringUtils;
 /**
  *
@@ -26,15 +26,13 @@ import org.more.util.StringUtils;
 public class LoginFormValidation implements Validation<LoginForm> {
     @Override
     public void doValidation(String validType, LoginForm dataForm, ValidErrors errors) {
-        if (StringUtils.equalsIgnoreCase("SignIn", validType)) {
-            if (!StringUtils.equalsIgnoreCase("admin", dataForm.getAccount())) {
-                errors.addError("account", "帐号不是account。");
-            }
-            //
-            //
-        } else if (StringUtils.equalsIgnoreCase("SignUp", validType)) {
-            errors.addError("message", "暂不支持注册功能。");
-            //
+        if (StringUtils.isBlank(dataForm.getLogin())) {
+            errors.addError("login", "帐号不能为空！");
+            return;
+        }
+        if (StringUtils.isBlank(dataForm.getPassword())) {
+            errors.addError("login", "密码不能为空！");
+            return;
         }
     }
 }

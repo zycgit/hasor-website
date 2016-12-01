@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 package net.hasor.website.web.forms;
-import net.hasor.website.web.valids.LoginFormValidation;
 import net.hasor.restful.api.ReqParam;
 import net.hasor.restful.api.ValidBy;
+import net.hasor.website.web.valids.LoginFormValidation;
 /**
  * 登录表单,指定 LoginFormValidation 类为它的验证器。
  * @version : 2016年1月10日
@@ -24,27 +24,19 @@ import net.hasor.restful.api.ValidBy;
  */
 @ValidBy(LoginFormValidation.class)
 public class LoginForm {
-    @ReqParam("email")
-    private String email;
-    @ReqParam("account")
-    private String account;
+    @ReqParam("login")
+    private String login;
     @ReqParam("password")
     private String password;
     @ReqParam("redirectURI")
     private String redirectURI;
     //
     //
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getAccount() {
-        return account;
-    }
-    public void setAccount(String account) {
-        this.account = account;
+    public void setLogin(String login) {
+        this.login = login;
     }
     public String getPassword() {
         return password;

@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 package net.hasor.website.manager;
-import net.hasor.website.core.Service;
-import net.hasor.website.core.AppConstant;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
 import net.hasor.db.jdbc.core.JdbcTemplate;
+import net.hasor.website.core.AppConstant;
+import net.hasor.website.core.Service;
+import net.hasor.website.domain.VersionInfoDO;
 import org.more.bizcommon.log.LogUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -44,9 +46,11 @@ public class VersionInfoManager {
             infoDO = jdbcTemplate.queryForObject(query, VersionInfoDO.class, version);
             return infoDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("version : queryByVersion error -> " + e.getMessage()).toJson());
-            throw e;
+            logger.error(LogUtils.create("ERROR_001_0001")//
+                    .addLog("version", version) //
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return null;
         }
     }
     /**查询所有版本(根据版本号排序)*/
@@ -57,9 +61,10 @@ public class VersionInfoManager {
             infoListDO = jdbcTemplate.queryForList(query, VersionInfoDO.class);
             return infoListDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("version : queryByVersion error -> " + e.getMessage()).toJson());
-            throw e;
+            logger.error(LogUtils.create("ERROR_001_0001")//
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return new ArrayList<VersionInfoDO>(0);
         }
     }
 }

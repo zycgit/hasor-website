@@ -47,7 +47,7 @@
     
     <!-- 新增用户 -->
     <insert id="user_insert" parameterType="net.hasor.website.domain.UserDO">
-        insert into USER_INFO(
+        insert into USER_INFO (
             account,
             email,
             mobile_phone,
@@ -62,7 +62,7 @@
             login_count,
             create_time,
             modify_time
-        ) values(
+        ) values (
             #{account},
             #{email},
             #{mobilePhone},
@@ -95,6 +95,28 @@
             type          = #{userInfo.type, typeHandler=net.hasor.website.datadao.convert.UserTypeConvert},
             modify_time   = now()
         where 
+            id = #{userID} and status = 0
+        limit 1
+    </update>
+
+    <!-- 登录 -->
+    <update id="user_loginUpdate">
+        update USER_INFO set
+            login_count       = login_count + 1,
+            first_login_time  = ifnull( first_login_time , now() ),
+            last_login_time   = now(),
+            modify_time       = now()
+        where
+            id = #{userID} and status = 0
+        limit 1
+    </update>
+
+    <!-- 将正常状态的用户状态设为失效 -->
+    <update id="user_invalidUser">
+        update USER_INFO set
+            status      = 1,
+            modify_time = now()
+        where
             id = #{userID} and status = 0
         limit 1
     </update>

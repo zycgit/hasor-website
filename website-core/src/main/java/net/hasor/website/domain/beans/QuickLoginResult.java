@@ -21,6 +21,7 @@ import net.hasor.website.domain.UserDO;
  */
 public class QuickLoginResult {
     private UserDO userDO;
+    private String provider;
     private String redirectURL;
     //
     public UserDO getUserDO() {
@@ -28,6 +29,12 @@ public class QuickLoginResult {
     }
     public void setUserDO(UserDO userDO) {
         this.userDO = userDO;
+    }
+    public String getProvider() {
+        return this.provider;
+    }
+    public void setProvider(String provider) {
+        this.provider = provider;
     }
     public String getRedirectURL() {
         return this.redirectURL;

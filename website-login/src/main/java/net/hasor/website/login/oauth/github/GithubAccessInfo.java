@@ -69,6 +69,10 @@ public class GithubAccessInfo extends AccessInfo {
     public String getExternalUserID() {
         return this.getId();
     }
+    @Override
+    public String getExternalUserNick() {
+        return this.getName();
+    }
     //
     public String getAccessToken() {
         return accessToken;

@@ -18,6 +18,7 @@ import com.qq.connect.utils.http.Response;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.InjectSettings;
 import net.hasor.core.Singleton;
+import net.hasor.website.domain.AccessInfo;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.UserSourceDO;
 import net.hasor.website.domain.enums.ErrorCodes;
@@ -26,7 +27,6 @@ import net.hasor.website.domain.enums.UserStatus;
 import net.hasor.website.domain.enums.UserType;
 import net.hasor.website.domain.futures.UserContactInfo;
 import net.hasor.website.domain.futures.UserFutures;
-import net.hasor.website.domain.AccessInfo;
 import net.hasor.website.login.oauth.AbstractOAuth;
 import net.hasor.website.utils.JsonUtils;
 import org.more.bizcommon.ResultDO;
@@ -88,19 +88,32 @@ public class GithubOAuth extends AbstractOAuth {
     /**首次登录的跳转地址(参数为回跳地址)*/
     public String evalLoginURL(String status, String redirectTo) {
         try {
-            String redirectURI = this.getRedirectURI() + "?" + GithubOAuth.URL_DATA + "&redirectURI=" + redirectTo;
+            String redirectURI = this.getRedirectURI() + "?" + URL_DATA + "&redirectURI=" + redirectTo;
             return "https://github.com/login/oauth/authorize?response_type=code" //
                     + "&client_id=" + this.appID //
                     + "&redirect_uri=" + URLEncoder.encode(redirectURI, "utf-8") //
                     + "&scope=" + this.scope;//
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0002").logException(e).toJson(), e);
+            logger.error(LogUtils.create("ERROR_004_0004")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_redirectTo", redirectTo)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_redirectTo", redirectTo)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             throw ExceptionUtils.toRuntimeException(e);
         }
     }
     //
     /**拿到远程Code之后通过code获取 AccessInfo 认证信息对象。*/
     public ResultDO<AccessInfo> evalToken(String status, String authCode) {
+        //
+        // .生成获取 token 的 url
         String tokenURL = null;
         try {
             tokenURL = "https://github.com/login/oauth/access_token?1=1" //
@@ -108,23 +121,44 @@ public class GithubOAuth extends AbstractOAuth {
                     + "&client_secret=" + this.appKey//
                     + "&code=" + authCode//
                     + "&state=" + (status == null ? "" : status) //
-                    + "&redirect_uri=" + URLEncoder.encode(this.getRedirectURI() + "?" + GithubOAuth.URL_DATA, "utf-8");
+                    + "&redirect_uri=" + URLEncoder.encode(this.getRedirectURI() + "?" + URL_DATA, "utf-8");
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0002").logException(e).toJson(), e);
+            logger.error(LogUtils.create("ERROR_004_0005")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             throw ExceptionUtils.toRuntimeException(e);
         }
         //
+        // .获取 token
         Map<String, String> dataMaps = new HashMap<String, String>();
         try {
             logger.error("github_access_token :authCode = {} , build token URL -> {}.", authCode, tokenURL);
             Response response = this.httpClient.httpGet(tokenURL);
             String data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                //结果为空
-                logger.error(LogUtils.create("ERROR_000_1105")//
-                        .addLog("authCode", authCode)//
-                        .addString("github_access_token : response is empty.").toJson());
-                return new ResultDO<AccessInfo>(false).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_TOKEN_RESULT_EMPTY.getMsg());
+                logger.error(LogUtils.create("ERROR_004_0006")//
+                        .addLog("oauth_provider", this.getProviderName())//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_redirectURI", this.getRedirectURI())//
+                        .addLog("oauth_urlData", URL_DATA)//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_scope", this.scope)//
+                        .addLog("param_status", status)//
+                        .addLog("param_authCode", authCode)//
+                        .addLog("tokenURL", tokenURL)//
+                        .toJson());//结果为空
+                return new ResultDO<AccessInfo>(false)//
+                        .setSuccess(false)//
+                        .setResult(null)//
+                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
             }
             //
             String[] dataItems = data.split("&");
@@ -136,14 +170,26 @@ public class GithubOAuth extends AbstractOAuth {
                 dataMaps.put(keyStr, varStr);
             }
         } catch (Exception e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
-                    .addLog("authCode", authCode)//
-                    .addString("github_access_token : remote error.").toJson(), e);
-            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_ERROR.getMsg("OAuth 远程认证失败。"));
+            logger.error(LogUtils.create("ERROR_004_0007")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("tokenURL", tokenURL)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            return new ResultDO<AccessInfo>(e)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .setThrowable(e)//
+                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
         }
         //
+        // .认证失败
         if (dataMaps.containsKey("error")) {
             //        0 = "error=bad_verification_code"
             //        1 = "error_description=The+code+passed+is+incorrect+or+expired."
@@ -153,39 +199,87 @@ public class GithubOAuth extends AbstractOAuth {
             String errorDesc = dataMaps.get("error_description").toString();
             String errorRUL = dataMaps.get("error_uri").toString();
             //
-            logger.error(LogUtils.create("ERROR_000_1106")//
-                    .addLog("authCode", authCode)//
+            logger.error(LogUtils.create("ERROR_004_0008")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("tokenURL", tokenURL)//
                     .addLog("errorCoe", errorCoe)//
                     .addLog("errorDesc", errorDesc)//
-                    .addString("tencent_access_token : response failed.").toJson());
-            return new ResultDO<AccessInfo>(false).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_TOKEN_ERROR.getMsg(errorCoe, errorDesc));
+                    .addLog("errorRUL", errorRUL)//
+                    .toJson());
+            return new ResultDO<AccessInfo>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .addMessage(ErrorCodes.OA_TOKEN_EXT_FAILED.getMsg());
         }
         //
+        // .获取用户信息
+        String data = "{}";
+        String access_token = null;
         try {
-            String access_token = (String) dataMaps.get("access_token");
+            access_token = (String) dataMaps.get("access_token");
             Response response = this.httpClient.httpGet("https://api.github.com/user?access_token=" + access_token);
-            String data = response.getResponseAsString();
-            GithubAccessInfo accessInfo = JsonUtils.toObject(data, GithubAccessInfo.class);
-            accessInfo.setAccessToken(access_token);
-            //
-            logger.error("tencent_access_token : success -> token : {} , sourceID : {} , nick : {}.", //
-                    accessInfo.getAccessToken(), accessInfo.getSource(), accessInfo.getName());
-            return new ResultDO<AccessInfo>(true).setResult(accessInfo);
+            data = response.getResponseAsString();
+            if (StringUtils.isBlank(data)) {
+                logger.error(LogUtils.create("ERROR_004_0006")//
+                        .addLog("oauth_provider", this.getProviderName())//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_redirectURI", this.getRedirectURI())//
+                        .addLog("oauth_urlData", URL_DATA)//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_scope", this.scope)//
+                        .addLog("param_status", status)//
+                        .addLog("param_authCode", authCode)//
+                        .addLog("access_token", access_token)//
+                        .addLog("tokenURL", tokenURL)//
+                        .toJson());//结果为空
+                return new ResultDO<AccessInfo>(false)//
+                        .setSuccess(false)//
+                        .setResult(null)//
+                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
+            }
         } catch (Exception e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
-                    .addLog("authCode", authCode)//
-                    .addString("tencent_access_token : get data failed.").toJson(), e);
-            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_ERROR.getMsg("OAuth 获取数据失败。"));
+            logger.error(LogUtils.create("ERROR_004_0009")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("access_token", access_token)//
+                    .addLog("tokenURL", tokenURL)//
+                    .toJson());
+            return new ResultDO<AccessInfo>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .setThrowable(e)//
+                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
         }
         //
+        // .数据解析
+        GithubAccessInfo accessInfo = JsonUtils.toObject(data, GithubAccessInfo.class);
+        accessInfo.setAccessToken(access_token);
+        logger.info("access_token : success -> token : {} , sourceID : {}.", accessInfo.getAccessToken(), accessInfo.getSource());
+        return new ResultDO<AccessInfo>(true)//
+                .setSuccess(true)//
+                .setResult(accessInfo);
     }
     @Override
     public UserDO convertTo(AccessInfo result) {
         GithubAccessInfo accessInfo = (GithubAccessInfo) result;
         UserDO userDO = new UserDO();
+        userDO.setAccount("");
         userDO.setPassword("-");
+        userDO.setEmail("");
+        userDO.setMobilePhone("");
         userDO.setNick(accessInfo.getName());
         userDO.setAvatar(accessInfo.getAvatar_url());
         if (StringUtils.isBlank(userDO.getNick())) {
@@ -203,7 +297,6 @@ public class GithubOAuth extends AbstractOAuth {
         userDO.setGender(GenderType.None);
         userDO.setStatus(UserStatus.Normal);
         userDO.setType(UserType.Temporary);
-        userDO.setEmail(accessInfo.getEmail());
         //
         userDO.setFutures(new UserFutures());
         userDO.getFutures().setName(accessInfo.getName());

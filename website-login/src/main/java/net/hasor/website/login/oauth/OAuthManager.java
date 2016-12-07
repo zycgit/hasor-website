@@ -70,54 +70,85 @@ public class OAuthManager {
     //
     protected AbstractOAuth getOAuthByProvider(String provider) {
         if (StringUtils.isBlank(provider)) {
+            logger.error(LogUtils.create("ERROR_004_0002")//
+                    .toJson());
             return null;
         }
         return this.oauthMap.get(provider.toUpperCase());
     }
     //
-    //
     /** 取得Oauth 的请求URL，用户通过请求URL到外站进行登陆 */
     public String evalLoginURL(String provider, String status, String redirectTo) {
         AbstractOAuth oauth = this.getOAuthByProvider(provider);
-        if (oauth == null)
+        if (oauth == null) {
+            logger.error(LogUtils.create("ERROR_004_0001")//
+                    .addLog("provider", provider)//
+                    .toJson());
             return null;
+        }
         return oauth.evalLoginURL(status, redirectTo);
     }
+    //
     /** 根据Auth取得的授权吗，通过远程调用取得用户信息 */
     public Result<UserDO> evalUserInfo(String provider, String authCode, String status) {
         AbstractOAuth oauth = this.getOAuthByProvider(provider);
         if (oauth == null) {
-            logger.error(LogUtils.create("ERROR_999_0001")//
-                    .addString("oauth_" + provider + " : provider is not support.").toJson());
-            return new ResultDO<UserDO>(false).addMessage(ErrorCodes.RESULT_NULL.getMsg());
+            logger.error(LogUtils.create("ERROR_004_0001")//
+                    .addLog("provider", provider)//
+                    .toJson());
+            return new ResultDO<UserDO>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .addMessage(ErrorCodes.OA_PROIVTER_NOT_EXIST.getMsg());
         }
         //
         ResultDO<AccessInfo> info = oauth.evalToken(status, authCode);
         if (info == null) {
-            logger.error(LogUtils.create("ERROR_999_0001")//
-                    .addString("oauth_" + provider + " : evalToken result is null.").toJson());
-            return new ResultDO<UserDO>(false).addMessage(ErrorCodes.RESULT_NULL.getMsg());
+            logger.error(LogUtils.create("ERROR_004_0003")//
+                    .addLog("provider", provider)//
+                    .addLog("authCode", authCode)//
+                    .addLog("status", status)//
+                    .addLog("error", "result is null.")//
+                    .toJson());
+            return new ResultDO<UserDO>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .addMessage(ErrorCodes.OA_ERROR.getMsg());
         }
         //
         if (!info.isSuccess()) {
             Message errorMsg = info.firstMessage();
-            logger.error(LogUtils.create("ERROR_000_1004")//
-                    .addString("oauth_" + provider + " : evalToken failed.")//
+            logger.error(LogUtils.create("ERROR_004_0003")//
+                    .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
-                    .addLog("provider", provider).toJson());
-            return new ResultDO<UserDO>(false).addMessage(errorMsg);
+                    .addLog("status", status)//
+                    .addMessage(errorMsg)//
+                    .toJson());
+            return new ResultDO<UserDO>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .addMessage(errorMsg);
         }
         //
         if (info.getResult() == null) {
-            logger.error(LogUtils.create("ERROR_999_0001")//
-                    .addString("oauth_" + provider + " : login success , but result is null.").toJson());
-            return new ResultDO<UserDO>(false).addMessage(ErrorCodes.RESULT_NULL.getMsg());
+            logger.error(LogUtils.create("ERROR_004_0003")//
+                    .addLog("provider", provider)//
+                    .addLog("authCode", authCode)//
+                    .addLog("status", status)//
+                    .addLog("error", "login success , but result is null.")//
+                    .toJson());
+            return new ResultDO<UserDO>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .addMessage(ErrorCodes.OA_ERROR.getMsg());
         }
         //
         AccessInfo accessInfo = info.getResult();
-        logger.error("oauth_" + provider + " : login success , accessInfo = {}.", JsonUtils.toJsonStringSingleLine(accessInfo));
+        logger.info("oauth_" + provider + " : login success , accessInfo = {}.", JsonUtils.toJsonStringSingleLine(accessInfo));
         //
         UserDO userDO = oauth.convertTo(accessInfo);
-        return new ResultDO<UserDO>(true).setResult(userDO);
+        return new ResultDO<UserDO>(true)//
+                .setSuccess(true)//
+                .setResult(userDO);
     }
 }

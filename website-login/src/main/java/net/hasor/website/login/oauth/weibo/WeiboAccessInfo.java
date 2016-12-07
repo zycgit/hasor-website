@@ -21,7 +21,7 @@ import net.hasor.website.domain.AccessInfo;
  * @author 赵永春(zyc@hasor.net)
  */
 public class WeiboAccessInfo extends AccessInfo {
-    private String accessToken = null;
+    private String  accessToken        = null;
     private String  remind_in          = null;
     private long    expires_in         = 0;
     private String  accessUserID       = null;
@@ -68,6 +68,10 @@ public class WeiboAccessInfo extends AccessInfo {
     @Override
     public String getExternalUserID() {
         return this.getIdstr();
+    }
+    @Override
+    public String getExternalUserNick() {
+        return this.getName();
     }
     //
     public String getAccessToken() {

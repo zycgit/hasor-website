@@ -63,10 +63,8 @@ public class EnvironmentConfig {
     /**获取静态文件host地址*/
     public String getStaticFilesHost() {
         if (this.isDaily()) {
-            //
             return "//files.hasor.net";
         } else {
-            //
             return "//files.hasor.net";
         }
     }

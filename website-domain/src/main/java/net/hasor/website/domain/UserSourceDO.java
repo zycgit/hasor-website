@@ -26,6 +26,7 @@ public class UserSourceDO {
     private String     uniqueID       = null; // 外部唯一码
     //
     private long       userID         = 0;    // 关联的UserID
+    private long       oriUserID      = 0;    // 关联的UserID
     private AccessInfo accessInfo     = null; // 外部登陆详细信息
     private boolean    status         = true; // 是否有效
     private long       loginCount     = 0;    // 登录次数
@@ -57,6 +58,12 @@ public class UserSourceDO {
     }
     public void setUserID(long userID) {
         this.userID = userID;
+    }
+    public long getOriUserID() {
+        return oriUserID;
+    }
+    public void setOriUserID(long oriUserID) {
+        this.oriUserID = oriUserID;
     }
     public AccessInfo getAccessInfo() {
         return accessInfo;

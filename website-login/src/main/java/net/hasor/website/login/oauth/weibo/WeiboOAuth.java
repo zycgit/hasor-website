@@ -91,14 +91,25 @@ public class WeiboOAuth extends AbstractOAuth {
     @Override
     public String evalLoginURL(String status, String redirectTo) {
         try {
-            String redirectURI = this.getRedirectURI() + "?" + WeiboOAuth.URL_DATA + "&redirectURI=" + redirectTo;
+            String redirectURI = this.getRedirectURI() + "?" + URL_DATA + "&redirectURI=" + redirectTo;
             return "https://api.weibo.com/oauth2/authorize?response_type=code" //
                     + "&display=default" //
                     + "&client_id=" + this.appID //
                     + "&redirect_uri=" + URLEncoder.encode(redirectURI, "utf-8") //
                     + "&scope=" + this.scope;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0002").logException(e).toJson(), e);
+            logger.error(LogUtils.create("ERROR_004_0004")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_redirectTo", redirectTo)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_redirectTo", redirectTo)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             throw ExceptionUtils.toRuntimeException(e);
         }
     }
@@ -106,96 +117,168 @@ public class WeiboOAuth extends AbstractOAuth {
     /**拿到远程Code之后通过code获取 AccessInfo 认证信息对象。*/
     @Override
     public ResultDO<AccessInfo> evalToken(String status, String authCode) {
+        //
+        // .生成获取 token 的 url
         String tokenURL = null;
         try {
             tokenURL = "https://api.weibo.com/oauth2/access_token?grant_type=authorization_code" //
                     + "&client_id=" + this.appID //
                     + "&client_secret=" + this.appKey//
                     + "&code=" + authCode//
-                    + "&redirect_uri=" + URLEncoder.encode(this.getRedirectURI() + "?" + WeiboOAuth.URL_DATA, "utf-8");
+                    + "&redirect_uri=" + URLEncoder.encode(this.getRedirectURI() + "?" + URL_DATA, "utf-8");
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0002").logException(e).toJson(), e);
+            logger.error(LogUtils.create("ERROR_004_0005")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             throw ExceptionUtils.toRuntimeException(e);
         }
         //
+        // .获取 token
         Map<String, Object> dataMaps = null;
         try {
             logger.error("weibo_access_token :authCode = {} , build token URL -> {}.", authCode, tokenURL);
             Response response = this.httpClient.httpPost(tokenURL);
             String data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                //结果为空
-                logger.error(LogUtils.create("ERROR_000_1105")//
-                        .addLog("authCode", authCode)//
-                        .addString("weibo_access_token : response is empty.").toJson());
-                return new ResultDO<AccessInfo>(false).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_TOKEN_RESULT_EMPTY.getMsg());
+                logger.error(LogUtils.create("ERROR_004_0006")//
+                        .addLog("oauth_provider", this.getProviderName())//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_redirectURI", this.getRedirectURI())//
+                        .addLog("oauth_urlData", URL_DATA)//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_scope", this.scope)//
+                        .addLog("param_status", status)//
+                        .addLog("param_authCode", authCode)//
+                        .addLog("tokenURL", tokenURL)//
+                        .toJson());//结果为空
+                return new ResultDO<AccessInfo>(false)//
+                        .setSuccess(false)//
+                        .setResult(null)//
+                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
             }
-            //
             dataMaps = JsonUtils.toMap(response.getResponseAsString());
         } catch (Exception e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
-                    .addLog("authCode", authCode)//
-                    .addString("tencent_access_token : remote error.").toJson(), e);
-            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_ERROR.getMsg("OAuth 远程认证失败。"));
+            logger.error(LogUtils.create("ERROR_004_0007")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("tokenURL", tokenURL)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            return new ResultDO<AccessInfo>(e)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .setThrowable(e)//
+                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
         }
         //
+        // .认证失败
         if (dataMaps == null || dataMaps.containsKey("error")) {
-            //返回结果失败
             String errorKey = dataMaps.get("error").toString();
             String errorCode = dataMaps.get("error_code").toString();
             String errorDesc = dataMaps.get("error_description").toString();
             //
-            logger.error(LogUtils.create("ERROR_000_1106")//
-                    .addLog("authCode", authCode)//
+            logger.error(LogUtils.create("ERROR_004_0008")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("tokenURL", tokenURL)//
                     .addLog("errorKey", errorKey)//
-                    .addLog("errorCoe", errorCode)//
+                    .addLog("errorCode", errorCode)//
                     .addLog("errorDesc", errorDesc)//
-                    .addString("tencent_access_token : response failed.").toJson());
-            return new ResultDO<AccessInfo>(false).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_TOKEN_ERROR.getMsg(errorKey, errorDesc));
+                    .toJson());
+            return new ResultDO<AccessInfo>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .addMessage(ErrorCodes.OA_TOKEN_EXT_FAILED.getMsg());
         }
         //
+        // .获取用户信息
+        String data = "{}";
+        String userID = dataMaps.get("uid").toString();
         try {
-            String accessToken = dataMaps.get("access_token").toString();
-            String userID = dataMaps.get("uid").toString();
+            String access_token = dataMaps.get("access_token").toString();
             Response response = this.httpClient.httpGet("https://api.weibo.com/2/users/show.json"//
-                    + "?access_token=" + accessToken //
+                    + "?access_token=" + access_token //
                     + "&uid=" + userID);//
-            String data = response.getResponseAsString();
+            data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                //结果为空
-                logger.error(LogUtils.create("ERROR_000_1105")//
-                        .addLog("authCode", authCode)//
-                        .addString("weibo_access_token : response is empty.").toJson());
-                return new ResultDO<AccessInfo>(false).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_TOKEN_RESULT_EMPTY.getMsg());
+                logger.error(LogUtils.create("ERROR_004_0006")//
+                        .addLog("oauth_provider", this.getProviderName())//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_redirectURI", this.getRedirectURI())//
+                        .addLog("oauth_urlData", URL_DATA)//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_scope", this.scope)//
+                        .addLog("param_status", status)//
+                        .addLog("param_authCode", authCode)//
+                        .addLog("userID", userID)//
+                        .addLog("access_token", access_token)//
+                        .addLog("tokenURL", tokenURL)//
+                        .toJson());//结果为空
+                return new ResultDO<AccessInfo>(false)//
+                        .setSuccess(false)//
+                        .setResult(null)//
+                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
             }
-            //
-            //
-            WeiboAccessInfo info = JsonUtils.toObject(response.getResponseAsString(), WeiboAccessInfo.class);
-            info.setAccessToken(dataMaps.get("access_token").toString());
-            info.setExpires_in(Long.parseLong(dataMaps.get("expires_in").toString()));
-            info.setRemind_in(dataMaps.get("remind_in").toString());
-            info.setAccessUserID(dataMaps.get("uid").toString());
-            //
-            logger.error("tencent_access_token : success -> token : {} , sourceID : {} , nick : {}.", //
-                    info.getAccessToken(), info.getSource(), ""/*info.getNickName()*/);
-            return new ResultDO<AccessInfo>(true).setResult(info);
         } catch (Exception e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
-                    .addLog("authCode", authCode)//
-                    .addString("tencent_access_token : get data failed.").toJson(), e);
-            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_ERROR.getMsg("OAuth 获取数据失败。"));
+            logger.error(LogUtils.create("ERROR_004_0009")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("userID", userID)//
+                    .addLog("tokenURL", tokenURL)//
+                    .toJson());
+            return new ResultDO<AccessInfo>(false)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .setThrowable(e)//
+                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
         }
         //
+        // .数据解析
+        WeiboAccessInfo accessInfo = JsonUtils.toObject(data, WeiboAccessInfo.class);
+        accessInfo.setAccessToken(dataMaps.get("access_token").toString());
+        accessInfo.setExpires_in(Long.parseLong(dataMaps.get("expires_in").toString()));
+        accessInfo.setRemind_in(dataMaps.get("remind_in").toString());
+        accessInfo.setAccessUserID(dataMaps.get("uid").toString());
+        //
+        logger.info("access_token : success -> token : {} , sourceID : {}.", accessInfo.getAccessToken(), accessInfo.getSource());
+        return new ResultDO<AccessInfo>(true)//
+                .setSuccess(true)//
+                .setResult(accessInfo);
     }
     @Override
     public UserDO convertTo(AccessInfo result) {
         WeiboAccessInfo accessInfo = (WeiboAccessInfo) result;
         UserDO userDO = new UserDO();
+        userDO.setAccount("");
         userDO.setPassword("-");
+        userDO.setEmail("");
+        userDO.setMobilePhone("");
         userDO.setNick(accessInfo.getScreen_name());
         userDO.setAvatar(accessInfo.getAvatar_large());
         if (StringUtils.isBlank(userDO.getNick())) {
@@ -213,7 +296,6 @@ public class WeiboOAuth extends AbstractOAuth {
         }
         userDO.setStatus(UserStatus.Normal);
         userDO.setType(UserType.Temporary);
-        userDO.setEmail("");
         //
         userDO.setFutures(new UserFutures());
         userDO.getFutures().setName(accessInfo.getName());

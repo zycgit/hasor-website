@@ -29,34 +29,21 @@ import java.util.Map;
  */
 public class UserSourceDAO extends AbstractDao {
     //
-    /** 新增登录类型 */
+    /** 新增外部登录 */
     public int insertUserSource(UserSourceDO sourceDO) throws SQLException {
         try {
             int result = this.getSqlExecutor().insert("userSource_insert", sourceDO);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("user_source_dao : insertUserSource error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+                    .addLog("method", "insertUserSource")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }
     //
-    /** 根据提供商和外部唯一ID,查询登录信息 */
-    public UserSourceDO queryByUnique(String provider, String uniqueID) throws SQLException {
-        try {
-            Map<String, Object> parameter = new HashMap<String, Object>();
-            parameter.put("provider", provider);
-            parameter.put("uniqueID", uniqueID);
-            UserSourceDO result = this.getSqlExecutor().selectOne("userSource_queryByUnique", parameter);
-            return result;
-        } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("user_source_dao : queryByUnique error -> " + e.getMessage()).toJson());
-            throw e;
-        }
-    }
-    //
-    /** 登录更新 */
+    /** 执行登录 */
     public int loginUpdateByUserID(String provider, long userID) throws SQLException {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
@@ -65,13 +52,15 @@ public class UserSourceDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("userSource_loginUpdateByUserID", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("user_source_dao : loginUpdateByUserID error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+                    .addLog("method", "loginUpdateByUserID")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }
     //
-    /** 更新基础信息 */
+    /** 更新外部登陆信息 */
     public int updateUserSource(String provider, long userID, UserSourceDO sourceDO) throws SQLException {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
@@ -81,13 +70,67 @@ public class UserSourceDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("userSource_updateInfo", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("user_source_dao : updateUserSource error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+                    .addLog("method", "updateUserSource")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }
     //
-    /** 获取帐号绑定的所有第三方帐号*/
+    /** 更新关联用户 */
+    public int updateBindUser(long userID, String provider, long newUserID) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("userID", userID);
+            parameter.put("provider", provider);
+            parameter.put("newUserID", newUserID);
+            int result = this.getSqlExecutor().update("userSource_updateBindUser", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+                    .addLog("method", "updateBindUser")//
+                    .logException(e) //
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    //
+    /** 根据 provider 和 userID，查询外部登陆 */
+    public UserSourceDO queryByUserID(String provider, long userID) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("provider", provider);
+            parameter.put("userID", userID);
+            UserSourceDO result = this.getSqlExecutor().selectOne("userSource_queryByUserID", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+                    .addLog("method", "queryByUserID")//
+                    .logException(e) //
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    //
+    /** 根据 provider 和 uniqueID，查询外部登陆 */
+    public UserSourceDO queryByUnique(String provider, String uniqueID) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("provider", provider);
+            parameter.put("uniqueID", uniqueID);
+            UserSourceDO result = this.getSqlExecutor().selectOne("userSource_queryByUnique", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+                    .addLog("method", "queryByUnique")//
+                    .logException(e) //
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    //
+    /** 根据 userID，查询所有相关的外部登录 */
     public List<UserSourceDO> queryListByUserID(long userID) throws SQLException {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
@@ -95,8 +138,10 @@ public class UserSourceDAO extends AbstractDao {
             List<UserSourceDO> result = this.getSqlExecutor().selectList("userSource_queryListByUserID", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("user_source_dao : updateUserSource error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+                    .addLog("method", "queryListByUserID")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }

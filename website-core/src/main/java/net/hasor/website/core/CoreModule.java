@@ -16,6 +16,7 @@
 package net.hasor.website.core;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.Module;
+import org.more.util.CommonCodeUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
 /**
@@ -27,27 +28,27 @@ public class CoreModule implements Module {
     @Override
     public void loadModule(ApiBinder apiBinder) throws Throwable {
         //
+        // .测试算法是否OK
+        CommonCodeUtils.MD5.getMD5(".");
+        //
+        // .子模块
         apiBinder.installModule(new DataSourceModule());    // 数据库
         apiBinder.installModule(new AliyunModule());        // 阿里云
         //
-        //
+        // .初始化Cache
         final ConcurrentHashMap<Object, Object> map = new ConcurrentHashMap<Object, Object>();
         apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_USER).toInstance(new Cache() {
-            @Override
             public String getName() {
                 return AppConstant.CACHE_USER;
             }
-            @Override
             public boolean put(Object key, Object value) {
                 map.put(key, value);
                 return true;
             }
-            @Override
             public boolean put(Object key, Object value, int timeout) {
                 map.put(key, value);
                 return true;
             }
-            @Override
             public Object get(Object key) {
                 if (key == null) {
                     return null;

@@ -40,6 +40,8 @@ public abstract class AccessInfo {
         return JsonUtils.toJsonStringSingleLine(this);
     }
     public abstract String getExternalUserID();
+
+    public abstract String getExternalUserNick();
     //
     //
     private static final Map<String, Class<? extends AccessInfo>> typeMappingInfo = new HashMap<String, Class<? extends AccessInfo>>();

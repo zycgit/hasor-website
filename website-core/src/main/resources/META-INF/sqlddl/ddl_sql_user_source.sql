@@ -6,6 +6,7 @@ create table `USER_SOURCE` (
 	`status`			      INT	          NOT NULL					      COMMENT '状态(是否有效)',
 	`login_count`			  BIGINT    	  NOT NULL					      COMMENT '登录次数',
 	`user_id`			      BIGINT	      NOT NULL					      COMMENT '关联的UserID',
+	`ori_user_id`			  BIGINT	      NOT NULL					      COMMENT '最初关联的UserID',
 	`access_info`			  TEXT	        NOT NULL                COMMENT '各种联系方式(json格式)',
 	
 	`first_login_time`	DATETIME		  NULL					          COMMENT '首次登陆时间',

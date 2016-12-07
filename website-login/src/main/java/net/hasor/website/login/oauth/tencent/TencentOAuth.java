@@ -107,13 +107,24 @@ public class TencentOAuth extends AbstractOAuth {
     @Override
     public String evalLoginURL(String status, String redirectTo) {
         try {
-            String redirectURI = this.getRedirectURI() + "?" + TencentOAuth.URL_DATA + "&redirectURI=" + redirectTo;
+            String redirectURI = this.getRedirectURI() + "?" + URL_DATA + "&redirectURI=" + redirectTo;
             return "https://graph.qq.com/oauth2.0/authorize?response_type=code" //
                     + "&client_id=" + this.appID //
                     + "&redirect_uri=" + URLEncoder.encode(redirectURI, "utf-8") //
                     + "&scope=" + this.scope;//
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0002").logException(e).toJson(), e);
+            logger.error(LogUtils.create("ERROR_004_0004")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_redirectTo", redirectTo)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_redirectTo", redirectTo)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             throw ExceptionUtils.toRuntimeException(e);
         }
     }
@@ -130,7 +141,17 @@ public class TencentOAuth extends AbstractOAuth {
                     + "&state=" + (status == null ? "" : status) //
                     + "&redirect_uri=" + URLEncoder.encode(this.getRedirectURI() + "?" + TencentOAuth.URL_DATA, "utf-8");
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0002").logException(e).toJson(), e);
+            logger.error(LogUtils.create("ERROR_004_0005")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             throw ExceptionUtils.toRuntimeException(e);
         }
         //
@@ -140,11 +161,21 @@ public class TencentOAuth extends AbstractOAuth {
             response = this.httpClient.httpGet(tokenURL);
             String data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                //结果为空
-                logger.error(LogUtils.create("ERROR_000_1105")//
-                        .addLog("authCode", authCode)//
-                        .addString("tencent_access_token : response is empty.").toJson());
-                return new ResultDO<AccessInfo>(false).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_TOKEN_RESULT_EMPTY.getMsg());
+                logger.error(LogUtils.create("ERROR_004_0006")//
+                        .addLog("oauth_provider", this.getProviderName())//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_redirectURI", this.getRedirectURI())//
+                        .addLog("oauth_urlData", URL_DATA)//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_scope", this.scope)//
+                        .addLog("param_status", status)//
+                        .addLog("param_authCode", authCode)//
+                        .addLog("tokenURL", tokenURL)//
+                        .toJson());//结果为空
+                return new ResultDO<AccessInfo>(false)//
+                        .setSuccess(false)//
+                        .setResult(null)//
+                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
             }
             if (data.startsWith("callback(")) {
                 //返回结果失败
@@ -153,87 +184,122 @@ public class TencentOAuth extends AbstractOAuth {
                 String errorCoe = errorInfo.get("error").toString();
                 String errorDesc = errorInfo.get("error_description").toString();
                 //
-                logger.error(LogUtils.create("ERROR_000_1106")//
-                        .addLog("authCode", authCode)//
+                logger.error(LogUtils.create("ERROR_004_0008")//
+                        .addLog("oauth_provider", this.getProviderName())//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_redirectURI", this.getRedirectURI())//
+                        .addLog("oauth_urlData", URL_DATA)//
+                        .addLog("oauth_appID", this.appID)//
+                        .addLog("oauth_scope", this.scope)//
+                        .addLog("param_status", status)//
+                        .addLog("param_authCode", authCode)//
+                        .addLog("tokenURL", tokenURL)//
                         .addLog("errorCoe", errorCoe)//
                         .addLog("errorDesc", errorDesc)//
-                        .addString("tencent_access_token : response failed.").toJson());
-                return new ResultDO<AccessInfo>(false).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_TOKEN_ERROR.getMsg(errorCoe, errorDesc));
+                        .toJson());
+                return new ResultDO<AccessInfo>(false)//
+                        .setSuccess(false)//
+                        .setResult(null)//
+                        .addMessage(ErrorCodes.OA_TOKEN_EXT_FAILED.getMsg());
             }
         } catch (Exception e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
-                    .addLog("authCode", authCode)//
-                    .addString("tencent_access_token : remote error.").toJson(), e);
-            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_ERROR.getMsg("OAuth 远程认证失败。"));
+            logger.error(LogUtils.create("ERROR_004_0007")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("tokenURL", tokenURL)//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            return new ResultDO<AccessInfo>(e)//
+                    .setSuccess(false)//
+                    .setResult(null)//
+                    .setThrowable(e)//
+                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
         }
         //
+        // .获取用户信息
+        String access_token = "";
+        String openID = "";
         try {
             AccessToken token = new AccessToken(response);
-            OpenID openIDObj = new OpenID(token.getAccessToken());
-            String openID = openIDObj.getUserOpenID();
-            com.qq.connect.api.qzone.UserInfo qzoneUserInfo = new com.qq.connect.api.qzone.UserInfo(token.getAccessToken(), openID);
+            access_token = token.getAccessToken();
+            OpenID openIDObj = new OpenID(access_token);
+            openID = openIDObj.getUserOpenID();
+            com.qq.connect.api.qzone.UserInfo qzoneUserInfo = new com.qq.connect.api.qzone.UserInfo(access_token, openID);
             com.qq.connect.javabeans.qzone.UserInfoBean qzoneInfoBean = qzoneUserInfo.getUserInfo();
             //
             // .QQ空间信息
-            TencentAccessInfo info = new TencentAccessInfo();
-            info.setAccessToken(token.getAccessToken());
-            info.setExpiresTime(token.getExpireIn());
-            info.setOpenID(openID);
-            info.setOriInfo(response.getResponseAsString());
-            info.setGender(qzoneInfoBean.getGender());
-            info.setNickName(qzoneInfoBean.getNickname());
-            info.setLevel(qzoneInfoBean.getLevel());
-            info.setVip(qzoneInfoBean.isVip());
-            info.setYellowYearVip(qzoneInfoBean.isYellowYearVip());
-            info.setAvatarURL30(qzoneInfoBean.getAvatar().getAvatarURL30());
-            info.setAvatarURL50(qzoneInfoBean.getAvatar().getAvatarURL50());
-            info.setAvatarURL100(qzoneInfoBean.getAvatar().getAvatarURL100());
+            TencentAccessInfo accessInfo = new TencentAccessInfo();
+            accessInfo.setAccessToken(access_token);
+            accessInfo.setExpiresTime(token.getExpireIn());
+            accessInfo.setOpenID(openID);
+            accessInfo.setOriInfo(response.getResponseAsString());
+            accessInfo.setGender(qzoneInfoBean.getGender());
+            accessInfo.setNickName(qzoneInfoBean.getNickname());
+            accessInfo.setLevel(qzoneInfoBean.getLevel());
+            accessInfo.setVip(qzoneInfoBean.isVip());
+            accessInfo.setYellowYearVip(qzoneInfoBean.isYellowYearVip());
+            accessInfo.setAvatarURL30(qzoneInfoBean.getAvatar().getAvatarURL30());
+            accessInfo.setAvatarURL50(qzoneInfoBean.getAvatar().getAvatarURL50());
+            accessInfo.setAvatarURL100(qzoneInfoBean.getAvatar().getAvatarURL100());
             //
             // .腾讯微博
-            com.qq.connect.api.weibo.UserInfo weiboUserInfo = new com.qq.connect.api.weibo.UserInfo(token.getAccessToken(), openID);
+            com.qq.connect.api.weibo.UserInfo weiboUserInfo = new com.qq.connect.api.weibo.UserInfo(access_token, openID);
             com.qq.connect.javabeans.weibo.UserInfoBean weiboInfoBean = weiboUserInfo.getUserInfo();
             if (weiboInfoBean.getRet() == 0) {
                 //
-                info.setCityCode(weiboInfoBean.getCityCode());
-                info.setCountryCode(weiboInfoBean.getCountryCode());
-                info.setProvinceCode(weiboInfoBean.getProvinceCode());
-                info.setHomeCityCode(weiboInfoBean.getHomeCityCode());
-                info.setHomeCountryCode(weiboInfoBean.getHomeCountryCode());
-                info.setHomeProvinceCode(weiboInfoBean.getHomeProvinceCode());
-                info.setHomeTownCode(weiboInfoBean.getHomeTownCode());
-                info.setEmail(weiboInfoBean.getEmail());
-                info.setWeiboLevel(weiboInfoBean.getLevel());
-                info.setWeiboName(weiboInfoBean.getName());
+                accessInfo.setCityCode(weiboInfoBean.getCityCode());
+                accessInfo.setCountryCode(weiboInfoBean.getCountryCode());
+                accessInfo.setProvinceCode(weiboInfoBean.getProvinceCode());
+                accessInfo.setHomeCityCode(weiboInfoBean.getHomeCityCode());
+                accessInfo.setHomeCountryCode(weiboInfoBean.getHomeCountryCode());
+                accessInfo.setHomeProvinceCode(weiboInfoBean.getHomeProvinceCode());
+                accessInfo.setHomeTownCode(weiboInfoBean.getHomeTownCode());
+                accessInfo.setEmail(weiboInfoBean.getEmail());
+                accessInfo.setWeiboLevel(weiboInfoBean.getLevel());
+                accessInfo.setWeiboName(weiboInfoBean.getName());
                 Birthday birthday = weiboInfoBean.getBirthday();
                 if (birthday != null) {
                     String yearStr = new DecimalFormat("0000").format(birthday.getYear());
                     String monthStr = new DecimalFormat("00").format(birthday.getMonth());
                     String dayStr = new DecimalFormat("00").format(birthday.getDay());
-                    info.setBirthday(yearStr + "-" + monthStr + "-" + dayStr);
+                    accessInfo.setBirthday(yearStr + "-" + monthStr + "-" + dayStr);
                 }
-                info.setBlogHome(weiboInfoBean.getHomePage());
+                accessInfo.setBlogHome(weiboInfoBean.getHomePage());
             }
             //
-            logger.error("tencent_access_token : success -> token : {} , sourceID : {} , nick : {}.", //
-                    info.getAccessToken(), info.getSource(), info.getNickName());
-            return new ResultDO<AccessInfo>(true).setResult(info);
+            logger.info("access_token : success -> token : {} , sourceID : {}.", accessInfo.getAccessToken(), accessInfo.getSource());
+            return new ResultDO<AccessInfo>(true).setResult(accessInfo);
         } catch (Exception e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
-                    .addLog("authCode", authCode)//
-                    .addString("tencent_access_token : get data failed.").toJson(), e);
-            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.LOGIN_OAUTH_ACCESS_ERROR.getMsg("OAuth 获取数据失败。"));
+            logger.error(LogUtils.create("ERROR_004_0009")//
+                    .addLog("oauth_provider", this.getProviderName())//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_redirectURI", this.getRedirectURI())//
+                    .addLog("oauth_urlData", URL_DATA)//
+                    .addLog("oauth_appID", this.appID)//
+                    .addLog("oauth_scope", this.scope)//
+                    .addLog("param_status", status)//
+                    .addLog("param_authCode", authCode)//
+                    .addLog("access_token", access_token)//
+                    .addLog("openID", openID)//
+                    .addLog("tokenURL", tokenURL)//
+                    .toJson());
+            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
         }
-        //
     }
     @Override
     public UserDO convertTo(AccessInfo result) {
         TencentAccessInfo accessInfo = (TencentAccessInfo) result;
         UserDO userDO = new UserDO();
+        userDO.setAccount("");
         userDO.setPassword("-");
+        userDO.setEmail("");
+        userDO.setMobilePhone("");
         userDO.setNick(accessInfo.getNickName());
         userDO.setAvatar(accessInfo.getAvatarURL50());
         if (StringUtils.isBlank(userDO.getNick())) {
@@ -251,7 +317,6 @@ public class TencentOAuth extends AbstractOAuth {
         }
         userDO.setStatus(UserStatus.Normal);
         userDO.setType(UserType.Temporary);
-        userDO.setEmail(accessInfo.getEmail());
         //
         userDO.setFutures(new UserFutures());
         userDO.getFutures().setBirthday(accessInfo.getBirthday());

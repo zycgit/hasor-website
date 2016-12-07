@@ -36,8 +36,10 @@ public class ContentCategoryDAO extends AbstractDao {
             int result = this.getSqlExecutor().insert("contentCategory_insert", categoryDO);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("content_category_dao : insertContentCategory error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
+                    .addLog("method", "insertCategory")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }
@@ -51,8 +53,10 @@ public class ContentCategoryDAO extends AbstractDao {
             UserSourceDO result = this.getSqlExecutor().selectOne("contentCategory_delete", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("content_category_dao : deleteCategory error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
+                    .addLog("method", "deleteCategory")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }
@@ -65,8 +69,10 @@ public class ContentCategoryDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("contentCategory_update", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("content_category_dao : updateContentCategory error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
+                    .addLog("method", "updateContentCategory")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }
@@ -79,8 +85,10 @@ public class ContentCategoryDAO extends AbstractDao {
             ContentCategoryDO result = this.getSqlExecutor().selectOne("contentCategory_queryById", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("content_category_dao : queryByID error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
+                    .addLog("method", "queryByID")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }
@@ -93,8 +101,10 @@ public class ContentCategoryDAO extends AbstractDao {
             List<ContentCategoryDO> result = this.getSqlExecutor().selectList("contentCategory_queryByUser", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").logException(e) //
-                    .addString("content_category_dao : queryListByUserID error -> " + e.getMessage()).toJson());
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
+                    .addLog("method", "queryListByUserID")//
+                    .logException(e) //
+                    .toJson(), e);
             throw e;
         }
     }

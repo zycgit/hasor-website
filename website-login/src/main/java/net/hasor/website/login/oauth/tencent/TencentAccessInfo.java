@@ -56,6 +56,10 @@ public class TencentAccessInfo extends AccessInfo {
     public String getExternalUserID() {
         return this.getOpenID();
     }
+    @Override
+    public String getExternalUserNick() {
+        return this.getNickName();
+    }
     //
     public String getAccessToken() {
         return accessToken;

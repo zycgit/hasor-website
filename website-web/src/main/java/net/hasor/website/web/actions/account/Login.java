@@ -49,7 +49,7 @@ public class Login extends Action {
                 if (userDO != null && StringUtils.equals(userDO.getPassword(), loginForm.getPassword())) {
                     // .跳转到目标页面
                     String redirectURI = this.userManager.startQuickLogin(userDO.getUserID(), null, loginForm.getRedirectURI());
-                    sendJsonData(redirectURI);
+                    getResponse().sendRedirect(redirectURI);
                     return;
                 }
             }

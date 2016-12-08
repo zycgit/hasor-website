@@ -121,18 +121,6 @@
         limit 1
     </update>
 
-    <!-- 登录 -->
-    <update id="user_loginUpdate">
-        update USER_INFO set
-            login_count       = login_count + 1,
-            first_login_time  = ifnull( first_login_time , now() ),
-            last_login_time   = now(),
-            modify_time       = now()
-        where
-            id = #{userID} and status = 0
-        limit 1
-    </update>
-
     <!-- 根据ID查询 -->
     <select id="user_queryById" resultMap="userDOMap">
         select

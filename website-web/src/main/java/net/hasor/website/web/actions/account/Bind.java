@@ -43,26 +43,6 @@ public class Bind extends Action {
         long targetUserID = this.getTargetUserID();
         String targetProivter = this.getTargetPrivider();
         //        UserDO targetUser = this.userManager.getFullUserDataByID(targetUserID);
-        //        //
-        //        // 检测该登陆方式已经绑定了其它账号
-        //        if (targetUser.getType() == UserType.Master && targetUser.getStatus() == UserStatus.Normal) {
-        //            sendRedirectError(ErrorCodes.OAUTH_BIND_FAILED.getMsg()); // 该登陆方式已经绑定了其它账号，请先解除绑定之后在操作
-        //            return;
-        //        }
-        //        // 检测当前账号是否已经具有了同类型绑定
-        //        UserDO cunterUser = this.userManager.getFullUserDataByID(getUserID());
-        //        boolean hasProivter = false;
-        //        for (UserSourceDO sourceDO : cunterUser.getUserSourceList()) {
-        //            if (StringUtils.equalsIgnoreCase(sourceDO.getProvider(), targetProivter)) {
-        //                hasProivter = true;
-        //            }
-        //        }
-        //        if (hasProivter) {
-        //            sendRedirectError(ErrorCodes.OAUTH_BIND_HAS_PROIVTER.getMsg());
-        //            return;
-        //        }
-        //        //
-        //        UserSourceDO sourceDO = this.userManager.queryUserSourceByUserID(targetUserID, targetProivter);
         Result<Boolean> result = this.userManager.reBindLogin(targetUserID, targetProivter, this.getUserID());
     }
 }

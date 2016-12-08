@@ -57,80 +57,109 @@ public class AccessToken extends Action {
         }
         // .csrf
         if (!this.csrfTokenTest()) {
-            logger.error(LogUtils.create("ERROR_000_0001")//
-                    .addString("login_error : csrfToken failed.").toJson());
-            sendJsonError(ErrorCodes.SECURITY_CSRF.getMsg());
+            logger.error(LogUtils.create("ERROR_999_0005")//
+                    .addLog("authCode", authCode)//
+                    .addLog("provider", provider)//
+                    .addLog("error", "login_error : csrfToken failed.")//
+                    .toJson());
+            sendJsonError(ErrorCodes.V_CSRF_INVALID.getMsg());
             return;
         }
         // .code
         if (StringUtils.isBlank(authCode)) {
-            logger.error(LogUtils.create("ERROR_000_1001")//
-                    .addLog("provider", provider)//
+            logger.error(LogUtils.create("ERROR_004_0010")//
                     .addLog("authCode", authCode)//
-                    .addString("login_error : get access_token failed, response is empty.").toJson());
-            sendJsonError(ErrorCodes.LOGIN_OAUTH_CODE_EMPTY.getMsg(authCode));
+                    .addLog("provider", provider)//
+                    .addLog("error", "login_error : get access_token failed, response is empty.")//
+                    .toJson());
+            sendJsonError(ErrorCodes.BAD_REQUEST.getMsg(authCode));
             return;
         }
         // .form valid
         if (!this.isValid()) {
-            logger.error(LogUtils.create("ERROR_000_1005")//
+            logger.error(LogUtils.create("ERROR_004_0011")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
-                    .addString("login_error : form valid failed.").toJson());
-            sendJsonError(ErrorCodes.LOGIN_OAUTH_VALID.getMsg(authCode));
+                    .addLog("error", "login_error : form valid failed.")//
+                    .toJson());
+            sendJsonError(ErrorCodes.V_OAUTH_CALLBACK_FAILED.getMsg(authCode));
             return;
         }
         // .oauth info
         Result<UserDO> infoResult = oauthManager.evalUserInfo(provider, authCode, loginForm.getState());
-        if (infoResult == null || infoResult.getResult() == null) {
+        if (infoResult == null || (infoResult.isSuccess() && infoResult.getResult() == null)) {
             logger.error(LogUtils.create("ERROR_999_0001")//
-                    .addString("login_error : result is null.").toJson());
-            sendJsonError(ErrorCodes.RESULT_NULL.getMsg());
+                    .addLog("provider", provider)//
+                    .addLog("authCode", authCode)//
+                    .addLog("error", "login_error : result is null.")//
+                    .toJson());
+            sendJsonError(ErrorCodes.LOGIN_ERROR.getMsg());
             return;
         }
         if (!infoResult.isSuccess()) {
-            logger.error(LogUtils.create("ERROR_000_1002")//
-                    .addString("login_error : access process failed.").toJson());
+            logger.error(LogUtils.create("ERROR_004_0003")//
+                    .addLog("provider", provider)//
+                    .addLog("authCode", authCode)//
+                    .addLog("error", "login_error : access process failed.")//
+                    .toJson());
             sendJsonError(infoResult.firstMessage());
             return;
         }
         // .login
         UserDO userDO = null;
         try {
-            // 登陆
+            // .登陆
             UserDO oriUserInfo = infoResult.getResult();
             String uniqueID = oriUserInfo.getUserSourceList().get(0).getAccessInfo().getExternalUserID();
             userDO = this.userManager.getUserByProvider(provider, uniqueID);
-            long dataResult = 0L;
+            Result<Long> dataResult = null;
             if (userDO == null) {
                 dataResult = this.userManager.newUser(oriUserInfo);//插入新用户
             } else {
                 dataResult = this.userManager.updateAccessInfo(userDO, provider, userDO.getUserSourceList().get(0));
             }
-            if (dataResult <= 0) {
-                logger.error(LogUtils.create("ERROR_999_0001")//
+            if (!dataResult.isSuccess() || dataResult.getResult() == null) {
+                logger.error(LogUtils.create("ERROR_003_0008")//
                         .addLog("result", dataResult) //
-                        .addString("oauth_" + provider + " : login success , but user save to db failed.").toJson());
-                sendJsonError(ErrorCodes.LOGIN_USER_SAVE.getMsg());
+                        .addLog("provider", provider)//
+                        .addLog("authCode", authCode)//
+                        .addLog("errorMessage", dataResult.firstMessage())//
+                        .addLog("error", "login success , but user save to db failed.")//
+                        .toJson());
+                sendJsonError(dataResult.firstMessage());
                 return;
             }
-            // .更新登录信息(忽略返回值)
-            logger.error("oauth_" + provider + " : login success , userID = {}.", dataResult);
+            // .save or update
+            long userID = dataResult.getResult();
+            if (userID <= 0) {
+                logger.error(LogUtils.create("ERROR_002_0006")//
+                        .addLog("result", dataResult) //
+                        .addLog("provider", provider)//
+                        .addLog("authCode", authCode)//
+                        .addLog("error", "login success , but user save to db failed.")//
+                        .toJson());
+                sendJsonError(ErrorCodes.U_SAVE_USER_FAILED.getMsg());
+                return;
+            }
             // .更新之后反查数据
             userDO = this.userManager.getUserByProvider(provider, uniqueID);
             if (userDO == null) {
-                logger.error(LogUtils.create("ERROR_999_0001")//
-                        .addString("login_error : query user by id result is null.").toJson());
-                sendJsonError(ErrorCodes.RESULT_NULL.getMsg());
+                logger.error(LogUtils.create("ERROR_002_0001")//
+                        .addLog("result", dataResult) //
+                        .addLog("provider", provider)//
+                        .addLog("authCode", authCode)//
+                        .addLog("error", "login_error : query user by id result is null.")//
+                        .toJson());
+                sendJsonError(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
                 return;
             }
         } catch (Exception e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
+            logger.error(LogUtils.create("ERROR_003_0009")//
+                    .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
-                    .addString("tencent_access_token : save or updata userinfo failed.").toJson(), e);
-            sendJsonError(ErrorCodes.LOGIN_USER_SAVE.getMsg("保存或者更新数据错误。"));
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            sendJsonError(ErrorCodes.LOGIN_ERROR.getMsg());
             return;
         }
         // .跳转到目标页面

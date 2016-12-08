@@ -334,29 +334,29 @@ public class UserManager {
         }
     }
     //
-    public Result<Boolean> updateAccessInfo(UserDO userDO, String provider, UserSourceDO result) {
+    public Result<Long> updateAccessInfo(UserDO userDO, String provider, UserSourceDO result) {
         try {
             int res = this.userSourceDAO.updateUserSource(provider, userDO.getUserID(), result);
             if (res <= 0) {
-                ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                ResultDO<Long> resultDO = new ResultDO<Long>(false)//
                         .setSuccess(false)//
                         .addMessage(ErrorCodes.U_SAVE_SOURCE_FAILED.getMsg())//
-                        .setResult(false);
+                        .setResult((long) res);
                 logger.error(LogUtils.create("ERROR_002_0009")//
                         .addLog("provider", provider) //
                         .addLog("userID", userDO.getUserID()) //
                         .toJson());
                 return resultDO;
             } else {
-                return new ResultDO<Boolean>(true)//
+                return new ResultDO<Long>(true)//
                         .setSuccess(true)//
-                        .setResult(true);
+                        .setResult(userDO.getUserID());
             }
         } catch (Exception e) {
-            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+            ResultDO<Long> resultDO = new ResultDO<Long>(false)//
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.U_SAVE_SOURCE_FAILED.getMsg())//
-                    .setResult(false);
+                    .setResult(0L);
             logger.error(LogUtils.create("ERROR_999_0003")//
                     .addLog("provider", provider) //
                     .addLog("userID", userDO.getUserID()) //

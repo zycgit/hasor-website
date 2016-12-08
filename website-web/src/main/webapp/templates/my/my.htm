@@ -1,33 +1,25 @@
 ${rootData.put('pageTitle','个人首页')}
 <script src="${ctx_path}/static/javascript/jquery.plugins/jsonview-1.0/jquery.jsonview.min.js"></script>
 <link rel="stylesheet" href="${ctx_path}/static/javascript/jquery.plugins/jsonview-1.0/jquery.jsonview.min.css">
+<link rel="stylesheet" href="${ctx_path}/static/website/css/login.css">
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">账号绑定操作</h3>
     </div>
     <div class="panel-body">
+        <#list infoList as infoData>
+            <#if infoData.allow == true>
+                <a id="${infoData.html_id}" class="${infoData.html_css}"></a>
+                <#if infoData.bind == true>
+                    ${infoData.nick} -[已绑定]
+                </#if>
+                <#if infoData.bind == false>
+                    [<a href="${infoData.html_href}" target="_blank">绑定</a>]
+                </#if>
+                <br/>
+            </#if>
 
-        <#assign tencent_status=false />
-        <#assign weibo_status=false />
-        <#assign github_status=false />
-        <#list infoList as sourceData>
-            <#if sourceData.provider == 'tencent'>
-                <#assign tencent_status=true />
-            </#if>
-            <#if sourceData.provider == 'weibo'>
-                <#assign weibo_status=true />
-            </#if>
-            <#if sourceData.provider == 'github'>
-                <#assign github_status=true />
-            </#if>
         </#list>
-        <#if tencent_status == false>
-
-        </#if>
-        req_redirectURI
-        <a id="qqAuthorizationUrl" class="qq" href="${oauth.evalLoginURL('tencent',oauth_status,req_redirectURI)}" target="_blank"></a>
-        <a id="weiboAuthorizationUrl" class="weibo" href="${oauth.evalLoginURL('weibo',oauth_status,req_redirectURI)}" target="_blank"></a>
-        <a id="githubAuthorizationUrl" class="github" href="${oauth.evalLoginURL('github',oauth_status,req_redirectURI)}" target="_blank"></a>
     </div>
 </div>
 <div class="panel panel-default">

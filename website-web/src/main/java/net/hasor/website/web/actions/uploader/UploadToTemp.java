@@ -20,9 +20,10 @@ import net.hasor.core.Inject;
 import net.hasor.restful.api.Async;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.web.FileItem;
-import net.hasor.website.web.core.Action;
 import net.hasor.website.core.AliyunOSSClient;
+import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.EnvironmentConfig;
+import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
 import org.more.bizcommon.log.LogUtils;
@@ -52,11 +53,11 @@ public class UploadToTemp extends Action {
     public void execute() throws IOException {
         //
         if (!isLogin()) {
-            sendError("请登陆系统。");
+            sendError(ErrorCodes.U_NEED_LOGIN.getMsg().getMessage());
             return;
         }
         if (!this.csrfTokenTest()) {
-            sendError("token已过期,请重新登录。");
+            sendError(ErrorCodes.V_TOKEN_NEED_LOGIN.getMsg().getMessage());
             return;
         }
         //
@@ -86,6 +87,11 @@ public class UploadToTemp extends Action {
                 }
             }
         } catch (Exception e) {
+            logger.error(LogUtils.create("ERROR_005_0001")//
+                    .addLog("fileName", (fileItem != null) ? fileItem.getName() : "")//
+                    .addLog("userID", this.getUserID())//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             sendError("上传过程中发生错误:" + e.getMessage());
             return;
         } finally {
@@ -112,36 +118,42 @@ public class UploadToTemp extends Action {
             if (this.ossClient.doesObjectExist(bucketName, ossKey)) {
                 return saveToOSS(fileItem, tryCount--);
             } else if (tryCount <= 0) {
-                logger.error(LogUtils.create("ERROR_002_0003")//
+                logger.error(LogUtils.create("ERROR_005_0003")//
                         .addLog("bucketName", bucketName)//
                         .addLog("fileName", fileItem.getName())//
+                        .addLog("tryCount", tryCount)//
                         .addLog("ossKey", ossKey)//
                         .addLog("userID", this.getUserID())//
+                        .addLog("error", "run out of tryCount.")//
                         .toJson());
                 return new ResultDO<String>(false);
             }
             // .数据保存
             PutObjectResult result = this.ossClient.putObject(bucketName, ossKey, fileItem.openStream());
             if (result == null) {
-                logger.error(LogUtils.create("ERROR_002_0002")//
+                logger.error(LogUtils.create("ERROR_005_0002")//
                         .addLog("bucketName", bucketName)//
                         .addLog("fileName", fileItem.getName())//
+                        .addLog("tryCount", tryCount)//
                         .addLog("ossKey", ossKey)//
                         .addLog("userID", this.getUserID())//
+                        .addLog("error", "oss result is null.")//
                         .toJson());
                 return new ResultDO<String>(false);
             }
             // .返回URL
-            String urlPath = envConfig.getStaticFilesHost() + "/" + ossKey;
+            String urlPath = this.envConfig.getStaticFilesHost() + "/" + ossKey;
             logger.error("upload : {} -> {}.", bucketName, urlPath);
             return new ResultDO<String>(urlPath).setSuccess(true);
         } catch (Throwable e) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LogUtils.create("ERROR_005_0001")//
                     .addLog("bucketName", bucketName)//
                     .addLog("fileName", fileItem.getName())//
+                    .addLog("tryCount", tryCount)//
                     .addLog("ossKey", ossKey)//
                     .addLog("userID", this.getUserID())//
-                    .logException(e).toJson());
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
             return new ResultDO<String>(false).setThrowable(e);
         }
     }

@@ -66,7 +66,7 @@ public class Action extends WebController {
     /**输出Json格式的失败结果。*/
     protected void sendJsonError(Message errorMessage) throws IOException {
         if (errorMessage == null) {
-            errorMessage = ErrorCodes.BAD_UNKNOWN.getMsg("因为异常信息丢失引起。");
+            errorMessage = ErrorCodes.BAD_UNKNOWN.getMsg("异常信息丢失。");
         }
         JsonResultDO jsonData = new JsonResultDO();
         jsonData.setSuccess(false);
@@ -79,7 +79,7 @@ public class Action extends WebController {
     /**跳转到错误页。*/
     protected void sendError(Message errorMessage) {
         if (errorMessage == null) {
-            errorMessage = ErrorCodes.BAD_UNKNOWN.getMsg("因为异常信息丢失引起。");
+            errorMessage = ErrorCodes.BAD_UNKNOWN.getMsg("异常信息丢失。");
         }
         int errorCode = errorMessage.getType();
         String errorStr = errorMessage.getMessage();
@@ -88,6 +88,14 @@ public class Action extends WebController {
         this.putData("errorCode", errorCode);
         this.putData("errorStr", errorStr);
         this.renderTo("htm", "/error.htm");
+    }
+    protected void sendRedirectError(Message errorMessage) throws IOException {
+        if (errorMessage == null) {
+            errorMessage = ErrorCodes.BAD_UNKNOWN.getMsg("异常信息丢失。");
+        }
+        int errorCode = errorMessage.getType();
+        String errorStr = errorMessage.getMessage();
+        this.getResponse().sendRedirect("/error.htm?errorCode=" + errorCode);
     }
     //
     /**登录用户的Nick*/
@@ -98,6 +106,14 @@ public class Action extends WebController {
     /**登录用户的ID*/
     protected long getUserID() {
         return LoginUtils.getUserID(getRequest());
+    }
+    /**最后一次调用登录的用户的ID*/
+    protected long getTargetUserID() {
+        return LoginUtils.getTargetUserID(getRequest());
+    }
+    /**获取最后一次调用登陆系统用的来源*/
+    protected String getTargetPrivider() {
+        return LoginUtils.getTargetPrivider(getRequest());
     }
     //
     /**是否已登录*/

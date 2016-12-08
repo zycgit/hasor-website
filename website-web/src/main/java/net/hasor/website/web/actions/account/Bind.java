@@ -17,16 +17,13 @@ package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
 import net.hasor.restful.RenderData;
 import net.hasor.restful.api.MappingTo;
-import net.hasor.restful.api.Params;
-import net.hasor.restful.api.PathParam;
-import net.hasor.restful.api.Valid;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
-import net.hasor.website.web.forms.LoginForm;
+import org.more.bizcommon.Result;
 
 import java.io.IOException;
 /**
- * 登陆跳转
+ * 给当前登陆账号绑定登陆
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
@@ -35,7 +32,37 @@ public class Bind extends Action {
     @Inject
     private UserManager userManager;
     //
-    public void execute(@PathParam("action") String action, @Valid("SignIn") @Params LoginForm loginForm, RenderData data) throws IOException {
+    public void execute(RenderData data) throws IOException {
+        // .need login
         String ctx_path = data.getHttpRequest().getContextPath();
+        if (!isLogin()) {
+            data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/my/my.htm");
+            return;
+        }
+        //
+        long targetUserID = this.getTargetUserID();
+        String targetProivter = this.getTargetPrivider();
+        //        UserDO targetUser = this.userManager.getFullUserDataByID(targetUserID);
+        //        //
+        //        // 检测该登陆方式已经绑定了其它账号
+        //        if (targetUser.getType() == UserType.Master && targetUser.getStatus() == UserStatus.Normal) {
+        //            sendRedirectError(ErrorCodes.OAUTH_BIND_FAILED.getMsg()); // 该登陆方式已经绑定了其它账号，请先解除绑定之后在操作
+        //            return;
+        //        }
+        //        // 检测当前账号是否已经具有了同类型绑定
+        //        UserDO cunterUser = this.userManager.getFullUserDataByID(getUserID());
+        //        boolean hasProivter = false;
+        //        for (UserSourceDO sourceDO : cunterUser.getUserSourceList()) {
+        //            if (StringUtils.equalsIgnoreCase(sourceDO.getProvider(), targetProivter)) {
+        //                hasProivter = true;
+        //            }
+        //        }
+        //        if (hasProivter) {
+        //            sendRedirectError(ErrorCodes.OAUTH_BIND_HAS_PROIVTER.getMsg());
+        //            return;
+        //        }
+        //        //
+        //        UserSourceDO sourceDO = this.userManager.queryUserSourceByUserID(targetUserID, targetProivter);
+        Result<Boolean> result = this.userManager.reBindLogin(targetUserID, targetProivter, this.getUserID());
     }
 }

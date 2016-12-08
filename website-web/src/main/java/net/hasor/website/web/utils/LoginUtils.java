@@ -65,6 +65,32 @@ public class LoginUtils {
             return 0;
         }
     }
+    /**获取最后一次调用登陆系统返回的UserID*/
+    public static long getTargetUserID(HttpServletRequest request) {
+        try {
+            Object userID = request.getSession(true).getAttribute(AppConstant.SESSION_KEY_TARGET_USER_ID);
+            if (userID == null) {
+                return 0;
+            } else {
+                return Long.parseLong(userID.toString());
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    /**获取最后一次调用登陆系统用的来源*/
+    public static String getTargetPrivider(HttpServletRequest request) {
+        try {
+            Object targetPrivider = request.getSession(true).getAttribute(AppConstant.SESSION_KEY_TARGET_PROVIDER);
+            if (targetPrivider == null) {
+                return "";
+            } else {
+                return targetPrivider.toString();
+            }
+        } catch (Exception e) {
+            return "";
+        }
+    }
     //
     /**是否已登录*/
     public static boolean isLogin(HttpServletRequest request) {

@@ -35,18 +35,25 @@ public class LoginJump extends Action {
     private UserManager userManager;
     //
     public void execute(@ReqParam("userCode") String userCode, @ReqParam("quickCode") String quickCode, RenderData data) throws IOException {
+        //
         // 登陆请求
         QuickLoginResult loginResult = this.userManager.doQuickLogin(userCode, quickCode);
         if (loginResult == null) {
             renderTo("htm", "/account/login.htm");
             return;
         }
+        //
+        // - 用户数据
+        if (!this.isLogin()) {
+            this.setSessionAttr(AppConstant.SESSION_KEY_USER_ID, loginResult.getUserDO().getUserID());
+            this.setSessionAttr(AppConstant.SESSION_KEY_USER_NICK, loginResult.getUserDO().getNick());
+            this.setSessionAttr(AppConstant.SESSION_KEY_USER_AVATAR, loginResult.getUserDO().getAvatar());
+        }
+        this.setSessionAttr(AppConstant.SESSION_KEY_TARGET_USER_ID, loginResult.getUserDO().getUserID());
+        this.setSessionAttr(AppConstant.SESSION_KEY_TARGET_PROVIDER, loginResult.getProvider());
+        //
         // 跳转页面
         String ctx_path = data.getHttpRequest().getContextPath();
         data.getHttpResponse().sendRedirect(ctx_path + loginResult.getRedirectURL());
-        // - 登录请求
-        this.setSessionAttr(AppConstant.SESSION_KEY_USER_ID, loginResult.getUserDO().getUserID());
-        this.setSessionAttr(AppConstant.SESSION_KEY_USER_NICK, loginResult.getUserDO().getNick());
-        this.setSessionAttr(AppConstant.SESSION_KEY_USER_AVATAR, loginResult.getUserDO().getAvatar());
     }
 }

@@ -21,15 +21,12 @@ import net.hasor.restful.api.Params;
 import net.hasor.restful.api.PathParam;
 import net.hasor.restful.api.Valid;
 import net.hasor.website.domain.UserDO;
-import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginForm;
-import org.more.bizcommon.log.LogUtils;
 import org.more.util.StringUtils;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 /**
  * 本地登陆
  * @version : 2016年1月1日
@@ -42,6 +39,7 @@ public class Login extends Action {
     //
     public void execute(@PathParam("action") String action, @Valid("SignIn") @Params LoginForm loginForm, RenderData data) throws IOException {
         String ctx_path = data.getHttpRequest().getContextPath();
+        this.putData("csrfToken", this.csrfTokenString());
         //
         // - 登录请求
         if (StringUtils.equalsIgnoreCase("do", action)) {
@@ -50,17 +48,9 @@ public class Login extends Action {
                 UserDO userDO = this.userManager.queryByLogin(loginForm.getLogin());
                 if (userDO != null && StringUtils.equals(userDO.getPassword(), loginForm.getPassword())) {
                     // .跳转到目标页面
-                    try {
-                        String redirectURI = this.userManager.startQuickLogin(userDO.getUserID(), null, loginForm.getRedirectURI());
-                        sendJsonData(redirectURI);
-                        return;
-                    } catch (NoSuchAlgorithmException e) {
-                        //
-                        logger.error(LogUtils.create("ERROR_999_0002")//
-                                .logException(e)//
-                                .addString("tencent_access_token : startQuickLogin failed.").toJson(), e);
-                        sendJsonError(ErrorCodes.LOGIN_USER_SAVE.getMsg("startQuickLogin。"));
-                    }
+                    String redirectURI = this.userManager.startQuickLogin(userDO.getUserID(), null, loginForm.getRedirectURI());
+                    sendJsonData(redirectURI);
+                    return;
                 }
             }
             //
@@ -72,7 +62,7 @@ public class Login extends Action {
         // - 登录页面
         data.clearValidErrors();//清空验证信息,避免瞎显示
         if (this.isLogin()) {
-            data.getHttpResponse().sendRedirect(ctx_path + "/account/my.htm");
+            data.getHttpResponse().sendRedirect(ctx_path + "/my/my.htm");
         }
     }
 }

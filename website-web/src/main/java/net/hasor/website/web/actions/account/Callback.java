@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.account;
-import net.hasor.website.web.core.Action;
-import net.hasor.website.domain.enums.ErrorCodes;
-import net.hasor.website.web.forms.LoginCallBackForm;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.Params;
 import net.hasor.restful.api.Valid;
+import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.web.core.Action;
+import net.hasor.website.web.forms.LoginCallBackForm;
 import org.more.bizcommon.log.LogUtils;
 /**
  * OAuth : 登录回调地址
@@ -31,11 +31,13 @@ public class Callback extends Action {
     public void execute(@Valid("Callback") @Params LoginCallBackForm loginForm) {
         //
         if (!this.isValid()) {
-            logger.error(LogUtils.create("ERROR_000_1006")//
+            logger.error(LogUtils.create("ERROR_999_0004")//
                     .addLog("provider", loginForm.getProvider())//
                     .addLog("code", loginForm.getCode())//
-                    .addString("login_error : form valid failed.").toJson());
-            sendError(ErrorCodes.BAD_REQUEST.getMsg(loginForm.getCode()));
+                    .addLog("validName", "Callback")//
+                    .addLog("error", "login_error : form valid failed.")//
+                    .toJson());
+            sendError(ErrorCodes.V_OAUTH_CALLBACK_FAILED.getMsg());
             return;
         }
         //

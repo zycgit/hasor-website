@@ -29,7 +29,6 @@ import org.more.bizcommon.log.LogUtils;
 import org.more.util.StringUtils;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 /**
  * OAuth : 服务器获取 AccessToken
  * @version : 2016年1月1日
@@ -48,8 +47,11 @@ public class AccessToken extends Action {
         // .ajax
         String ajaxTo = this.getRequest().getHeader("ajaxTo");
         if (StringUtils.isBlank(ajaxTo) || !StringUtils.equalsIgnoreCase(ajaxTo, "true")) {
-            logger.error(LogUtils.create("ERROR_000_0002")//
-                    .addString("login_error : request not accepted.").toJson());
+            logger.error(LogUtils.create("ERROR_003_0007")//
+                    .addLog("authCode", authCode)//
+                    .addLog("provider", provider)//
+                    .addLog("error", "login_error : request not accepted.")//
+                    .toJson());
             sendError(ErrorCodes.BAD_REQUEST.getMsg());
             return;
         }
@@ -132,16 +134,7 @@ public class AccessToken extends Action {
             return;
         }
         // .跳转到目标页面
-        try {
-            String redirectURI = this.userManager.startQuickLogin(userDO.getUserID(), provider, loginForm.getRedirectURI());
-            sendJsonData(redirectURI);
-        } catch (NoSuchAlgorithmException e) {
-            //
-            logger.error(LogUtils.create("ERROR_999_0002")//
-                    .logException(e)//
-                    .addLog("authCode", authCode)//
-                    .addString("tencent_access_token : startQuickLogin failed.").toJson(), e);
-            sendJsonError(ErrorCodes.LOGIN_USER_SAVE.getMsg("startQuickLogin。"));
-        }
+        String redirectURI = this.userManager.startQuickLogin(userDO.getUserID(), provider, loginForm.getRedirectURI());
+        sendJsonData(redirectURI);
     }
 }

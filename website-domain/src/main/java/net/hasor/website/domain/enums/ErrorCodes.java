@@ -23,6 +23,7 @@ import org.more.bizcommon.MessageTemplate;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum ErrorCodes {
+    // .用户系统
     U_SAVE_USER_EXIST(1, "登陆账号已经被占用，请更换一个再试。"),//
     U_GET_USER_NOT_EXIST(1, "对不起错误的用户ID，该用户不存在。"),//
     U_GET_USER_FAILED(1, "用户数据查询失败，请重试。"),//
@@ -34,12 +35,16 @@ public enum ErrorCodes {
     U_UPDATE_FAILED(14, "账号更新失败，请重试或联系管理员。"),//
     U_NEED_LOGIN(8, "请先登录。"),//
     //
+    // .外部登陆接入
     OA_PROIVTER_NOT_EXIST(15, "抱歉我们不支持这种方式的第三方登陆。"),//
     OA_TOKEN_EXT_ERROR(15, "OAuth方式登陆，登陆失败。"),//
     OA_TOKEN_EXT_EMPTY(15, "OAuth方式登陆，第三方合作网站没有结果。请重试或联系管理员。"),//
     OA_TOKEN_EXT_FAILED(15, "OAuth方式登陆，第三方合作网站验证失败，请重试。"),//
     OA_ERROR(15, "OAuth登陆系统内部错误，请重试或联系管理员。"),//
     //
+    // .表单验证
+    V_OAUTH_CALLBACK_FAILED(12, "合作网站登陆回调验证失败。"),//
+    V_TOKEN_NEED_LOGIN(12, "token已过期,请重新登录。"),//
     //
     //
     //    LOGIN_OAUTH_CODE_EMPTY(1, "LOGIN_OAUTH_ACCESS_FAILED"),//
@@ -52,7 +57,8 @@ public enum ErrorCodes {
     //    LOGIN_USER_SAVE(9, "用户数据保存失败。"),//
     //    RESULT_NULL(10, "返回结果为空,或者是数据查询失败。"),//
     //    SECURITY_CSRF(11, "SECURITY_CSRF"),//
-    BAD_REQUEST(12, "错误的请求链接。"),//
+    //
+    BAD_REQUEST(12, "错误的请求。"),//
     BAD_UNKNOWN(13, "未知类型异常: %s");
     //
     //

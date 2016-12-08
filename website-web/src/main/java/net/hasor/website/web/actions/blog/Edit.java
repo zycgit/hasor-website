@@ -19,12 +19,12 @@ import net.hasor.restful.RenderData;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.PathParam;
 import net.hasor.restful.api.ReqParam;
-import net.hasor.website.web.core.Action;
 import net.hasor.website.domain.ContentCategoryDO;
 import net.hasor.website.domain.enums.ContentType;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.CategoryManager;
 import net.hasor.website.manager.EnvironmentConfig;
+import net.hasor.website.web.core.Action;
 import org.more.util.StringUtils;
 
 import java.io.IOException;
@@ -48,10 +48,10 @@ public class Edit extends Action {
         if (!isLogin()) {
             if (StringUtils.equalsIgnoreCase(action, "htm")) {
                 String ctx_path = data.getHttpRequest().getContextPath();
-                data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/account/my.htm");
+                data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/blog/edit.htm?content_id=" + contentID);
                 return;
             } else {
-                sendJsonError(ErrorCodes.NEED_LOGIN.getMsg());
+                sendJsonError(ErrorCodes.U_NEED_LOGIN.getMsg());
                 return;
             }
         }
@@ -78,7 +78,7 @@ public class Edit extends Action {
     private void newBlog() {
         //
         long curUser = this.getUserID();
-        List<ContentCategoryDO> categoryList = categoryManager.queryListByUser(curUser);
+        List<ContentCategoryDO> categoryList = this.categoryManager.queryListByUser(curUser);
         if (categoryList == null || categoryList.isEmpty()) {
             categoryList = new ArrayList<ContentCategoryDO>(0);
         }

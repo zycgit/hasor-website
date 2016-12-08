@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.web.actions.account;
+package net.hasor.website.web.actions.my;
 import net.hasor.core.Inject;
 import net.hasor.restful.RenderData;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.website.domain.UserDO;
+import net.hasor.website.domain.UserSourceDO;
 import net.hasor.website.domain.enums.ErrorCodes;
-import net.hasor.website.manager.UserManager;
 import net.hasor.website.login.oauth.OAuthManager;
+import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.model.UserBindInfo;
+import org.more.bizcommon.log.LogUtils;
+import org.more.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/account/my.htm")
+@MappingTo("/my/my.htm")
 public class My extends Action {
     @Inject
     private OAuthManager oauthManager;
@@ -43,12 +46,17 @@ public class My extends Action {
         // .need login
         String ctx_path = data.getHttpRequest().getContextPath();
         if (!isLogin()) {
-            data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/account/my.htm");
+            data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/my/my.htm");
+            return;
         }
         // .user info
         UserDO user = this.userManager.getFullUserDataByID(this.getUserID());
         if (user == null) {
-            sendError(ErrorCodes.RESULT_NULL.getMsg());
+            logger.error(LogUtils.create("ERROR_002_0001")//
+                    .addLog("userID", this.getUserID()) //
+                    .addLog("error", "result is null.") //
+                    .toJson());
+            sendError(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
             return;
         }
         this.putData("userData", user);
@@ -58,11 +66,18 @@ public class My extends Action {
         for (String provider : providerList) {
             UserBindInfo info = new UserBindInfo();
             info.setAllow(true);
+            info.setBind(false);
             info.setProvider(provider);
             info.setHtml_css(provider.toLowerCase());
             info.setHtml_id(provider.toLowerCase() + "AuthorizationUrl");
-            info.setHtml_href(this.oauthManager.evalLoginURL(provider, "", ctx_path + "/account/bind.htm"));
+            info.setHtml_href(this.oauthManager.evalLoginURL(provider, "", ctx_path + "/account/bind.do"));
             infoList.add(info);
+            for (UserSourceDO sourceDO : user.getUserSourceList()) {
+                if (StringUtils.equalsIgnoreCase(sourceDO.getProvider(), provider)) {
+                    info.setBind(true);
+                    info.setNick(sourceDO.getAccessInfo().getExternalUserNick());
+                }
+            }
         }
         this.putData("infoList", infoList);
     }

@@ -7,6 +7,7 @@ public class UserBindInfo {
     private boolean bind      = false;  // 是否已绑定
     private boolean allow     = true;   // 是否允许绑定
     private String  provider  = "";     // 名称
+    private String  nick      = "";     // 如果绑定了，那么nick
     //
     private String  html_id   = "";     // HTML元素ID
     private String  html_css  = "";     // HTML元素样式
@@ -30,6 +31,12 @@ public class UserBindInfo {
     }
     public void setProvider(String provider) {
         this.provider = provider;
+    }
+    public String getNick() {
+        return this.nick;
+    }
+    public void setNick(String nick) {
+        this.nick = nick;
     }
     public String getHtml_id() {
         return html_id;

@@ -554,7 +554,7 @@ public class UserManager {
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
-                    .addLog("targetUserType", targetUser.getType()) //
+                    .addLog("targetUserType", targetUser.getType().name()) //
                     .addLog("targetSize", targetUser.getUserSourceList().size()) //
                     .toJson());
             return result;
@@ -576,7 +576,7 @@ public class UserManager {
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
-                    .addLog("targetUserType", targetUser.getType()) //
+                    .addLog("targetUserType", targetUser.getType().name()) //
                     .addLog("targetSize", targetUser.getUserSourceList().size()) //
                     .addLog("error", e.getMessage()) //
                     .toJson());

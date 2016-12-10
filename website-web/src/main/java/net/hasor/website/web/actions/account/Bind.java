@@ -17,9 +17,11 @@ package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
 import net.hasor.restful.RenderData;
 import net.hasor.restful.api.MappingTo;
+import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
+import org.more.bizcommon.log.LogUtils;
 
 import java.io.IOException;
 /**
@@ -42,7 +44,32 @@ public class Bind extends Action {
         //
         long targetUserID = this.getTargetUserID();
         String targetProivter = this.getTargetPrivider();
-        //        UserDO targetUser = this.userManager.getFullUserDataByID(targetUserID);
         Result<Boolean> result = this.userManager.reBindLogin(targetUserID, targetProivter, this.getUserID());
+        //
+        if (!result.isSuccess() || result.getResult() == null) {
+            logger.error(LogUtils.create("ERROR_003_0008")//
+                    .addLog("result", result) //
+                    .addLog("currentUserID", this.getUserID())//
+                    .addLog("targetUserID", targetUserID)//
+                    .addLog("targetProivter", targetProivter)//
+                    .addLog("errorMessage", result.firstMessage())//
+                    .toJson());
+            sendError(result.firstMessage());
+            return;
+        }
+        //
+        if (!result.getResult()) {
+            logger.error(LogUtils.create("ERROR_004_0012")//
+                    .addLog("result", result) //
+                    .addLog("currentUserID", this.getUserID())//
+                    .addLog("targetUserID", targetUserID)//
+                    .addLog("targetProivter", targetProivter)//
+                    .addLog("errorMessage", result.firstMessage())//
+                    .toJson());
+            sendError(ErrorCodes.OA_BIND_FAILED.getMsg());
+            return;
+        }
+        // .绑定成功
+        data.getHttpResponse().sendRedirect(ctx_path + "/my/my.htm");
     }
 }

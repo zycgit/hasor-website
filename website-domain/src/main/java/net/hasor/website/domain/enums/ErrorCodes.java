@@ -41,9 +41,9 @@ public enum ErrorCodes {
     OA_TOKEN_EXT_EMPTY(103, "OAuth方式登陆，第三方合作网站没有结果。请重试或联系管理员。"),//
     OA_TOKEN_EXT_FAILED(104, "OAuth方式登陆，第三方合作网站验证失败，请重试。"),//
     OA_ERROR(105, "OAuth登陆系统内部错误，请重试或联系管理员。"),//
+    OA_BIND_FAILED(106, "第三方登陆账号绑定失败，请重试"),//
     //
-    //
-    LOGIN_ERROR(106, "登陆出错，请重试或联系管理员。"),//
+    LOGIN_ERROR(107, "登陆出错，请重试或联系管理员。"),//
     //
     // .表单验证
     V_OAUTH_CALLBACK_FAILED(201, "合作网站登陆回调验证失败。"),//

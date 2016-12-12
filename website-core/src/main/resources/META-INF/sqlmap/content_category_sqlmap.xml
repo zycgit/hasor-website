@@ -67,7 +67,7 @@
         update CONTENT_CATEGORY set
             name        = #{category.name},
             order_index = #{category.orderIndex},
-            status      = #{category.status, typeHandler=net.hasor.website.datadao.convert.DataStatusConvert},
+            status      = #{category.status,  typeHandler=net.hasor.website.datadao.convert.DataStatusConvert},
             futures     = #{category.futures, typeHandler=net.hasor.website.datadao.convert.ContentCategoryFuturesConvert},
             modify_time = now()
         where

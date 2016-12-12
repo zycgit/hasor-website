@@ -7,8 +7,8 @@ RUN curl -fsSL http://project.hasor.net/hasor/develop/tools/apache/maven/$MAVEN_
         && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
         && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 ENV MAVEN_HOME /usr/share/maven
-RUN mkdir -p "/home/repo" && \
-    sed -i '/<!-- localRepository/i\<localRepository>/home/repo</localRepository>' $MAVEN_HOME/conf/settings.xml
+RUN mkdir -p "/home/admin/maven-repository" && \
+    sed -i '/<!-- localRepository/i\<localRepository>/home/admin/maven-repository</localRepository>' $MAVEN_HOME/conf/settings.xml
 
 # tomcat
 ENV CATALINA_HOME /usr/local/tomcat
@@ -25,23 +25,23 @@ RUN set -x && \
 	rm tomcat.tar.gz*
 #
 # work
-ENV EXAMPLE_HOME /home/example
-ENV WORK_HOME /home/example
-RUN mkdir -p "$EXAMPLE_HOME/logs"
-ADD . /home/example/sources
+ADD . /home/admin/hasorsite/source
+ENV WEBSITE_HOME /home/admin/hasorsite
+ENV WORK_HOME /home/admin/hasorsite
+RUN mkdir -p "$WEBSITE_HOME/target" && \
+    cp $WEBSITE_HOME/source/conf/work_home/online/env.config $WEBSITE_HOME/ && \
+    ln -s $WEBSITE_HOME/source/conf/tomcat $WEBSITE_HOME/tomcat && \
+    rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat   $CATALINA_HOME/conf && \
+    rm -rf $CATALINA_HOME/logs    && ln -s $CATALINA_HOME/logs    $WEBSITE_HOME/logs && \
+    rm -rf $CATALINA_HOME/deploys && ln -s $CATALINA_HOME/deploys $WEBSITE_HOME/target/deploys
 
-RUN cp $EXAMPLE_HOME/sources/conf/online_home/env.config $EXAMPLE_HOME/ && \
-    ln -s $EXAMPLE_HOME/sources/conf/tomcat $EXAMPLE_HOME/tomcat && \
-    rm -rf $CATALINA_HOME/conf && ln -s $EXAMPLE_HOME/tomcat $CATALINA_HOME/conf && \
-    rm -rf $CATALINA_HOME/logs && ln -s $CATALINA_HOME/logs $EXAMPLE_HOME/logs
 EXPOSE 8080
+EXPOSE 8210
 
 # === project ===
-WORKDIR /home/example/sources
-RUN mkdir -p "$EXAMPLE_HOME/webroot" && \
-    mvn package -Dmaven.test.skip=true && \
-    mv ./target/demo-web-1.0.war $EXAMPLE_HOME/webroot/ROOT.war && \
-    mvn clean
+WORKDIR /home/admin/hasorsite/source
+RUN mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war
+#    mvn clean package -Dmaven.test.skip=true && \
 
 WORKDIR $CATALINA_HOME
 CMD ["catalina.sh", "run"]

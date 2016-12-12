@@ -10,7 +10,7 @@
         <result property="subtitle"         column="subtitle"/>
         <result property="changelog"        column="changelog"/>
         <result property="changelogFormat"  column="changelog_format" typeHandler="net.hasor.website.datadao.convert.ContentFormatConvert"/>
-        <result property="futures"          column="futures" typeHandler="net.hasor.website.datadao.convert.ProjectVersionFuturesConvert"/>
+        <result property="futures"          column="futures"          typeHandler="net.hasor.website.datadao.convert.ProjectVersionFuturesConvert"/>
         <result property="createTime"       column="create_time"/>
         <result property="modifyTime"       column="modify_time"/>
     </resultMap>
@@ -47,7 +47,7 @@
             #{subtitle},
             #{changelog},
             #{changelogFormat, typeHandler=net.hasor.website.datadao.convert.ContentFormatConvert},
-            #{futures, typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            #{futures,         typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
             now(),
             now()
         );

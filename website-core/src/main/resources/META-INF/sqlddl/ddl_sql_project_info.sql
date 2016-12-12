@@ -1,8 +1,9 @@
 create table `PROJECT_INFO` (
 	`id`			          BIGINT			  NOT NULL AUTO_INCREMENT	COMMENT '项目ID（PK，自增）',
 	`owner_id`		      BIGINT				NOT NULL				        COMMENT '项目owner id',
-  `organization_id`		BIGINT	      NULL				            COMMENT '归属组织 id',
-  
+  `owner_type`		    INT	          NOT NULL				        COMMENT '归属组织 id',
+  `parent_id`		      BIGINT	      NULL				            COMMENT '归属父项目 id',
+
   `name`		          VARCHAR(50)	  NOT NULL				        COMMENT '项目名称',
   `subtitle`		      VARCHAR(150)	NOT NULL				        COMMENT '小标题',
   `present`		  		  TEXT	        NOT NULL				        COMMENT '介绍正文',
@@ -18,5 +19,6 @@ create table `PROJECT_INFO` (
 	`create_time`	      DATETIME		  NOT NULL			    	    COMMENT '创建时间',
 	`modify_time`	      DATETIME		  NOT NULL					      COMMENT '修改时间',
 	PRIMARY KEY (`id`),
-  index(`owner_id`)
+  index(`owner_id`,`owner_type`),
+  index(`parent_id`)
 );

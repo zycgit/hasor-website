@@ -31,10 +31,13 @@ import java.util.Map;
 public class ContentCategoryDAO extends AbstractDao {
     //
     /** 新增分类登录类型 */
-    public int insertCategory(ContentCategoryDO categoryDO) throws SQLException {
+    public long insertCategory(ContentCategoryDO categoryDO) throws SQLException {
         try {
             int result = this.getSqlExecutor().insert("contentCategory_insert", categoryDO);
-            return result;
+            if (result > 0) {
+                return categoryDO.getId();
+            }
+            return 0L;
         } catch (SQLException e) {
             logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
                     .addLog("method", "insertCategory")//

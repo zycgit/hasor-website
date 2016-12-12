@@ -5,7 +5,8 @@
     <resultMap id="projectInfoDOMap" type="net.hasor.website.domain.ProjectInfoDO">
         <result property="id"               column="id"/>
         <result property="ownerID"          column="owner_id"/>
-        <result property="organizationID"   column="organization_id"/>
+        <result property="ownerType"        column="owner_type"     typeHandler="net.hasor.website.datadao.convert.OwnerTypeConvert"/>
+        <result property="parentID"         column="parent_id"/>
 
         <result property="name"             column="name"/>
         <result property="subtitle"         column="subtitle"/>
@@ -26,7 +27,8 @@
     <sql id="projectInfoDO_allColumns">
         id,
         owner_id,
-        organization_id,
+        owner_type,
+        parent_id,
         name,
         subtitle,
         present,
@@ -41,11 +43,12 @@
         modify_time
 	</sql>
 
-    <!-- 新增外部登录 -->
+    <!-- 新项目 -->
     <insert id="projectInfo_insert" parameterType="net.hasor.website.domain.ProjectInfoDO">
         insert into PROJECT_INFO(
             owner_id,
-            organization_id,
+            owner_type,
+            parent_id,
             name,
             subtitle,
             present,
@@ -60,7 +63,8 @@
             modify_time
         ) values(
             #{ownerID},
-            #{organizationID},
+            #{ownerType, typeHandler=net.hasor.website.datadao.convert.OwnerTypeConvert},
+            #{parentID},
             #{name},
             #{subtitle},
             #{present},
@@ -70,7 +74,7 @@
             #{sourceType, typeHandler=net.hasor.website.datadao.convert.SourceTypeConvert},
             #{language},
             #{license},
-            #{sourceType, typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            #{futures, typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
             now(),
             now()
         );
@@ -86,7 +90,7 @@
         from
             PROJECT_INFO
         where
-            id = #{id}
+            id = #{projectID}
         limit 1
     </select>
 
@@ -96,9 +100,10 @@
             <include refid="projectInfoDO_allColumns"/>
         from
             PROJECT_INFO
-        where
-            owner_id = #{ownerID}
+        where 1=1
+            and owner_id = #{ownerID}
+            and owner_type = #{ownerType}
         order by
-            create_time desc 
+            create_time desc
     </select>
 </mapper>

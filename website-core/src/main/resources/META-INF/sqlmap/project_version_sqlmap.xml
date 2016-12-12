@@ -9,12 +9,12 @@
         <result property="version"          column="version"/>
         <result property="subtitle"         column="subtitle"/>
         <result property="changelog"        column="changelog"/>
-        <result property="changelogFormat"  column="changelog_format"   typeHandler="net.hasor.website.datadao.convert.ContentFormatConvert"/>
-        <result property="futures"          column="futures"            typeHandler="net.hasor.website.datadao.convert.ProjectVersionFuturesConvert"/>
+        <result property="changelogFormat"  column="changelog_format" typeHandler="net.hasor.website.datadao.convert.ContentFormatConvert"/>
+        <result property="futures"          column="futures" typeHandler="net.hasor.website.datadao.convert.ProjectVersionFuturesConvert"/>
         <result property="createTime"       column="create_time"/>
         <result property="modifyTime"       column="modify_time"/>
     </resultMap>
-    
+
     <sql id="projectVersionDO_allColumns">
         id,
         project_id,
@@ -27,5 +27,33 @@
         create_time,
         modify_time
 	</sql>
+
+    <!-- 新版本 -->
+    <insert id="projectVersion_insert" parameterType="net.hasor.website.domain.ProjectVersionDO">
+        insert into PROJECT_VERSION(
+            project_id,
+            release_time,
+            version,
+            subtitle,
+            changelog,
+            changelog_format,
+            futures,
+            create_time,
+            modify_time
+        ) values(
+            #{projectID},
+            #{releaseTime},
+            #{version},
+            #{subtitle},
+            #{changelog},
+            #{changelogFormat, typeHandler=net.hasor.website.datadao.convert.ContentFormatConvert},
+            #{futures, typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            now(),
+            now()
+        );
+        <selectKey keyProperty="id" resultType="long">
+            select LAST_INSERT_ID() as value
+        </selectKey>
+    </insert>
 
 </mapper>

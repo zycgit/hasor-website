@@ -15,6 +15,7 @@
  */
 package net.hasor.website.domain;
 import net.hasor.website.domain.enums.ContentFormat;
+import net.hasor.website.domain.enums.OwnerType;
 import net.hasor.website.domain.enums.SourceType;
 import net.hasor.website.domain.futures.ProjectFutures;
 
@@ -25,21 +26,22 @@ import java.util.Date;
  * @author 赵永春(zyc@hasor.net)
  */
 public class ProjectInfoDO {
-    private long           id             = 0;     //项目ID（PK，自增）
-    private long           ownerID        = 0;     //项目owner id
-    private long           organizationID = 0;     //归属组织 id
-    private String         name           = null;  //项目名称
-    private String         subtitle       = null;  //小标题
-    private String         present        = null;  //介绍正文
-    private ContentFormat  contentFormat  = null;  //介绍内容格式
-    private String         homePage       = null;  //项目主页
-    private String         downPage       = null;  //下载连接 or 页面
-    private SourceType     sourceType     = null;  //项目类型(开源项目 or 闭源)
-    private String         language       = null;  //主要使用语言
-    private String         license        = null;  //授权协议
-    private ProjectFutures futures        = null;  //扩展信息(json格式)
-    private Date           createTime     = null;  //创建时间
-    private Date           modifyTime     = null;  //修改时间
+    private long           id            = 0;     //项目ID（PK，自增）
+    private long           ownerID       = 0;     //owner id
+    private OwnerType      ownerType     = null;  //owner 类型
+    private Long           parentID      = null;  //归属父项目 id
+    private String         name          = null;  //项目名称
+    private String         subtitle      = null;  //小标题
+    private String         present       = null;  //介绍正文
+    private ContentFormat  contentFormat = null;  //介绍内容格式
+    private String         homePage      = null;  //项目主页
+    private String         downPage      = null;  //下载连接 or 页面
+    private SourceType     sourceType    = null;  //项目类型(开源项目 or 闭源)
+    private String         language      = null;  //主要使用语言
+    private String         license       = null;  //授权协议
+    private ProjectFutures futures       = null;  //扩展信息(json格式)
+    private Date           createTime    = null;  //创建时间
+    private Date           modifyTime    = null;  //修改时间
     //
     public long getId() {
         return id;
@@ -53,11 +55,17 @@ public class ProjectInfoDO {
     public void setOwnerID(long ownerID) {
         this.ownerID = ownerID;
     }
-    public long getOrganizationID() {
-        return organizationID;
+    public OwnerType getOwnerType() {
+        return ownerType;
     }
-    public void setOrganizationID(long organizationID) {
-        this.organizationID = organizationID;
+    public void setOwnerType(OwnerType ownerType) {
+        this.ownerType = ownerType;
+    }
+    public Long getParentID() {
+        return parentID;
+    }
+    public void setParentID(Long parentID) {
+        this.parentID = parentID;
     }
     public String getName() {
         return name;

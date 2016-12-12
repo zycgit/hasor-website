@@ -273,7 +273,7 @@ public class UserManager {
     private Result<Long> saveNewUser(TransactionStatus tranStatus, UserDO userDO) throws SQLException {
         // .保存用户数据
         try {
-            int userResult = this.userDAO.insertUser(userDO);
+            long userResult = this.userDAO.insertUser(userDO);
             if (userResult <= 0) {
                 ResultDO<Long> resultDO = new ResultDO<Long>(false)//
                         .setSuccess(false)//
@@ -303,7 +303,7 @@ public class UserManager {
                 for (UserSourceDO sourceDO : sourceList) {
                     sourceDO.setUserID(userDO.getUserID());
                     sourceDO.setOriUserID(userDO.getUserID());
-                    int sourceResult = this.userSourceDAO.insertUserSource(sourceDO);
+                    long sourceResult = this.userSourceDAO.insertUserSource(sourceDO);
                     if (sourceResult <= 0) {
                         ResultDO<Long> resultDO = new ResultDO<Long>(false)//
                                 .setSuccess(false)//

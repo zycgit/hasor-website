@@ -15,6 +15,7 @@
  */
 package net.hasor.website.domain;
 import net.hasor.website.domain.enums.GenderType;
+import net.hasor.website.domain.enums.OwnerType;
 import net.hasor.website.domain.enums.UserStatus;
 import net.hasor.website.domain.enums.UserType;
 import net.hasor.website.domain.futures.UserContactInfo;
@@ -27,7 +28,7 @@ import java.util.List;
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public class UserDO {
+public class UserDO implements Owner {
     private long               userID         = 0;    // UserID（PK，自增）
     private String             account        = null; // 帐号（唯一）
     private String             email          = null; // email
@@ -156,5 +157,14 @@ public class UserDO {
     }
     public void setType(UserType type) {
         this.type = type;
+    }
+    //
+    @Override
+    public long getOwnerID() {
+        return this.getUserID();
+    }
+    @Override
+    public OwnerType getOwnerType() {
+        return OwnerType.Personal;
     }
 }

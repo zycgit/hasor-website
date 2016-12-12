@@ -30,10 +30,13 @@ import java.util.Map;
 public class UserSourceDAO extends AbstractDao {
     //
     /** 新增外部登录 */
-    public int insertUserSource(UserSourceDO sourceDO) throws SQLException {
+    public long insertUserSource(UserSourceDO sourceDO) throws SQLException {
         try {
             int result = this.getSqlExecutor().insert("userSource_insert", sourceDO);
-            return result;
+            if (result > 0) {
+                return sourceDO.getUserID();
+            }
+            return 0L;
         } catch (SQLException e) {
             logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "insertUserSource")//

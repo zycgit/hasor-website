@@ -16,6 +16,7 @@
 package net.hasor.website.domain;
 import net.hasor.website.domain.enums.ContentFormat;
 import net.hasor.website.domain.enums.OwnerType;
+import net.hasor.website.domain.enums.ProjectStatus;
 import net.hasor.website.domain.enums.SourceType;
 import net.hasor.website.domain.futures.ProjectFutures;
 
@@ -30,6 +31,7 @@ public class ProjectInfoDO {
     private long           ownerID       = 0;     //owner id
     private OwnerType      ownerType     = null;  //owner 类型
     private Long           parentID      = null;  //归属父项目 id
+    private ProjectStatus  status        = null;  //状态
     private String         name          = null;  //项目名称
     private String         subtitle      = null;  //小标题
     private String         present       = null;  //介绍正文
@@ -66,6 +68,12 @@ public class ProjectInfoDO {
     }
     public void setParentID(Long parentID) {
         this.parentID = parentID;
+    }
+    public ProjectStatus getStatus() {
+        return status;
+    }
+    public void setStatus(ProjectStatus status) {
+        this.status = status;
     }
     public String getName() {
         return name;

@@ -49,9 +49,17 @@ public enum ErrorCodes {
     V_OAUTH_CALLBACK_FAILED(201, "合作网站登陆回调验证失败。"),//
     V_TOKEN_NEED_LOGIN(202, "token已过期,请重新登录。"),//
     V_CSRF_INVALID(203, "请重新登陆，或者这是一个非法的请求。"),//
+    V_FORM_PROJECT_INVALID(204, "项目表单验证不通过，请检查表单值是否正确。"),//
     //
-    BAD_REQUEST(901, "错误的请求。"),//
-    BAD_UNKNOWN(902, "未知类型异常: %s");
+    P_OWNER_ERROR(301, "对不起，Owner参数信息错误。"),//
+    P_OWNER_TYPE_FAILED(302, "Owner类型错误。"),//
+    P_OWNER_NOT_EXIST(303, "对不起，Owner不存在。"),//
+    P_SAVE_PROJECT_FAILED(304, "项目信息保存失败，请稍后重试。"),//
+    //
+    BAD_PARAMS(901, "错误的调用参数。"),//
+    BAD_REQUEST(902, "错误的请求。"),//
+    BAD_REQUEST_PARAMS(903, "错误数据查询参数。"),//
+    BAD_UNKNOWN(904, "未知类型异常: %s");
     //
     //
     private MessageTemplate temp = null;

@@ -3,6 +3,7 @@ create table `PROJECT_INFO` (
 	`owner_id`		      BIGINT				NOT NULL				        COMMENT '项目owner id',
   `owner_type`		    INT	          NOT NULL				        COMMENT '归属组织 id',
   `parent_id`		      BIGINT	      NULL				            COMMENT '归属父项目 id',
+  `status`		        INT	          NOT NULL				        COMMENT '状态',
 
   `name`		          VARCHAR(50)	  NOT NULL				        COMMENT '项目名称',
   `subtitle`		      VARCHAR(150)	NOT NULL				        COMMENT '小标题',

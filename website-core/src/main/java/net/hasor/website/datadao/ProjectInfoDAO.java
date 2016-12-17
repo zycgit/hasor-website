@@ -20,6 +20,7 @@ import net.hasor.website.domain.enums.OwnerType;
 import org.more.bizcommon.log.LogUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,9 +68,9 @@ public class ProjectInfoDAO extends AbstractDao {
     }
     //
     /** 根据owner查询项目列表 */
-    public List<ProjectInfoDO> queryListByOwner(long ownerID, OwnerType ownerType) throws SQLException {
+    public List<ProjectInfoDO> queryByOwner(long ownerID, OwnerType ownerType) throws SQLException {
         if (ownerID < 0 || ownerType == null) {
-            return null;
+            return new ArrayList<ProjectInfoDO>(0);
         }
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();

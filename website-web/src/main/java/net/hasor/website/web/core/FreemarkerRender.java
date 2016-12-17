@@ -18,16 +18,17 @@ import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import net.hasor.core.AppContext;
 import net.hasor.restful.Render;
 import net.hasor.restful.RenderData;
 import net.hasor.restful.RenderEngine;
-import net.hasor.web.WebAppContext;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.Service;
 import net.hasor.website.web.utils.LoginUtils;
 import org.more.util.StringEscapeUtils;
 import org.more.util.StringUtils;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
@@ -43,8 +44,8 @@ public class FreemarkerRender implements RenderEngine {
     protected Configuration configuration;
     private   String        ctxPath;
     @Override
-    public void initEngine(WebAppContext appContext) throws Throwable {
-        String realPath = appContext.getEnvironment().getServletContext().getRealPath("/");
+    public void initEngine(AppContext appContext) throws Throwable {
+        String realPath = appContext.getInstance(ServletContext.class).getRealPath("/");
         TemplateLoader templateLoader = new FileTemplateLoader(new File(realPath), true);
         this.configuration = new Configuration(Configuration.VERSION_2_3_22);
         this.configuration.setTemplateLoader(templateLoader);

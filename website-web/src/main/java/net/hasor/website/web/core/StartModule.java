@@ -32,12 +32,12 @@ public class StartModule extends WebModule {
         apiBinder.installModule(new OAuthModule());
         apiBinder.installModule(new CoreModule());
         //
+        apiBinder.setEncodingCharacter("utf-8", "utf-8");
         String contextPath = apiBinder.getServletContext().getContextPath();
         apiBinder.bindType(String.class).nameWith(AppConstant.VAR_CONTEXT_PATH).toInstance(contextPath);
         apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
         //
         // .Webs
-        apiBinder.filter("/*").through(0, new EncodingFilter());
         apiBinder.filter("/*").through(0, new JumpFilter());
     }
 }

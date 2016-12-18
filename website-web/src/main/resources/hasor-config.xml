@@ -12,7 +12,7 @@
         <environmentVar>
             <!-- Daily -->
             <!-- 下面环境变量为本机调试的配置,正式环境下由 dockfile 在系统环境中声明,并且覆盖程序中的配置 -->
-            <WORK_HOME>%HASOR_WEBROOT%/WEB-INF/classes/daily</WORK_HOME>
+            <WORK_HOME>%HASOR_WEBROOT%/WEB-INF/classes/dev</WORK_HOME>
 
             <APP_REDIRECT_URI>/account/callback.do</APP_REDIRECT_URI>
             <APP_PROTOCOL>http</APP_PROTOCOL>

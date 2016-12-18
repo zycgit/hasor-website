@@ -14,10 +14,10 @@ Hasor首页项目
                  ^
                  |
            website-core         // 服务类和业务逻辑
-           ^          ^
-           |          |
-    website-web       |         // 处理Web请求和响应
-                website-test    // 各类单元测试
+             ^      ^
+             |      |
+       website-web  |           // 处理Web请求和响应
+              website-test      // 各类单元测试
 
 == 主要依赖
     net.hasor:hasor-core:jar:2.6.0                  基础开发框架

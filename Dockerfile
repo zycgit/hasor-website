@@ -40,8 +40,8 @@ EXPOSE 8210
 
 # === project ===
 WORKDIR /home/admin/hasorsite/source
-RUN mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war
-#    mvn clean package -Dmaven.test.skip=true && \
+RUN mvn clean package -Dmaven.test.skip=true && \
+    mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war
 
 WORKDIR $CATALINA_HOME
 CMD ["catalina.sh", "run"]

@@ -16,6 +16,7 @@
 package net.hasor.website.core;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.Module;
+import net.hasor.website.oss.AliyunModule;
 import org.more.util.CommonCodeUtils;
 
 import java.util.concurrent.ConcurrentHashMap;

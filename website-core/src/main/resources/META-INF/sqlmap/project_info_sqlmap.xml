@@ -7,7 +7,7 @@
         <result property="ownerID"          column="owner_id"/>
         <result property="ownerType"        column="owner_type"     typeHandler="net.hasor.website.datadao.convert.OwnerTypeConvert"/>
         <result property="parentID"         column="parent_id"/>
-        <result property="status"           column="status"/>
+        <result property="status"           column="status"         typeHandler="net.hasor.website.datadao.convert.ProjectStatusConvert"/>
 
         <result property="name"             column="name"/>
         <result property="subtitle"         column="subtitle"/>
@@ -86,6 +86,38 @@
             select LAST_INSERT_ID() as value
         </selectKey>
     </insert>
+
+    <!-- 更新项目信息（不包含：介绍正文、正文格式） -->
+    <update id="projectInfo_updateWithoutContent">
+        update PROJECT_INFO set
+            name            = #{info.name},
+            subtitle        = #{info.subtitle},
+            home_page       = #{info.homePage},
+            down_page       = #{info.downPage},
+            type            = #{info.sourceType, typeHandler=net.hasor.website.datadao.convert.SourceTypeConvert},
+            language        = #{info.language},
+            license         = #{info.license},
+            futures         = #{info.futures, typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            modify_time     = now()
+        where 1=1
+            and id          = #{info.id}
+            and owner_id    = #{info.ownerID}
+            and owner_type  = #{info.ownerType.type}
+        limit 1
+    </update>
+
+    <!-- 更新项目信息（仅包含：介绍正文、正文格式） -->
+    <update id="projectInfo_updateContent">
+        update PROJECT_INFO set
+            present         = #{info.present},
+            present_format  = #{info.contentFormat, typeHandler=net.hasor.website.datadao.convert.ContentFormatConvert},
+            modify_time     = now()
+        where 1=1
+            and id          = #{info.id}
+            and owner_id    = #{info.ownerID}
+            and owner_type  = #{info.ownerType.type}
+        limit 1
+    </update>
 
     <!-- 根据项目ID获取项目 -->
     <select id="projectInfo_queryByID" resultMap="projectInfoDOMap">

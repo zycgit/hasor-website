@@ -25,8 +25,7 @@ public interface AppConstant {
     //
     public static final String CACHE_USER                  = "CACHE_USER";
     //
-    public static final String SESSION_KEY_USER_ID         = "user_id";
-    public static final String SESSION_KEY_USER_NICK       = "user_nick";
+    public static final String SESSION_KEY_USER            = "user_id";
     public static final String SESSION_KEY_USER_AVATAR     = "user_avatar";
     public static final String SESSION_KEY_CSRF_TOKEN      = "csrfTokenString";
     public static final String SESSION_KEY_TARGET_USER_ID  = "target_user_id";

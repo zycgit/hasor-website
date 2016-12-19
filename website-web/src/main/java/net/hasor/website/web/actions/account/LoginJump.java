@@ -20,6 +20,7 @@ import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.ReqParam;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.domain.beans.QuickLoginResult;
+import net.hasor.website.domain.owner.SimpleOwner;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
 
@@ -45,8 +46,8 @@ public class LoginJump extends Action {
         //
         // - 用户数据
         if (!this.isLogin()) {
-            this.setSessionAttr(AppConstant.SESSION_KEY_USER_ID, loginResult.getUserDO().getUserID());
-            this.setSessionAttr(AppConstant.SESSION_KEY_USER_NICK, loginResult.getUserDO().getNick());
+            SimpleOwner owner = new SimpleOwner(loginResult.getUserDO(), loginResult.getUserDO().getNick());
+            this.setSessionAttr(AppConstant.SESSION_KEY_USER, owner);
             this.setSessionAttr(AppConstant.SESSION_KEY_USER_AVATAR, loginResult.getUserDO().getAvatar());
         }
         this.setSessionAttr(AppConstant.SESSION_KEY_TARGET_USER_ID, loginResult.getUserDO().getUserID());

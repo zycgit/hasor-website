@@ -17,6 +17,7 @@ package net.hasor.website.web.core;
 import net.hasor.restful.WebController;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.domain.JsonResultDO;
+import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.utils.JsonUtils;
 import net.hasor.website.web.utils.LoginUtils;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.security.SecureRandom;
 /**
  * 基类
@@ -36,6 +38,33 @@ public class Action extends WebController {
     protected Logger       logger       = LoggerFactory.getLogger(getClass());
     private   SecureRandom secureRandom = new SecureRandom();
     //
+    protected boolean needLogin() throws IOException {
+        String ctx_path = getRequest().getContextPath();
+        String reqURL = getRequest().getRequestURI();
+        String reqQuery = getRequest().getQueryString();
+        if (StringUtils.isNotBlank(reqQuery)) {
+            reqURL = ctx_path + reqURL + "?" + reqQuery;
+        }
+        return needLogin(reqURL);
+    }
+    protected boolean needLogin(String redirectURI) throws IOException {
+        String ctx_path = getRequest().getContextPath();
+        if (!isLogin()) {
+            if (StringUtils.isBlank(redirectURI)) {
+                redirectURI = ctx_path + "/my/my.htm";
+            }
+            getResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + URLEncoder.encode(redirectURI, "utf-8"));
+            return true;
+        }
+        return false;
+    }
+    protected boolean needLoginAjax() throws IOException {
+        if (!isLogin()) {
+            sendError(ErrorCodes.U_NEED_LOGIN.getMsg());
+            return true;
+        }
+        return false;
+    }
     /** 获取 csrf Token */
     protected final String csrfTokenString() {
         String token = this.getSessionAttr(AppConstant.SESSION_KEY_CSRF_TOKEN);
@@ -96,6 +125,11 @@ public class Action extends WebController {
         int errorCode = errorMessage.getType();
         String errorStr = errorMessage.getMessage();
         this.getResponse().sendRedirect("/error.htm?errorCode=" + errorCode);
+    }
+    //
+    /**登录用户的Nick*/
+    protected Owner getUser() {
+        return LoginUtils.getUser(getRequest());
     }
     //
     /**登录用户的Nick*/

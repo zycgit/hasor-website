@@ -20,9 +20,9 @@ import net.hasor.core.Inject;
 import net.hasor.restful.api.Async;
 import net.hasor.restful.api.MappingTo;
 import net.hasor.web.FileItem;
-import net.hasor.website.oss.AliyunOSSClient;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.EnvironmentConfig;
+import net.hasor.website.oss.AliyunOSSClient;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
@@ -51,9 +51,8 @@ public class UploadToTemp extends Action {
     private AliyunOSSClient   ossClient;
     //
     public void execute() throws IOException {
-        //
-        if (!isLogin()) {
-            sendError(ErrorCodes.U_NEED_LOGIN.getMsg().getMessage());
+        // .need login
+        if (needLoginAjax()) {
             return;
         }
         if (!this.csrfTokenTest()) {

@@ -75,12 +75,56 @@ public class ProjectInfoDAO extends AbstractDao {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("ownerID", ownerID);
-            parameter.put("ownerType", ownerType);
+            parameter.put("ownerType", ownerType.getType());
             List<ProjectInfoDO> result = this.getSqlExecutor().selectList("projectInfo_queryByOwner", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "queryListByOwner")//
+                    .logException(e) //
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    //
+    /** 更新项目信息（不包含：介绍正文、正文格式） */
+    public int updateWithoutContent(ProjectInfoDO project) throws SQLException {
+        if (project.getId() <= 0) {
+            return 0;
+        }
+        if (project.getOwnerID() < 0 || project.getOwnerType() == null) {
+            return 0;
+        }
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("info", project);
+            int result = this.getSqlExecutor().update("projectInfo_updateWithoutContent", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+                    .addLog("method", "updateWithoutContent")//
+                    .logException(e) //
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    //
+    /** 更新项目信息（仅包含：介绍正文、正文格式） */
+    public int updateContent(ProjectInfoDO project) throws SQLException {
+        if (project.getId() <= 0) {
+            return 0;
+        }
+        if (project.getOwnerID() < 0 || project.getOwnerType() == null) {
+            return 0;
+        }
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("info", project);
+            int result = this.getSqlExecutor().update("projectInfo_updateContent", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+                    .addLog("method", "updateContent")//
                     .logException(e) //
                     .toJson(), e);
             throw e;

@@ -44,9 +44,7 @@ public class My extends Action {
     //
     public void execute(RenderData data) throws IOException {
         // .need login
-        String ctx_path = data.getHttpRequest().getContextPath();
-        if (!isLogin()) {
-            data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/my/my.htm");
+        if (needLogin()) {
             return;
         }
         // .user info
@@ -70,6 +68,7 @@ public class My extends Action {
             info.setProvider(provider);
             info.setHtml_css(provider.toLowerCase());
             info.setHtml_id(provider.toLowerCase() + "AuthorizationUrl");
+            String ctx_path = data.getHttpRequest().getContextPath();
             info.setHtml_href(this.oauthManager.evalLoginURL(provider, "", ctx_path + "/account/bind.do"));
             infoList.add(info);
             for (UserSourceDO sourceDO : user.getUserSourceList()) {

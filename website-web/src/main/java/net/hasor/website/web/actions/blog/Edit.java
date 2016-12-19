@@ -47,8 +47,7 @@ public class Edit extends Action {
         // .正式环境必须执行登陆
         if (!isLogin()) {
             if (StringUtils.equalsIgnoreCase(action, "htm")) {
-                String ctx_path = data.getHttpRequest().getContextPath();
-                data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/blog/edit.htm?content_id=" + contentID);
+                this.needLogin();
                 return;
             } else {
                 sendJsonError(ErrorCodes.U_NEED_LOGIN.getMsg());

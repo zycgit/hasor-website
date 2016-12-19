@@ -184,20 +184,107 @@ public class ProjectManager {
     //
     /** 查询首页项目 */
     public Result<List<ProjectInfoDO>> queryTopProjectList() {
-        //
-        return null;
+        return null;// TODO
     }
     //
-    /** 更新项目信息（不包含：项目名、小标题、介绍正文、正文格式） */
+    /** 更新项目信息（不包含：介绍正文、正文格式） */
     public Result<Boolean> updateProjectWithoutContent(ProjectInfoDO project) {
-        //
-        return null;
+        // .验证
+        boolean test1 = project.getId() <= 0;
+        boolean test2 = project.getOwnerID() < 0 || project.getOwnerType() == null;
+        boolean test3 = StringUtils.isBlank(project.getName());
+        if (test1 || test2 || test3) {
+            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_V_PROJECT_INFO_FAILED.getMsg())//
+                    .setResult(false);
+            logger.error(LogUtils.create("ERROR_006_0009")//
+                    .addLog("ownerID", project.getOwnerID()) //
+                    .addLog("ownerType", project.getOwnerType()) //
+                    .addLog("error", resultDO.firstMessage().getMessage()) //
+                    .toJson());
+        }
+        // .保存
+        try {
+            int res = this.projectInfoDAO.updateWithoutContent(project);
+            if (res <= 0) {
+                ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                        .setSuccess(false)//
+                        .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
+                        .setResult(false);
+                logger.error(LogUtils.create("ERROR_006_0007")//
+                        .addLog("ownerID", project.getOwnerID()) //
+                        .addLog("ownerType", project.getOwnerType()) //
+                        .addLog("error", resultDO.firstMessage().getMessage()) //
+                        .toJson());
+                return resultDO;
+            } else {
+                return new ResultDO<Boolean>(true)//
+                        .setSuccess(true)//
+                        .setResult(true);
+            }
+        } catch (Exception e) {
+            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
+                    .setResult(false);
+            logger.error(LogUtils.create("ERROR_999_0003")//
+                    .addLog("ownerID", project.getOwnerID()) //
+                    .addLog("ownerType", project.getOwnerType()) //
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return resultDO;
+        }
     }
     //
-    /** 更新项目信息（仅包含：项目名、小标题、介绍正文、正文格式） */
+    /** 更新项目信息（仅包含：介绍正文、正文格式） */
     public Result<Boolean> updateProjectContent(ProjectInfoDO project) {
-        //
-        return null;
+        // .验证
+        boolean test1 = project.getId() <= 0;
+        boolean test2 = project.getOwnerID() < 0 || project.getOwnerType() == null;
+        boolean test4 = project.getContentFormat() == null;
+        if (test1 || test2 || test4) {
+            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_V_PROJECT_INFO_FAILED.getMsg())//
+                    .setResult(false);
+            logger.error(LogUtils.create("ERROR_006_0009")//
+                    .addLog("ownerID", project.getOwnerID()) //
+                    .addLog("ownerType", project.getOwnerType()) //
+                    .addLog("error", resultDO.firstMessage().getMessage()) //
+                    .toJson());
+        }
+        // .保存
+        try {
+            int res = this.projectInfoDAO.updateContent(project);
+            if (res <= 0) {
+                ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                        .setSuccess(false)//
+                        .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
+                        .setResult(false);
+                logger.error(LogUtils.create("ERROR_006_0008")//
+                        .addLog("ownerID", project.getOwnerID()) //
+                        .addLog("ownerType", project.getOwnerType()) //
+                        .addLog("error", resultDO.firstMessage().getMessage()) //
+                        .toJson());
+                return resultDO;
+            } else {
+                return new ResultDO<Boolean>(true)//
+                        .setSuccess(true)//
+                        .setResult(true);
+            }
+        } catch (Exception e) {
+            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
+                    .setResult(false);
+            logger.error(LogUtils.create("ERROR_999_0003")//
+                    .addLog("ownerID", project.getOwnerID()) //
+                    .addLog("ownerType", project.getOwnerType()) //
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return resultDO;
+        }
     }
     //
     //    /** 查询项目列表 */

@@ -36,9 +36,7 @@ public class Bind extends Action {
     //
     public void execute(RenderData data) throws IOException {
         // .need login
-        String ctx_path = data.getHttpRequest().getContextPath();
-        if (!isLogin()) {
-            data.getHttpResponse().sendRedirect(ctx_path + "/account/login.htm?redirectURI=" + ctx_path + "/my/my.htm");
+        if (needLogin("/my/my.htm")) {
             return;
         }
         //
@@ -70,6 +68,7 @@ public class Bind extends Action {
             return;
         }
         // .绑定成功
+        String ctx_path = getRequest().getContextPath();
         data.getHttpResponse().sendRedirect(ctx_path + "/my/my.htm");
     }
 }

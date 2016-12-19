@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.List;
 /**
  * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)
@@ -48,7 +49,7 @@ public class DaoTest extends AbstractTest {
     public void insert() throws SQLException {
         //
         ProjectInfoDO projectDO = new ProjectInfoDO();
-        projectDO.setOwnerID(0);
+        projectDO.setOwnerID(1);
         projectDO.setOwnerType(OwnerType.Personal);
         projectDO.setParentID(null);
         projectDO.setName("testProject");
@@ -69,4 +70,11 @@ public class DaoTest extends AbstractTest {
         logger.info(JSON.toJSONString(infoDO));
     }
     //
+    @Test
+    public void queryByOwner() throws SQLException {
+        //
+        List<ProjectInfoDO> projectList = this.projectInfoDAO.queryByOwner(1L, OwnerType.Personal);
+        //
+        logger.info(JSON.toJSONString(projectList));
+    }
 }

@@ -15,6 +15,7 @@
  */
 package net.hasor.website.web.utils;
 import net.hasor.website.core.AppConstant;
+import net.hasor.website.domain.owner.SimpleOwner;
 import org.more.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,17 +26,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LoginUtils {
     //
+    /**获取登录用户*/
+    public static SimpleOwner getUser(HttpServletRequest request) {
+        SimpleOwner owner = (SimpleOwner) request.getSession(true).getAttribute(AppConstant.SESSION_KEY_USER);
+        return owner;
+    }
+    //
     /**登录用户的Nick*/
     public static String getUserNick(HttpServletRequest request) {
-        try {
-            Object userNick = request.getSession(true).getAttribute(AppConstant.SESSION_KEY_USER_NICK);
-            if (userNick == null) {
-                return "";
-            } else {
-                return userNick.toString();
-            }
-        } catch (Exception e) {
+        SimpleOwner owner = getUser(request);
+        if (owner == null) {
             return "";
+        } else {
+            return owner.getOwnerName();
         }
     }
     /**获取登陆用户的头像*/
@@ -54,15 +57,11 @@ public class LoginUtils {
     //
     /**登录用户的ID*/
     public static long getUserID(HttpServletRequest request) {
-        try {
-            Object userID = request.getSession(true).getAttribute(AppConstant.SESSION_KEY_USER_ID);
-            if (userID == null) {
-                return 0;
-            } else {
-                return Long.parseLong(userID.toString());
-            }
-        } catch (Exception e) {
-            return 0;
+        SimpleOwner owner = getUser(request);
+        if (owner == null) {
+            return 0L;
+        } else {
+            return owner.getOwnerID();
         }
     }
     /**获取最后一次调用登陆系统返回的UserID*/

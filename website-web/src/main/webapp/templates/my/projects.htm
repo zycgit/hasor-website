@@ -16,15 +16,26 @@ ${rootData.put('pageTitle','我的项目')}
 </div>
 <div style="padding-left: 210px;">
     <#if project?? >
-        <!-- 个人信息 -->
+        <!-- 详情 -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">项目信息</h3>
+                <h3 class="panel-title">详情</h3>
             </div>
             <div class="panel-body">
                 <div>
                     <span class="col-sm-1 label label-success">项目名称</span>&nbsp;${project.name}
                 </div>
+                subtitle ${project.subtitle} <br/>
+                contentFormat ${project.contentFormat.desc} <br/>
+                present ${project.present} <br/>
+            </div>
+        </div>
+        <!-- 项目信息 -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">项目信息</h3>
+            </div>
+            <div class="panel-body">
                 <div>
                     <span class="col-sm-1 label label-success">父&nbsp;项&nbsp;目</span>&nbsp;${project.parentID}
                 </div>
@@ -54,18 +65,26 @@ ${rootData.put('pageTitle','我的项目')}
                 </div>
             </div>
         </div>
-
-        subtitle ${project.subtitle} <br/>
-        contentFormat ${project.contentFormat.desc} <br/>
-        present ${project.present} <br/>
-
-        <br/><br/>==版本==<br/>
-        [<a>新增版本</a>]
-
-        <br/><br/>==操作==<br/>
-        [<a>删除项目</a>]
-        [<a>推送到首页</a>]
-        [<a>转移</a>]
+        <!-- 版本信息 -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">版本信息</h3>
+            </div>
+            <div class="panel-body">
+                [<a>新增版本</a>]
+            </div>
+        </div>
+        <!-- 操作 -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">操作</h3>
+            </div>
+            <div class="panel-body">
+                [<a>删除项目</a>]
+                [<a>推送到首页</a>]
+                [<a>转移</a>]
+            </div>
+        </div>
 
     </#if>
     <#if !project?? >

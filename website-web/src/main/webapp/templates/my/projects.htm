@@ -71,7 +71,16 @@ ${rootData.put('pageTitle','我的项目')}
                 <h3 class="panel-title">版本信息</h3>
             </div>
             <div class="panel-body">
-                [<a>新增版本</a>]
+                [<a>新增版本</a>]<br/>
+                <#list versionList as ver>
+                    ${ver.version}<br/>
+                </#list>
+                <#if !versionList?? || (versionList?size = 0) >
+                    尚未发布任何版本
+                </#if>
+                <#if versionErrorMessage??>
+                    版本数据加载错误：${versionErrorMessage.getMessage()}
+                </#if>
             </div>
         </div>
         <!-- 操作 -->

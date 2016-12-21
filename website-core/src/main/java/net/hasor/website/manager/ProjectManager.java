@@ -20,6 +20,7 @@ import net.hasor.website.datadao.ProjectInfoDAO;
 import net.hasor.website.datadao.ProjectVersionDAO;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.OwnerType;
 import net.hasor.website.domain.enums.ProjectStatus;
@@ -169,7 +170,7 @@ public class ProjectManager {
                     .setSuccess(true)//
                     .setResult(projectList);
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LogUtils.create("ERROR_999_0003")//
                     .addLog("queryType", "projectInfoDAO.queryByOwner") //
                     .addLog("ownerID", owner.getOwnerID()) //
                     .addLog("ownerType", owner.getOwnerType().name()) //
@@ -287,8 +288,36 @@ public class ProjectManager {
         }
     }
     //
-    //    /** 查询项目列表 */
-    //    protected PageResult<ProjectInfoDO> queryProjectList(ProjectQuery query) {
-    //        return null;
-    //    }
+    /** 查询项目的版本列表 */
+    public Result<List<ProjectVersionDO>> queryVersionListByProject(long projectID) {
+        // .id判断
+        if (projectID <= 0) {
+            logger.error(LogUtils.create("ERROR_006_0010")//
+                    .addLog("projectID", projectID) //
+                    .addLog("error", ErrorCodes.P_PROJECT_NOT_EXIST.getMsg().getMessage()) //
+                    .toJson());
+            return new ResultDO<List<ProjectVersionDO>>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg())//
+                    .setResult(null);
+        }
+        // .查询数据
+        try {
+            List<ProjectVersionDO> versionList = this.projectVersionDAO.queryByProject(projectID);
+            versionList = (versionList == null) ? new ArrayList<ProjectVersionDO>(0) : versionList;
+            return new ResultDO<List<ProjectVersionDO>>(true)//
+                    .setSuccess(true)//
+                    .setResult(versionList);
+        } catch (Exception e) {
+            logger.error(LogUtils.create("ERROR_999_0003")//
+                    .addLog("queryType", "projectVersionDAO.queryByProject") //
+                    .addLog("projectID", projectID) //
+                    .addLog("error", "query error -> " + e.getMessage()) //
+                    .toJson(), e);
+            return new ResultDO<List<ProjectVersionDO>>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_OWNER_ERROR.getMsg())//
+                    .setResult(null);
+        }
+    }
 }

@@ -15,6 +15,7 @@
  */
 package net.hasor.website.domain;
 import net.hasor.website.domain.enums.ContentFormat;
+import net.hasor.website.domain.enums.VersionStatus;
 import net.hasor.website.domain.futures.ProjectVersionFutures;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ public class ProjectVersionDO {
     private long                  projectID       = 0;     //归属项目ID
     private Date                  releaseTime     = null;  //发布时间
     private String                version         = null;  //版本号
+    private VersionStatus         status          = null;  //状态
     private String                subtitle        = null;  //小标题
     private String                changelog       = null;  //更新内容
     private ContentFormat         changelogFormat = null;  //更新内容格式
@@ -58,6 +60,12 @@ public class ProjectVersionDO {
     }
     public void setVersion(String version) {
         this.version = version;
+    }
+    public VersionStatus getStatus() {
+        return status;
+    }
+    public void setStatus(VersionStatus status) {
+        this.status = status;
     }
     public String getSubtitle() {
         return subtitle;

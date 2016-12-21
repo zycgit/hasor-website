@@ -7,6 +7,7 @@
         <result property="projectID"        column="project_id"/>
         <result property="releaseTime"      column="release_time"/>
         <result property="version"          column="version"/>
+        <result property="status"           column="status"           typeHandler="net.hasor.website.datadao.convert.VersionStatusConvert"/>
         <result property="subtitle"         column="subtitle"/>
         <result property="changelog"        column="changelog"/>
         <result property="changelogFormat"  column="changelog_format" typeHandler="net.hasor.website.datadao.convert.ContentFormatConvert"/>
@@ -20,6 +21,7 @@
         project_id,
         release_time,
         version,
+        status,
         subtitle,
         changelog,
         changelog_format,
@@ -34,6 +36,7 @@
             project_id,
             release_time,
             version,
+            status,
             subtitle,
             changelog,
             changelog_format,
@@ -44,6 +47,7 @@
             #{projectID},
             #{releaseTime},
             #{version},
+            #{status,          typeHandler=net.hasor.website.datadao.convert.VersionStatusConvert},
             #{subtitle},
             #{changelog},
             #{changelogFormat, typeHandler=net.hasor.website.datadao.convert.ContentFormatConvert},
@@ -55,5 +59,18 @@
             select LAST_INSERT_ID() as value
         </selectKey>
     </insert>
+
+    <!-- 根据项目owner获取项目列表 -->
+    <select id="projectVersion_queryByProject" resultMap="projectVersionDOMap">
+        select
+            <include refid="projectVersionDO_allColumns"/>
+        from
+            PROJECT_VERSION
+        where 1=1
+            and project_id = #{projectID}
+        order by
+            release_time desc
+    </select>
+
 
 </mapper>

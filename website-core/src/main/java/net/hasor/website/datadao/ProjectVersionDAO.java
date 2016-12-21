@@ -19,6 +19,10 @@ import net.hasor.website.domain.ProjectVersionDO;
 import org.more.bizcommon.log.LogUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /**
  *
  * @version : 2016年08月08日
@@ -37,6 +41,25 @@ public class ProjectVersionDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "insertVersion")//
+                    .logException(e) //
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    //
+    /** 查询项目版本列表 */
+    public List<ProjectVersionDO> queryByProject(long projectID) throws SQLException {
+        if (projectID <= 0) {
+            return new ArrayList<ProjectVersionDO>(0);
+        }
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("projectID", projectID);
+            List<ProjectVersionDO> result = this.getSqlExecutor().selectList("projectVersion_queryByProject", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
+                    .addLog("method", "queryByProject")//
                     .logException(e) //
                     .toJson(), e);
             throw e;

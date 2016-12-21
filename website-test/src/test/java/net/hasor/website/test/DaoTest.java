@@ -21,16 +21,20 @@ import net.hasor.junit.HasorUnitRunner;
 import net.hasor.website.datadao.ProjectInfoDAO;
 import net.hasor.website.datadao.ProjectVersionDAO;
 import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.domain.enums.ContentFormat;
 import net.hasor.website.domain.enums.OwnerType;
 import net.hasor.website.domain.enums.SourceType;
+import net.hasor.website.domain.enums.VersionStatus;
 import net.hasor.website.domain.futures.ProjectFutures;
+import net.hasor.website.domain.futures.ProjectVersionFutures;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 /**
  * @version : 2016年1月10日
@@ -46,7 +50,7 @@ public class DaoTest extends AbstractTest {
     protected ProjectVersionDAO projectVersionDAO;
     //
     @Test
-    public void insert() throws SQLException {
+    public void insertProject() throws SQLException {
         //
         ProjectInfoDO projectDO = new ProjectInfoDO();
         projectDO.setOwnerID(1);
@@ -64,6 +68,27 @@ public class DaoTest extends AbstractTest {
         projectDO.setFutures(new ProjectFutures());
         //
         long i = projectInfoDAO.insertProject(projectDO);
+        logger.info("i=" + i);
+        //
+        ProjectInfoDO infoDO = projectInfoDAO.queryByID(i);
+        logger.info(JSON.toJSONString(infoDO));
+    }
+    @Test
+    public void insertVersion() throws SQLException {
+        //
+        ProjectVersionDO versionDO = new ProjectVersionDO();
+        versionDO.setProjectID(2L);
+        versionDO.setReleaseTime(new Date());
+        versionDO.setVersion("1.0.1");
+        versionDO.setStatus(VersionStatus.Release);
+        versionDO.setSubtitle("小标题");
+        versionDO.setChangelog("更新内容");
+        versionDO.setChangelogFormat(ContentFormat.MD);
+        versionDO.setFutures(new ProjectVersionFutures());
+        versionDO.setCreateTime(new Date());
+        versionDO.setModifyTime(new Date());
+        //
+        long i = projectVersionDAO.insertVersion(versionDO);
         logger.info("i=" + i);
         //
         ProjectInfoDO infoDO = projectInfoDAO.queryByID(i);

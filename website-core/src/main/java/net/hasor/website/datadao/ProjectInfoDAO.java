@@ -50,7 +50,7 @@ public class ProjectInfoDAO extends AbstractDao {
     //
     /** 根据项目ID查询项目 */
     public ProjectInfoDO queryByID(long projectID) throws SQLException {
-        if (projectID < 0) {
+        if (projectID <= 0) {
             return null;
         }
         try {
@@ -69,7 +69,7 @@ public class ProjectInfoDAO extends AbstractDao {
     //
     /** 根据owner查询项目列表 */
     public List<ProjectInfoDO> queryByOwner(long ownerID, OwnerType ownerType) throws SQLException {
-        if (ownerID < 0 || ownerType == null) {
+        if (ownerID <= 0 || ownerType == null) {
             return new ArrayList<ProjectInfoDO>(0);
         }
         try {
@@ -92,7 +92,7 @@ public class ProjectInfoDAO extends AbstractDao {
         if (project.getId() <= 0) {
             return 0;
         }
-        if (project.getOwnerID() < 0 || project.getOwnerType() == null) {
+        if (project.getOwnerID() <= 0 || project.getOwnerType() == null) {
             return 0;
         }
         try {
@@ -114,7 +114,7 @@ public class ProjectInfoDAO extends AbstractDao {
         if (project.getId() <= 0) {
             return 0;
         }
-        if (project.getOwnerID() < 0 || project.getOwnerType() == null) {
+        if (project.getOwnerID() <= 0 || project.getOwnerType() == null) {
             return 0;
         }
         try {

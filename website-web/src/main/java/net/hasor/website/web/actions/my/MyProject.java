@@ -20,6 +20,7 @@ import net.hasor.restful.api.MappingTo;
 import net.hasor.restful.api.ReqParam;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.manager.ProjectManager;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
@@ -44,9 +45,9 @@ public class MyProject extends Action {
             return;
         }
         //
+        // .我的项目
         Owner userOwner = getUser();
         Result<List<ProjectInfoDO>> result = this.projectManager.queryMyProjectList(userOwner);
-        //
         if (!result.isSuccess()) {
             logger.error(LogUtils.create("ERROR_003_0008")//
                     .addLog("result", result) //
@@ -56,11 +57,13 @@ public class MyProject extends Action {
             sendError(result.firstMessage());
             return;
         }
-        //
         List<ProjectInfoDO> list = result.getResult();
         if (list == null) {
             list = new ArrayList<ProjectInfoDO>(0);
         }
+        putData("projectList", list);
+        //
+        // .当前项目
         ProjectInfoDO infoDO = null;
         for (ProjectInfoDO info : list) {
             if (curProjectID == info.getId()) {
@@ -70,8 +73,23 @@ public class MyProject extends Action {
         if (infoDO == null && !list.isEmpty()) {
             infoDO = list.get(0);
         }
-        //
         putData("project", infoDO);
-        putData("projectList", list);
+        //
+        // .版本列表
+        List<ProjectVersionDO> versionList = new ArrayList<ProjectVersionDO>(0);
+        if (infoDO != null) {
+            Result<List<ProjectVersionDO>> versionResult = this.projectManager.queryVersionListByProject(infoDO.getId());
+            if (!versionResult.isSuccess()) {
+                logger.error(LogUtils.create("ERROR_003_0008")//
+                        .addLog("result", versionResult) //
+                        .addLog("currentUserID", userOwner.getOwnerID())//
+                        .addLog("errorMessage", "queryVersionListByProject -> " + versionResult.firstMessage().getMessage())//
+                        .toJson());
+                putData("versionErrorMessage", versionResult.firstMessage());
+            } else {
+                versionList = versionResult.getResult();
+            }
+        }
+        putData("versionList", versionList);
     }
 }

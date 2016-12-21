@@ -56,6 +56,7 @@ public enum ErrorCodes {
     P_OWNER_NOT_EXIST(303, "对不起，Owner不存在。"),//
     P_SAVE_PROJECT_FAILED(304, "项目信息保存失败，请稍后重试。"),//
     P_V_PROJECT_INFO_FAILED(305, "项目信息不完整或错误的表单数据。"),//
+    P_PROJECT_NOT_EXIST(306, "不存在的项目。"),//
     //
     BAD_PARAMS(901, "错误的调用参数。"),//
     BAD_REQUEST(902, "错误的请求。"),//

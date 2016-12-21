@@ -4,6 +4,7 @@ create table `PROJECT_VERSION` (
 
   `release_time`	    DATETIME		  NOT NULL			    	    COMMENT '发布时间',
   `version`	          VARCHAR(50)		NOT NULL			    	    COMMENT '版本号',
+	`status`	          INT	          NOT NULL                COMMENT '状态',
   `subtitle`		      VARCHAR(150)	NULL				            COMMENT '小标题',
 	`changelog`	        TEXT	        NOT NULL                COMMENT '更新内容',
 	`changelog_format`	INT	          NOT NULL                COMMENT '更新内容格式',

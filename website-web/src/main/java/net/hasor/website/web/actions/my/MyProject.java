@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.web.actions.projects;
+package net.hasor.website.web.actions.my;
 import net.hasor.core.Inject;
 import net.hasor.restful.RenderData;
 import net.hasor.restful.api.MappingTo;
+import net.hasor.restful.api.ReqParam;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.manager.ProjectManager;
@@ -32,12 +33,12 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/projects/my.htm")
+@MappingTo("/my/projects.htm")
 public class MyProject extends Action {
     @Inject
     private ProjectManager projectManager;
     //
-    public void execute(RenderData data) throws IOException {
+    public void execute(@ReqParam("curProjectID") long curProjectID, RenderData data) throws IOException {
         // .need login
         if (needLogin()) {
             return;
@@ -60,6 +61,17 @@ public class MyProject extends Action {
         if (list == null) {
             list = new ArrayList<ProjectInfoDO>(0);
         }
+        ProjectInfoDO infoDO = null;
+        for (ProjectInfoDO info : list) {
+            if (curProjectID == info.getId()) {
+                infoDO = info;
+            }
+        }
+        if (infoDO == null && !list.isEmpty()) {
+            infoDO = list.get(0);
+        }
+        //
+        putData("project", infoDO);
         putData("projectList", list);
     }
 }

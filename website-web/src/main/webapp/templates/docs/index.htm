@@ -13,6 +13,7 @@ ${rootData.put('navIndex',1)}
 </script>
 <ul class="nav nav-tabs">
     <#assign isTop=false/>
+    <#assign className=""/>
     <#list allVersion as versionInfo>
         <#if versionInfo_index lt 3 >
             <#assign className=""/>
@@ -26,8 +27,6 @@ ${rootData.put('navIndex',1)}
     <#if isTop == false>
         <#assign className="active"/>
         <#assign curTitle="(v${curVersion.version})"/>
-        <#else/>
-        <#assign className=""/>
     </#if>
     <li class="dropdown ${className}">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">

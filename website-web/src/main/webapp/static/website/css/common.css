@@ -8,12 +8,20 @@
     width: 150px !important;
 }
 
+.w200px {
+    width: 200px !important;
+}
+
 .w300px {
     width: 300px !important;
 }
 
 .flowRight {
     float: right;
+}
+
+.flowLeft {
+    float: left;
 }
 
 .g-option-tal {

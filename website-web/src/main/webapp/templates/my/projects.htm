@@ -1,0 +1,75 @@
+${rootData.put('pageTitle','我的项目')}
+<div class="w200px flowLeft">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-info">创建新项目</a>
+        <#list projectList as item>
+            <#assign activeCss=""/>
+            <#if project?? && item.id == project.id>
+                <#assign activeCss="list-group-item-warning"/>
+            </#if>
+            <a class="list-group-item ${activeCss}" href="${ctx_path}/my/projects.htm?curProjectID=${item.id}">
+                <span class="badge">14</span>
+                ${item.name}
+            </a>
+        </#list>
+    </div>
+</div>
+<div style="padding-left: 210px;">
+    <#if project?? >
+        <!-- 个人信息 -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">项目信息</h3>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <span class="col-sm-1 label label-success">项目名称</span>&nbsp;${project.name}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">父&nbsp;项&nbsp;目</span>&nbsp;${project.parentID}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">活跃状态</span>&nbsp;${project.status.desc}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">首页链接</span>&nbsp;${project.homePage}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">下载链接</span>&nbsp;${project.downPage}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">项目类型</span>&nbsp;${project.sourceType.desc}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">主要语言</span>&nbsp;${project.language}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">授权协议</span>&nbsp;${project.license}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${project.createTime?string("yyyy-MM-dd HH:mm:ss")}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${project.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
+                </div>
+            </div>
+        </div>
+
+        subtitle ${project.subtitle} <br/>
+        contentFormat ${project.contentFormat.desc} <br/>
+        present ${project.present} <br/>
+
+        <br/><br/>==版本==<br/>
+        [<a>新增版本</a>]
+
+        <br/><br/>==操作==<br/>
+        [<a>删除项目</a>]
+        [<a>推送到首页</a>]
+        [<a>转移</a>]
+
+    </#if>
+    <#if !project?? >
+        您还没有创建任何项目，请[<a>创建新项目</a>]。
+    </#if>
+
+</div>

@@ -16,12 +16,9 @@
 package net.hasor.website.core;
 import net.hasor.core.Inject;
 import net.hasor.db.jdbc.JdbcOperations;
-import net.hasor.plugins.mybatis.SqlExecutorOperations;
-import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.db.orm.mybatis3.SqlExecutorOperations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 /**
  * @version : 2015年5月22日
  * @author 赵永春(zyc@hasor.net)

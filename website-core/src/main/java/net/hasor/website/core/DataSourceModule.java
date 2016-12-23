@@ -18,7 +18,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import net.hasor.core.*;
 import net.hasor.db.DBModule;
 import net.hasor.db.jdbc.core.JdbcTemplate;
-import net.hasor.plugins.mybatis.MyBatisModule;
+import net.hasor.db.orm.mybatis3.MyBatisModule;
 import net.hasor.website.manager.EnvironmentConfig;
 import org.more.util.StringUtils;
 import org.slf4j.Logger;

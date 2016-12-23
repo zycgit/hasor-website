@@ -16,8 +16,8 @@
 package net.hasor.website.test;
 import com.alibaba.fastjson.JSON;
 import net.hasor.core.Inject;
-import net.hasor.junit.ContextConfiguration;
-import net.hasor.junit.HasorUnitRunner;
+import net.hasor.plugins.junit.ContextConfiguration;
+import net.hasor.plugins.junit.HasorUnitRunner;
 import net.hasor.website.datadao.ProjectInfoDAO;
 import net.hasor.website.datadao.ProjectVersionDAO;
 import net.hasor.website.domain.ProjectInfoDO;

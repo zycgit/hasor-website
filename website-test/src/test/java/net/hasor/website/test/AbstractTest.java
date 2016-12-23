@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package net.hasor.website.test;
-import net.hasor.junit.ContextConfiguration;
-import net.hasor.junit.HasorUnitRunner;
+import net.hasor.plugins.junit.ContextConfiguration;
+import net.hasor.plugins.junit.HasorUnitRunner;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

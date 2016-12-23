@@ -15,8 +15,8 @@
  */
 package net.hasor.website.web.forms;
 import net.hasor.website.web.valids.LoginCallBackFormValidation;
-import net.hasor.restful.api.ReqParam;
-import net.hasor.restful.api.ValidBy;
+import net.hasor.web.annotation.ReqParam;
+import net.hasor.web.annotation.ValidBy;
 /**
  * 登录表单回调form。
  * @version : 2016年1月10日

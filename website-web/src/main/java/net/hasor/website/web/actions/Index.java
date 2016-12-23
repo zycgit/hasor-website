@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions;
+import net.hasor.web.RenderData;
+import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.web.core.Action;
-import net.hasor.restful.RenderData;
-import net.hasor.restful.api.MappingTo;
 /**
  *
  * @version : 2016年1月1日

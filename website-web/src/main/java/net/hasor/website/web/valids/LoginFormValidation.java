@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package net.hasor.website.web.valids;
-import net.hasor.restful.ValidErrors;
-import net.hasor.restful.Validation;
+import net.hasor.web.ValidErrors;
+import net.hasor.web.Validation;
 import net.hasor.website.web.forms.LoginForm;
 import org.more.util.StringUtils;
 /**
@@ -31,7 +31,7 @@ public class LoginFormValidation implements Validation<LoginForm> {
             return;
         }
         if (StringUtils.isBlank(dataForm.getPassword())) {
-            errors.addError("login", "密码不能为空！");
+            errors.addError("password", "密码不能为空！");
             return;
         }
     }

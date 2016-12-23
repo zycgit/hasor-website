@@ -15,10 +15,10 @@
  */
 package net.hasor.website.web.actions.blog;
 import net.hasor.core.Inject;
-import net.hasor.restful.RenderData;
-import net.hasor.restful.api.MappingTo;
-import net.hasor.restful.api.PathParam;
-import net.hasor.restful.api.ReqParam;
+import net.hasor.web.RenderData;
+import net.hasor.web.annotation.MappingTo;
+import net.hasor.web.annotation.PathParam;
+import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.domain.ContentCategoryDO;
 import net.hasor.website.domain.enums.ContentType;
 import net.hasor.website.domain.enums.ErrorCodes;

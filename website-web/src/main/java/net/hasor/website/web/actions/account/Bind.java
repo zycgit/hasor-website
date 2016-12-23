@@ -15,8 +15,8 @@
  */
 package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
-import net.hasor.restful.RenderData;
-import net.hasor.restful.api.MappingTo;
+import net.hasor.web.RenderData;
+import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;

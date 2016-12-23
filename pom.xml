@@ -13,6 +13,7 @@
     <!-- 配置属性 -->
     <properties>
         <website.version>1.0.0-SNAPSHOT</website.version>
+        <atlassian.commonmark.version>0.8.0</atlassian.commonmark.version>
         <wtpversion>2.0</wtpversion>
         <downloadSources>true</downloadSources>
         <downloadJavadocs>true</downloadJavadocs>
@@ -152,27 +153,37 @@
             <dependency>
                 <groupId>com.atlassian.commonmark</groupId>
                 <artifactId>commonmark</artifactId>
-                <version>0.6.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark-ext-yaml-front-matter</artifactId>
-                <version>0.6.0</version>
+                <version>${atlassian.commonmark.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.commonmark</groupId>
                 <artifactId>commonmark-ext-gfm-tables</artifactId>
-                <version>0.6.0</version>
+                <version>${atlassian.commonmark.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.commonmark</groupId>
                 <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
-                <version>0.6.0</version>
+                <version>${atlassian.commonmark.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.commonmark</groupId>
                 <artifactId>commonmark-ext-autolink</artifactId>
-                <version>0.6.0</version>
+                <version>${atlassian.commonmark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.commonmark</groupId>
+                <artifactId>commonmark-ext-yaml-front-matter</artifactId>
+                <version>${atlassian.commonmark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.commonmark</groupId>
+                <artifactId>commonmark-ext-ins</artifactId>
+                <version>${atlassian.commonmark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.commonmark</groupId>
+                <artifactId>commonmark-ext-heading-anchor</artifactId>
+                <version>${atlassian.commonmark.version}</version>
             </dependency>
             <!-- markdown : end -->
 

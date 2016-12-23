@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.docs;
-import net.hasor.restful.api.MappingTo;
-import net.hasor.restful.api.PathParam;
+import net.hasor.web.annotation.MappingTo;
+import net.hasor.web.annotation.PathParam;
 /**
  *
  * @version : 2016年1月1日

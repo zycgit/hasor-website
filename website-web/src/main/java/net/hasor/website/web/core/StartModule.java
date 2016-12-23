@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.web.core;
-import net.hasor.restful.RenderEngine;
+import net.hasor.web.RenderEngine;
 import net.hasor.web.WebApiBinder;
 import net.hasor.web.WebModule;
 import net.hasor.website.core.AppConstant;

@@ -15,8 +15,8 @@
  */
 package net.hasor.website.web.valids;
 import net.hasor.website.web.forms.LoginCallBackForm;
-import net.hasor.restful.ValidErrors;
-import net.hasor.restful.Validation;
+import net.hasor.web.ValidErrors;
+import net.hasor.web.Validation;
 import org.more.util.StringUtils;
 /**
  *

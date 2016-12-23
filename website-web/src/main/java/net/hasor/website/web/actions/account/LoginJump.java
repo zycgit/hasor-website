@@ -15,9 +15,9 @@
  */
 package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
-import net.hasor.restful.RenderData;
-import net.hasor.restful.api.MappingTo;
-import net.hasor.restful.api.ReqParam;
+import net.hasor.web.RenderData;
+import net.hasor.web.annotation.MappingTo;
+import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.domain.beans.QuickLoginResult;
 import net.hasor.website.domain.owner.SimpleOwner;

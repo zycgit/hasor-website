@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.docs;
-import net.hasor.website.web.core.Action;
+import net.hasor.core.Inject;
+import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.VersionInfoDO;
 import net.hasor.website.manager.EnvironmentConfig;
 import net.hasor.website.manager.VersionInfoManager;
-import net.hasor.core.Inject;
-import net.hasor.restful.api.MappingTo;
+import net.hasor.website.web.core.Action;
 import org.more.util.StringUtils;
 
 import java.util.List;

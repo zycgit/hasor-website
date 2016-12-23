@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.login.oauth;
-import net.hasor.restful.api.ReqParam;
+import net.hasor.web.annotation.ReqParam;
 /**
  * 登录表单回调form。
  * @version : 2016年1月10日

@@ -48,10 +48,6 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark-ext-yaml-front-matter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark-ext-gfm-tables</artifactId>
         </dependency>
         <dependency>
@@ -61,6 +57,18 @@
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark-ext-autolink</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-yaml-front-matter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-ins</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-heading-anchor</artifactId>
         </dependency>
         <!-- markdown : end -->
 

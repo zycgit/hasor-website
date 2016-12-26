@@ -15,12 +15,12 @@
  */
 package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
-import net.hasor.web.DataContext;
+import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;
 import net.hasor.web.annotation.PathParam;
 import net.hasor.web.annotation.Valid;
-import net.hasor.web.valid.ValidContext;
+import net.hasor.web.valid.ValidInvoker;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
@@ -38,7 +38,7 @@ public class Login extends Action {
     @Inject
     private UserManager userManager;
     //
-    public void execute(@PathParam("action") String action, @Valid("SignIn") @Params LoginForm loginForm, DataContext data, ValidContext valid) throws IOException {
+    public void execute(@PathParam("action") String action, @Valid("SignIn") @Params LoginForm loginForm, Invoker data, ValidInvoker valid) throws IOException {
         String ctx_path = data.getHttpRequest().getContextPath();
         this.putData("csrfToken", this.csrfTokenString());
         //

@@ -15,7 +15,7 @@
  */
 package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
-import net.hasor.web.DataContext;
+import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.core.AppConstant;
@@ -35,7 +35,7 @@ public class LoginJump extends Action {
     @Inject
     private UserManager userManager;
     //
-    public void execute(@ReqParam("userCode") String userCode, @ReqParam("quickCode") String quickCode, DataContext data) throws IOException {
+    public void execute(@ReqParam("userCode") String userCode, @ReqParam("quickCode") String quickCode, Invoker data) throws IOException {
         //
         // 登陆请求
         QuickLoginResult loginResult = this.userManager.doQuickLogin(userCode, quickCode);

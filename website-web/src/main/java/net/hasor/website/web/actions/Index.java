@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions;
-import net.hasor.web.DataContext;
+import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.web.core.Action;
 /**
@@ -25,7 +25,7 @@ import net.hasor.website.web.core.Action;
 @MappingTo("/index.htm")
 public class Index extends Action {
     //
-    public void execute(DataContext data) {
+    public void execute(Invoker data) {
         //
     }
 }

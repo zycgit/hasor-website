@@ -15,7 +15,7 @@
  */
 package net.hasor.website.web.actions.my;
 import net.hasor.core.Inject;
-import net.hasor.web.DataContext;
+import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.domain.Owner;
@@ -39,7 +39,7 @@ public class MyProject extends Action {
     @Inject
     private ProjectManager projectManager;
     //
-    public void execute(@ReqParam("curProjectID") long curProjectID, DataContext data) throws IOException {
+    public void execute(@ReqParam("curProjectID") long curProjectID, Invoker data) throws IOException {
         // .need login
         if (needLogin()) {
             return;

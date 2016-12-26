@@ -18,7 +18,7 @@ import net.hasor.core.Inject;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;
 import net.hasor.web.annotation.Valid;
-import net.hasor.web.valid.ValidContext;
+import net.hasor.web.valid.ValidInvoker;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.login.oauth.OAuthManager;
@@ -42,7 +42,7 @@ public class AccessToken extends Action {
     @Inject
     private UserManager  userManager;
     //
-    public void execute(@Valid("AccessToken") @Params LoginCallBackForm loginForm, ValidContext valid) throws IOException {
+    public void execute(@Valid("AccessToken") @Params LoginCallBackForm loginForm, ValidInvoker valid) throws IOException {
         String authCode = loginForm.getCode();
         String provider = loginForm.getProvider();
         // .ajax

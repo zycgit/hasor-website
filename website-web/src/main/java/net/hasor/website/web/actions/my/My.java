@@ -15,7 +15,7 @@
  */
 package net.hasor.website.web.actions.my;
 import net.hasor.core.Inject;
-import net.hasor.web.DataContext;
+import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.UserSourceDO;
@@ -42,7 +42,7 @@ public class My extends Action {
     @Inject
     private UserManager  userManager;
     //
-    public void execute(DataContext data) throws IOException {
+    public void execute(Invoker data) throws IOException {
         // .need login
         if (needLogin()) {
             return;

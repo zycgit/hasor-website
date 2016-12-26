@@ -19,9 +19,9 @@ import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import net.hasor.core.AppContext;
-import net.hasor.web.annotation.Render;
-import net.hasor.web.RenderData;
+import net.hasor.web.DataContext;
 import net.hasor.web.RenderEngine;
+import net.hasor.web.annotation.Render;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.Service;
 import net.hasor.website.web.utils.LoginUtils;
@@ -75,7 +75,7 @@ public class FreemarkerRender implements RenderEngine {
         this.ctxPath = appContext.findBindingBean(AppConstant.VAR_CONTEXT_PATH, String.class);
     }
     @Override
-    public void process(RenderData renderData, Writer writer) throws Throwable {
+    public void process(DataContext renderData, Writer writer) throws Throwable {
         Template temp = this.configuration.getTemplate(renderData.renderTo());
         //
         HashMap<String, Object> data = new HashMap<String, Object>();

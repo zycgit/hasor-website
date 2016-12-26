@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions;
-import net.hasor.web.RenderData;
+import net.hasor.web.DataContext;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.web.core.Action;
@@ -26,7 +26,7 @@ import net.hasor.website.web.core.Action;
 @MappingTo("/error.htm")
 public class Error extends Action {
     //
-    public void execute(@ReqParam("errorKey") String errorKey, @ReqParam("errorCode") int errorCode, RenderData data) {
+    public void execute(@ReqParam("errorKey") String errorKey, @ReqParam("errorCode") int errorCode, DataContext data) {
         //
     }
 }

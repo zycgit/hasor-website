@@ -17,6 +17,7 @@ package net.hasor.website.web.actions.account;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;
 import net.hasor.web.annotation.Valid;
+import net.hasor.web.valid.ValidContext;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginCallBackForm;
@@ -28,9 +29,9 @@ import org.more.bizcommon.log.LogUtils;
  */
 @MappingTo("/account/callback.do")
 public class Callback extends Action {
-    public void execute(@Valid("Callback") @Params LoginCallBackForm loginForm) {
+    public void execute(@Valid("Callback") @Params LoginCallBackForm loginForm, ValidContext valid) {
         //
-        if (!this.isValid()) {
+        if (!valid.isValid()) {
             logger.error(LogUtils.create("ERROR_999_0004")//
                     .addLog("provider", loginForm.getProvider())//
                     .addLog("code", loginForm.getCode())//

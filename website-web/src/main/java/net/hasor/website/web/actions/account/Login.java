@@ -15,11 +15,12 @@
  */
 package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
-import net.hasor.web.RenderData;
+import net.hasor.web.DataContext;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;
 import net.hasor.web.annotation.PathParam;
 import net.hasor.web.annotation.Valid;
+import net.hasor.web.valid.ValidContext;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
@@ -37,14 +38,14 @@ public class Login extends Action {
     @Inject
     private UserManager userManager;
     //
-    public void execute(@PathParam("action") String action, @Valid("SignIn") @Params LoginForm loginForm, RenderData data) throws IOException {
+    public void execute(@PathParam("action") String action, @Valid("SignIn") @Params LoginForm loginForm, DataContext data, ValidContext valid) throws IOException {
         String ctx_path = data.getHttpRequest().getContextPath();
         this.putData("csrfToken", this.csrfTokenString());
         //
         // - 登录请求
         if (StringUtils.equalsIgnoreCase("do", action)) {
             this.putData("loginForm", loginForm);
-            if (data.isValid()) {
+            if (valid.isValid()) {
                 UserDO userDO = this.userManager.queryByLogin(loginForm.getLogin());
                 if (userDO != null && StringUtils.equals(userDO.getPassword(), loginForm.getPassword())) {
                     // .跳转到目标页面
@@ -60,7 +61,7 @@ public class Login extends Action {
         }
         //
         // - 登录页面
-        data.clearValidErrors();//清空验证信息,避免瞎显示
+        valid.clearValidErrors();//清空验证信息,避免瞎显示
         if (this.isLogin()) {
             data.getHttpResponse().sendRedirect(ctx_path + "/my/my.htm");
         }

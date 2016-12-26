@@ -15,7 +15,7 @@
  */
 package net.hasor.website.web.actions.account;
 import net.hasor.core.Inject;
-import net.hasor.web.RenderData;
+import net.hasor.web.DataContext;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.UserManager;
@@ -34,7 +34,7 @@ public class Bind extends Action {
     @Inject
     private UserManager userManager;
     //
-    public void execute(RenderData data) throws IOException {
+    public void execute(DataContext data) throws IOException {
         // .need login
         if (needLogin("/my/my.htm")) {
             return;

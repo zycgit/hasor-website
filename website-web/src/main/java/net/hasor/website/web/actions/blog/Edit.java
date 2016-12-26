@@ -15,7 +15,7 @@
  */
 package net.hasor.website.web.actions.blog;
 import net.hasor.core.Inject;
-import net.hasor.web.RenderData;
+import net.hasor.web.DataContext;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.PathParam;
 import net.hasor.web.annotation.ReqParam;
@@ -43,7 +43,7 @@ public class Edit extends Action {
     @Inject
     private CategoryManager   categoryManager;
     //
-    public void execute(@PathParam("action") String action, @ReqParam("content_id") long contentID, RenderData data) throws IOException {
+    public void execute(@PathParam("action") String action, @ReqParam("content_id") long contentID, DataContext data) throws IOException {
         // .正式环境必须执行登陆
         if (!isLogin()) {
             if (StringUtils.equalsIgnoreCase(action, "htm")) {

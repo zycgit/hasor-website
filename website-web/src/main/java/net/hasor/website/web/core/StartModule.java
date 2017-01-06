@@ -38,6 +38,6 @@ public class StartModule extends WebModule {
         apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
         //
         // .Webs
-        apiBinder.filter("/*").through(0, new JumpFilter());
+        apiBinder.jeeFilter("/*").through(0, new JumpFilter());
     }
 }

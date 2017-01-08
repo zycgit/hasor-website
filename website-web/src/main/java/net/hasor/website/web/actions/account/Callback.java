@@ -16,7 +16,7 @@
 package net.hasor.website.web.actions.account;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;
-import net.hasor.web.annotation.Valid;
+import net.hasor.web.valid.Valid;
 import net.hasor.web.valid.ValidInvoker;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.web.core.Action;

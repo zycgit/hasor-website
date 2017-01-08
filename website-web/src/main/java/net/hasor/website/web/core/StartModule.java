@@ -16,7 +16,7 @@
 package net.hasor.website.web.core;
 import net.hasor.web.WebApiBinder;
 import net.hasor.web.WebModule;
-import net.hasor.web.render.RenderEngine;
+import net.hasor.web.render.RenderApiBinder;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.CoreModule;
 import net.hasor.website.login.oauth.OAuthModule;
@@ -35,7 +35,8 @@ public class StartModule extends WebModule {
         apiBinder.setEncodingCharacter("utf-8", "utf-8");
         String contextPath = apiBinder.getServletContext().getContextPath();
         apiBinder.bindType(String.class).nameWith(AppConstant.VAR_CONTEXT_PATH).toInstance(contextPath);
-        apiBinder.bindType(RenderEngine.class).uniqueName().toInstance(new FreemarkerRender());
+        //
+        apiBinder.tryCast(RenderApiBinder.class).scanAnnoRender("net.hasor.website.web");
         //
         // .Webs
         apiBinder.jeeFilter("/*").through(0, new JumpFilter());

@@ -15,7 +15,7 @@
  */
 package net.hasor.website.web.forms;
 import net.hasor.web.annotation.ReqParam;
-import net.hasor.web.annotation.ValidBy;
+import net.hasor.web.valid.ValidBy;
 import net.hasor.website.web.valids.LoginFormValidation;
 /**
  * 登录表单,指定 LoginFormValidation 类为它的验证器。

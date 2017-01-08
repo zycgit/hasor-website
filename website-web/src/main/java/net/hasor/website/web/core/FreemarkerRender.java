@@ -19,7 +19,7 @@ import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import net.hasor.core.AppContext;
-import net.hasor.web.annotation.Render;
+import net.hasor.web.render.Render;
 import net.hasor.web.render.RenderEngine;
 import net.hasor.web.render.RenderInvoker;
 import net.hasor.website.core.AppConstant;

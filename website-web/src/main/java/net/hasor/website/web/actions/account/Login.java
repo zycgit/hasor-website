@@ -19,7 +19,7 @@ import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;
 import net.hasor.web.annotation.PathParam;
-import net.hasor.web.annotation.Valid;
+import net.hasor.web.valid.Valid;
 import net.hasor.web.valid.ValidInvoker;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.manager.UserManager;

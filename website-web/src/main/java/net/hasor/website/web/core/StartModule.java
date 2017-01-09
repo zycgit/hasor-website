@@ -36,8 +36,7 @@ public class StartModule extends WebModule {
         String contextPath = apiBinder.getServletContext().getContextPath();
         apiBinder.bindType(String.class).nameWith(AppConstant.VAR_CONTEXT_PATH).toInstance(contextPath);
         //
-        RenderApiBinder renderApiBinder = apiBinder.tryCast(RenderApiBinder.class);
-        renderApiBinder.scanAnnoRender("net.hasor.website.web");
+        apiBinder.tryCast(RenderApiBinder.class).scanAnnoRender();
         //
         // .Webs
         apiBinder.jeeFilter("/*").through(0, new JumpFilter());

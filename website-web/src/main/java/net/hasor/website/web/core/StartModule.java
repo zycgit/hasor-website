@@ -37,6 +37,7 @@ public class StartModule extends WebModule {
         apiBinder.bindType(String.class).nameWith(AppConstant.VAR_CONTEXT_PATH).toInstance(contextPath);
         //
         apiBinder.tryCast(RenderApiBinder.class).scanAnnoRender();
+        apiBinder.scanMappingTo();
         //
         // .Webs
         apiBinder.jeeFilter("/*").through(0, new JumpFilter());

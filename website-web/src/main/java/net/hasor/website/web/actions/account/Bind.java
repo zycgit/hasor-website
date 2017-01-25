@@ -19,9 +19,9 @@ import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.UserManager;
+import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
-import net.hasor.rsf.utils.LogUtils;
 
 import java.io.IOException;
 /**
@@ -45,7 +45,7 @@ public class Bind extends Action {
         Result<Boolean> result = this.userManager.reBindLogin(targetUserID, targetProivter, this.getUserID());
         //
         if (!result.isSuccess() || result.getResult() == null) {
-            logger.error(LogUtils.create("ERROR_003_0008")//
+            logger.error(LoggerUtils.create("ERROR_003_0008")//
                     .addLog("result", result) //
                     .addLog("currentUserID", this.getUserID())//
                     .addLog("targetUserID", targetUserID)//
@@ -57,7 +57,7 @@ public class Bind extends Action {
         }
         //
         if (!result.getResult()) {
-            logger.error(LogUtils.create("ERROR_004_0012")//
+            logger.error(LoggerUtils.create("ERROR_004_0012")//
                     .addLog("result", result) //
                     .addLog("currentUserID", this.getUserID())//
                     .addLog("targetUserID", targetUserID)//

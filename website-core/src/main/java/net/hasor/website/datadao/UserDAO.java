@@ -16,7 +16,7 @@
 package net.hasor.website.datadao;
 import net.hasor.website.core.AbstractDao;
 import net.hasor.website.domain.UserDO;
-import net.hasor.rsf.utils.LogUtils;
+import net.hasor.website.utils.LoggerUtils;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class UserDAO extends AbstractDao {
             }
             return 0L;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "insertUser")//
                     .logException(e) //
                     .toJson(), e);
@@ -54,7 +54,7 @@ public class UserDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("user_updateInfo", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "updateUser")//
                     .logException(e) //
                     .toJson(), e);
@@ -70,7 +70,7 @@ public class UserDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("user_loginUpdate", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "loginUpdate")//
                     .logException(e) //
                     .toJson(), e);
@@ -85,7 +85,7 @@ public class UserDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("user_invalidUser", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "invalidUser")//
                     .logException(e) //
                     .toJson(), e);
@@ -101,7 +101,7 @@ public class UserDAO extends AbstractDao {
             UserDO result = this.getSqlExecutor().selectOne("user_queryById", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "queryById")//
                     .logException(e) //
                     .toJson(), e);
@@ -117,7 +117,7 @@ public class UserDAO extends AbstractDao {
             UserDO result = this.getSqlExecutor().selectOne("user_queryByLogin", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "queryByLogin")//
                     .logException(e) //
                     .toJson(), e);

@@ -22,9 +22,9 @@ import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.manager.ProjectManager;
+import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
-import net.hasor.rsf.utils.LogUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class MyProject extends Action {
         Owner userOwner = getUser();
         Result<List<ProjectInfoDO>> result = this.projectManager.queryMyProjectList(userOwner);
         if (!result.isSuccess()) {
-            logger.error(LogUtils.create("ERROR_003_0008")//
+            logger.error(LoggerUtils.create("ERROR_003_0008")//
                     .addLog("result", result) //
                     .addLog("currentUserID", userOwner.getOwnerID())//
                     .addLog("errorMessage", "queryMyProjectList -> " + result.firstMessage())//
@@ -80,7 +80,7 @@ public class MyProject extends Action {
         if (infoDO != null) {
             Result<List<ProjectVersionDO>> versionResult = this.projectManager.queryVersionListByProject(infoDO.getId());
             if (!versionResult.isSuccess()) {
-                logger.error(LogUtils.create("ERROR_003_0008")//
+                logger.error(LoggerUtils.create("ERROR_003_0008")//
                         .addLog("result", versionResult) //
                         .addLog("currentUserID", userOwner.getOwnerID())//
                         .addLog("errorMessage", "queryVersionListByProject -> " + versionResult.firstMessage().getMessage())//

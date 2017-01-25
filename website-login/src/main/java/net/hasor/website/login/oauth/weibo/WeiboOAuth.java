@@ -30,8 +30,8 @@ import net.hasor.website.domain.futures.UserContactInfo;
 import net.hasor.website.domain.futures.UserFutures;
 import net.hasor.website.login.oauth.AbstractOAuth;
 import net.hasor.website.utils.JsonUtils;
+import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.ResultDO;
-import org.more.bizcommon.log.LogUtils;
 import org.more.util.ExceptionUtils;
 import org.more.util.StringUtils;
 
@@ -98,7 +98,7 @@ public class WeiboOAuth extends AbstractOAuth {
                     + "&redirect_uri=" + URLEncoder.encode(redirectURI, "utf-8") //
                     + "&scope=" + this.scope;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0004")//
+            logger.error(LoggerUtils.create("ERROR_004_0004")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -127,7 +127,7 @@ public class WeiboOAuth extends AbstractOAuth {
                     + "&code=" + authCode//
                     + "&redirect_uri=" + URLEncoder.encode(this.getRedirectURI() + "?" + URL_DATA, "utf-8");
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0005")//
+            logger.error(LoggerUtils.create("ERROR_004_0005")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -148,7 +148,7 @@ public class WeiboOAuth extends AbstractOAuth {
             Response response = this.httpClient.httpPost(tokenURL);
             String data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                logger.error(LogUtils.create("ERROR_004_0006")//
+                logger.error(LoggerUtils.create("ERROR_004_0006")//
                         .addLog("oauth_provider", this.getProviderName())//
                         .addLog("oauth_appID", this.appID)//
                         .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -166,7 +166,7 @@ public class WeiboOAuth extends AbstractOAuth {
             }
             dataMaps = JsonUtils.toMap(response.getResponseAsString());
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0007")//
+            logger.error(LoggerUtils.create("ERROR_004_0007")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -191,7 +191,7 @@ public class WeiboOAuth extends AbstractOAuth {
             String errorCode = dataMaps.get("error_code").toString();
             String errorDesc = dataMaps.get("error_description").toString();
             //
-            logger.error(LogUtils.create("ERROR_004_0008")//
+            logger.error(LoggerUtils.create("ERROR_004_0008")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -221,7 +221,7 @@ public class WeiboOAuth extends AbstractOAuth {
                     + "&uid=" + userID);//
             data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                logger.error(LogUtils.create("ERROR_004_0006")//
+                logger.error(LoggerUtils.create("ERROR_004_0006")//
                         .addLog("oauth_provider", this.getProviderName())//
                         .addLog("oauth_appID", this.appID)//
                         .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -240,7 +240,7 @@ public class WeiboOAuth extends AbstractOAuth {
                         .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
             }
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0009")//
+            logger.error(LoggerUtils.create("ERROR_004_0009")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//

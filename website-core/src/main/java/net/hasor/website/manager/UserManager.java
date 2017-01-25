@@ -29,10 +29,10 @@ import net.hasor.website.domain.beans.QuickLoginResult;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.UserType;
 import net.hasor.website.utils.JsonUtils;
+import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
 import org.more.bizcommon.json.JSON;
-import net.hasor.rsf.utils.LogUtils;
 import org.more.util.CommonCodeUtils;
 import org.more.util.StringUtils;
 import org.slf4j.Logger;
@@ -63,7 +63,7 @@ public class UserManager {
         try {
             UserSourceDO sourceDO = this.userSourceDAO.queryByUnique(provider, uniqueID);
             if (sourceDO == null || sourceDO.getUserID() <= 0) {
-                logger.error(LogUtils.create("ERROR_002_0002")//
+                logger.error(LoggerUtils.create("ERROR_002_0002")//
                         .addLog("queryType", "userSourceDAO.queryByUnique") //
                         .addLog("provider", provider) //
                         .addLog("uniqueID", uniqueID) //
@@ -72,7 +72,7 @@ public class UserManager {
             }
             UserDO userDO = this.userDAO.queryById(sourceDO.getUserID());
             if (userDO == null) {
-                logger.error(LogUtils.create("ERROR_002_0001")//
+                logger.error(LoggerUtils.create("ERROR_002_0001")//
                         .addLog("queryType", "userDAO.queryById") //
                         .addLog("userID", sourceDO.getUserID()) //
                         .addLog("source_provider", provider) //
@@ -84,7 +84,7 @@ public class UserManager {
             userDO.getUserSourceList().add(sourceDO);
             return userDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("queryType", "userDAO.queryById") //
                     .addLog("source_provider", provider) //
                     .addLog("source_uniqueID", uniqueID) //
@@ -96,7 +96,7 @@ public class UserManager {
     //
     public UserDO getUserByID(long userID) {
         if (userID <= 0) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", userID) //
                     .addLog("error", "userID error.") //
                     .toJson());
@@ -105,7 +105,7 @@ public class UserManager {
         try {
             UserDO userDO = this.userDAO.queryById(userID);
             if (userDO == null) {
-                logger.error(LogUtils.create("ERROR_002_0001")//
+                logger.error(LoggerUtils.create("ERROR_002_0001")//
                         .addLog("queryType", "userDAO.queryById") //
                         .addLog("userID", userID) //
                         .addLog("error", "query result is empty.") //
@@ -113,7 +113,7 @@ public class UserManager {
             }
             return userDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("queryType", "userDAO.queryById") //
                     .addLog("userID", userID) //
                     .addLog("error", "query error -> " + e.getMessage()) //
@@ -124,7 +124,7 @@ public class UserManager {
     //
     public UserDO queryByLogin(String login) {
         if (StringUtils.isBlank(login)) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("error", "login input is blank.") //
                     .toJson());
             return null;
@@ -132,7 +132,7 @@ public class UserManager {
         try {
             UserDO userDO = this.userDAO.queryByLogin(login);
             if (userDO == null) {
-                logger.error(LogUtils.create("ERROR_002_0001")//
+                logger.error(LoggerUtils.create("ERROR_002_0001")//
                         .addLog("queryType", "userDAO.queryByLogin") //
                         .addLog("login", login) //
                         .addLog("error", "query result is empty.") //
@@ -140,7 +140,7 @@ public class UserManager {
             }
             return userDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("queryType", "userDAO.queryByLogin") //
                     .addLog("login", login) //
                     .addLog("error", "query error -> " + e.getMessage()) //
@@ -151,7 +151,7 @@ public class UserManager {
     //
     public UserSourceDO queryUserSourceByUserID(long userID, String proivter) {
         if (StringUtils.isBlank(proivter) || userID <= 0) {
-            logger.error(LogUtils.create("ERROR_002_0002")//
+            logger.error(LoggerUtils.create("ERROR_002_0002")//
                     .addLog("proivter", proivter) //
                     .addLog("userID", userID) //
                     .addLog("error", "proivter is blank or userID <=0.") //
@@ -161,7 +161,7 @@ public class UserManager {
         try {
             UserSourceDO userSourceDO = this.userSourceDAO.queryByUserID(proivter, userID);
             if (userSourceDO == null) {
-                logger.error(LogUtils.create("ERROR_002_0002")//
+                logger.error(LoggerUtils.create("ERROR_002_0002")//
                         .addLog("queryType", "userSourceDAO.queryByUserID") //
                         .addLog("proivter", proivter) //
                         .addLog("userID", userID) //
@@ -170,7 +170,7 @@ public class UserManager {
             }
             return userSourceDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_002_0002")//
+            logger.error(LoggerUtils.create("ERROR_002_0002")//
                     .addLog("queryType", "userSourceDAO.queryByUserID") //
                     .addLog("proivter", proivter) //
                     .addLog("userID", userID) //
@@ -183,7 +183,7 @@ public class UserManager {
     public UserDO getFullUserDataByID(long userID) {
         UserDO userDO = this.getUserByID(userID);
         if (userDO == null) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", userID) //
                     .addLog("error", "query failed.") //
                     .toJson());
@@ -195,13 +195,13 @@ public class UserManager {
             if (sourceList != null) {
                 userDO.setUserSourceList(sourceList);
             } else {
-                logger.info(LogUtils.create("ERROR_002_0003")//
+                logger.info(LoggerUtils.create("ERROR_002_0003")//
                         .addLog("queryType", "userSourceDAO.queryListByUserID") //
                         .addLog("userID", userID) //
                         .toJson());
             }
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("queryType", "userSourceDAO.queryListByUserID") //
                     .addLog("userID", userID) //
                     .addLog("error", "query error -> " + e.getMessage()) //
@@ -232,7 +232,7 @@ public class UserManager {
                         .setSuccess(false)//
                         .addMessage(ErrorCodes.U_SAVE_USER_EXIST.getMsg(loginData))//
                         .setResult(0L);
-                logger.error(LogUtils.create("ERROR_002_0004")//
+                logger.error(LoggerUtils.create("ERROR_002_0004")//
                         .addLog("loginData", loginData) //
                         .addLog("error", resultDO.firstMessage().getMessage()) //
                         .toJson());
@@ -244,7 +244,7 @@ public class UserManager {
                     .setThrowable(e)//
                     .addMessage(ErrorCodes.U_GET_USER_FAILED.getMsg(loginData))//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("loginData", loginData) //
                     .addLog("error", resultDO.firstMessage().getMessage()) //
                     .toJson(), e);
@@ -264,7 +264,7 @@ public class UserManager {
                     .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
                     .setThrowable(e)//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_002_0005")//
+            logger.error(LoggerUtils.create("ERROR_002_0005")//
                     .addLog("error", resultDO.firstMessage().getMessage()) //
                     .toJson());
             return resultDO;
@@ -279,7 +279,7 @@ public class UserManager {
                         .setSuccess(false)//
                         .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
                         .setResult(0L);
-                logger.error(LogUtils.create("ERROR_002_0006")//
+                logger.error(LoggerUtils.create("ERROR_002_0006")//
                         .addLog("error", resultDO.firstMessage().getMessage()) //
                         .toJson());
                 tranStatus.setRollbackOnly(); //回滚事务
@@ -290,7 +290,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_002_0005")//
+            logger.error(LoggerUtils.create("ERROR_002_0005")//
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             tranStatus.setRollbackOnly(); //回滚事务
@@ -309,7 +309,7 @@ public class UserManager {
                                 .setSuccess(false)//
                                 .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
                                 .setResult(0L);
-                        logger.error(LogUtils.create("ERROR_002_0007")//
+                        logger.error(LoggerUtils.create("ERROR_002_0007")//
                                 .addLog("error", resultDO.firstMessage().getMessage()) //
                                 .toJson());
                         tranStatus.setRollbackOnly(); //回滚事务
@@ -326,7 +326,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_002_0008")//
+            logger.error(LoggerUtils.create("ERROR_002_0008")//
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             tranStatus.setRollbackOnly(); //回滚事务
@@ -342,7 +342,7 @@ public class UserManager {
                         .setSuccess(false)//
                         .addMessage(ErrorCodes.U_SAVE_SOURCE_FAILED.getMsg())//
                         .setResult((long) res);
-                logger.error(LogUtils.create("ERROR_002_0009")//
+                logger.error(LoggerUtils.create("ERROR_002_0009")//
                         .addLog("provider", provider) //
                         .addLog("userID", userDO.getUserID()) //
                         .toJson());
@@ -357,7 +357,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.U_SAVE_SOURCE_FAILED.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("provider", provider) //
                     .addLog("userID", userDO.getUserID()) //
                     .addLog("error", e.getMessage()) //
@@ -374,7 +374,7 @@ public class UserManager {
                 this.userSourceDAO.loginUpdateByUserID(provider, userDO.getUserID());
             }
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("provider", provider) //
                     .addLog("userID", userDO.getUserID()) //
                     .addLog("error", e.getMessage()) //
@@ -397,7 +397,7 @@ public class UserManager {
         try {
             key = CommonCodeUtils.MD5.getMD5(userIDHex + "-" + quickJson);
         } catch (NoSuchAlgorithmException e) {
-            logger.error(LogUtils.create("ERROR_003_0001")//
+            logger.error(LoggerUtils.create("ERROR_003_0001")//
                     .addLog("provider", provider) //
                     .addLog("userID", userID) //
                     .addLog("error", "NoSuchAlgorithm 'MD5' -> " + e.getMessage()) //
@@ -412,7 +412,7 @@ public class UserManager {
         // .空数据
         String quickInfo = (String) this.userCache.get(quickCode);
         if (StringUtils.isBlank(quickInfo)) {
-            logger.error(LogUtils.create("ERROR_003_0002")//
+            logger.error(LoggerUtils.create("ERROR_003_0002")//
                     .addLog("userCode", userCode) //
                     .addLog("quickCode", quickCode) //
                     .addLog("error", "no such data") //
@@ -426,7 +426,7 @@ public class UserManager {
         String redirectURL = (String) quickMap.get("redirectURL");
         String lostTimeStr = (String) quickMap.get("lostTime");
         if (StringUtils.isBlank(userIDStr) || StringUtils.isBlank(lostTimeStr) || StringUtils.isBlank(redirectURL)) {
-            logger.error(LogUtils.create("ERROR_003_0003")//
+            logger.error(LoggerUtils.create("ERROR_003_0003")//
                     .addLog("userCode", userCode) //
                     .addLog("quickCode", quickCode) //
                     .addLog("userIDStr", userIDStr) //
@@ -439,7 +439,7 @@ public class UserManager {
         long lostTime = Long.parseLong(lostTimeStr);
         long atTime = System.currentTimeMillis();
         if (lostTime < atTime) {
-            logger.error(LogUtils.create("ERROR_003_0004")//
+            logger.error(LoggerUtils.create("ERROR_003_0004")//
                     .addLog("userCode", userCode) //
                     .addLog("quickCode", quickCode) //
                     .addLog("userIDStr", userIDStr) //
@@ -453,7 +453,7 @@ public class UserManager {
         long userID = Long.parseLong(userIDStr);
         String cacheUserCode = toHexString(userID);
         if (!StringUtils.equalsIgnoreCase(extUserCode, cacheUserCode)) {
-            logger.error(LogUtils.create("ERROR_003_0005")//
+            logger.error(LoggerUtils.create("ERROR_003_0005")//
                     .addLog("userCode", userCode) //
                     .addLog("quickCode", quickCode) //
                     .addLog("userIDStr", userIDStr) //
@@ -469,7 +469,7 @@ public class UserManager {
         result.setUserDO(userDO);
         result.setProvider(provider);
         result.setRedirectURL(redirectURL);
-        logger.info(LogUtils.create("INFO_003_0006")//
+        logger.info(LoggerUtils.create("INFO_003_0006")//
                 .addLog("userCode", userCode) //
                 .addLog("quickCode", quickCode) //
                 .addLog("userID", userDO.getUserID()) //
@@ -495,7 +495,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .setResult(false)//
                     .addMessage(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", targetUserID) //
                     .toJson());
             return result;
@@ -512,7 +512,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .setResult(false)//
                     .addMessage(ErrorCodes.U_PROIVTER_EXIST.getMsg());
-            logger.error(LogUtils.create("ERROR_002_0010")//
+            logger.error(LoggerUtils.create("ERROR_002_0010")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
@@ -526,7 +526,7 @@ public class UserManager {
             ResultDO<Boolean> result = new ResultDO<Boolean>()//
                     .setSuccess(false)//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_002_0002")//
+            logger.error(LoggerUtils.create("ERROR_002_0002")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
@@ -540,7 +540,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .setResult(false)//
                     .addMessage(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", targetUserID) //
                     .toJson());
             return result;
@@ -550,7 +550,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .setResult(false)//
                     .addMessage(ErrorCodes.U_PROIVTER_MAST_UNBIND.getMsg());
-            logger.error(LogUtils.create("ERROR_002_0011")//
+            logger.error(LoggerUtils.create("ERROR_002_0011")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
@@ -572,7 +572,7 @@ public class UserManager {
                     .setThrowable(e)//
                     .setSuccess(false)//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_002_0012")//
+            logger.error(LoggerUtils.create("ERROR_002_0012")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
@@ -592,7 +592,7 @@ public class UserManager {
                         .setSuccess(false)//
                         .setResult(false)//
                         .addMessage(ErrorCodes.U_PROIVTER_REBIND_FAILED.getMsg());
-                logger.error(LogUtils.create("ERROR_002_0013")//
+                logger.error(LoggerUtils.create("ERROR_002_0013")//
                         .addLog("res", res) //
                         .addLog("targetUserID", targetUserID) //
                         .addLog("targetProivter", targetProivter) //
@@ -606,7 +606,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.U_PROIVTER_REBIND_FAILED.getMsg())//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
                     .addLog("bindToUserID", bindToUserID) //
@@ -623,7 +623,7 @@ public class UserManager {
                         .setSuccess(false)//
                         .setResult(false)//
                         .addMessage(ErrorCodes.U_UPDATE_FAILED.getMsg());
-                logger.error(LogUtils.create("ERROR_002_0014")//
+                logger.error(LoggerUtils.create("ERROR_002_0014")//
                         .addLog("res", res) //
                         .addLog("userID", targetUserID) //
                         .toJson());
@@ -635,7 +635,7 @@ public class UserManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.U_UPDATE_FAILED.getMsg())//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("targetUserID", targetUserID) //
                     .addLog("error", "userDAO.invalidUser -> " + e.getMessage()) //
                     .toJson(), e);

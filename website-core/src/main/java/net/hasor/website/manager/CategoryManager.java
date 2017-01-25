@@ -18,7 +18,7 @@ import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
 import net.hasor.website.datadao.ContentCategoryDAO;
 import net.hasor.website.domain.ContentCategoryDO;
-import net.hasor.rsf.utils.LogUtils;
+import net.hasor.website.utils.LoggerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,14 +40,14 @@ public class CategoryManager {
         try {
             List<ContentCategoryDO> infoListDO = this.contentCategoryDAO.queryListByUserID(userId);
             if (infoListDO == null || infoListDO.isEmpty()) {
-                logger.error(LogUtils.create("ERROR_001_0002")//
+                logger.error(LoggerUtils.create("ERROR_001_0002")//
                         .addLog("userId", userId) //
                         .toJson());
                 return new ArrayList<ContentCategoryDO>(0);
             }
             return infoListDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_001_0001")//
+            logger.error(LoggerUtils.create("ERROR_001_0001")//
                     .addLog("userId", userId) //
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);

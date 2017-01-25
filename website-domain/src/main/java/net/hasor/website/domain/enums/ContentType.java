@@ -22,9 +22,7 @@ import org.more.util.StringUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum ContentType implements GeneralEnumParsing<ContentType> {
-    Starting(0, "首发"),
-    Original(1, "原创"),
-    Reprinted(2, "转载"),;
+    Starting(0, "首发"), Original(1, "原创"), Reprinted(2, "转载"),;
     //
     private int    type;
     private String desc;

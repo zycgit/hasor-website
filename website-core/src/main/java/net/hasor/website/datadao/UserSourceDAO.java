@@ -16,7 +16,7 @@
 package net.hasor.website.datadao;
 import net.hasor.website.core.AbstractDao;
 import net.hasor.website.domain.UserSourceDO;
-import net.hasor.rsf.utils.LogUtils;
+import net.hasor.website.utils.LoggerUtils;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class UserSourceDAO extends AbstractDao {
             }
             return 0L;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "insertUserSource")//
                     .logException(e) //
                     .toJson(), e);
@@ -55,7 +55,7 @@ public class UserSourceDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("userSource_loginUpdateByUserID", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "loginUpdateByUserID")//
                     .logException(e) //
                     .toJson(), e);
@@ -73,7 +73,7 @@ public class UserSourceDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("userSource_updateInfo", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "updateUserSource")//
                     .logException(e) //
                     .toJson(), e);
@@ -91,7 +91,7 @@ public class UserSourceDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("userSource_updateBindUser", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "updateBindUser")//
                     .logException(e) //
                     .toJson(), e);
@@ -108,7 +108,7 @@ public class UserSourceDAO extends AbstractDao {
             UserSourceDO result = this.getSqlExecutor().selectOne("userSource_queryByUserID", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "queryByUserID")//
                     .logException(e) //
                     .toJson(), e);
@@ -125,7 +125,7 @@ public class UserSourceDAO extends AbstractDao {
             UserSourceDO result = this.getSqlExecutor().selectOne("userSource_queryByUnique", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "queryByUnique")//
                     .logException(e) //
                     .toJson(), e);
@@ -141,7 +141,7 @@ public class UserSourceDAO extends AbstractDao {
             List<UserSourceDO> result = this.getSqlExecutor().selectList("userSource_queryListByUserID", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "queryListByUserID")//
                     .logException(e) //
                     .toJson(), e);

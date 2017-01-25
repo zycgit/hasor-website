@@ -22,8 +22,7 @@ import org.more.util.StringUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum SourceType implements GeneralEnumParsing<SourceType> {
-    Open(0, "开源"),
-    Close(1, "闭源");
+    Open(0, "开源"), Close(1, "闭源");
     //
     private int    type;
     private String desc;

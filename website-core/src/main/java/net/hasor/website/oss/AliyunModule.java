@@ -18,7 +18,7 @@ import net.hasor.core.ApiBinder;
 import net.hasor.core.AppContext;
 import net.hasor.core.LifeModule;
 import net.hasor.core.Settings;
-import net.hasor.rsf.utils.LogUtils;
+import net.hasor.website.utils.LoggerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -38,7 +38,7 @@ public class AliyunModule implements LifeModule {
         //
         try {
             //Class<?>[] clt = { ThrowableInformation.class, DefaultThrowableRenderer.class };
-            //com.aliyun.oss.common.utils.LogUtils.getLog().error("TEST", new Exception());ERROR_999_0002
+            //com.aliyun.oss.common.utils.LoggerUtils.getLog().error("TEST", new Exception());ERROR_999_0002
             //
             logger.error("aliyun:oss -> endpoint : {} , accessKey= {} ,accessKeySecret = ******", endpoint, accessKey);
             this.ossClient = new AliyunOSSClient(endpoint, accessKey, accessKeySecret);
@@ -46,7 +46,7 @@ public class AliyunModule implements LifeModule {
             this.ossClient.setBucketPath(settings.getString("aliyun.bucketPath", "/uploader_daily/"));
             apiBinder.bindType(AliyunOSSClient.class).toInstance(this.ossClient);
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0002")//
+            logger.error(LoggerUtils.create("ERROR_999_0002")//
                     .addLog("fun", "aliyun:oss")//
                     .addLog("error", e.getMessage())//
                     .toJson(), e);

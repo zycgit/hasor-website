@@ -17,7 +17,7 @@ package net.hasor.website.datadao;
 import net.hasor.website.core.AbstractDao;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.enums.OwnerType;
-import net.hasor.rsf.utils.LogUtils;
+import net.hasor.website.utils.LoggerUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class ProjectInfoDAO extends AbstractDao {
             }
             return 0L;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "insertProject")//
                     .logException(e) //
                     .toJson(), e);
@@ -59,7 +59,7 @@ public class ProjectInfoDAO extends AbstractDao {
             ProjectInfoDO result = this.getSqlExecutor().selectOne("projectInfo_queryByID", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "queryByID")//
                     .logException(e) //
                     .toJson(), e);
@@ -79,7 +79,7 @@ public class ProjectInfoDAO extends AbstractDao {
             List<ProjectInfoDO> result = this.getSqlExecutor().selectList("projectInfo_queryByOwner", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "queryListByOwner")//
                     .logException(e) //
                     .toJson(), e);
@@ -101,7 +101,7 @@ public class ProjectInfoDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("projectInfo_updateWithoutContent", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "updateWithoutContent")//
                     .logException(e) //
                     .toJson(), e);
@@ -123,7 +123,7 @@ public class ProjectInfoDAO extends AbstractDao {
             int result = this.getSqlExecutor().update("projectInfo_updateContent", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "updateContent")//
                     .logException(e) //
                     .toJson(), e);

@@ -24,9 +24,9 @@ import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.OwnerType;
 import net.hasor.website.domain.enums.ProjectStatus;
+import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
-import net.hasor.rsf.utils.LogUtils;
 import org.more.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +57,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_OWNER_ERROR.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_006_0006")//
+            logger.error(LoggerUtils.create("ERROR_006_0006")//
                     .addLog("errorCode", resultDO.firstMessage().getMessage()) //
                     .toJson());
             return resultDO;
@@ -68,7 +68,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.V_FORM_PROJECT_INVALID.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_006_0001")//
+            logger.error(LoggerUtils.create("ERROR_006_0001")//
                     .addLog("ownerID", owner.getOwnerID()) //
                     .addLog("ownerType", owner.getOwnerType().name()) //
                     .addLog("errorCode", resultDO.firstMessage().getMessage()) //
@@ -90,7 +90,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_OWNER_TYPE_FAILED.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_006_0002")//
+            logger.error(LoggerUtils.create("ERROR_006_0002")//
                     .addLog("ownerID", owner.getOwnerID()) //
                     .addLog("ownerType", owner.getOwnerType().name()) //
                     .addLog("error", resultDO.firstMessage().getMessage()) //
@@ -102,7 +102,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_OWNER_NOT_EXIST.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_006_0003")//
+            logger.error(LoggerUtils.create("ERROR_006_0003")//
                     .addLog("ownerID", owner.getOwnerID()) //
                     .addLog("ownerType", owner.getOwnerType().name()) //
                     .addLog("error", resultDO.firstMessage().getMessage()) //
@@ -123,7 +123,7 @@ public class ProjectManager {
                         .setSuccess(false)//
                         .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
                         .setResult(0L);
-                logger.error(LogUtils.create("ERROR_006_0005")//
+                logger.error(LoggerUtils.create("ERROR_006_0005")//
                         .addLog("ownerID", owner.getOwnerID()) //
                         .addLog("ownerType", owner.getOwnerType().name()) //
                         .addLog("errorCode", resultDO.firstMessage().getMessage()) //
@@ -136,7 +136,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
                     .setResult(0L);
-            logger.error(LogUtils.create("ERROR_006_0004")//
+            logger.error(LoggerUtils.create("ERROR_006_0004")//
                     .addLog("ownerID", owner.getOwnerID()) //
                     .addLog("ownerType", owner.getOwnerType().name()) //
                     .addLog("errorCode", resultDO.firstMessage().getMessage()) //
@@ -154,7 +154,7 @@ public class ProjectManager {
     public Result<List<ProjectInfoDO>> queryMyProjectList(Owner owner) {
         // .owner判断
         if (owner == null) {
-            logger.error(LogUtils.create("ERROR_006_0006")//
+            logger.error(LoggerUtils.create("ERROR_006_0006")//
                     .addLog("error", ErrorCodes.P_OWNER_ERROR.getMsg().getMessage()) //
                     .toJson());
             return new ResultDO<List<ProjectInfoDO>>(false)//
@@ -170,7 +170,7 @@ public class ProjectManager {
                     .setSuccess(true)//
                     .setResult(projectList);
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("queryType", "projectInfoDAO.queryByOwner") //
                     .addLog("ownerID", owner.getOwnerID()) //
                     .addLog("ownerType", owner.getOwnerType().name()) //
@@ -199,7 +199,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_V_PROJECT_INFO_FAILED.getMsg())//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_006_0009")//
+            logger.error(LoggerUtils.create("ERROR_006_0009")//
                     .addLog("ownerID", project.getOwnerID()) //
                     .addLog("ownerType", project.getOwnerType()) //
                     .addLog("error", resultDO.firstMessage().getMessage()) //
@@ -213,7 +213,7 @@ public class ProjectManager {
                         .setSuccess(false)//
                         .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
                         .setResult(false);
-                logger.error(LogUtils.create("ERROR_006_0007")//
+                logger.error(LoggerUtils.create("ERROR_006_0007")//
                         .addLog("ownerID", project.getOwnerID()) //
                         .addLog("ownerType", project.getOwnerType()) //
                         .addLog("error", resultDO.firstMessage().getMessage()) //
@@ -229,7 +229,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("ownerID", project.getOwnerID()) //
                     .addLog("ownerType", project.getOwnerType()) //
                     .addLog("error", e.getMessage()) //
@@ -249,7 +249,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_V_PROJECT_INFO_FAILED.getMsg())//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_006_0009")//
+            logger.error(LoggerUtils.create("ERROR_006_0009")//
                     .addLog("ownerID", project.getOwnerID()) //
                     .addLog("ownerType", project.getOwnerType()) //
                     .addLog("error", resultDO.firstMessage().getMessage()) //
@@ -263,7 +263,7 @@ public class ProjectManager {
                         .setSuccess(false)//
                         .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
                         .setResult(false);
-                logger.error(LogUtils.create("ERROR_006_0008")//
+                logger.error(LoggerUtils.create("ERROR_006_0008")//
                         .addLog("ownerID", project.getOwnerID()) //
                         .addLog("ownerType", project.getOwnerType()) //
                         .addLog("error", resultDO.firstMessage().getMessage()) //
@@ -279,7 +279,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
                     .setResult(false);
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("ownerID", project.getOwnerID()) //
                     .addLog("ownerType", project.getOwnerType()) //
                     .addLog("error", e.getMessage()) //
@@ -292,7 +292,7 @@ public class ProjectManager {
     public Result<List<ProjectVersionDO>> queryVersionListByProject(long projectID) {
         // .id判断
         if (projectID <= 0) {
-            logger.error(LogUtils.create("ERROR_006_0010")//
+            logger.error(LoggerUtils.create("ERROR_006_0010")//
                     .addLog("projectID", projectID) //
                     .addLog("error", ErrorCodes.P_PROJECT_NOT_EXIST.getMsg().getMessage()) //
                     .toJson());
@@ -309,7 +309,7 @@ public class ProjectManager {
                     .setSuccess(true)//
                     .setResult(versionList);
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_999_0003")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("queryType", "projectVersionDAO.queryByProject") //
                     .addLog("projectID", projectID) //
                     .addLog("error", "query error -> " + e.getMessage()) //

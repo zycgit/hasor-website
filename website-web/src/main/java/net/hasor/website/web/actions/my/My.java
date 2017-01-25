@@ -22,9 +22,9 @@ import net.hasor.website.domain.UserSourceDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.login.oauth.OAuthManager;
 import net.hasor.website.manager.UserManager;
+import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.model.UserBindInfo;
-import net.hasor.rsf.utils.LogUtils;
 import org.more.util.StringUtils;
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class My extends Action {
         // .user info
         UserDO user = this.userManager.getFullUserDataByID(this.getUserID());
         if (user == null) {
-            logger.error(LogUtils.create("ERROR_002_0001")//
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", this.getUserID()) //
                     .addLog("error", "result is null.") //
                     .toJson());

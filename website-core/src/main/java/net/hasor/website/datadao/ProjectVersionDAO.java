@@ -16,7 +16,7 @@
 package net.hasor.website.datadao;
 import net.hasor.website.core.AbstractDao;
 import net.hasor.website.domain.ProjectVersionDO;
-import net.hasor.rsf.utils.LogUtils;
+import net.hasor.website.utils.LoggerUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class ProjectVersionDAO extends AbstractDao {
             }
             return 0L;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "insertVersion")//
                     .logException(e) //
                     .toJson(), e);
@@ -58,7 +58,7 @@ public class ProjectVersionDAO extends AbstractDao {
             List<ProjectVersionDO> result = this.getSqlExecutor().selectList("projectVersion_queryByProject", parameter);
             return result;
         } catch (SQLException e) {
-            logger.error(LogUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "queryByProject")//
                     .logException(e) //
                     .toJson(), e);

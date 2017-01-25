@@ -22,10 +22,7 @@ import org.more.util.StringUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum ContentFormat implements GeneralEnumParsing<ContentFormat> {
-    Text(0, "文本"),
-    MD(1, "MD"),
-    Rich(2, "富文本"),
-    PrivateJson(3, "私有Json"),;
+    Text(0, "文本"), MD(1, "MD"), Rich(2, "富文本"), PrivateJson(3, "私有Json"),;
     //
     private int    type;
     private String desc;

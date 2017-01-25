@@ -20,7 +20,7 @@ import net.hasor.db.jdbc.core.JdbcTemplate;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.Service;
 import net.hasor.website.domain.VersionInfoDO;
-import net.hasor.rsf.utils.LogUtils;
+import net.hasor.website.utils.LoggerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +46,7 @@ public class VersionInfoManager {
             infoDO = jdbcTemplate.queryForObject(query, VersionInfoDO.class, version);
             return infoDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_001_0001")//
+            logger.error(LoggerUtils.create("ERROR_001_0001")//
                     .addLog("version", version) //
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
@@ -61,7 +61,7 @@ public class VersionInfoManager {
             infoListDO = jdbcTemplate.queryForList(query, VersionInfoDO.class);
             return infoListDO;
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_001_0001")//
+            logger.error(LoggerUtils.create("ERROR_001_0001")//
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             return new ArrayList<VersionInfoDO>(0);

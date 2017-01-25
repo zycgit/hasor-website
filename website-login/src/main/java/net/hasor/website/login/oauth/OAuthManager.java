@@ -23,10 +23,10 @@ import net.hasor.website.domain.AccessInfo;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.utils.JsonUtils;
+import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
-import org.more.bizcommon.log.LogUtils;
 import org.more.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +70,7 @@ public class OAuthManager {
     //
     protected AbstractOAuth getOAuthByProvider(String provider) {
         if (StringUtils.isBlank(provider)) {
-            logger.error(LogUtils.create("ERROR_004_0002")//
+            logger.error(LoggerUtils.create("ERROR_004_0002")//
                     .toJson());
             return null;
         }
@@ -81,7 +81,7 @@ public class OAuthManager {
     public String evalLoginURL(String provider, String status, String redirectTo) {
         AbstractOAuth oauth = this.getOAuthByProvider(provider);
         if (oauth == null) {
-            logger.error(LogUtils.create("ERROR_004_0001")//
+            logger.error(LoggerUtils.create("ERROR_004_0001")//
                     .addLog("provider", provider)//
                     .toJson());
             return null;
@@ -93,7 +93,7 @@ public class OAuthManager {
     public Result<UserDO> evalUserInfo(String provider, String authCode, String status) {
         AbstractOAuth oauth = this.getOAuthByProvider(provider);
         if (oauth == null) {
-            logger.error(LogUtils.create("ERROR_004_0001")//
+            logger.error(LoggerUtils.create("ERROR_004_0001")//
                     .addLog("provider", provider)//
                     .toJson());
             return new ResultDO<UserDO>(false)//
@@ -104,7 +104,7 @@ public class OAuthManager {
         //
         ResultDO<AccessInfo> info = oauth.evalToken(status, authCode);
         if (info == null) {
-            logger.error(LogUtils.create("ERROR_004_0003")//
+            logger.error(LoggerUtils.create("ERROR_004_0003")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("status", status)//
@@ -118,7 +118,7 @@ public class OAuthManager {
         //
         if (!info.isSuccess()) {
             Message errorMsg = info.firstMessage();
-            logger.error(LogUtils.create("ERROR_004_0003")//
+            logger.error(LoggerUtils.create("ERROR_004_0003")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("status", status)//
@@ -131,7 +131,7 @@ public class OAuthManager {
         }
         //
         if (info.getResult() == null) {
-            logger.error(LogUtils.create("ERROR_004_0003")//
+            logger.error(LoggerUtils.create("ERROR_004_0003")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("status", status)//

@@ -23,10 +23,10 @@ import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.login.oauth.OAuthManager;
 import net.hasor.website.manager.UserManager;
+import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginCallBackForm;
 import org.more.bizcommon.Result;
-import net.hasor.rsf.utils.LogUtils;
 import org.more.util.StringUtils;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class AccessToken extends Action {
         // .ajax
         String ajaxTo = this.getRequest().getHeader("ajaxTo");
         if (StringUtils.isBlank(ajaxTo) || !StringUtils.equalsIgnoreCase(ajaxTo, "true")) {
-            logger.error(LogUtils.create("ERROR_003_0007")//
+            logger.error(LoggerUtils.create("ERROR_003_0007")//
                     .addLog("authCode", authCode)//
                     .addLog("provider", provider)//
                     .addLog("error", "login_error : request not accepted.")//
@@ -58,7 +58,7 @@ public class AccessToken extends Action {
         }
         // .csrf
         if (!this.csrfTokenTest()) {
-            logger.error(LogUtils.create("ERROR_999_0005")//
+            logger.error(LoggerUtils.create("ERROR_999_0005")//
                     .addLog("authCode", authCode)//
                     .addLog("provider", provider)//
                     .addLog("error", "login_error : csrfToken failed.")//
@@ -68,7 +68,7 @@ public class AccessToken extends Action {
         }
         // .code
         if (StringUtils.isBlank(authCode)) {
-            logger.error(LogUtils.create("ERROR_004_0010")//
+            logger.error(LoggerUtils.create("ERROR_004_0010")//
                     .addLog("authCode", authCode)//
                     .addLog("provider", provider)//
                     .addLog("error", "login_error : get access_token failed, response is empty.")//
@@ -78,7 +78,7 @@ public class AccessToken extends Action {
         }
         // .form valid
         if (!valid.isValid()) {
-            logger.error(LogUtils.create("ERROR_004_0011")//
+            logger.error(LoggerUtils.create("ERROR_004_0011")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("error", "login_error : form valid failed.")//
@@ -89,7 +89,7 @@ public class AccessToken extends Action {
         // .oauth info
         Result<UserDO> infoResult = oauthManager.evalUserInfo(provider, authCode, loginForm.getState());
         if (infoResult == null || (infoResult.isSuccess() && infoResult.getResult() == null)) {
-            logger.error(LogUtils.create("ERROR_999_0001")//
+            logger.error(LoggerUtils.create("ERROR_999_0001")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("error", "login_error : result is null.")//
@@ -98,7 +98,7 @@ public class AccessToken extends Action {
             return;
         }
         if (!infoResult.isSuccess()) {
-            logger.error(LogUtils.create("ERROR_004_0003")//
+            logger.error(LoggerUtils.create("ERROR_004_0003")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("error", "login_error : access process failed.")//
@@ -120,7 +120,7 @@ public class AccessToken extends Action {
                 dataResult = this.userManager.updateAccessInfo(userDO, provider, userDO.getUserSourceList().get(0));
             }
             if (!dataResult.isSuccess() || dataResult.getResult() == null) {
-                logger.error(LogUtils.create("ERROR_003_0008")//
+                logger.error(LoggerUtils.create("ERROR_003_0008")//
                         .addLog("result", dataResult) //
                         .addLog("provider", provider)//
                         .addLog("authCode", authCode)//
@@ -133,7 +133,7 @@ public class AccessToken extends Action {
             // .save or update
             long userID = dataResult.getResult();
             if (userID <= 0) {
-                logger.error(LogUtils.create("ERROR_002_0006")//
+                logger.error(LoggerUtils.create("ERROR_002_0006")//
                         .addLog("result", dataResult) //
                         .addLog("provider", provider)//
                         .addLog("authCode", authCode)//
@@ -145,7 +145,7 @@ public class AccessToken extends Action {
             // .更新之后反查数据
             userDO = this.userManager.getUserByProvider(provider, uniqueID);
             if (userDO == null) {
-                logger.error(LogUtils.create("ERROR_002_0001")//
+                logger.error(LoggerUtils.create("ERROR_002_0001")//
                         .addLog("result", dataResult) //
                         .addLog("provider", provider)//
                         .addLog("authCode", authCode)//
@@ -155,7 +155,7 @@ public class AccessToken extends Action {
                 return;
             }
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_003_0009")//
+            logger.error(LoggerUtils.create("ERROR_003_0009")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("error", e.getMessage())//

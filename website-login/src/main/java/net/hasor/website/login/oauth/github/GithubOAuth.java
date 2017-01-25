@@ -29,8 +29,8 @@ import net.hasor.website.domain.futures.UserContactInfo;
 import net.hasor.website.domain.futures.UserFutures;
 import net.hasor.website.login.oauth.AbstractOAuth;
 import net.hasor.website.utils.JsonUtils;
+import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.ResultDO;
-import org.more.bizcommon.log.LogUtils;
 import org.more.util.ExceptionUtils;
 import org.more.util.StringUtils;
 
@@ -94,7 +94,7 @@ public class GithubOAuth extends AbstractOAuth {
                     + "&redirect_uri=" + URLEncoder.encode(redirectURI, "utf-8") //
                     + "&scope=" + this.scope;//
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0004")//
+            logger.error(LoggerUtils.create("ERROR_004_0004")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -123,7 +123,7 @@ public class GithubOAuth extends AbstractOAuth {
                     + "&state=" + (status == null ? "" : status) //
                     + "&redirect_uri=" + URLEncoder.encode(this.getRedirectURI() + "?" + URL_DATA, "utf-8");
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0005")//
+            logger.error(LoggerUtils.create("ERROR_004_0005")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -144,7 +144,7 @@ public class GithubOAuth extends AbstractOAuth {
             Response response = this.httpClient.httpGet(tokenURL);
             String data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                logger.error(LogUtils.create("ERROR_004_0006")//
+                logger.error(LoggerUtils.create("ERROR_004_0006")//
                         .addLog("oauth_provider", this.getProviderName())//
                         .addLog("oauth_appID", this.appID)//
                         .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -170,7 +170,7 @@ public class GithubOAuth extends AbstractOAuth {
                 dataMaps.put(keyStr, varStr);
             }
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0007")//
+            logger.error(LoggerUtils.create("ERROR_004_0007")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -199,7 +199,7 @@ public class GithubOAuth extends AbstractOAuth {
             String errorDesc = dataMaps.get("error_description").toString();
             String errorRUL = dataMaps.get("error_uri").toString();
             //
-            logger.error(LogUtils.create("ERROR_004_0008")//
+            logger.error(LoggerUtils.create("ERROR_004_0008")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -227,7 +227,7 @@ public class GithubOAuth extends AbstractOAuth {
             Response response = this.httpClient.httpGet("https://api.github.com/user?access_token=" + access_token);
             data = response.getResponseAsString();
             if (StringUtils.isBlank(data)) {
-                logger.error(LogUtils.create("ERROR_004_0006")//
+                logger.error(LoggerUtils.create("ERROR_004_0006")//
                         .addLog("oauth_provider", this.getProviderName())//
                         .addLog("oauth_appID", this.appID)//
                         .addLog("oauth_redirectURI", this.getRedirectURI())//
@@ -245,7 +245,7 @@ public class GithubOAuth extends AbstractOAuth {
                         .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
             }
         } catch (Exception e) {
-            logger.error(LogUtils.create("ERROR_004_0009")//
+            logger.error(LoggerUtils.create("ERROR_004_0009")//
                     .addLog("oauth_provider", this.getProviderName())//
                     .addLog("oauth_appID", this.appID)//
                     .addLog("oauth_redirectURI", this.getRedirectURI())//

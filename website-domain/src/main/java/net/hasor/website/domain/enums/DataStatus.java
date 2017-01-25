@@ -22,8 +22,7 @@ import org.more.util.StringUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum DataStatus implements GeneralEnumParsing<DataStatus> {
-    OK(0, "正常"),
-    Delete(-1, "删除"),;
+    OK(0, "正常"), Delete(-1, "删除"),;
     //
     private int    type;
     private String desc;

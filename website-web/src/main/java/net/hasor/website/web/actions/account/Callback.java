@@ -19,9 +19,9 @@ import net.hasor.web.annotation.Params;
 import net.hasor.web.valid.Valid;
 import net.hasor.web.valid.ValidInvoker;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginCallBackForm;
-import net.hasor.rsf.utils.LogUtils;
 /**
  * OAuth : 登录回调地址
  * @version : 2016年1月1日
@@ -32,7 +32,7 @@ public class Callback extends Action {
     public void execute(@Valid("Callback") @Params LoginCallBackForm loginForm, ValidInvoker valid) {
         //
         if (!valid.isValid()) {
-            logger.error(LogUtils.create("ERROR_999_0004")//
+            logger.error(LoggerUtils.create("ERROR_999_0004")//
                     .addLog("provider", loginForm.getProvider())//
                     .addLog("code", loginForm.getCode())//
                     .addLog("validName", "Callback")//

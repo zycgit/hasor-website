@@ -21,7 +21,7 @@ import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 
 import java.io.IOException;
 /**

@@ -16,7 +16,7 @@
 package net.hasor.website.datadao;
 import net.hasor.website.core.AbstractDao;
 import net.hasor.website.domain.ProjectVersionDO;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

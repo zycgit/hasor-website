@@ -21,7 +21,7 @@ import net.hasor.web.valid.ValidInvoker;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginCallBackForm;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 /**
  * OAuth : 登录回调地址
  * @version : 2016年1月1日

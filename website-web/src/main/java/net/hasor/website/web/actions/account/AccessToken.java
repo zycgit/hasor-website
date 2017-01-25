@@ -26,7 +26,7 @@ import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginCallBackForm;
 import org.more.bizcommon.Result;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 import org.more.util.StringUtils;
 
 import java.io.IOException;

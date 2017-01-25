@@ -18,7 +18,7 @@ import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
 import net.hasor.website.datadao.ContentCategoryDAO;
 import net.hasor.website.domain.ContentCategoryDO;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

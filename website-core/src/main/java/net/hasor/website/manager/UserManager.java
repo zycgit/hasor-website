@@ -32,7 +32,7 @@ import net.hasor.website.utils.JsonUtils;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
 import org.more.bizcommon.json.JSON;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 import org.more.util.CommonCodeUtils;
 import org.more.util.StringUtils;
 import org.slf4j.Logger;

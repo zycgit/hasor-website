@@ -24,7 +24,7 @@ import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.manager.ProjectManager;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -20,7 +20,7 @@ import net.hasor.db.jdbc.core.JdbcTemplate;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.Service;
 import net.hasor.website.domain.VersionInfoDO;
-import org.more.bizcommon.log.LogUtils;
+import net.hasor.rsf.utils.LogUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

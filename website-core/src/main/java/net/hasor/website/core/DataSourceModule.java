@@ -98,7 +98,7 @@ public class DataSourceModule implements LifeModule {
     }
     @Override
     public void onStop(AppContext appContext) throws Throwable {
-        // TODO Auto-generated method stub
+        //
     }
     //
     private DataSource createDataSource(String driverString, String urlString, String userString, String pwdString) throws PropertyVetoException {

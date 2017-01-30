@@ -91,7 +91,7 @@
             <dependency>
                 <groupId>net.hasor</groupId>
                 <artifactId>hasor-core</artifactId>
-                <version>3.0.2-SNAPSHOT</version>
+                <version>3.0.2</version>
             </dependency>
             <!-- RSF -->
             <dependency>

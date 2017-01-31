@@ -1,4 +1,49 @@
 insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('3.0.2','2017-01-30',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-3.0.2.zip',
+	'http://apis.hasor.net/apis/3.0.2/index.html',
+	'http://apis.hasor.net/apis/download/3.0.2.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('3.0.1','2017-01-29',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-3.0.1.zip',
+	'http://apis.hasor.net/apis/3.0.1/index.html',
+	'http://apis.hasor.net/apis/download/3.0.1.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('3.0.0','2017-01-12',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-3.0.0.zip',
+	'http://apis.hasor.net/apis/3.0.0/index.html',
+	'http://apis.hasor.net/apis/download/3.0.0.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('2.5.2','2016-12-01',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-2.5.2.zip',
+	'http://apis.hasor.net/apis/2.5.2/index.html',
+	'http://apis.hasor.net/apis/download/2.5.2.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('2.5.1','2016-11-08',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-2.5.1.zip',
+	'http://apis.hasor.net/apis/2.5.1/index.html',
+	'http://apis.hasor.net/apis/download/2.5.1.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('2.5.0','2016-10-26',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-2.5.0.zip',
+	'http://apis.hasor.net/apis/2.5.0/index.html',
+	'http://apis.hasor.net/apis/download/2.5.0.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('2.4.6','2016-10-07',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-2.4.6.zip',
+	'http://apis.hasor.net/apis/2.4.6/index.html',
+	'http://apis.hasor.net/apis/download/2.4.6.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('2.4.5','2016-09-29',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-2.4.5.zip',
+	'http://apis.hasor.net/apis/2.4.5/index.html',
+	'http://apis.hasor.net/apis/download/2.4.5.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
+	values('2.4.4','2016-09-05',
+	'https://github.com/zycgit/hasor/archive/Release.Hasor-2.4.4.zip',
+	'http://apis.hasor.net/apis/2.4.4/index.html',
+	'http://apis.hasor.net/apis/download/2.4.4.zip');
+insert into VersionInfo(version,releaseDate,downloadURL,apiURL,downloadApiURL)
 	values('2.4.3','2016-08-18',
 	'https://github.com/zycgit/hasor/archive/Release.Hasor-2.4.3.zip',
 	'http://apis.hasor.net/apis/2.4.3/index.html',

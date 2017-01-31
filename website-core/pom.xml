@@ -34,13 +34,11 @@
             <groupId>net.hasor</groupId>
             <artifactId>hasor-rsf</artifactId>
         </dependency>
-
         <!-- aliyun OSS -->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
-
         <!-- markdown : begin -->
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
@@ -71,7 +69,6 @@
             <artifactId>commonmark-ext-heading-anchor</artifactId>
         </dependency>
         <!-- markdown : end -->
-
         <!-- DB begin -->
         <dependency>
             <groupId>org.mybatis</groupId>

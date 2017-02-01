@@ -1,3 +1,9 @@
+.w50px {
+    width: 50px !important;
+    display: block;
+    text-align: right;
+}
+
 .w100px {
     width: 100px !important;
     display: block;

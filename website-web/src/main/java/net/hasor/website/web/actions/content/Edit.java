@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.web.actions.blog;
+package net.hasor.website.web.actions.content;
 import net.hasor.core.Inject;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
@@ -36,7 +36,7 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/blog/edit.{action}")
+@MappingTo("/content/edit.{action}")
 public class Edit extends Action {
     @Inject
     private EnvironmentConfig envConfig;

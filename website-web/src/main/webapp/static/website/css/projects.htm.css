@@ -1,0 +1,13 @@
+div[class="panel-body"] > div[class="input-group"] {
+    margin-bottom: 3px;
+}
+
+div[class="list-group-item"] > a[class="flowRight"] {
+    padding-top: 13px;
+    padding-right: 6px;
+    color: #ff416d;
+}
+
+h3[class="panel-title"] > span {
+    padding-right: 6px;
+}

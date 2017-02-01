@@ -3,7 +3,7 @@
     <!-- 框架配置 -->
     <appExample>
         <!-- 当前最新版本 -->
-        <curentVersion>2.4.3</curentVersion>
+        <curentVersion>3.0.2</curentVersion>
         <!-- 所属环境:daily、online -->
         <envType>${APP_ENV_TYPE}</envType>
         <!-- 主机名称 -->

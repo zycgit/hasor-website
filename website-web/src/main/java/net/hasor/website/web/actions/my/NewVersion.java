@@ -26,32 +26,30 @@ import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 /**
- * 我的项目，项目详情。
+ * 新版本
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/my/projects.htm")
-public class MyProject extends BaseMyProject {
+@MappingTo("/my/newVersion.htm")
+public class NewVersion extends BaseMyProject {
     //
-    public void execute(@ReqParam("curProjectID") long curProjectID, Invoker data) throws IOException {
+    public void execute(@ReqParam("projectID") long projectID, Invoker data) throws IOException {
         // .need login
-        if (!super.fillProjectInfo(curProjectID)) {
+        if (!super.fillProjectInfo(projectID)) {
             return;
         }
-        // .页面必须的列表元素
-        super.fillInfo();
-        //
         // .查询curProjectID项目
-        Result<ProjectInfoDO> result = this.projectManager.queryProjectByID(curProjectID);
+        Result<ProjectInfoDO> result = this.projectManager.queryProjectByID(projectID);
         int notExist = ErrorCodes.P_PROJECT_NOT_EXIST.getMsg().getType();
         Message resultMsg = result.firstMessage();
         if (resultMsg != null && resultMsg.getType() != notExist) {
             logger.error(LoggerUtils.create("ERROR_006_0011")//
                     .addLog("result", result) //
-                    .addLog("currentUserID", curProjectID)//
+                    .addLog("projectID", projectID)//
                     .addLog("errorMessage", resultMsg)//
                     .toJson());
             sendError(resultMsg);
@@ -64,7 +62,7 @@ public class MyProject extends BaseMyProject {
             if (infoDO.getOwnerID() != userOwner.getOwnerID() || !infoDO.getOwnerType().equals(userOwner.getOwnerType())) {
                 logger.error(LoggerUtils.create("ERROR_006_0013")//
                         .addLog("result", result) //
-                        .addLog("currentUserID", curProjectID)//
+                        .addLog("projectID", projectID)//
                         .addLog("errorMessage", resultMsg)//
                         .toJson());
                 sendError(resultMsg);
@@ -73,21 +71,22 @@ public class MyProject extends BaseMyProject {
         }
         //
         // .版本列表
-        List<ProjectVersionDO> versionList = new ArrayList<ProjectVersionDO>(0);
+        String newVersion = "0.0.1";
         if (infoDO != null) {
             Result<List<ProjectVersionDO>> versionResult = this.projectManager.queryVersionListByProject(infoDO.getId());
-            if (!versionResult.isSuccess()) {
-                logger.error(LoggerUtils.create("ERROR_003_0008")//
-                        .addLog("result", versionResult) //
-                        .addLog("currentUserID", userOwner.getOwnerID())//
-                        .addLog("errorMessage", "queryVersionListByProject -> " + versionResult.firstMessage().getMessage())//
-                        .toJson());
-                putData("versionErrorMessage", versionResult.firstMessage());
-            } else {
-                versionList = versionResult.getResult();
+            List<ProjectVersionDO> verList = versionResult.getResult();
+            if (versionResult.isSuccess() && verList != null && !verList.isEmpty()) {
+                Collections.sort(verList, new Comparator<ProjectVersionDO>() {
+                    @Override
+                    public int compare(ProjectVersionDO o1, ProjectVersionDO o2) {
+                        return -o1.getVersion().compareToIgnoreCase(o2.getVersion());
+                    }
+                });
+                ProjectVersionDO versionDO = verList.get(0);
+                String version = versionDO.getVersion();
+                newVersion = version;
             }
         }
-        putData("versionList", versionList);
-        //
+        putData("newVersion", newVersion);
     }
 }

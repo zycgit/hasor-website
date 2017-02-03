@@ -7,39 +7,40 @@
     <!-- 详情 -->
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">为 <a href="${ctx_path}/my/projects.htm?curProjectID=${project.id}">${project.name}</a> 新增版本
+            <h3 class="panel-title">
+                <a href="${ctx_path}/my/projects.htm?curProjectID=${project.id}">${project.name} - ${version.version}</a> 版本信息
                 <a href="javascript:void(0);" target="_blank">
-                    <span class="badge flowRight">保存</span>
+                    <span class="badge flowRight">更新</span>
                 </a>
             </h3>
         </div>
         <div class="panel-body">
             <div class="input-group">
                 <span class="input-group-addon">标题</span>
-                <input type="text" class="form-control" placeholder="请输入..."/>
+                <input type="text" class="form-control" placeholder="请输入..." value="${version.subtitle}"/>
                 <span class="input-group-addon">MD<input type="hidden" name="changelogFormat" value="1"/></span>
             </div>
             <div class="input-group">
                 <span class="input-group-addon">版本</span>
-                <input type="text" class="form-control" placeholder="last version is ${newVersion}"/>
+                <input type="text" class="form-control" placeholder="curent version is ${version.version}" value="${version.version}"/>
             </div>
             <div class="input-group">
                 <span class="input-group-addon">下载</span>
-                <input type="text" class="form-control" placeholder="http://"/>
+                <input type="text" class="form-control" placeholder="http://" value="${version.futures.downloadURL??}"/>
                 <span class="input-group-addon">
                     <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                 </span>
             </div>
             <div class="input-group">
                 <span class="input-group-addon">源码</span>
-                <input type="text" class="form-control" placeholder="http://"/>
+                <input type="text" class="form-control" placeholder="http://" value="${version.futures.sourceURL??}"/>
                 <span class="input-group-addon">
                     <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                 </span>
             </div>
             <div class="input-group">
                 <span class="input-group-addon">手册</span>
-                <input type="text" class="form-control" placeholder="http://"/>
+                <input type="text" class="form-control" placeholder="http://" value="${version.futures.apiURL??}"/>
                 <span class="input-group-addon">
                     <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                 </span>
@@ -49,7 +50,19 @@
                     initEditor("changelogEditor");
                 });
             </script>
-            <div id='changelogEditor'>- 新版本描述</div>
+            <div id='changelogEditor'>${version.changelog}</div>
+            <div>
+                <span class="col-sm-1 label label-success">状&nbsp;&nbsp;&nbsp;&nbsp;态</span>&nbsp;${version.status.desc}
+            </div>
+            <div>
+                <span class="col-sm-1 label label-success">发布时间</span>&nbsp;${version.releaseTime?string("yyyy-MM-dd HH:mm:ss")}
+            </div>
+            <div>
+                <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${version.createTime?string("yyyy-MM-dd HH:mm:ss")}
+            </div>
+            <div>
+                <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${version.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
+            </div>
         </div>
     </div>
 </div>

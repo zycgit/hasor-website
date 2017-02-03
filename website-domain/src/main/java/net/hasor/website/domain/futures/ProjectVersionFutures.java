@@ -7,7 +7,7 @@ package net.hasor.website.domain.futures;
 public class ProjectVersionFutures {
     private String downloadURL;
     private String apiURL;
-    private String downloadApiURL;
+    private String sourceURL;
     //
     public String getDownloadURL() {
         return downloadURL;
@@ -21,10 +21,10 @@ public class ProjectVersionFutures {
     public void setApiURL(String apiURL) {
         this.apiURL = apiURL;
     }
-    public String getDownloadApiURL() {
-        return downloadApiURL;
+    public String getSourceURL() {
+        return sourceURL;
     }
-    public void setDownloadApiURL(String downloadApiURL) {
-        this.downloadApiURL = downloadApiURL;
+    public void setSourceURL(String sourceURL) {
+        this.sourceURL = sourceURL;
     }
 }

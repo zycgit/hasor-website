@@ -39,7 +39,7 @@ public class UserDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "insertUser")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -56,7 +56,7 @@ public class UserDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "updateUser")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -72,7 +72,7 @@ public class UserDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "loginUpdate")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -87,7 +87,7 @@ public class UserDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "invalidUser")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -103,7 +103,7 @@ public class UserDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "queryById")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -119,7 +119,7 @@ public class UserDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
                     .addLog("method", "queryByLogin")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }

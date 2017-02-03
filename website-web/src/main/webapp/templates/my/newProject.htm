@@ -1,2 +1,87 @@
+<#include "/control/editor_md.htm"/>
+<link rel="stylesheet" href="${ctx_path}/static/website/css/projects.htm.css">
+<#include "/control/project/my_project_list.htm"/>
 <!-- -->
-新项目
+<div style="padding-left: 210px;">
+    <#include "/control/project/my_message.htm"/>
+    <!-- 详情 -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">${owner.ownerName} 的新项目
+                <a href="javascript:void(0);" target="_blank">
+                    <span class="badge flowRight">保存</span>
+                </a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <input type="hidden" value="${parentID}"/>
+            <div class="input-group">
+                <span class="input-group-addon">项目名称</span>
+                <input type="text" class="form-control" placeholder="请输入..."/>
+                <#if parentProject??>
+                    <span class="input-group-addon">
+                        <a href="${ctx_path}/my/projects.htm?curProjectID=${parentProject.id}">父项目：${parentProject.name}</a>
+                    </span>
+                </#if>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">项目介绍</span>
+                <input type="text" class="form-control" placeholder="这里一句话说明项目，下面在详细介绍"/>
+                <span class="input-group-addon">MD<input type="hidden" name="changelogFormat" value="1"/></span>
+            </div>
+            <script>
+                $(function () {
+                    initEditor("presentEditor");
+                });
+            </script>
+            <div id='presentEditor'>- 新项目描述</div>
+            <div class="input-group">
+                <span class="input-group-addon">项目主页</span>
+                <input type="text" class="form-control" placeholder="http://"/>
+                <span class="input-group-addon">
+                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                </span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">下载连接</span>
+                <input type="text" class="form-control" placeholder="http://"/>
+                <span class="input-group-addon">
+                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                </span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">主要语言</span>
+                <div class="form-control">
+                    <#list languageList as language>
+                        <label class="radio-inline">
+                            <input type="radio" name="language" value="${language.type}">${language.desc}
+                        </label>
+                    </#list>
+                </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">项目类型</span>
+                <div class="form-control">
+                    <#list sourceTypeList as sourceType>
+                        <label class="radio-inline">
+                            <input type="radio" name="sourceTypeOptions" value="${sourceType.type}">${sourceType.desc}
+                        </label>
+                    </#list>
+                </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">授权协议</span>
+                <div class="form-control">
+                    <#list licenseList as license>
+                        <label class="radio-inline">
+                            <input type="radio" name="license" value="${license.type}">${license.desc}
+                        </label>
+                    </#list>
+                </div>
+                <span class="input-group-addon">
+                    <a href="https://choosealicense.com/licenses/" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

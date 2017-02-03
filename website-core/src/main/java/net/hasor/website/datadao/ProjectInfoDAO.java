@@ -42,7 +42,7 @@ public class ProjectInfoDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "insertProject")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -61,7 +61,7 @@ public class ProjectInfoDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "queryByID")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -81,7 +81,7 @@ public class ProjectInfoDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "queryListByOwner")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -103,7 +103,7 @@ public class ProjectInfoDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "updateWithoutContent")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -125,7 +125,7 @@ public class ProjectInfoDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "updateContent")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }

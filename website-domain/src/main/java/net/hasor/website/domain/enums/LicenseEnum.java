@@ -17,20 +17,24 @@ package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
 import org.more.util.StringUtils;
 /**
- * 文章格式类型
+ * 授权协议类型
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public enum ContentFormat implements GeneralEnumParsing<ContentFormat> {
-    Text(0, "文本"),//
-    MD(1, "MD"), //
-    Rich(2, "富文本"), //
-    PrivateJson(3, "结构化"),//
+public enum LicenseEnum implements GeneralEnumParsing<LicenseEnum> {
+    Private(0, "私有协议"),//
+    AGPLv3(1, "AGPLv3"),//
+    GPLv3(2, "GPLv3"), //
+    MPLv2(3, "MPLv2.0"), //
+    Apache2(4, "Apache 2.0"),//
+    MIT(5, "MIT"),//
+    Unlicense(6, "Unlicense"),//
+    Other(999, "其它"),//
     ;
     //
     private int    type;
     private String desc;
-    ContentFormat(int type, String desc) {
+    LicenseEnum(int type, String desc) {
         this.type = type;
         this.desc = desc;
     }
@@ -41,16 +45,16 @@ public enum ContentFormat implements GeneralEnumParsing<ContentFormat> {
         return desc;
     }
     //
-    public ContentFormat formType(int type) {
-        for (ContentFormat item : ContentFormat.values()) {
+    public LicenseEnum formType(int type) {
+        for (LicenseEnum item : LicenseEnum.values()) {
             if (item.getType() == type) {
                 return item;
             }
         }
         return null;
     }
-    public ContentFormat formName(String name) {
-        for (ContentFormat item : ContentFormat.values()) {
+    public LicenseEnum formName(String name) {
+        for (LicenseEnum item : LicenseEnum.values()) {
             if (StringUtils.equalsIgnoreCase(item.name(), name)) {
                 return item;
             }

@@ -26,7 +26,8 @@
     /*编辑器初始化*/
     function initEditor(elementID) {
         var markdownData = $("#" + elementID).html();
-        $("#" + elementID).html("<div id='" + elementID + "_Editor'><textarea id='" + elementID + "_Content'></textarea></div>");
+        var inputID = elementID + "_Content";
+        $("#" + elementID).html("<div id='" + elementID + "_Editor'><textarea id='" + inputID + "' name='" + inputID + "'></textarea></div>");
         $("#" + elementID + "_Content").html(markdownData);
 
         var editerID = elementID + "_Editor";
@@ -53,7 +54,7 @@
             watch: false,                   // 关闭实时预览
             imageUpload: true,
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL: ctx_path + "/uploader/upload_to_temp.do?csrfToken=" + $("#csrfToken").val(),
+            imageUploadURL: ctx_path + "/uploader/upload_to_temp.do?csrfToken=${csrfToken}",
             placeholder: "开始你的Blog之路吧!",
             onload: function () {
                 echoHeight(editerID, testEditor);

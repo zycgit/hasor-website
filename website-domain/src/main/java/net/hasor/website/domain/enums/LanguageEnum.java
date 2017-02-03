@@ -17,20 +17,21 @@ package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
 import org.more.util.StringUtils;
 /**
- * 文章格式类型
+ * 语言类型
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public enum ContentFormat implements GeneralEnumParsing<ContentFormat> {
-    Text(0, "文本"),//
-    MD(1, "MD"), //
-    Rich(2, "富文本"), //
-    PrivateJson(3, "结构化"),//
+public enum LanguageEnum implements GeneralEnumParsing<LanguageEnum> {
+    Java(1, "Java"),//
+    C(2, "C/C++"), //
+    JavaScript(3, "JavaScript"), //
+    Python(4, "Python"),//
+    Other(999, "其它"),//
     ;
     //
     private int    type;
     private String desc;
-    ContentFormat(int type, String desc) {
+    LanguageEnum(int type, String desc) {
         this.type = type;
         this.desc = desc;
     }
@@ -41,16 +42,16 @@ public enum ContentFormat implements GeneralEnumParsing<ContentFormat> {
         return desc;
     }
     //
-    public ContentFormat formType(int type) {
-        for (ContentFormat item : ContentFormat.values()) {
+    public LanguageEnum formType(int type) {
+        for (LanguageEnum item : LanguageEnum.values()) {
             if (item.getType() == type) {
                 return item;
             }
         }
         return null;
     }
-    public ContentFormat formName(String name) {
-        for (ContentFormat item : ContentFormat.values()) {
+    public LanguageEnum formName(String name) {
+        for (LanguageEnum item : LanguageEnum.values()) {
             if (StringUtils.equalsIgnoreCase(item.name(), name)) {
                 return item;
             }

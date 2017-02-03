@@ -15,27 +15,31 @@
  */
 package net.hasor.website.core;
 import net.hasor.core.Inject;
-import net.hasor.db.jdbc.JdbcOperations;
-import net.hasor.db.orm.mybatis3.SqlExecutorOperations;
+import net.hasor.db.transaction.TransactionCallback;
+import net.hasor.db.transaction.TransactionTemplate;
+import net.hasor.website.utils.LoggerUtils;
+import org.more.bizcommon.Result;
+import org.more.bizcommon.ResultDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
  * @version : 2015年5月22日
  * @author 赵永春(zyc@hasor.net)
  */
-public abstract class AbstractDao<T> {
+public class TransactionService {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     @Inject(AppConstant.DB_MYSQL)
-    private JdbcOperations        jdbcTemplate;
-    @Inject(AppConstant.DB_MYSQL)
-    private SqlExecutorOperations executorTemplate;
+    private TransactionTemplate transactionTemplate;
     //
-    protected SqlExecutorOperations getSqlExecutor() {
-        return this.executorTemplate;
+    public <T> Result<T> mysqlTransaction(TransactionCallback<T> callBack) {
+        try {
+            T execute = this.transactionTemplate.execute(callBack);
+            return new ResultDO<T>(true).setResult(execute);
+        } catch (Throwable e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("errorMessage", e.getMessage())//
+                    .toJson());
+            return new ResultDO<T>(false).setThrowable(e);
+        }
     }
-    //
-    protected JdbcOperations getJdbcTemplate() {
-        return this.jdbcTemplate;
-    }
-    //
 }

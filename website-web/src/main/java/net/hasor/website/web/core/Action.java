@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 package net.hasor.website.web.core;
+import net.hasor.core.Inject;
 import net.hasor.web.WebController;
 import net.hasor.website.core.AppConstant;
+import net.hasor.website.core.TransactionService;
 import net.hasor.website.domain.JsonResultDO;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.enums.ErrorCodes;
@@ -37,6 +39,8 @@ import java.security.SecureRandom;
 public class Action extends WebController {
     protected Logger       logger       = LoggerFactory.getLogger(getClass());
     private   SecureRandom secureRandom = new SecureRandom();
+    @Inject
+    protected TransactionService transactionService;
     //
     protected boolean needLogin() throws IOException {
         String ctx_path = getRequest().getContextPath();

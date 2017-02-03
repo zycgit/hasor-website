@@ -16,6 +16,7 @@
 package net.hasor.website.web.actions.my;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
+import net.hasor.web.annotation.PathParam;
 import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
@@ -26,32 +27,35 @@ import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 /**
- * 我的项目，项目详情。
+ * 版本详情 & 版本更新
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/my/projects.htm")
-public class MyProject extends BaseMyProject {
+@MappingTo("/my/updateVersion.{action}")
+public class UpdateVersion extends BaseMyProject {
     //
-    public void execute(@ReqParam("curProjectID") long curProjectID, Invoker data) throws IOException {
+    public void execute(@ReqParam("projectID") long projectID, @ReqParam("versionID") long versionID,//
+            @PathParam("action") String action, Invoker data) throws IOException {
         // .need login
-        if (!super.fillProjectInfo(curProjectID)) {
+        if (!super.fillProjectInfo(projectID)) {
             return;
         }
-        // .页面必须的列表元素
-        super.fillInfo();
         //
+        if ("do".equalsIgnoreCase(action)) {
+            this.doUpdate(projectID, versionID, data);
+        }
+        this.doShow(projectID, versionID, data);
+    }
+    private void doShow(long projectID, long versionID, Invoker data) {
         // .查询curProjectID项目
-        Result<ProjectInfoDO> result = this.projectManager.queryProjectByID(curProjectID);
+        Result<ProjectInfoDO> result = this.projectManager.queryProjectByID(projectID);
         int notExist = ErrorCodes.P_PROJECT_NOT_EXIST.getMsg().getType();
         Message resultMsg = result.firstMessage();
         if (resultMsg != null && resultMsg.getType() != notExist) {
             logger.error(LoggerUtils.create("ERROR_006_0011")//
                     .addLog("result", result) //
-                    .addLog("currentUserID", curProjectID)//
+                    .addLog("projectID", projectID)//
                     .addLog("errorMessage", resultMsg)//
                     .toJson());
             sendError(resultMsg);
@@ -64,30 +68,34 @@ public class MyProject extends BaseMyProject {
             if (infoDO.getOwnerID() != userOwner.getOwnerID() || !infoDO.getOwnerType().equals(userOwner.getOwnerType())) {
                 logger.error(LoggerUtils.create("ERROR_006_0013")//
                         .addLog("result", result) //
-                        .addLog("currentUserID", curProjectID)//
+                        .addLog("projectID", projectID)//
                         .addLog("errorMessage", resultMsg)//
                         .toJson());
                 sendError(resultMsg);
                 return;
             }
         }
-        //
-        // .版本列表
-        List<ProjectVersionDO> versionList = new ArrayList<ProjectVersionDO>(0);
-        if (infoDO != null) {
-            Result<List<ProjectVersionDO>> versionResult = this.projectManager.queryVersionListByProject(infoDO.getId());
-            if (!versionResult.isSuccess()) {
-                logger.error(LoggerUtils.create("ERROR_003_0008")//
-                        .addLog("result", versionResult) //
-                        .addLog("currentUserID", userOwner.getOwnerID())//
-                        .addLog("errorMessage", "queryVersionListByProject -> " + versionResult.firstMessage().getMessage())//
-                        .toJson());
-                putData("versionErrorMessage", versionResult.firstMessage());
-            } else {
-                versionList = versionResult.getResult();
-            }
+        // .
+        if (infoDO == null) {
+            sendError(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg());
+            return;
+        } else {
+            putData("project", infoDO);
         }
-        putData("versionList", versionList);
+        //
+        // .版本
+        Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
+        if (!versionResult.isSuccess() || versionResult.getResult() == null) {
+            sendError(result.firstMessage());
+            return;
+        }
+        //
+        ProjectVersionDO versionDO = versionResult.getResult();
+        putData("version", versionDO);
+    }
+    //
+    //
+    private void doUpdate(long projectID, long versionID, Invoker data) {
         //
     }
 }

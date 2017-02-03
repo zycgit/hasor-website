@@ -41,7 +41,7 @@ public class ProjectVersionDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "insertVersion")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -60,7 +60,26 @@ public class ProjectVersionDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "queryByProject")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    /** 查询项目版本 */
+    public ProjectVersionDO queryByID(long projectID, long versionID) throws SQLException {
+        if (projectID <= 0 || versionID <= 0) {
+            return null;
+        }
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("projectID", projectID);
+            parameter.put("versionID", versionID);
+            ProjectVersionDO result = this.getSqlExecutor().selectOne("projectVersion_queryByID", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
+                    .addLog("method", "queryByID")//
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }

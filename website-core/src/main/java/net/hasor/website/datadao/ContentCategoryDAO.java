@@ -41,7 +41,7 @@ public class ContentCategoryDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
                     .addLog("method", "insertCategory")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -58,7 +58,7 @@ public class ContentCategoryDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
                     .addLog("method", "deleteCategory")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -74,7 +74,7 @@ public class ContentCategoryDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
                     .addLog("method", "updateContentCategory")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -90,7 +90,7 @@ public class ContentCategoryDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
                     .addLog("method", "queryByID")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -106,7 +106,7 @@ public class ContentCategoryDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//
                     .addLog("method", "queryListByUserID")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }

@@ -51,12 +51,15 @@ public enum ErrorCodes {
     V_CSRF_INVALID(203, "请重新登陆，或者这是一个非法的请求。"),//
     V_FORM_PROJECT_INVALID(204, "项目表单验证不通过，请检查表单值是否正确。"),//
     //
+    // .项目&版本
     P_OWNER_ERROR(301, "对不起，Owner参数信息错误。"),//
     P_OWNER_TYPE_FAILED(302, "Owner类型错误。"),//
     P_OWNER_NOT_EXIST(303, "对不起，Owner不存在。"),//
     P_SAVE_PROJECT_FAILED(304, "项目信息保存失败，请稍后重试。"),//
     P_V_PROJECT_INFO_FAILED(305, "项目信息不完整或错误的表单数据。"),//
     P_PROJECT_NOT_EXIST(306, "不存在的项目。"),//
+    P_QUERY_ERROR(307, "查询项目信息失败，请重试。"),//
+    P_VERSION_NOT_EXIST(308, "不存在的项目版本。"),//
     //
     BAD_PARAMS(901, "错误的调用参数。"),//
     BAD_REQUEST(902, "错误的请求。"),//

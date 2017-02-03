@@ -40,7 +40,7 @@ public class UserSourceDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "insertUserSource")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -57,7 +57,7 @@ public class UserSourceDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "loginUpdateByUserID")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -75,7 +75,7 @@ public class UserSourceDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "updateUserSource")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -93,7 +93,7 @@ public class UserSourceDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "updateBindUser")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -110,7 +110,7 @@ public class UserSourceDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "queryByUserID")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -127,7 +127,7 @@ public class UserSourceDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "queryByUnique")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }
@@ -143,7 +143,7 @@ public class UserSourceDAO extends AbstractDao {
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
                     .addLog("method", "queryListByUserID")//
-                    .logException(e) //
+                    .addLog("error", e.getMessage())//
                     .toJson(), e);
             throw e;
         }

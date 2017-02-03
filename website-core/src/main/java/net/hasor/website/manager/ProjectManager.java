@@ -16,6 +16,7 @@
 package net.hasor.website.manager;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
+import net.hasor.website.core.TransactionService;
 import net.hasor.website.datadao.ProjectInfoDAO;
 import net.hasor.website.datadao.ProjectVersionDAO;
 import net.hasor.website.domain.Owner;
@@ -43,11 +44,13 @@ import java.util.List;
 public class ProjectManager {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     @Inject
-    private UserManager       userManager;
+    private UserManager        userManager;
     @Inject
-    private ProjectInfoDAO    projectInfoDAO;
+    private ProjectInfoDAO     projectInfoDAO;
     @Inject
-    private ProjectVersionDAO projectVersionDAO;
+    private ProjectVersionDAO  projectVersionDAO;
+    @Inject
+    private TransactionService transactionService;
     //
     /** 新项目 */
     public Result<Long> newProject(Owner owner, ProjectInfoDO newProject) {
@@ -178,7 +181,33 @@ public class ProjectManager {
                     .toJson(), e);
             return new ResultDO<List<ProjectInfoDO>>(false)//
                     .setSuccess(false)//
-                    .addMessage(ErrorCodes.P_OWNER_ERROR.getMsg())//
+                    .addMessage(ErrorCodes.P_QUERY_ERROR.getMsg())//
+                    .setResult(null);
+        }
+    }
+    //
+    /** 根据项目ID查询项目 */
+    public Result<ProjectInfoDO> queryProjectByID(long projectID) {
+        try {
+            ProjectInfoDO projectInfo = this.projectInfoDAO.queryByID(projectID);
+            if (projectInfo == null) {
+                return new ResultDO<ProjectInfoDO>(false)//
+                        .setSuccess(false)//
+                        .addMessage(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg());
+            } else {
+                return new ResultDO<ProjectInfoDO>(true)//
+                        .setSuccess(true)//
+                        .setResult(projectInfo);
+            }
+        } catch (Exception e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("queryType", "projectInfoDAO.queryByID") //
+                    .addLog("projectID", projectID) //
+                    .addLog("error", "query error -> " + e.getMessage()) //
+                    .toJson(), e);
+            return new ResultDO<ProjectInfoDO>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_QUERY_ERROR.getMsg())//
                     .setResult(null);
         }
     }
@@ -316,7 +345,33 @@ public class ProjectManager {
                     .toJson(), e);
             return new ResultDO<List<ProjectVersionDO>>(false)//
                     .setSuccess(false)//
-                    .addMessage(ErrorCodes.P_OWNER_ERROR.getMsg())//
+                    .addMessage(ErrorCodes.P_QUERY_ERROR.getMsg())//
+                    .setResult(null);
+        }
+    }
+    /** 根据ID查询版本信息 */
+    public Result<ProjectVersionDO> queryVersionByID(long projectID, long versionID) {
+        try {
+            ProjectVersionDO versionDO = this.projectVersionDAO.queryByID(projectID, versionID);
+            if (versionDO == null) {
+                return new ResultDO<ProjectVersionDO>(false)//
+                        .setSuccess(false)//
+                        .addMessage(ErrorCodes.P_VERSION_NOT_EXIST.getMsg());
+            } else {
+                return new ResultDO<ProjectVersionDO>(true)//
+                        .setSuccess(true)//
+                        .setResult(versionDO);
+            }
+        } catch (Exception e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("queryType", "projectInfoDAO.queryByID") //
+                    .addLog("projectID", projectID) //
+                    .addLog("versionID", versionID) //
+                    .addLog("error", "query error -> " + e.getMessage()) //
+                    .toJson(), e);
+            return new ResultDO<ProjectVersionDO>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_QUERY_ERROR.getMsg())//
                     .setResult(null);
         }
     }

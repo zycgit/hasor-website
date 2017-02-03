@@ -72,5 +72,17 @@
             release_time desc
     </select>
 
+    <!-- 查询项目版本 -->
+    <select id="projectVersion_queryByID" resultMap="projectVersionDOMap">
+        select
+            <include refid="projectVersionDO_allColumns"/>
+        from
+            PROJECT_VERSION
+        where 1=1
+            and id         = #{versionID}
+            and project_id = #{projectID}
+        limit
+            1
+    </select>
 
 </mapper>

@@ -1,124 +1,169 @@
-<link rel="stylesheet" href="${ctx_path}/static/website/css/projects.htm.css">
 <#include "/control/editor_md.htm"/>
+<link rel="stylesheet" href="${ctx_path}/static/website/css/projects.htm.css">
+<#include "/control/project/my_project_list.htm"/>
 <!-- -->
-<div class="w200px flowLeft">
-    <div class="list-group">
-        <a href="${ctx_path}/my/newProject.htm" class="list-group-item list-group-item-info">创建新项目</a>
-        <#list projectList as item>
-            <#assign activeCss=""/>
-            <#if project?? && item.id == project.id>
-                <#assign activeCss="list-group-item-warning"/>
-            </#if>
-            <a class="list-group-item ${activeCss}" href="${ctx_path}/my/projects.htm?curProjectID=${item.id}">
-                <span class="badge">14</span>
-                ${item.name}
-            </a>
-        </#list>
-    </div>
-</div>
 <div style="padding-left: 210px;">
+    <#include "/control/project/my_message.htm"/>
     <#if project?? >
-        <!-- 详情 -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">详情</h3>
-            </div>
-            <div class="panel-body">
-                <div class="input-group">
-                    <span class="input-group-addon">项目</span>
-                    <input type="text" class="form-control" value="${project.name}"/>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon">标题</span>
-                    <input type="text" class="form-control" value="${project.subtitle}"/>
-                    <span class="input-group-addon">${project.contentFormat.desc}</span>
-                </div>
-                <script>
-                    $(function () {
-                        initEditor("blogEditor");
-                    });
-                </script>
-                <div id='blogEditor'>${project.present}</div>
-                <div>
-                    <span class="col-sm-1 label label-success">父&nbsp;项&nbsp;目</span>&nbsp;
-                    <a href="${ctx_path}/my/projects.htm?curProjectID=${project.parentID}">${project.parentID}</a>
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">活跃状态</span>&nbsp;${project.status.desc}
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">首页链接</span>&nbsp;${project.homePage}
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">下载链接</span>&nbsp;${project.downPage}
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">项目类型</span>&nbsp;${project.sourceType.desc}
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">主要语言</span>&nbsp;${project.language}
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">授权协议</span>&nbsp;${project.license}
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${project.createTime?string("yyyy-MM-dd HH:mm:ss")}
-                </div>
-                <div>
-                    <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${project.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
-                </div>
-            </div>
-        </div>
-        <!-- 版本信息 -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">版本信息
-                    <a href="${ctx_path}/my/newVersion.htm?projectID=${project.id}">
-                        <span class="badge flowRight">添加</span>
-                    </a>
-                </h3>
-            </div>
-            <div class="list-group">
-                <#list versionList as ver>
-                    <div class="list-group-item">
-                        <a class="flowRight"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a>
-                        <a class="flowRight"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                        <a class="flowRight"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a class="flowRight"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></a>
-                        <a href="#">
-                            <h4 class="list-group-item-heading">${ver.version} - ${ver.subtitle}</h4>
-                            <p class="list-group-item-text">状态:${ver.status.desc} - 发布时间：${ver.releaseTime?string("yyyy-MM-dd HH:mm:ss")}</p>
+        <form id="projectForm" action="${ctx_path}/my/updateProject.do" method="post" target="_blank">
+            <!-- 详情 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">${project.name} 详情
+                        <a>
+                            <span class="badge flowRight" onclick="projectForm.submit();">保存</span>
                         </a>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <input name="id" type="hidden" value="${project.id}"/>
+                    <div class="input-group">
+                        <span class="input-group-addon">项目</span>
+                        <input type="text" class="form-control" value="${project.name}" disabled="disabled"/>
+                        <#if parentProject??>
+                        <span class="input-group-addon">
+                            <a href="${ctx_path}/my/projects.htm?curProjectID=${parentProject.id}">父项目：${parentProject.name}</a>
+                        </span>
+                        </#if>
                     </div>
-                </#list>
-                <#if !versionList?? || (versionList?size = 0) >
-                    <a href="#" class="list-group-item">
-                        <h4 class="list-group-item-heading">尚未发布任何版本</h4>
-                    </a>
-                </#if>
-                <#if versionErrorMessage??>
-                    <a href="#" class="list-group-item">
-                        <h4 class="list-group-item-heading">版本数据加载错误：${versionErrorMessage.getMessage()}</h4>
-                    </a>
-                </#if>
+                    <div class="input-group">
+                        <span class="input-group-addon">标题</span>
+                        <input name="subtitle" type="text" class="form-control" value="${project.subtitle}"/>
+                        <span class="input-group-addon">
+                            <input name="contentFormatType" type="hidden" value="${project.contentFormat.type}"/>
+                            ${project.contentFormat.desc}
+                        </span>
+                    </div>
+                    <script>
+                        $(function () {
+                            initEditor("presentEditor");
+                        });
+                    </script>
+                    <div id='presentEditor'>${project.present}</div>
+                    <div class="input-group">
+                        <span class="input-group-addon">首页链接</span>
+                        <input name="homePage" type="text" class="form-control" placeholder="http://" value="${project.homePage}"/>
+                        <span class="input-group-addon">
+                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">下载连接</span>
+                        <input name="downPage" type="text" class="form-control" placeholder="http://" value="${project.downPage}"/>
+                        <span class="input-group-addon">
+                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">主要语言</span>
+                        <div class="form-control">
+                            <#list languageList as language>
+                                <#assign checked = ""/>
+                                <#if project.language?? && project.language == language.desc>
+                                    <#assign checked = "checked='checked'"/>
+                                </#if>
+                                <label class="radio-inline">
+                                    <input type="radio" name="language" value="${language.desc}" ${checked}>${language.desc}
+                                </label>
+                            </#list>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">项目类型</span>
+                        <div class="form-control">
+                            <#list sourceTypeList as sourceType>
+                                <#assign checked = ""/>
+                                <#if project.sourceType?? && project.sourceType.type == sourceType.type>
+                                    <#assign checked = "checked='checked'"/>
+                                </#if>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sourceTypeEnum" value="${sourceType.type}" ${checked}>${sourceType.desc}
+                                </label>
+                            </#list>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">授权协议</span>
+                        <div class="form-control">
+                            <#list licenseList as license>
+                                <#assign checked = ""/>
+                                <#if project.license?? && project.license == license.desc>
+                                    <#assign checked = "checked='checked'"/>
+                                </#if>
+                                <label class="radio-inline">
+                                    <input type="radio" name="license" value="${license.desc}" ${checked}>${license.desc}
+                                </label>
+                            </#list>
+                        </div>
+                        <span class="input-group-addon">
+                        <a href="https://choosealicense.com/licenses/" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
+                    </span>
+                    </div>
+                    <div>
+                        <span class="col-sm-1 label label-success">活跃状态</span>&nbsp;${project.status.desc}
+                    </div>
+                    <div>
+                        <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${project.createTime?string("yyyy-MM-dd HH:mm:ss")}
+                    </div>
+                    <div>
+                        <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${project.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- 操作 -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">操作</h3>
+            <!-- 版本信息 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">版本信息
+                        <a href="${ctx_path}/my/newVersion.htm?projectID=${project.id}" target="_blank">
+                            <span class="badge flowRight">添加</span>
+                        </a>
+                    </h3>
+                </div>
+                <div class="list-group">
+                    <#list versionList as ver>
+                        <div class="list-group-item">
+                            <a class="flowRight">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>
+                            <a class="flowRight" href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                            <a class="flowRight">
+                                <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                            </a>
+                            <a href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}">
+                                <h4 class="list-group-item-heading">${ver.version} - ${ver.subtitle}</h4>
+                                <p class="list-group-item-text">状态:${ver.status.desc} - 发布时间：${ver.releaseTime?string("yyyy-MM-dd HH:mm:ss")}</p>
+                            </a>
+                        </div>
+                    </#list>
+                    <#if !versionList?? || (versionList?size = 0) >
+                        <a href="javascript:void(0);" class="list-group-item">
+                            <h4 class="list-group-item-heading">尚未发布任何版本</h4>
+                        </a>
+                    </#if>
+                    <#if versionErrorMessage??>
+                        <a href="javascript:void(0);" class="list-group-item">
+                            <h4 class="list-group-item-heading">版本数据加载错误：${versionErrorMessage.getMessage()}</h4>
+                        </a>
+                    </#if>
+                </div>
             </div>
-            <div class="panel-body">
-                [<a>保存</a>]
-                [<a>删除项目</a>]
-                [<a>推送到首页</a>]
-                [<a>转移</a>]
-                [<a>新增版本</a>]
+            <!-- 操作 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">操作</h3>
+                </div>
+                <div class="panel-body">
+                    [<a>删除项目</a>]
+                    [<a>推送到首页</a>]
+                    [<a>转移</a>]
+                    [<a>新增版本</a>]
+                </div>
             </div>
-        </div>
-
+        </form>
     </#if>
     <#if !project?? >
-        您还没有创建任何项目，请[<a>创建新项目</a>]。
+        您还没有创建任何项目，请[<a href="${ctx_path}/my/newProject.htm" target="_blank">创建新项目</a>]。
     </#if>
 </div>

@@ -14,5 +14,5 @@ create table `PROJECT_VERSION` (
 	`modify_time`	      DATETIME		  NULL					          COMMENT '修改时间',
 	PRIMARY KEY (`id`),
 	index(`project_id`),
-	index(`project_id`,`version`)
+	unique index(`project_id`,`version`)
 );

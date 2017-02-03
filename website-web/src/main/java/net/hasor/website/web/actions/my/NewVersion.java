@@ -15,11 +15,14 @@
  */
 package net.hasor.website.web.actions.my;
 import net.hasor.web.Invoker;
-import net.hasor.web.annotation.MappingTo;
-import net.hasor.web.annotation.ReqParam;
+import net.hasor.web.annotation.*;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
+import net.hasor.website.domain.enums.ContentFormat;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.domain.enums.VersionStatus;
+import net.hasor.website.domain.futures.ProjectVersionFutures;
+import net.hasor.website.web.forms.ProjectVersionForm;
 import org.more.bizcommon.Result;
 
 import java.io.IOException;
@@ -34,6 +37,7 @@ import java.util.List;
 @MappingTo("/my/newVersion.htm")
 public class NewVersion extends BaseMyProject {
     //
+    @Get
     public void execute(@ReqParam("projectID") long projectID, Invoker data) throws IOException {
         //
         // .need login
@@ -72,5 +76,42 @@ public class NewVersion extends BaseMyProject {
             }
         }
         putData("newVersion", newVersion);
+    }
+    //
+    @Post
+    public void insertVersion(@Params ProjectVersionForm versionInfoDO, Invoker data) throws IOException {
+        //
+        // .need login
+        if (needLoginAjax())
+            return;
+        //
+        long projectID = versionInfoDO.getProjectID();
+        long versionID = versionInfoDO.getId();
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        if (!projectResult.isSuccess()) {
+            sendError(projectResult.firstMessage());
+            return;
+        }
+        final ProjectInfoDO infoDO = projectResult.getResult();
+        //
+        // .判断项目归属
+        if (!super.isMyProject(infoDO)) {
+            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
+            return;
+        }
+        //
+        // .补充信息
+        if (versionInfoDO.getFutures() == null)
+            versionInfoDO.setFutures(new ProjectVersionFutures());
+        versionInfoDO.getFutures().setDownloadURL(versionInfoDO.getFuturesDownloadURL());
+        versionInfoDO.getFutures().setSourceURL(versionInfoDO.getFuturesSourceURL());
+        versionInfoDO.getFutures().setApiURL(versionInfoDO.getFuturesApiURL());
+        versionInfoDO.setChangelog(versionInfoDO.getChangelogContent());
+        versionInfoDO.setChangelogFormat(ContentFormat.MD.formType(versionInfoDO.getChangelogFormatType()));
+        versionInfoDO.setStatus(VersionStatus.DesignPlan);
+        //
+        Result<Long> newVersion = this.projectManager.newVersion(infoDO, versionInfoDO);
+        //
+        data.getHttpResponse().sendRedirect("/my/updateVersion.htm?projectID=" + projectID + "&versionID=" + newVersion.getResult());
     }
 }

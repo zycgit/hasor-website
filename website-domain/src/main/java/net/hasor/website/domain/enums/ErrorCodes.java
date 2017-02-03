@@ -63,6 +63,7 @@ public enum ErrorCodes {
     P_OWNER_NOT_YOU(309, "对不起，这个项目的Owner不是您。"),//
     P_PROJECT_UPDATE_FAILED(310, "更新项目信息失败，请重试。"),//
     P_VERSION_UPDATE_FAILED(311, "更新版本信息失败，请重试。"),//
+    P_VERSION_SAVE_FAILED(304, "项目新增版本失败，请重试。"),//
     //
     SUCCESS(900, "操作成功。"),//
     BAD_PARAMS(901, "错误的调用参数。"),//

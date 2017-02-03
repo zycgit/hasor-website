@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.manager;
+import net.hasor.core.Hasor;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
 import net.hasor.website.core.TransactionService;
@@ -139,7 +140,7 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_SAVE_PROJECT_FAILED.getMsg())//
                     .setResult(0L);
-            logger.error(LoggerUtils.create("ERROR_006_0004")//
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("ownerID", owner.getOwnerID()) //
                     .addLog("ownerType", owner.getOwnerType().name()) //
                     .addLog("errorCode", resultDO.firstMessage().getMessage()) //
@@ -407,6 +408,39 @@ public class ProjectManager {
             logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("versionID", version.getId()) //
                     .addLog("projectID", version.getProjectID()) //
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return resultDO;
+        }
+    }
+    //
+    /** 新增版本 */
+    public Result<Long> newVersion(ProjectInfoDO infoDO, ProjectVersionDO versionInfoDO) {
+        // .保存
+        try {
+            versionInfoDO.setProjectID(Hasor.assertIsNotNull(infoDO).getId());
+            long versionID = this.projectVersionDAO.insertVersion(versionInfoDO);
+            if (versionID <= 0) {
+                ResultDO<Long> resultDO = new ResultDO<Long>(false)//
+                        .setSuccess(false)//
+                        .addMessage(ErrorCodes.P_VERSION_SAVE_FAILED.getMsg());
+                logger.error(LoggerUtils.create("ERROR_006_0014")//
+                        .addLog("projectID", infoDO.getId()) //
+                        .addLog("error", resultDO.firstMessage().getMessage()) //
+                        .toJson());
+                return resultDO;
+            } else {
+                versionInfoDO.setId(versionID);
+                return new ResultDO<Long>(true)//
+                        .setSuccess(true)//
+                        .setResult(versionID);
+            }
+        } catch (Exception e) {
+            ResultDO<Long> resultDO = new ResultDO<Long>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_VERSION_SAVE_FAILED.getMsg());
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("projectID", infoDO.getId()) //
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             return resultDO;

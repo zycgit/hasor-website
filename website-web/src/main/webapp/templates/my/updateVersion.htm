@@ -1,3 +1,5 @@
+<script src="//files.hasor.net/static/javascript/jquery.plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<link href="//files.hasor.net/static/javascript/jquery.plugins/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet"/>
 <#include "/control/editor_md.htm"/>
 <link rel="stylesheet" href="${ctx_path}/static/website/css/projects.htm.css">
 <#include "/control/project/my_project_list.htm"/>
@@ -34,22 +36,22 @@
                     <span class="input-group-addon">下载</span>
                     <input name="downloadURL" type="text" class="form-control" placeholder="http://" value="${version.futures.downloadURL}"/>
                     <span class="input-group-addon">
-                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </span>
+                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </span>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">源码</span>
                     <input name="sourceURL" type="text" class="form-control" placeholder="http://" value="${version.futures.sourceURL}"/>
                     <span class="input-group-addon">
-                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </span>
+                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </span>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">手册</span>
                     <input name="apiURL" type="text" class="form-control" placeholder="http://" value="${version.futures.apiURL}"/>
                     <span class="input-group-addon">
-                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </span>
+                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </span>
                 </div>
                 <script>
                     $(function () {
@@ -57,11 +59,25 @@
                     });
                 </script>
                 <div id='changelogEditor'>${version.changelog}</div>
-                <div>
-                    <span class="col-sm-1 label label-success">状&nbsp;&nbsp;&nbsp;&nbsp;态</span>&nbsp;${version.status.desc}
+                <div class="input-group">
+                    <script>
+                        $(function () {
+                            $("#releaseTime").datepicker({dateFormat: "yy-mm-dd", defaultDate: $("#releaseTime").val()});
+                        });
+                    </script>
+                    <style>
+                        .ui-datepicker {
+                            z-index: 99999 !important
+                        }
+                    </style>
+                    <span class="input-group-addon">发布时间</span>
+                    <input id="releaseTime" name="releaseTime" type="text" class="form-control" placeholder="YYYY-MM-DD" value="${version.releaseTime?string('yyyy-MM-dd')}"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
                 <div>
-                    <span class="col-sm-1 label label-success">发布时间</span>&nbsp;${version.releaseTime?string("yyyy-MM-dd HH:mm:ss")}
+                    <span class="col-sm-1 label label-success">状&nbsp;&nbsp;&nbsp;&nbsp;态</span>&nbsp;${version.status.desc}
                 </div>
                 <div>
                     <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${version.createTime?string("yyyy-MM-dd HH:mm:ss")}

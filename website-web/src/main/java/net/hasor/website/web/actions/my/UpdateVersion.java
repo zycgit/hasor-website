@@ -105,7 +105,6 @@ public class UpdateVersion extends BaseMyProject {
         // .更新版本信息
         versionDO.setSubtitle(versionInfoDO.getSubtitle());
         versionDO.setVersion(versionInfoDO.getVersion());
-        versionDO.setChangelog(versionInfoDO.getChangelog());
         if (versionDO.getFutures() == null)
             versionDO.setFutures(new ProjectVersionFutures());
         versionDO.getFutures().setDownloadURL(versionInfoDO.getFuturesDownloadURL());
@@ -113,6 +112,7 @@ public class UpdateVersion extends BaseMyProject {
         versionDO.getFutures().setApiURL(versionInfoDO.getFuturesApiURL());
         versionDO.setChangelog(versionInfoDO.getChangelogContent());
         versionDO.setChangelogFormat(ContentFormat.MD.formType(versionInfoDO.getChangelogFormatType()));
+        versionDO.setReleaseTime(versionInfoDO.getReleaseTime());
         //
         // .更新数据(启动事务)
         Result<Boolean> result = this.projectManager.updateVersionInfo(versionDO);
@@ -120,7 +120,6 @@ public class UpdateVersion extends BaseMyProject {
             sendError(result.firstMessage());
             return;
         }
-        //
         //
         Boolean aBoolean = result.getResult();
         if (aBoolean == null || !aBoolean) {

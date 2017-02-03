@@ -20,6 +20,10 @@ import net.hasor.web.render.RenderApiBinder;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.CoreModule;
 import net.hasor.website.login.oauth.OAuthModule;
+import org.more.convert.ConverterUtils;
+import org.more.convert.convert.DateConverter;
+
+import java.util.Date;
 /**
  *
  * @version : 2015年12月25日
@@ -41,5 +45,9 @@ public class StartModule extends WebModule {
         //
         // .Webs
         apiBinder.jeeFilter("/*").through(0, new JumpFilter());
+        //
+        DateConverter converter = new DateConverter();
+        converter.setPatterns(new String[] { "yyyy-mm-dd", "hh:mm:ss", "yyyy-mm-dd hh:mm:ss" });
+        ConverterUtils.register(converter, Date.class);
     }
 }

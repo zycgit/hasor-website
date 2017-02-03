@@ -21,6 +21,7 @@ import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.enums.ContentFormat;
+import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.SourceType;
 import net.hasor.website.web.forms.ProjectInfoForm;
 import org.more.bizcommon.Result;
@@ -39,8 +40,19 @@ public class UpdateProject extends BaseMyProject {
         // .need login
         if (needLoginAjax())
             return;
+        //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectInfoDO.getId());
+        if (!projectResult.isSuccess()) {
+            sendError(projectResult.firstMessage());
+            return;
+        }
         final ProjectInfoDO infoDO = projectResult.getResult();
+        //
+        // .判断项目归属
+        if (!super.isMyProject(infoDO)) {
+            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
+            return;
+        }
         //
         // .更新项目信息
         infoDO.setSubtitle(projectInfoDO.getSubtitle());
@@ -73,6 +85,13 @@ public class UpdateProject extends BaseMyProject {
             }
         });
         //
+        //
         Boolean aBoolean = result.getResult();
+        if (aBoolean == null || !aBoolean) {
+            sendError(ErrorCodes.P_PROJECT_UPDATE_FAILED.getMsg());
+            return;
+        }
+        //
+        getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectInfoDO.getId());
     }
 }

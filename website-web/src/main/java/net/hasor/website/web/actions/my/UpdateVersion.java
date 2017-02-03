@@ -18,12 +18,9 @@ import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.PathParam;
 import net.hasor.web.annotation.ReqParam;
-import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.domain.enums.ErrorCodes;
-import net.hasor.website.utils.LoggerUtils;
-import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
 
 import java.io.IOException;
@@ -48,33 +45,20 @@ public class UpdateVersion extends BaseMyProject {
         this.doShow(projectID, versionID, data);
     }
     private void doShow(long projectID, long versionID, Invoker data) {
-        // .查询curProjectID项目
-        Result<ProjectInfoDO> result = this.projectManager.queryProjectByID(projectID);
-        int notExist = ErrorCodes.P_PROJECT_NOT_EXIST.getMsg().getType();
-        Message resultMsg = result.firstMessage();
-        if (resultMsg != null && resultMsg.getType() != notExist) {
-            logger.error(LoggerUtils.create("ERROR_006_0011")//
-                    .addLog("result", result) //
-                    .addLog("projectID", projectID)//
-                    .addLog("errorMessage", resultMsg)//
-                    .toJson());
-            sendError(resultMsg);
+        //
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        if (!projectResult.isSuccess()) {
+            sendError(projectResult.firstMessage());
             return;
         }
+        final ProjectInfoDO infoDO = projectResult.getResult();
+        //
         // .判断项目归属
-        Owner userOwner = getUser();
-        ProjectInfoDO infoDO = result.getResult();
-        if (infoDO != null) {
-            if (infoDO.getOwnerID() != userOwner.getOwnerID() || !infoDO.getOwnerType().equals(userOwner.getOwnerType())) {
-                logger.error(LoggerUtils.create("ERROR_006_0013")//
-                        .addLog("result", result) //
-                        .addLog("projectID", projectID)//
-                        .addLog("errorMessage", resultMsg)//
-                        .toJson());
-                sendError(resultMsg);
-                return;
-            }
+        if (!super.isMyProject(infoDO)) {
+            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
+            return;
         }
+        //
         // .
         if (infoDO == null) {
             sendError(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg());
@@ -86,7 +70,7 @@ public class UpdateVersion extends BaseMyProject {
         // .版本
         Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
         if (!versionResult.isSuccess() || versionResult.getResult() == null) {
-            sendError(result.firstMessage());
+            sendError(versionResult.firstMessage());
             return;
         }
         //

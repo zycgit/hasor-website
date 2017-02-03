@@ -37,7 +37,7 @@ public class BaseMyProject extends Action {
     @Inject
     protected ProjectManager projectManager;
     //
-    /** 填充我的项目列表 */
+    /** 填充我的项目列表(包含：我的列表、当前项目、当前项目的父项目) */
     protected boolean fillProjectInfo(long curProjectID) throws IOException {
         // .need login
         if (needLogin()) {
@@ -94,5 +94,16 @@ public class BaseMyProject extends Action {
         putData("sourceTypeList", SourceType.values());
         putData("languageList", LanguageEnum.values());
         putData("licenseList", LicenseEnum.values());
+    }
+    public boolean isMyProject(ProjectInfoDO infoDO) {
+        if (infoDO == null) {
+            return false;
+        }
+        Owner userOwner = getUser();
+        return !(infoDO.getOwnerID() != userOwner.getOwnerID() || !infoDO.getOwnerType().equals(userOwner.getOwnerType()));
+    }
+    public void showMessage(String msg) {
+        putData("showMessage", true);
+        putData("showMessageString", msg);
     }
 }

@@ -60,7 +60,10 @@ public enum ErrorCodes {
     P_PROJECT_NOT_EXIST(306, "不存在的项目。"),//
     P_QUERY_ERROR(307, "查询项目信息失败，请重试。"),//
     P_VERSION_NOT_EXIST(308, "不存在的项目版本。"),//
+    P_OWNER_NOT_YOU(309, "对不起，这个项目的Owner不是您。"),//
+    P_PROJECT_UPDATE_FAILED(310, "保存项目信息失败，请重试。"),//
     //
+    SUCCESS(900, "操作成功。"),//
     BAD_PARAMS(901, "错误的调用参数。"),//
     BAD_REQUEST(902, "错误的请求。"),//
     BAD_REQUEST_PARAMS(903, "错误数据查询参数。"),//

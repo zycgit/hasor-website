@@ -17,12 +17,9 @@ package net.hasor.website.web.actions.my;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.ReqParam;
-import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.domain.enums.ErrorCodes;
-import net.hasor.website.utils.LoggerUtils;
-import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
 
 import java.io.IOException;
@@ -38,36 +35,22 @@ import java.util.List;
 public class NewVersion extends BaseMyProject {
     //
     public void execute(@ReqParam("projectID") long projectID, Invoker data) throws IOException {
+        //
         // .need login
-        if (!super.fillProjectInfo(projectID)) {
+        if (needLoginAjax())
+            return;
+        //
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        if (!projectResult.isSuccess()) {
+            sendError(projectResult.firstMessage());
             return;
         }
-        // .查询curProjectID项目
-        Result<ProjectInfoDO> result = this.projectManager.queryProjectByID(projectID);
-        int notExist = ErrorCodes.P_PROJECT_NOT_EXIST.getMsg().getType();
-        Message resultMsg = result.firstMessage();
-        if (resultMsg != null && resultMsg.getType() != notExist) {
-            logger.error(LoggerUtils.create("ERROR_006_0011")//
-                    .addLog("result", result) //
-                    .addLog("projectID", projectID)//
-                    .addLog("errorMessage", resultMsg)//
-                    .toJson());
-            sendError(resultMsg);
-            return;
-        }
+        final ProjectInfoDO infoDO = projectResult.getResult();
+        //
         // .判断项目归属
-        Owner userOwner = getUser();
-        ProjectInfoDO infoDO = result.getResult();
-        if (infoDO != null) {
-            if (infoDO.getOwnerID() != userOwner.getOwnerID() || !infoDO.getOwnerType().equals(userOwner.getOwnerType())) {
-                logger.error(LoggerUtils.create("ERROR_006_0013")//
-                        .addLog("result", result) //
-                        .addLog("projectID", projectID)//
-                        .addLog("errorMessage", resultMsg)//
-                        .toJson());
-                sendError(resultMsg);
-                return;
-            }
+        if (!super.isMyProject(infoDO)) {
+            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
+            return;
         }
         //
         // .版本列表

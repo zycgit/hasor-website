@@ -72,13 +72,13 @@ public class UpdateProject extends BaseMyProject {
                 // .1st ,更新标题等数据
                 result = projectManager.updateProjectWithoutContent(infoDO);
                 if (!result.isSuccess()) {
-                    tranStatus.setRollbackOnly();
+                    tranStatus.setRollbackOnly();// <-- 回滚事务
                     return false;
                 }
                 // .2st ,更新内容
                 result = projectManager.updateProjectContent(infoDO);
                 if (!result.isSuccess()) {
-                    tranStatus.setRollbackOnly();
+                    tranStatus.setRollbackOnly();// <-- 回滚事务
                     return false;
                 }
                 return true;

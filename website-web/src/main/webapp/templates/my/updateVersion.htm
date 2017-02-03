@@ -3,66 +3,73 @@
 <#include "/control/project/my_project_list.htm"/>
 <!-- -->
 <div style="padding-left: 210px;">
-    <#include "/control/project/my_message.htm"/>
-    <!-- 详情 -->
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <a href="${ctx_path}/my/projects.htm?curProjectID=${project.id}">${project.name} - ${version.version}</a> 版本信息
-                <a href="javascript:void(0);" target="_blank">
-                    <span class="badge flowRight">更新</span>
-                </a>
-            </h3>
+    <form id="versionForm" action="${ctx_path}/my/updateVersion.htm" method="post">
+        <#include "/control/project/my_message.htm"/>
+        <!-- 详情 -->
+        <div class="panel panel-default">
+            <input name="id" type="hidden" value="${version.id}"/>
+            <input name="projectID" type="hidden" value="${project.id}"/>
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a href="${ctx_path}/my/projects.htm?curProjectID=${project.id}">${project.name} - ${version.version}</a> 版本信息
+                    <a href="javascript:void(0)">
+                        <span class="badge flowRight" onclick="versionForm.submit();">更新</span>
+                    </a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon">标题</span>
+                    <input name="subtitle" type="text" class="form-control" placeholder="请输入..." value="${version.subtitle}"/>
+                    <span class="input-group-addon">
+                        <input name="contentFormatType" type="hidden" value="${version.changelogFormat.type}"/>
+                        ${version.changelogFormat.desc}
+                    </span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">版本</span>
+                    <input name="version" type="text" class="form-control" placeholder="curent version is ${version.version}" value="${version.version}"/>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">下载</span>
+                    <input name="downloadURL" type="text" class="form-control" placeholder="http://" value="${version.futures.downloadURL}"/>
+                    <span class="input-group-addon">
+                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                </span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">源码</span>
+                    <input name="sourceURL" type="text" class="form-control" placeholder="http://" value="${version.futures.sourceURL}"/>
+                    <span class="input-group-addon">
+                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                </span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">手册</span>
+                    <input name="apiURL" type="text" class="form-control" placeholder="http://" value="${version.futures.apiURL}"/>
+                    <span class="input-group-addon">
+                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                </span>
+                </div>
+                <script>
+                    $(function () {
+                        initEditor("changelogEditor");
+                    });
+                </script>
+                <div id='changelogEditor'>${version.changelog}</div>
+                <div>
+                    <span class="col-sm-1 label label-success">状&nbsp;&nbsp;&nbsp;&nbsp;态</span>&nbsp;${version.status.desc}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">发布时间</span>&nbsp;${version.releaseTime?string("yyyy-MM-dd HH:mm:ss")}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${version.createTime?string("yyyy-MM-dd HH:mm:ss")}
+                </div>
+                <div>
+                    <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${version.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-            <div class="input-group">
-                <span class="input-group-addon">标题</span>
-                <input type="text" class="form-control" placeholder="请输入..." value="${version.subtitle}"/>
-                <span class="input-group-addon">MD<input type="hidden" name="changelogFormat" value="1"/></span>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">版本</span>
-                <input type="text" class="form-control" placeholder="curent version is ${version.version}" value="${version.version}"/>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">下载</span>
-                <input type="text" class="form-control" placeholder="http://" value="${version.futures.downloadURL??}"/>
-                <span class="input-group-addon">
-                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </span>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">源码</span>
-                <input type="text" class="form-control" placeholder="http://" value="${version.futures.sourceURL??}"/>
-                <span class="input-group-addon">
-                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </span>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">手册</span>
-                <input type="text" class="form-control" placeholder="http://" value="${version.futures.apiURL??}"/>
-                <span class="input-group-addon">
-                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </span>
-            </div>
-            <script>
-                $(function () {
-                    initEditor("changelogEditor");
-                });
-            </script>
-            <div id='changelogEditor'>${version.changelog}</div>
-            <div>
-                <span class="col-sm-1 label label-success">状&nbsp;&nbsp;&nbsp;&nbsp;态</span>&nbsp;${version.status.desc}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">发布时间</span>&nbsp;${version.releaseTime?string("yyyy-MM-dd HH:mm:ss")}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${version.createTime?string("yyyy-MM-dd HH:mm:ss")}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${version.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
-            </div>
-        </div>
-    </div>
+    </form>
 </div>

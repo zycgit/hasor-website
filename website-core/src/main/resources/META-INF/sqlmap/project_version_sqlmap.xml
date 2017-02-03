@@ -85,4 +85,20 @@
             1
     </select>
 
+    <!-- 更新项目版本信息，不会变更版本状态和隶属关系。 -->
+    <update id="projectVersion_updateVersion">
+        update PROJECT_VERSION set
+            release_time    = #{releaseTime},
+            version         = #{version},
+            subtitle        = #{subtitle},
+            changelog       = #{changelog},
+            changelog_format= #{changelogFormat,typeHandler=net.hasor.website.datadao.convert.ContentFormatConvert},
+            futures         = #{futures,typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            modify_time     = now()
+        where 1=1
+            and id          = #{id}
+            and project_id  = #{projectID}
+        limit 1
+    </update>
+
 </mapper>

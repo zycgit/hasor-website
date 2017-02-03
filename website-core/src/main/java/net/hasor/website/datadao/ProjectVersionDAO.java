@@ -84,4 +84,16 @@ public class ProjectVersionDAO extends AbstractDao {
             throw e;
         }
     }
+    /** 更新项目版本信息，不会变更版本状态和隶属关系 */
+    public int updateVersionInfo(ProjectVersionDO version) throws SQLException {
+        try {
+            return this.getSqlExecutor().update("projectVersion_updateVersion", version);
+        } catch (SQLException e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
+                    .addLog("method", "updateVersionInfo")//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            throw e;
+        }
+    }
 }

@@ -317,6 +317,7 @@ public class ProjectManager {
         }
     }
     //
+    //
     /** 查询项目的版本列表 */
     public Result<List<ProjectVersionDO>> queryVersionListByProject(long projectID) {
         // .id判断
@@ -349,6 +350,7 @@ public class ProjectManager {
                     .setResult(null);
         }
     }
+    //
     /** 根据ID查询版本信息 */
     public Result<ProjectVersionDO> queryVersionByID(long projectID, long versionID) {
         try {
@@ -373,6 +375,41 @@ public class ProjectManager {
                     .setSuccess(false)//
                     .addMessage(ErrorCodes.P_QUERY_ERROR.getMsg())//
                     .setResult(null);
+        }
+    }
+    //
+    /** 更新版本信息（更新项目版本信息，不会变更版本状态和隶属关系） */
+    public Result<Boolean> updateVersionInfo(ProjectVersionDO version) {
+        // .保存
+        try {
+            int res = this.projectVersionDAO.updateVersionInfo(version);
+            if (res <= 0) {
+                ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                        .setSuccess(false)//
+                        .addMessage(ErrorCodes.P_VERSION_UPDATE_FAILED.getMsg())//
+                        .setResult(false);
+                logger.error(LoggerUtils.create("ERROR_006_0007")//
+                        .addLog("versionID", version.getId()) //
+                        .addLog("projectID", version.getProjectID()) //
+                        .addLog("error", resultDO.firstMessage().getMessage()) //
+                        .toJson());
+                return resultDO;
+            } else {
+                return new ResultDO<Boolean>(true)//
+                        .setSuccess(true)//
+                        .setResult(true);
+            }
+        } catch (Exception e) {
+            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
+                    .setSuccess(false)//
+                    .addMessage(ErrorCodes.P_VERSION_UPDATE_FAILED.getMsg())//
+                    .setResult(false);
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("versionID", version.getId()) //
+                    .addLog("projectID", version.getProjectID()) //
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return resultDO;
         }
     }
 }

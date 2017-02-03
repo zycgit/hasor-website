@@ -15,12 +15,13 @@
  */
 package net.hasor.website.web.actions.my;
 import net.hasor.web.Invoker;
-import net.hasor.web.annotation.MappingTo;
-import net.hasor.web.annotation.PathParam;
-import net.hasor.web.annotation.ReqParam;
+import net.hasor.web.annotation.*;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
+import net.hasor.website.domain.enums.ContentFormat;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.domain.futures.ProjectVersionFutures;
+import net.hasor.website.web.forms.ProjectVersionForm;
 import org.more.bizcommon.Result;
 
 import java.io.IOException;
@@ -29,22 +30,16 @@ import java.io.IOException;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/my/updateVersion.{action}")
+@MappingTo("/my/updateVersion.htm")
 public class UpdateVersion extends BaseMyProject {
     //
-    public void execute(@ReqParam("projectID") long projectID, @ReqParam("versionID") long versionID,//
-            @PathParam("action") String action, Invoker data) throws IOException {
+    @Get
+    public void doShow(@ReqParam("projectID") long projectID, @ReqParam("versionID") long versionID) throws IOException {
         // .need login
         if (!super.fillProjectInfo(projectID)) {
             return;
         }
         //
-        if ("do".equalsIgnoreCase(action)) {
-            this.doUpdate(projectID, versionID, data);
-        }
-        this.doShow(projectID, versionID, data);
-    }
-    private void doShow(long projectID, long versionID, Invoker data) {
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         if (!projectResult.isSuccess()) {
@@ -78,8 +73,61 @@ public class UpdateVersion extends BaseMyProject {
         putData("version", versionDO);
     }
     //
-    //
-    private void doUpdate(long projectID, long versionID, Invoker data) {
+    @Post
+    public void doUpdate(@Params ProjectVersionForm versionInfoDO, Invoker data) throws IOException {
         //
+        // .need login
+        if (needLoginAjax())
+            return;
+        //
+        long projectID = versionInfoDO.getProjectID();
+        long versionID = versionInfoDO.getId();
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        if (!projectResult.isSuccess()) {
+            sendError(projectResult.firstMessage());
+            return;
+        }
+        final ProjectInfoDO infoDO = projectResult.getResult();
+        //
+        // .判断项目归属
+        if (!super.isMyProject(infoDO)) {
+            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
+            return;
+        }
+        //
+        Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
+        if (!versionResult.isSuccess()) {
+            sendError(versionResult.firstMessage());
+            return;
+        }
+        ProjectVersionDO versionDO = versionResult.getResult();
+        //
+        // .更新版本信息
+        versionDO.setSubtitle(versionInfoDO.getSubtitle());
+        versionDO.setVersion(versionInfoDO.getVersion());
+        versionDO.setChangelog(versionInfoDO.getChangelog());
+        if (versionDO.getFutures() == null)
+            versionDO.setFutures(new ProjectVersionFutures());
+        versionDO.getFutures().setDownloadURL(versionInfoDO.getFuturesDownloadURL());
+        versionDO.getFutures().setSourceURL(versionInfoDO.getFuturesSourceURL());
+        versionDO.getFutures().setApiURL(versionInfoDO.getFuturesApiURL());
+        versionDO.setChangelog(versionInfoDO.getChangelogContent());
+        versionDO.setChangelogFormat(ContentFormat.MD.formType(versionInfoDO.getChangelogFormatType()));
+        //
+        // .更新数据(启动事务)
+        Result<Boolean> result = this.projectManager.updateVersionInfo(versionDO);
+        if (!result.isSuccess()) {
+            sendError(result.firstMessage());
+            return;
+        }
+        //
+        //
+        Boolean aBoolean = result.getResult();
+        if (aBoolean == null || !aBoolean) {
+            sendError(ErrorCodes.P_VERSION_UPDATE_FAILED.getMsg());
+            return;
+        }
+        //
+        data.getHttpResponse().sendRedirect("/my/updateVersion.htm?projectID=" + projectID + "&versionID=" + versionID);
     }
 }

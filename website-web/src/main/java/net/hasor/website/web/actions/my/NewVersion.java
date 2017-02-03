@@ -37,8 +37,9 @@ public class NewVersion extends BaseMyProject {
     public void execute(@ReqParam("projectID") long projectID, Invoker data) throws IOException {
         //
         // .need login
-        if (needLoginAjax())
+        if (!super.fillProjectInfo(projectID)) {
             return;
+        }
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         if (!projectResult.isSuccess()) {

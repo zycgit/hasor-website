@@ -8,7 +8,7 @@ create table `CONTENT_INFO` (
   
   `title`		          VARCHAR(100)	NOT NULL				        COMMENT '标题',
   `brief`		          VARCHAR(200)	NOT NULL				        COMMENT '摘要',
-  `content_body`		  TEXT	        NOT NULL				        COMMENT '内容正文',
+  `content_body`		  MEDIUMTEXT	  NOT NULL				        COMMENT '内容正文',
   `content_format`		INT	          NOT NULL				        COMMENT '文章格式',
   
   `futures`	          TEXT	        NULL                    COMMENT '扩展信息(json格式)',

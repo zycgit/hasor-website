@@ -7,7 +7,7 @@ create table `PROJECT_INFO` (
 
   `name`		          VARCHAR(50)	  NOT NULL				        COMMENT '项目名称',
   `subtitle`		      VARCHAR(150)	NOT NULL				        COMMENT '小标题',
-  `present`		  		  TEXT	        NOT NULL				        COMMENT '介绍正文',
+  `present`		  		  MEDIUMTEXT	  NOT NULL				        COMMENT '介绍正文',
   `present_format`		INT	          NOT NULL				        COMMENT '介绍内容格式',
 
   `home_page`		      VARCHAR(200)	NOT NULL				        COMMENT '项目主页',

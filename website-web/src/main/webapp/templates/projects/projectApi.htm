@@ -1,0 +1,59 @@
+${rootData.put('pageTitle', project.name + 'APIs')}
+${rootData.put('navIndex',0)}
+<link rel="stylesheet" href="${ctx_path}/static/website/css/projects_public.htm.css">
+<style>
+    iframe {
+        width: 100%;
+        height: 800px;
+    }
+</style>
+<script language="javascript" type="text/javascript">
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.frames["classFrame"].document.body.scrollHeight + 'px';
+    }
+</script>
+<div class="page-header" style="margin: 0px;">
+    <h3 style="margin: 0px;">${project.name}
+        <small>${project.subtitle}</small>
+    </h3>
+</div>
+<ul class="nav nav-tabs">
+    <#assign isTop=false/>
+    <#assign className=""/>
+    <#list versionList as versionInfo>
+        <#if versionInfo_index lt 3 >
+            <#assign className=""/>
+            <#if versionInfo.version == curVersion.version>
+                <#assign className="active"/>
+                <#assign isTop=true/>
+            </#if>
+            <li class="${className}"><a href="${ctx_path}/projects/${project.id}/${versionInfo.version}/projectApi.htm">Hasor-${versionInfo.version!}</a></li>
+        </#if>
+    </#list>
+    <#if isTop == false>
+        <#assign className="active"/>
+        <#assign curTitle="(${curVersion.version})"/>
+    </#if>
+    <li class="dropdown ${className}">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            其它版本${curTitle}<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <#list versionList as versionInfo>
+                <#if versionInfo_index gt 2 >
+                    <#if versionInfo.version == curVersion.version>
+                        <#assign className="active"/>
+                        <#else/>
+                        <#assign className=""/>
+                    </#if>
+                    <li class="${className}"><a href="${ctx_path}/projects/${project.id}/${versionInfo.version}/projectApi.htm">Hasor-${versionInfo.version!}</a></li>
+                </#if>
+            </#list>
+        </ul>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active">
+        <iframe name="apiFrame" src="${curVersion.futures.apiURL}" scrolling="no" onload="resizeIframe(this)" frameborder="0"></iframe>
+    </div>
+</div>

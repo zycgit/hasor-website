@@ -19,20 +19,22 @@ import net.hasor.web.annotation.PathParam;
 import net.hasor.web.render.RenderInvoker;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
+import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.Result;
-import org.pegdown.Extensions;
-import org.pegdown.PegDownProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * 项目的首页入口
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/projects/{projectID}/index.htm")
-public class ProjectIndex extends BaseProjects {
+@MappingTo("/projects/{projectID}/{version}/projectApi.htm")
+public class ProjectApi extends BaseProjects {
     //
-    public void execute(@PathParam("projectID") long projectID, RenderInvoker data) {
+    public void execute(RenderInvoker data,//
+            @PathParam("projectID") long projectID,//
+            @PathParam("version") String version) {
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         if (!projectResult.isSuccess()) {
@@ -43,16 +45,27 @@ public class ProjectIndex extends BaseProjects {
         ProjectInfoDO projectInfo = projectResult.getResult();
         putData("project", projectInfo);
         //
-        PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
-        String htmlData = processor.markdownToHtml(projectInfo.getPresent());
-        putData("projectPresent", htmlData);
-        //
+        // .版本列表
+        List<ProjectVersionDO> versionList = new ArrayList<ProjectVersionDO>(0);
         Result<List<ProjectVersionDO>> versionResult = this.projectManager.queryVersionListByProject(projectID);
-        List<ProjectVersionDO> result = versionResult.getResult();
-        if (!result.isEmpty()) {
-            putData("newVersion", result.get(0));
+        if (!versionResult.isSuccess()) {
+            logger.error(LoggerUtils.create("ERROR_003_0008")//
+                    .addLog("result", versionResult) //
+                    .addLog("errorMessage", "queryVersionListByProject -> " + versionResult.firstMessage().getMessage())//
+                    .toJson());
+            putData("versionErrorMessage", versionResult.firstMessage());
+        } else {
+            versionList = versionResult.getResult();
+        }
+        putData("versionList", versionList);
+        //
+        for (ProjectVersionDO versionDO : versionList) {
+            if (versionDO.getVersion().equalsIgnoreCase(version)) {
+                putData("curVersion", versionDO);
+                break;
+            }
         }
         //
-        data.renderTo("htm", "/projects/projectDetail.htm");
+        data.renderTo("htm", "/projects/projectApi.htm");
     }
 }

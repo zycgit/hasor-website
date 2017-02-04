@@ -6,7 +6,7 @@ create table `PROJECT_VERSION` (
   `version`	          VARCHAR(50)		NOT NULL			    	    COMMENT '版本号',
 	`status`	          INT	          NOT NULL                COMMENT '状态',
   `subtitle`		      VARCHAR(150)	NULL				            COMMENT '小标题',
-	`changelog`	        TEXT	        NOT NULL                COMMENT '更新内容',
+	`changelog`	        MEDIUMTEXT	  NOT NULL                COMMENT '更新内容',
 	`changelog_format`	INT	          NOT NULL                COMMENT '更新内容格式',
 	`futures`	          TEXT	        NULL                    COMMENT '扩展信息(json格式)',
 	

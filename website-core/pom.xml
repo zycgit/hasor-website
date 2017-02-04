@@ -39,36 +39,12 @@
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
-        <!-- markdown : begin -->
+        <!-- markdown -->
         <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark</artifactId>
+            <groupId>org.pegdown</groupId>
+            <artifactId>pegdown</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark-ext-gfm-tables</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark-ext-autolink</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark-ext-yaml-front-matter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark-ext-ins</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.commonmark</groupId>
-            <artifactId>commonmark-ext-heading-anchor</artifactId>
-        </dependency>
-        <!-- markdown : end -->
+        
         <!-- DB begin -->
         <dependency>
             <groupId>org.mybatis</groupId>

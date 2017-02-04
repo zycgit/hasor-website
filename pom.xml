@@ -13,7 +13,6 @@
     <!-- 配置属性 -->
     <properties>
         <website.version>1.0.0-SNAPSHOT</website.version>
-        <atlassian.commonmark.version>0.8.0</atlassian.commonmark.version>
         <wtpversion>2.0</wtpversion>
         <downloadSources>true</downloadSources>
         <downloadJavadocs>true</downloadJavadocs>
@@ -149,43 +148,12 @@
                 <version>2.4.0</version>
             </dependency>
 
-            <!-- markdown : begin -->
+            <!-- markdown -->
             <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark</artifactId>
-                <version>${atlassian.commonmark.version}</version>
+                <groupId>org.pegdown</groupId>
+                <artifactId>pegdown</artifactId>
+                <version>1.6.0</version>
             </dependency>
-            <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark-ext-gfm-tables</artifactId>
-                <version>${atlassian.commonmark.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
-                <version>${atlassian.commonmark.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark-ext-autolink</artifactId>
-                <version>${atlassian.commonmark.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark-ext-yaml-front-matter</artifactId>
-                <version>${atlassian.commonmark.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark-ext-ins</artifactId>
-                <version>${atlassian.commonmark.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.atlassian.commonmark</groupId>
-                <artifactId>commonmark-ext-heading-anchor</artifactId>
-                <version>${atlassian.commonmark.version}</version>
-            </dependency>
-            <!-- markdown : end -->
 
             <!-- DB begin -->
             <dependency>

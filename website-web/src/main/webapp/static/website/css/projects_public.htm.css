@@ -25,3 +25,8 @@ p.home-subtitle {
     color: #7c7c7c;
     margin-bottom: 25px;
 }
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}

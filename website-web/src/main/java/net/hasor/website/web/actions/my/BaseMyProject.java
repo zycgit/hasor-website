@@ -31,7 +31,7 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-public class BaseMyProject extends Action {
+public abstract class BaseMyProject extends Action {
     @Inject
     protected ProjectManager projectManager;
     //

@@ -1,0 +1,20 @@
+${rootData.put('pageTitle', project.name)}
+${rootData.put('navIndex',0)}
+<link rel="stylesheet" href="${ctx_path}/static/website/css/projects_public.htm.css">
+
+<!--begin row-->
+<div class="row home-wrapper">
+    <!--begin col-md-12-->
+    <div class="col-md-12 text-center">
+        <h1 class="home-title">${project.name}</h1>
+        <p class="home-subtitle">${project.subtitle}</p>
+
+        <a href="/demo" class="btn btn-lg btn-margin btn-white-transparent scrool wow fadeIn animated" data-wow-delay="1.5s" style="visibility: visible; animation-delay: 1.5s; animation-name: fadeIn;">Schedule a Demo</a>
+
+        <a href="https://app.givinggreat.com/signup" class="btn btn-lg btn-margin btn-white scrool wow fadeIn animated" data-wow-delay="1.5s" style="visibility: visible; animation-delay: 1.5s; animation-name: fadeIn;">Get Started Free</a>
+
+    </div>
+    <!--end col-md-12-->
+</div>
+<hr/>
+${projectPresent}

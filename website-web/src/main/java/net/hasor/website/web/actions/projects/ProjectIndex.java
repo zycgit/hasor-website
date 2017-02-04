@@ -45,7 +45,7 @@ public class ProjectIndex extends BaseProjects {
         //
         PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
         String htmlData = processor.markdownToHtml(projectInfo.getPresent());
-        putData("projectPresent", htmlData);
+        projectInfo.setPresent(htmlData);
         //
         Result<List<ProjectVersionDO>> versionResult = super.versionListToIndex(projectID);
         List<ProjectVersionDO> result = versionResult.getResult();

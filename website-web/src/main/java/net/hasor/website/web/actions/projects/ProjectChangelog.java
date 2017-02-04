@@ -21,6 +21,8 @@ import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.Result;
+import org.pegdown.Extensions;
+import org.pegdown.PegDownProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,13 @@ public class ProjectChangelog extends BaseProjects {
         } else {
             versionList = versionResult.getResult();
         }
+        //
+        PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
+        for (ProjectVersionDO versionDO : versionList) {
+            String htmlData = processor.markdownToHtml(versionDO.getChangelog());
+            versionDO.setChangelog(htmlData);
+        }
+        //
         putData("versionList", versionList);
         //
         //

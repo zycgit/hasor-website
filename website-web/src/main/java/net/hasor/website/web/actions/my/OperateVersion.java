@@ -29,8 +29,8 @@ import java.io.IOException;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/my/deleteVersion.do")
-public class DeleteVersion extends BaseMyProject {
+@MappingTo("/my/operateVersion.do")
+public class OperateVersion extends BaseMyProject {
     //
     private boolean testVersion(long projectID, long versionID) {
         //
@@ -63,25 +63,42 @@ public class DeleteVersion extends BaseMyProject {
     public void execute(Invoker data,//
             @ReqParam("method") String method, //
             @ReqParam("projectID") long projectID, //
-            @ReqParam("versionID") long versionID) throws IOException {
+            @ReqParam("versionID") long versionID, //
+            @ReqParam("target") String target) throws IOException {
         //
+        boolean onError = false;
         if ("delete".equalsIgnoreCase(method)) {
-            this.doDelete(projectID, versionID);
-            return;
+            onError = this.doDelete(projectID, versionID);
         }
         if ("recover".equalsIgnoreCase(method)) {
-            this.doRecover(projectID, versionID);
-            return;
+            onError = this.doRecover(projectID, versionID);
+        }
+        if ("publish".equalsIgnoreCase(method)) {
+            onError = this.doPublish(projectID, versionID);
         }
         //
+        if (onError) {
+            if ("detail".equalsIgnoreCase(target)) {
+                getResponse().sendRedirect("/my/updateVersion.htm?projectID=" + projectID + "&versionID=" + versionID);
+            } else {
+                getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectID);
+            }
+            return;
+        }
         sendError(ErrorCodes.BAD_PARAMS.getMsg());
     }
     //
     //
-    protected void doDelete(long projectID, long versionID) throws IOException {
+    private boolean doPublish(long projectID, long versionID) {
+        if (!testVersion(projectID, versionID)) {
+            return false;
+        }
+        return true;
+    }
+    private boolean doDelete(long projectID, long versionID) throws IOException {
         // .是否可删除
         if (!testVersion(projectID, versionID)) {
-            return;
+            return false;
         }
         // .执行删除
         Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
@@ -90,15 +107,14 @@ public class DeleteVersion extends BaseMyProject {
             Result<Boolean> result = this.projectManager.deleteVersion(this.getUser(), projectID, versionID);
             if (!result.isSuccess()) {
                 sendError(result.firstMessage());
-                return;
+                return false;
             }
         }
-        //
-        getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectID);
+        return true;
     }
-    protected void doRecover(long projectID, long versionID) throws IOException {
+    private boolean doRecover(long projectID, long versionID) throws IOException {
         if (!testVersion(projectID, versionID)) {
-            return;
+            return false;
         }
         // .执行恢复
         Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
@@ -107,10 +123,9 @@ public class DeleteVersion extends BaseMyProject {
             Result<Boolean> result = this.projectManager.recoverVersion(this.getUser(), projectID, versionID);
             if (!result.isSuccess()) {
                 sendError(result.firstMessage());
-                return;
+                return false;
             }
         }
-        //
-        getResponse().sendRedirect("/my/updateVersion.htm?projectID=" + projectID + "&versionID=" + versionID);
+        return true;
     }
 }

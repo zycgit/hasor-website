@@ -10,7 +10,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <a href="${ctx_path}/projects/${project.id}/index.htm" target="_blank">${project.name}</a> 详情
+                        <a href="${ctx_path}/projects/${project.id}" target="_blank">${project.name}</a> 详情
                         <a href="javascript:void(0)">
                             <span class="badge flowRight" onclick="projectForm.submit();">更新</span>
                         </a>
@@ -139,7 +139,7 @@
                         </#if>
                         <div class="list-group-item">
                             <#if markDelete == ''>
-                                <a class="flowRight" title="删除，7天后将正式删除" href="${ctx_path}/my/deleteVersion.do?projectID=${project.id}&versionID=${ver.id}&method=delete">
+                                <a class="flowRight" title="删除，7天后将正式删除" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${ver.id}&method=delete">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
                                 <a class="flowRight" title="编辑或查看" href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}">
@@ -150,7 +150,7 @@
                                 <!--</a>-->
                             </#if>
                             <#if markDelete != ''>
-                                <a class="flowRight" title="取消删除操作" href="${ctx_path}/my/deleteVersion.do?projectID=${project.id}&versionID=${ver.id}&method=recover">
+                                <a class="flowRight" title="取消删除操作" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${ver.id}&method=recover">
                                     <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                 </a>
                             </#if>
@@ -158,7 +158,8 @@
                                 <h4 class="list-group-item-heading">${ver.version} - ${ver.subtitle}</h4>
                                 <p class="list-group-item-text">
                                     <span class="col-sm-1 label label-info rightMargin">${ver.status.desc}</span>
-                                    发布时间：${ver.releaseTime?string("yyyy-MM-dd HH:mm:ss")}</p>
+                                    发布时间：${ver.releaseTime?string("yyyy-MM-dd HH:mm:ss")}
+                                </p>
                             </a>
                         </div>
                     </#list>

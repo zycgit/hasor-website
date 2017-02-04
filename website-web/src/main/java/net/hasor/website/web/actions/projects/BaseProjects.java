@@ -15,8 +15,16 @@
  */
 package net.hasor.website.web.actions.projects;
 import net.hasor.core.Inject;
+import net.hasor.website.domain.ProjectVersionDO;
+import net.hasor.website.domain.enums.VersionStatus;
 import net.hasor.website.manager.ProjectManager;
 import net.hasor.website.web.core.Action;
+import org.more.bizcommon.Result;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static net.hasor.website.utils.ResultUtils.success;
 /**
  *
  * @version : 2016年1月1日
@@ -25,4 +33,23 @@ import net.hasor.website.web.core.Action;
 public abstract class BaseProjects extends Action {
     @Inject
     protected ProjectManager projectManager;
+    //
+    /** 可以用来展现的版本列表 */
+    protected Result<List<ProjectVersionDO>> versionListToIndex(long projectID) {
+        //
+        Result<List<ProjectVersionDO>> versionResult = this.projectManager.queryVersionListByProject(projectID);
+        if (!versionResult.isSuccess()) {
+            return versionResult;
+        }
+        List<ProjectVersionDO> finalversionList = new ArrayList<ProjectVersionDO>(0);
+        List<ProjectVersionDO> versionList = versionResult.getResult();
+        //
+        for (ProjectVersionDO versionDO : versionList) {
+            if (VersionStatus.Release.equals(versionDO.getStatus())) {
+                finalversionList.add(versionDO);
+            }
+        }
+        //
+        return success(finalversionList);
+    }
 }

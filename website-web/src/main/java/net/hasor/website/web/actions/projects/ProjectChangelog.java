@@ -29,12 +29,10 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/projects/{projectID}/{version}/api.htm")
-public class ProjectApi extends BaseProjects {
+@MappingTo("/projects/{projectID}/projectChangelog.htm")
+public class ProjectChangelog extends BaseProjects {
     //
-    public void execute(RenderInvoker data,//
-            @PathParam("projectID") long projectID,//
-            @PathParam("version") String version) {
+    public void execute(RenderInvoker data, @PathParam("projectID") long projectID) {
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         if (!projectResult.isSuccess()) {
@@ -59,13 +57,7 @@ public class ProjectApi extends BaseProjects {
         }
         putData("versionList", versionList);
         //
-        for (ProjectVersionDO versionDO : versionList) {
-            if (versionDO.getVersion().equalsIgnoreCase(version)) {
-                putData("curVersion", versionDO);
-                break;
-            }
-        }
         //
-        data.renderTo("htm", "/projects/projectApi.htm");
+        data.renderTo("htm", "/projects/projectChangelog.htm");
     }
 }

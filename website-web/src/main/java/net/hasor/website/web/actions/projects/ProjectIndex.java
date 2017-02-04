@@ -29,7 +29,7 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/projects/{projectID}/index.htm")
+@MappingTo("/projects/{projectID}")
 public class ProjectIndex extends BaseProjects {
     //
     public void execute(@PathParam("projectID") long projectID, RenderInvoker data) {
@@ -47,12 +47,12 @@ public class ProjectIndex extends BaseProjects {
         String htmlData = processor.markdownToHtml(projectInfo.getPresent());
         putData("projectPresent", htmlData);
         //
-        Result<List<ProjectVersionDO>> versionResult = this.projectManager.queryVersionListByProject(projectID);
+        Result<List<ProjectVersionDO>> versionResult = super.versionListToIndex(projectID);
         List<ProjectVersionDO> result = versionResult.getResult();
         if (!result.isEmpty()) {
             putData("newVersion", result.get(0));
         }
         //
-        data.renderTo("htm", "/projects/projectDetail.htm");
+        data.renderTo("htm", "/projects/projectIndex.htm");
     }
 }

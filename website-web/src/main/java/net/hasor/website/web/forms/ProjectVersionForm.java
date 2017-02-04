@@ -31,6 +31,8 @@ public class ProjectVersionForm extends ProjectVersionDO {
     private String futuresSourceURL    = null;
     @ReqParam("apiURL")
     private String futuresApiURL       = null;
+    @ReqParam("releaseTimeStr")
+    private String releaseTimeStr      = null;
     //
     public int getChangelogFormatType() {
         return changelogFormatType;
@@ -61,5 +63,11 @@ public class ProjectVersionForm extends ProjectVersionDO {
     }
     public void setFuturesApiURL(String futuresApiURL) {
         this.futuresApiURL = futuresApiURL;
+    }
+    public String getReleaseTimeStr() {
+        return releaseTimeStr;
+    }
+    public void setReleaseTimeStr(String releaseTimeStr) {
+        this.releaseTimeStr = releaseTimeStr;
     }
 }

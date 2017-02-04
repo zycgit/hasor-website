@@ -9,9 +9,15 @@ ${rootData.put('navIndex',0)}
         <h1 class="home-title">${project.name}</h1>
         <p class="home-subtitle">${project.subtitle}</p>
 
-        <a href="#" class="btn btn-lg">Schedule a Demo</a>
         <a href="#" class="btn btn-lg">Documentation</a>
-        <a href="/projects/${project.id}/${newVersion.version}/projectApi.htm" class="btn btn-lg">Versions: ${newVersion.version}</a>
+        <a href="/projects/${project.id}/projectChangelog.htm" class="btn btn-lg">Changelog</a>
+        <!-- -->
+        <#if newVersion??>
+            <a href="/projects/${project.id}/${newVersion.version}/api.htm" class="btn btn-lg">APIs: ${newVersion.version}</a>
+        </#if>
+        <#if !newVersion??>
+            <a href="javascript:void(0);" class="btn btn-lg">APIs: Unknown</a>
+        </#if>
 
     </div>
     <!--end col-md-12-->

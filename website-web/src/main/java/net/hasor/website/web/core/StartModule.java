@@ -47,7 +47,7 @@ public class StartModule extends WebModule {
         apiBinder.jeeFilter("/*").through(0, new JumpFilter());
         //
         DateConverter converter = new DateConverter();
-        converter.setPatterns(new String[] { "yyyy-mm-dd", "hh:mm:ss", "yyyy-mm-dd hh:mm:ss" });
+        converter.setPatterns(new String[] { "yyyy-MM-dd", "hh:mm:ss", "yyyy-MM-dd hh:mm:ss" });
         ConverterUtils.register(converter, Date.class);
     }
 }

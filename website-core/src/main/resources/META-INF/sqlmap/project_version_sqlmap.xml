@@ -101,4 +101,28 @@
         limit 1
     </update>
 
+    <!-- 标记版本为回收状态，真正删除交给定时任务进行处理。 -->
+    <update id="projectVersion_updateStatusToDelete">
+        update PROJECT_VERSION set
+            status        = #{versionInfo.status,typeHandler=net.hasor.website.datadao.convert.VersionStatusConvert},
+            futures       = #{versionInfo.futures,typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            modify_time   = now()
+        where 1=1
+            and id          = #{versionInfo.id}
+            and project_id  = #{projectID}
+        limit 1
+    </update>
+
+    <!-- 恢复删除的版本。 -->
+    <update id="projectVersion_updateStatusToRecover">
+        update PROJECT_VERSION set
+            status        = #{versionInfo.status,typeHandler=net.hasor.website.datadao.convert.VersionStatusConvert},
+            futures       = #{versionInfo.futures,typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            modify_time   = now()
+        where 1=1
+            and id          = #{versionInfo.id}
+            and project_id  = #{projectID}
+        limit 1
+    </update>
+
 </mapper>

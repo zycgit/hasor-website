@@ -96,4 +96,34 @@ public class ProjectVersionDAO extends AbstractDao {
             throw e;
         }
     }
+    /** 标记版本为回收状态，真正删除交给定时任务进行处理。 */
+    public int updateStatusToDelete(long projectID, ProjectVersionDO versionInfo) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("projectID", projectID);
+            parameter.put("versionInfo", versionInfo);
+            return this.getSqlExecutor().update("projectVersion_updateStatusToDelete", parameter);
+        } catch (SQLException e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
+                    .addLog("method", "updateStatusToDelete")//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            throw e;
+        }
+    }
+    /** 恢复删除的版本。 */
+    public int updateStatusToRecover(long projectID, ProjectVersionDO versionInfo) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("projectID", projectID);
+            parameter.put("versionInfo", versionInfo);
+            return this.getSqlExecutor().update("projectVersion_updateStatusToRecover", parameter);
+        } catch (SQLException e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
+                    .addLog("method", "updateStatusToRecover")//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            throw e;
+        }
+    }
 }

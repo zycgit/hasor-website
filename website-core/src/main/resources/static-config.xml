@@ -8,6 +8,8 @@
         <envType>${APP_ENV_TYPE}</envType>
         <!-- 主机名称 -->
         <hostName>${APP_HOST}</hostName>
+        <!-- 数据的回收期限，单位小时（删除项目、删除版本） -->
+        <recoveryTime>168</recoveryTime>
     </appExample>
 
     <!-- 数据库链接配置,真实配置通过 '${...}' 方式连接到 'env.config' 配置文件 -->

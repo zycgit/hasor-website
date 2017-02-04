@@ -24,7 +24,6 @@ import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.utils.JsonUtils;
 import net.hasor.website.utils.LoggerUtils;
-import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
 import org.more.bizcommon.ResultDO;
 import org.more.util.StringUtils;
@@ -32,6 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+
+import static net.hasor.website.utils.ResultUtils.failed;
+import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 集成第三方登陆 & CAS 等
  * @version : 2016年1月10日
@@ -96,10 +98,7 @@ public class OAuthManager {
             logger.error(LoggerUtils.create("ERROR_004_0001")//
                     .addLog("provider", provider)//
                     .toJson());
-            return new ResultDO<UserDO>(false)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .addMessage(ErrorCodes.OA_PROIVTER_NOT_EXIST.getMsg());
+            return failed(ErrorCodes.OA_PROIVTER_NOT_EXIST);
         }
         //
         ResultDO<AccessInfo> info = oauth.evalToken(status, authCode);
@@ -110,24 +109,16 @@ public class OAuthManager {
                     .addLog("status", status)//
                     .addLog("error", "result is null.")//
                     .toJson());
-            return new ResultDO<UserDO>(false)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .addMessage(ErrorCodes.OA_ERROR.getMsg());
+            return failed(ErrorCodes.OA_ERROR);
         }
         //
         if (!info.isSuccess()) {
-            Message errorMsg = info.firstMessage();
             logger.error(LoggerUtils.create("ERROR_004_0003")//
                     .addLog("provider", provider)//
                     .addLog("authCode", authCode)//
                     .addLog("status", status)//
-                    .addMessage(errorMsg)//
                     .toJson());
-            return new ResultDO<UserDO>(false)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .addMessage(errorMsg);
+            return failed(info);
         }
         //
         if (info.getResult() == null) {
@@ -137,18 +128,13 @@ public class OAuthManager {
                     .addLog("status", status)//
                     .addLog("error", "login success , but result is null.")//
                     .toJson());
-            return new ResultDO<UserDO>(false)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .addMessage(ErrorCodes.OA_ERROR.getMsg());
+            return failed(ErrorCodes.OA_ERROR);
         }
         //
         AccessInfo accessInfo = info.getResult();
         logger.info("oauth_" + provider + " : login success , accessInfo = {}.", JsonUtils.toJsonStringSingleLine(accessInfo));
         //
         UserDO userDO = oauth.convertTo(accessInfo);
-        return new ResultDO<UserDO>(true)//
-                .setSuccess(true)//
-                .setResult(userDO);
+        return success(userDO);
     }
 }

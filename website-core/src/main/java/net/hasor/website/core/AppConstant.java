@@ -35,4 +35,7 @@ public interface AppConstant {
     //
     public static final String VAR_CONTEXT_PATH            = "ctx_path";
     public static final String VAR_REQUEST                 = "request";
+    //
+    public static final long   OneHourTime                 = 1 * 60 * 60 * 1000;
+    public static final long   SevenDaysTime               = 7 * 24 * OneHourTime;
 }

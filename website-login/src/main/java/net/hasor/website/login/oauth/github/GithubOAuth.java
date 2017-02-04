@@ -39,6 +39,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static net.hasor.website.utils.ResultUtils.failed;
+import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 封装Github登陆
  * https://status.github.com/
@@ -134,7 +137,7 @@ public class GithubOAuth extends AbstractOAuth {
                     .addLog("param_authCode", authCode)//
                     .addLog("error", e.getMessage())//
                     .toJson(), e);
-            throw ExceptionUtils.toRuntimeException(e);
+            return failed(e);
         }
         //
         // .获取 token
@@ -155,10 +158,7 @@ public class GithubOAuth extends AbstractOAuth {
                         .addLog("param_authCode", authCode)//
                         .addLog("tokenURL", tokenURL)//
                         .toJson());//结果为空
-                return new ResultDO<AccessInfo>(false)//
-                        .setSuccess(false)//
-                        .setResult(null)//
-                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
+                return failed(ErrorCodes.OA_TOKEN_EXT_EMPTY);
             }
             //
             String[] dataItems = data.split("&");
@@ -182,11 +182,7 @@ public class GithubOAuth extends AbstractOAuth {
                     .addLog("tokenURL", tokenURL)//
                     .addLog("error", e.getMessage())//
                     .toJson(), e);
-            return new ResultDO<AccessInfo>(e)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .setThrowable(e)//
-                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
+            return failed(ErrorCodes.OA_TOKEN_EXT_ERROR);
         }
         //
         // .认证失败
@@ -213,10 +209,7 @@ public class GithubOAuth extends AbstractOAuth {
                     .addLog("errorDesc", errorDesc)//
                     .addLog("errorRUL", errorRUL)//
                     .toJson());
-            return new ResultDO<AccessInfo>(false)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .addMessage(ErrorCodes.OA_TOKEN_EXT_FAILED.getMsg());
+            return failed(ErrorCodes.OA_TOKEN_EXT_FAILED);
         }
         //
         // .获取用户信息
@@ -239,10 +232,7 @@ public class GithubOAuth extends AbstractOAuth {
                         .addLog("access_token", access_token)//
                         .addLog("tokenURL", tokenURL)//
                         .toJson());//结果为空
-                return new ResultDO<AccessInfo>(false)//
-                        .setSuccess(false)//
-                        .setResult(null)//
-                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
+                return failed(ErrorCodes.OA_TOKEN_EXT_EMPTY);
             }
         } catch (Exception e) {
             logger.error(LoggerUtils.create("ERROR_004_0009")//
@@ -257,20 +247,14 @@ public class GithubOAuth extends AbstractOAuth {
                     .addLog("access_token", access_token)//
                     .addLog("tokenURL", tokenURL)//
                     .toJson());
-            return new ResultDO<AccessInfo>(false)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .setThrowable(e)//
-                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
+            return failed(ErrorCodes.OA_TOKEN_EXT_ERROR, e);
         }
         //
         // .数据解析
         GithubAccessInfo accessInfo = JsonUtils.toObject(data, GithubAccessInfo.class);
         accessInfo.setAccessToken(access_token);
         logger.info("access_token : success -> token : {} , sourceID : {}.", accessInfo.getAccessToken(), accessInfo.getSource());
-        return new ResultDO<AccessInfo>(true)//
-                .setSuccess(true)//
-                .setResult(accessInfo);
+        return success(accessInfo);
     }
     @Override
     public UserDO convertTo(AccessInfo result) {

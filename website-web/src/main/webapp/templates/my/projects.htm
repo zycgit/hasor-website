@@ -19,7 +19,7 @@
                     <input name="id" type="hidden" value="${project.id}"/>
                     <div class="input-group">
                         <span class="input-group-addon">项目</span>
-                        <input type="text" class="form-control" value="${project.name}" disabled="disabled"/>
+                        <input type="text" class="form-control" value="${project.name}" readonly="readonly"/>
                         <#if parentProject??>
                         <span class="input-group-addon">
                             <a href="${ctx_path}/my/projects.htm?curProjectID=${parentProject.id}">父项目：${parentProject.name}</a>
@@ -44,15 +44,15 @@
                         <span class="input-group-addon">首页链接</span>
                         <input name="homePage" type="text" class="form-control" placeholder="http://" value="${project.homePage}"/>
                         <span class="input-group-addon">
-                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                    </span>
+                            <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        </span>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">下载连接</span>
                         <input name="downPage" type="text" class="form-control" placeholder="http://" value="${project.downPage}"/>
                         <span class="input-group-addon">
-                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                    </span>
+                            <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        </span>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">主要语言</span>
@@ -96,17 +96,28 @@
                             </#list>
                         </div>
                         <span class="input-group-addon">
-                        <a href="https://choosealicense.com/licenses/" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
-                    </span>
+                            <a href="https://choosealicense.com/licenses/" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </span>
                     </div>
-                    <div>
-                        <span class="col-sm-1 label label-success">活跃状态</span>&nbsp;${project.status.desc}
+                    <div class="input-group">
+                        <span class="input-group-addon">当前状态</span>
+                        <span class="form-control">
+                            <#list projectStatusList as statusItem>
+                                <#assign styleName = "label-default"/>
+                                <#if project.status?? && project.status.type == statusItem.type>
+                                    <#assign styleName = "label-success"/>
+                                </#if>
+                                <span class="col-sm-1 label ${styleName} rightMargin">${statusItem.desc}</span>
+                            </#list>
+                        </span>
                     </div>
-                    <div>
-                        <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${project.createTime?string("yyyy-MM-dd HH:mm:ss")}
+                    <div class="input-group">
+                        <span class="input-group-addon">创建时间</span>
+                        <input type="text" class="form-control" value="${project.createTime?string('yyyy-MM-dd HH:mm:ss')}" readonly="readonly"/>
                     </div>
-                    <div>
-                        <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${project.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
+                    <div class="input-group">
+                        <span class="input-group-addon">修改时间</span>
+                        <input type="text" class="form-control" value="${project.modifyTime?string('yyyy-MM-dd HH:mm:ss')}" readonly="readonly"/>
                     </div>
                 </div>
             </div>
@@ -121,19 +132,32 @@
                 </div>
                 <div class="list-group">
                     <#list versionList as ver>
+                        <#assign markDelete = ""/>
+                        <#if ver.status.type == 3>
+                            <#assign markDelete = "markDelete"/>
+                        </#if>
                         <div class="list-group-item">
-                            <a class="flowRight">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
-                            <a class="flowRight" href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </a>
-                            <a class="flowRight">
-                                <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
-                            </a>
-                            <a href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}">
+                            <#if markDelete == ''>
+                                <a class="flowRight" title="删除，7天后将正式删除" href="${ctx_path}/my/deleteVersion.do?projectID=${project.id}&versionID=${ver.id}&method=delete">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </a>
+                                <a class="flowRight" title="编辑或查看" href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </a>
+                                <!--<a class="flowRight" title="发布">-->
+                                <!--<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>-->
+                                <!--</a>-->
+                            </#if>
+                            <#if markDelete != ''>
+                                <a class="flowRight" title="取消删除操作" href="${ctx_path}/my/deleteVersion.do?projectID=${project.id}&versionID=${ver.id}&method=recover">
+                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                </a>
+                            </#if>
+                            <a href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}" class="versionLink ${markDelete}">
                                 <h4 class="list-group-item-heading">${ver.version} - ${ver.subtitle}</h4>
-                                <p class="list-group-item-text">状态:${ver.status.desc} - 发布时间：${ver.releaseTime?string("yyyy-MM-dd HH:mm:ss")}</p>
+                                <p class="list-group-item-text">
+                                    <span class="col-sm-1 label label-info rightMargin">${ver.status.desc}</span>
+                                    发布时间：${ver.releaseTime?string("yyyy-MM-dd HH:mm:ss")}</p>
                             </a>
                         </div>
                     </#list>
@@ -158,7 +182,6 @@
                     [<a>删除项目</a>]
                     [<a>推送到首页</a>]
                     [<a>转移</a>]
-                    [<a>新增版本</a>]
                 </div>
             </div>
         </form>

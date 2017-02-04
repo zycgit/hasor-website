@@ -20,6 +20,7 @@ import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.domain.enums.ContentFormat;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.domain.enums.VersionStatus;
 import net.hasor.website.domain.futures.ProjectVersionFutures;
 import net.hasor.website.web.forms.ProjectVersionForm;
 import org.more.bizcommon.Result;
@@ -39,6 +40,7 @@ public class UpdateVersion extends BaseMyProject {
         if (!super.fillProjectInfo(projectID)) {
             return;
         }
+        super.fillInfo();
         //
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
@@ -101,6 +103,10 @@ public class UpdateVersion extends BaseMyProject {
             return;
         }
         ProjectVersionDO versionDO = versionResult.getResult();
+        if (VersionStatus.Delete.equals(versionDO.getStatus())) {
+            sendError(ErrorCodes.BAD_RESOURCE_DELETE.getMsg());
+            return;
+        }
         //
         // .更新版本信息
         versionDO.setSubtitle(versionInfoDO.getSubtitle());

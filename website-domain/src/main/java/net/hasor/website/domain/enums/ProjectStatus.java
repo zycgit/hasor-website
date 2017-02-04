@@ -22,9 +22,10 @@ import org.more.util.StringUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum ProjectStatus implements GeneralEnumParsing<ProjectStatus> {
-    Auditing(0, "审核中"),//
-    OK(1, "正常"),//
-    Invalid(2, "失效"),//
+    Init(0, "初始项目"),//
+    Auditing(1, "递交审核"),//
+    OK(2, "正常"),//
+    Invalid(3, "失效"),//
     ;
     //
     private int    type;

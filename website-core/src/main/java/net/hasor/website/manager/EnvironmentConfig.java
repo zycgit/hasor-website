@@ -21,6 +21,8 @@ import net.hasor.core.Type;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.Service;
 import org.more.util.StringUtils;
+
+import java.util.Date;
 /**
  *
  * @version : 2016年1月10日
@@ -35,6 +37,8 @@ public class EnvironmentConfig {
     private String envType;
     @InjectSettings("appExample.hostName")
     private String hostName;
+    @InjectSettings("appExample.recoveryTime")
+    private int    recoveryTime;
     @InjectSettings("uploader.maxSize")
     private int    maxSize;
     @Inject(value = AppConstant.VAR_CONTEXT_PATH, byType = Type.ByName)
@@ -72,5 +76,10 @@ public class EnvironmentConfig {
     /**文件上传最大大小*/
     public int getMaxSize() {
         return this.maxSize;
+    }
+    /** 在给定的时间上加上一个回收期限 */
+    public Date getRecoveryTime(Date date) {
+        long addMore = AppConstant.OneHourTime * this.recoveryTime;
+        return new Date(date.getTime() + addMore);
     }
 }

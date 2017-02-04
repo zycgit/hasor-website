@@ -30,10 +30,11 @@ public enum ErrorCodes {
     U_SAVE_USER_FAILED(4, "保存或更新用户失败。"),//
     U_SAVE_SOURCE_FAILED(5, "保存或更新登陆方式失败。"),//
     U_PROIVTER_EXIST(6, "您已经绑定了同类型账号，或者您先行解绑在重新绑定。"),//
-    U_PROIVTER_MAST_UNBIND(7, "另账号正在使用它，请先解除绑定之后在操作。"),//
-    U_PROIVTER_REBIND_FAILED(8, "绑定登陆方式失败，请重试或联系管理员。"),//
-    U_UPDATE_FAILED(9, "账号更新失败，请重试或联系管理员。"),//
-    U_NEED_LOGIN(10, "请先登录。"),//
+    U_PROIVTER_NOT_EXIST(7, "要绑定的合作帐号数据不存在，请重新执行绑定操作。"),//
+    U_PROIVTER_MAST_UNBIND(8, "另账号正在使用它，请先解除绑定之后在操作。"),//
+    U_PROIVTER_REBIND_FAILED(9, "绑定登陆方式失败，请重试或联系管理员。"),//
+    U_UPDATE_FAILED(10, "账号更新失败，请重试或联系管理员。"),//
+    U_NEED_LOGIN(11, "请先登录。"),//
     //
     // .外部登陆接入
     OA_PROIVTER_NOT_EXIST(101, "抱歉我们不支持这种方式的第三方登陆。"),//
@@ -63,13 +64,15 @@ public enum ErrorCodes {
     P_OWNER_NOT_YOU(309, "对不起，这个项目的Owner不是您。"),//
     P_PROJECT_UPDATE_FAILED(310, "更新项目信息失败，请重试。"),//
     P_VERSION_UPDATE_FAILED(311, "更新版本信息失败，请重试。"),//
-    P_VERSION_SAVE_FAILED(304, "项目新增版本失败，请重试。"),//
+    P_DELETE_TIME_TOO_LONG(312, "资源删除的时间太过久远，不能执行该操作。"),//
+    P_VERSION_SAVE_FAILED(313, "项目新增版本失败，请重试。"),//
     //
     SUCCESS(900, "操作成功。"),//
     BAD_PARAMS(901, "错误的调用参数。"),//
     BAD_REQUEST(902, "错误的请求。"),//
     BAD_REQUEST_PARAMS(903, "错误数据查询参数。"),//
-    BAD_UNKNOWN(904, "未知类型异常: %s");
+    BAD_RESOURCE_DELETE(904, "资源已经被删除，不能执行该操作。"),//
+    BAD_UNKNOWN(999, "未知类型异常: %s");
     //
     //
     private MessageTemplate temp = null;

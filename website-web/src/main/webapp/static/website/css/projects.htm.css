@@ -11,3 +11,25 @@ div[class="list-group-item"] > a[class="flowRight"] {
 h3[class="panel-title"] > span {
     padding-right: 6px;
 }
+
+.versionLink, .versionLink:active, .versionLink:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.versionLink:hover > .list-group-item-heading {
+    text-decoration: underline !important;
+}
+
+.rightMargin {
+    margin-right: 10px;
+}
+
+.markDelete, .markDelete:hover {
+    text-decoration: line-through !important;
+    color: #a6a6a6;
+}
+
+.markDelete:hover {
+    color: #747474 !important;
+}

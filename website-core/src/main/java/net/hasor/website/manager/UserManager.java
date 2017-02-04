@@ -31,7 +31,6 @@ import net.hasor.website.domain.enums.UserType;
 import net.hasor.website.utils.JsonUtils;
 import net.hasor.website.utils.LoggerUtils;
 import org.more.bizcommon.Result;
-import org.more.bizcommon.ResultDO;
 import org.more.bizcommon.json.JSON;
 import org.more.util.CommonCodeUtils;
 import org.more.util.StringUtils;
@@ -41,6 +40,9 @@ import org.slf4j.LoggerFactory;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
+
+import static net.hasor.website.utils.ResultUtils.failed;
+import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 用户Manager
  * @version : 2016年1月10日
@@ -228,27 +230,16 @@ public class UserManager {
                 query = this.userDAO.queryByLogin(userDO.getMobilePhone());
             }
             if (query != null) {
-                ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                        .setSuccess(false)//
-                        .addMessage(ErrorCodes.U_SAVE_USER_EXIST.getMsg(loginData))//
-                        .setResult(0L);
                 logger.error(LoggerUtils.create("ERROR_002_0004")//
                         .addLog("loginData", loginData) //
-                        .addLog("error", resultDO.firstMessage().getMessage()) //
                         .toJson());
-                return resultDO;
+                return failed(ErrorCodes.U_SAVE_USER_EXIST);
             }
         } catch (Exception e) {
-            ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                    .setSuccess(false)//
-                    .setThrowable(e)//
-                    .addMessage(ErrorCodes.U_GET_USER_FAILED.getMsg(loginData))//
-                    .setResult(0L);
             logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("loginData", loginData) //
-                    .addLog("error", resultDO.firstMessage().getMessage()) //
                     .toJson(), e);
-            return resultDO;
+            return failed(ErrorCodes.U_GET_USER_FAILED, e);
         }
         //
         // .保存用户数据
@@ -259,15 +250,8 @@ public class UserManager {
                 }
             });
         } catch (Throwable e) {
-            ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                    .setSuccess(false)//
-                    .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
-                    .setThrowable(e)//
-                    .setResult(0L);
-            logger.error(LoggerUtils.create("ERROR_002_0005")//
-                    .addLog("error", resultDO.firstMessage().getMessage()) //
-                    .toJson());
-            return resultDO;
+            logger.error(LoggerUtils.create("ERROR_002_0005").toJson());
+            return failed(ErrorCodes.U_SAVE_USER_FAILED, e);
         }
     }
     private Result<Long> saveNewUser(TransactionStatus tranStatus, UserDO userDO) throws SQLException {
@@ -275,26 +259,16 @@ public class UserManager {
         try {
             long userResult = this.userDAO.insertUser(userDO);
             if (userResult <= 0) {
-                ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                        .setSuccess(false)//
-                        .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
-                        .setResult(0L);
-                logger.error(LoggerUtils.create("ERROR_002_0006")//
-                        .addLog("error", resultDO.firstMessage().getMessage()) //
-                        .toJson());
+                logger.error(LoggerUtils.create("ERROR_002_0006").toJson());
                 tranStatus.setRollbackOnly(); //回滚事务
-                return resultDO;
+                return failed(ErrorCodes.U_SAVE_USER_FAILED);
             }
         } catch (Exception e) {
-            ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                    .setSuccess(false)//
-                    .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
-                    .setResult(0L);
             logger.error(LoggerUtils.create("ERROR_002_0005")//
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             tranStatus.setRollbackOnly(); //回滚事务
-            return resultDO;
+            return failed(ErrorCodes.U_SAVE_USER_FAILED, e);
         }
         // .保存外部登陆
         try {
@@ -305,32 +279,20 @@ public class UserManager {
                     sourceDO.setOriUserID(userDO.getUserID());
                     long sourceResult = this.userSourceDAO.insertUserSource(sourceDO);
                     if (sourceResult <= 0) {
-                        ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                                .setSuccess(false)//
-                                .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
-                                .setResult(0L);
-                        logger.error(LoggerUtils.create("ERROR_002_0007")//
-                                .addLog("error", resultDO.firstMessage().getMessage()) //
-                                .toJson());
+                        logger.error(LoggerUtils.create("ERROR_002_0007").toJson());
                         tranStatus.setRollbackOnly(); //回滚事务
-                        return resultDO;
+                        return failed(ErrorCodes.U_SAVE_USER_FAILED);
                     }
                 }
             }
             // .返回用户ID
-            return new ResultDO<Long>(false)//
-                    .setSuccess(true)//
-                    .setResult(userDO.getUserID());
+            return success(userDO.getUserID());
         } catch (Exception e) {
-            ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                    .setSuccess(false)//
-                    .addMessage(ErrorCodes.U_SAVE_USER_FAILED.getMsg())//
-                    .setResult(0L);
             logger.error(LoggerUtils.create("ERROR_002_0008")//
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             tranStatus.setRollbackOnly(); //回滚事务
-            return resultDO;
+            return failed(ErrorCodes.U_SAVE_USER_FAILED, e);
         }
     }
     //
@@ -338,31 +300,21 @@ public class UserManager {
         try {
             int res = this.userSourceDAO.updateUserSource(provider, userDO.getUserID(), result);
             if (res <= 0) {
-                ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                        .setSuccess(false)//
-                        .addMessage(ErrorCodes.U_SAVE_SOURCE_FAILED.getMsg())//
-                        .setResult((long) res);
                 logger.error(LoggerUtils.create("ERROR_002_0009")//
                         .addLog("provider", provider) //
                         .addLog("userID", userDO.getUserID()) //
                         .toJson());
-                return resultDO;
+                return failed(ErrorCodes.U_SAVE_SOURCE_FAILED);
             } else {
-                return new ResultDO<Long>(true)//
-                        .setSuccess(true)//
-                        .setResult(userDO.getUserID());
+                return success(userDO.getUserID());
             }
         } catch (Exception e) {
-            ResultDO<Long> resultDO = new ResultDO<Long>(false)//
-                    .setSuccess(false)//
-                    .addMessage(ErrorCodes.U_SAVE_SOURCE_FAILED.getMsg())//
-                    .setResult(0L);
             logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("provider", provider) //
                     .addLog("userID", userDO.getUserID()) //
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
-            return resultDO;
+            return failed(ErrorCodes.U_SAVE_SOURCE_FAILED, e);
         }
     }
     //
@@ -491,14 +443,10 @@ public class UserManager {
         // .获取接受绑定的账号
         UserDO currentUser = this.getFullUserDataByID(bindToUserID);
         if (currentUser == null) {
-            ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                    .setSuccess(false)//
-                    .setResult(false)//
-                    .addMessage(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
             logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", targetUserID) //
                     .toJson());
-            return result;
+            return failed(ErrorCodes.U_GET_USER_NOT_EXIST);
         }
         // .检测是否已经拥有同类型登陆方式，如果有则放弃后续绑定。一个账号同一个proivter只能绑定一个外部账号。
         UserSourceDO sourceProivter = null;
@@ -508,48 +456,33 @@ public class UserManager {
             }
         }
         if (sourceProivter != null) {
-            ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                    .setSuccess(false)//
-                    .setResult(false)//
-                    .addMessage(ErrorCodes.U_PROIVTER_EXIST.getMsg());
             logger.error(LoggerUtils.create("ERROR_002_0010")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
                     .addLog("sourceID", sourceProivter.getSourceID()) //
                     .toJson());
-            return result;
+            return failed(ErrorCodes.U_PROIVTER_EXIST);
         }
         // .检测即将绑定的 source 是否存在
         UserSourceDO sourceDO = this.queryUserSourceByUserID(targetUserID, targetProivter);
         if (sourceDO == null) {
-            ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                    .setSuccess(false)//
-                    .setResult(false);
             logger.error(LoggerUtils.create("ERROR_002_0002")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
                     .toJson());
-            return result;
+            return failed(ErrorCodes.U_PROIVTER_NOT_EXIST);
         }
         // .下列情景必须先解绑：1.主账号、2.绑定多个登陆方式
         UserDO targetUser = this.getFullUserDataByID(targetUserID);
         if (targetUser == null) {
-            ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                    .setSuccess(false)//
-                    .setResult(false)//
-                    .addMessage(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
             logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", targetUserID) //
                     .toJson());
-            return result;
+            return failed(ErrorCodes.U_GET_USER_NOT_EXIST);
         }
         if (!(targetUser.getType() == UserType.Temporary && targetUser.getUserSourceList().size() == 1)) {
-            ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                    .setSuccess(false)//
-                    .setResult(false)//
-                    .addMessage(ErrorCodes.U_PROIVTER_MAST_UNBIND.getMsg());
             logger.error(LoggerUtils.create("ERROR_002_0011")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
@@ -557,7 +490,7 @@ public class UserManager {
                     .addLog("targetUserType", targetUser.getType().name()) //
                     .addLog("targetSize", targetUser.getUserSourceList().size()) //
                     .toJson());
-            return result;
+            return failed(ErrorCodes.U_PROIVTER_MAST_UNBIND);
         }
         //
         // .重新绑定
@@ -568,10 +501,6 @@ public class UserManager {
                 }
             });
         } catch (Throwable e) {
-            ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                    .setThrowable(e)//
-                    .setSuccess(false)//
-                    .setResult(false);
             logger.error(LoggerUtils.create("ERROR_002_0012")//
                     .addLog("bindToUserID", bindToUserID) //
                     .addLog("targetUserID", targetUserID) //
@@ -580,7 +509,7 @@ public class UserManager {
                     .addLog("targetSize", targetUser.getUserSourceList().size()) //
                     .addLog("error", e.getMessage()) //
                     .toJson());
-            return result;
+            return failed(ErrorCodes.U_UPDATE_FAILED, e);
         }
     }
     private Result<Boolean> rebind(TransactionStatus tranStatus, long targetUserID, String targetProivter, long bindToUserID) throws SQLException {
@@ -588,10 +517,6 @@ public class UserManager {
         try {
             int res = this.userSourceDAO.updateBindUser(targetUserID, targetProivter, bindToUserID);
             if (res != 1) {
-                ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                        .setSuccess(false)//
-                        .setResult(false)//
-                        .addMessage(ErrorCodes.U_PROIVTER_REBIND_FAILED.getMsg());
                 logger.error(LoggerUtils.create("ERROR_002_0013")//
                         .addLog("res", res) //
                         .addLog("targetUserID", targetUserID) //
@@ -599,13 +524,9 @@ public class UserManager {
                         .addLog("bindToUserID", bindToUserID) //
                         .toJson());
                 tranStatus.setRollbackOnly();
-                return result;
+                return failed(ErrorCodes.U_PROIVTER_REBIND_FAILED);
             }
         } catch (Exception e) {
-            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
-                    .setSuccess(false)//
-                    .addMessage(ErrorCodes.U_PROIVTER_REBIND_FAILED.getMsg())//
-                    .setResult(false);
             logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("targetUserID", targetUserID) //
                     .addLog("targetProivter", targetProivter) //
@@ -613,39 +534,28 @@ public class UserManager {
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             tranStatus.setRollbackOnly(); //回滚事务
-            return resultDO;
+            return failed(ErrorCodes.U_PROIVTER_REBIND_FAILED, e);
         }
         // .更新账号为失效
         try {
             int res = this.userDAO.invalidUser(targetUserID);
             if (res != 1) {
-                ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                        .setSuccess(false)//
-                        .setResult(false)//
-                        .addMessage(ErrorCodes.U_UPDATE_FAILED.getMsg());
                 logger.error(LoggerUtils.create("ERROR_002_0014")//
                         .addLog("res", res) //
                         .addLog("userID", targetUserID) //
                         .toJson());
                 tranStatus.setRollbackOnly();
-                return result;
+                return failed(ErrorCodes.U_UPDATE_FAILED);
             }
         } catch (Exception e) {
-            ResultDO<Boolean> resultDO = new ResultDO<Boolean>(false)//
-                    .setSuccess(false)//
-                    .addMessage(ErrorCodes.U_UPDATE_FAILED.getMsg())//
-                    .setResult(false);
             logger.error(LoggerUtils.create("ERROR_999_0003")//
                     .addLog("targetUserID", targetUserID) //
                     .addLog("error", "userDAO.invalidUser -> " + e.getMessage()) //
                     .toJson(), e);
             tranStatus.setRollbackOnly(); //回滚事务
-            return resultDO;
+            return failed(ErrorCodes.U_UPDATE_FAILED, e);
         }
         //
-        ResultDO<Boolean> result = new ResultDO<Boolean>()//
-                .setSuccess(true)//
-                .setResult(true);
-        return result;
+        return success(true);
     }
 }

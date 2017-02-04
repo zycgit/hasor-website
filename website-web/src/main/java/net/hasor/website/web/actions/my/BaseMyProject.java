@@ -17,9 +17,7 @@ package net.hasor.website.web.actions.my;
 import net.hasor.core.Inject;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
-import net.hasor.website.domain.enums.LanguageEnum;
-import net.hasor.website.domain.enums.LicenseEnum;
-import net.hasor.website.domain.enums.SourceType;
+import net.hasor.website.domain.enums.*;
 import net.hasor.website.manager.ProjectManager;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
@@ -94,6 +92,8 @@ public class BaseMyProject extends Action {
         putData("sourceTypeList", SourceType.values());
         putData("languageList", LanguageEnum.values());
         putData("licenseList", LicenseEnum.values());
+        putData("projectStatusList", ProjectStatus.values());
+        putData("versionStatusList", VersionStatus.values());
     }
     public boolean isMyProject(ProjectInfoDO infoDO) {
         if (infoDO == null) {

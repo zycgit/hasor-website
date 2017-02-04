@@ -44,6 +44,9 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
+
+import static net.hasor.website.utils.ResultUtils.failed;
+import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 封装腾讯登陆
  * @version : 2016年1月10日
@@ -152,7 +155,7 @@ public class TencentOAuth extends AbstractOAuth {
                     .addLog("param_authCode", authCode)//
                     .addLog("error", e.getMessage())//
                     .toJson(), e);
-            throw ExceptionUtils.toRuntimeException(e);
+            return failed(e);
         }
         //
         Response response = null;
@@ -172,10 +175,7 @@ public class TencentOAuth extends AbstractOAuth {
                         .addLog("param_authCode", authCode)//
                         .addLog("tokenURL", tokenURL)//
                         .toJson());//结果为空
-                return new ResultDO<AccessInfo>(false)//
-                        .setSuccess(false)//
-                        .setResult(null)//
-                        .addMessage(ErrorCodes.OA_TOKEN_EXT_EMPTY.getMsg());
+                return failed(ErrorCodes.OA_TOKEN_EXT_EMPTY);
             }
             if (data.startsWith("callback(")) {
                 //返回结果失败
@@ -197,10 +197,7 @@ public class TencentOAuth extends AbstractOAuth {
                         .addLog("errorCoe", errorCoe)//
                         .addLog("errorDesc", errorDesc)//
                         .toJson());
-                return new ResultDO<AccessInfo>(false)//
-                        .setSuccess(false)//
-                        .setResult(null)//
-                        .addMessage(ErrorCodes.OA_TOKEN_EXT_FAILED.getMsg());
+                return failed(ErrorCodes.OA_TOKEN_EXT_FAILED);
             }
         } catch (Exception e) {
             logger.error(LoggerUtils.create("ERROR_004_0007")//
@@ -215,11 +212,7 @@ public class TencentOAuth extends AbstractOAuth {
                     .addLog("tokenURL", tokenURL)//
                     .addLog("error", e.getMessage())//
                     .toJson(), e);
-            return new ResultDO<AccessInfo>(e)//
-                    .setSuccess(false)//
-                    .setResult(null)//
-                    .setThrowable(e)//
-                    .addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
+            return failed(ErrorCodes.OA_TOKEN_EXT_ERROR, e);
         }
         //
         // .获取用户信息
@@ -274,7 +267,7 @@ public class TencentOAuth extends AbstractOAuth {
             }
             //
             logger.info("access_token : success -> token : {} , sourceID : {}.", accessInfo.getAccessToken(), accessInfo.getSource());
-            return new ResultDO<AccessInfo>(true).setResult(accessInfo);
+            return success(accessInfo);
         } catch (Exception e) {
             logger.error(LoggerUtils.create("ERROR_004_0009")//
                     .addLog("oauth_provider", this.getProviderName())//
@@ -289,7 +282,7 @@ public class TencentOAuth extends AbstractOAuth {
                     .addLog("openID", openID)//
                     .addLog("tokenURL", tokenURL)//
                     .toJson());
-            return new ResultDO<AccessInfo>(e).addMessage(ErrorCodes.OA_TOKEN_EXT_ERROR.getMsg());
+            return failed(ErrorCodes.OA_TOKEN_EXT_ERROR, e);
         }
     }
     @Override

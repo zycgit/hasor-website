@@ -25,6 +25,8 @@ public enum VersionStatus implements GeneralEnumParsing<VersionStatus> {
     DesignPlan(0, "设计"),//
     Developing(1, "开发"),//
     Release(2, "发布"),//
+    Recovery(3, "回收"),//
+    Delete(4, "已删除"),//
     ;
     //
     private int    type;

@@ -14,9 +14,12 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <a href="${ctx_path}/my/projects.htm?curProjectID=${project.id}">${project.name} - ${version.version}</a> 版本信息
-                    <a href="javascript:void(0)">
-                        <span class="badge flowRight" onclick="versionForm.submit();">更新</span>
-                    </a>
+                    <#if version.status.type != 3>
+                        <a href="javascript:void(0)"><span class="badge flowRight" onclick="versionForm.submit();">更新</span></a>
+                    </#if>
+                    <#if version.status.type == 3>
+                        <span class="label label-warning flowRight">版本已被删除</span>
+                    </#if>
                 </h3>
             </div>
             <div class="panel-body">
@@ -76,14 +79,25 @@
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-                <div>
-                    <span class="col-sm-1 label label-success">状&nbsp;&nbsp;&nbsp;&nbsp;态</span>&nbsp;${version.status.desc}
+                <div class="input-group">
+                    <span class="input-group-addon">当前状态</span>
+                    <span class="form-control">
+                        <#list versionStatusList as statusItem>
+                            <#assign styleName = "label-default"/>
+                            <#if version.status?? && version.status.type == statusItem.type>
+                                <#assign styleName = "label-success"/>
+                            </#if>
+                            <span class="col-sm-1 label ${styleName} rightMargin">${statusItem.desc}</span>
+                        </#list>
+                    </span>
                 </div>
-                <div>
-                    <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${version.createTime?string("yyyy-MM-dd HH:mm:ss")}
+                <div class="input-group">
+                    <span class="input-group-addon">创建时间</span>
+                    <input type="text" class="form-control" value="${version.createTime?string('yyyy-MM-dd HH:mm:ss')}" readonly="readonly"/>
                 </div>
-                <div>
-                    <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${version.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
+                <div class="input-group">
+                    <span class="input-group-addon">修改时间</span>
+                    <input type="text" class="form-control" value="${version.modifyTime?string('yyyy-MM-dd HH:mm:ss')}" readonly="readonly"/>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">${project.name} 详情
                         <a href="javascript:void(0)">
-                            <span class="badge flowRight" onclick="projectForm.submit();">保存</span>
+                            <span class="badge flowRight" onclick="projectForm.submit();">更新</span>
                         </a>
                     </h3>
                 </div>
@@ -19,7 +19,7 @@
                     <input name="id" type="hidden" value="${project.id}"/>
                     <div class="input-group">
                         <span class="input-group-addon">项目</span>
-                        <input type="text" class="form-control" value="${project.name}" readonly="readonly"/>
+                        <input name="name" type="text" class="form-control" value="${project.name}"/>
                         <#if parentProject??>
                         <span class="input-group-addon">
                             <a href="${ctx_path}/my/projects.htm?curProjectID=${parentProject.id}">父项目：${parentProject.name}</a>
@@ -179,6 +179,7 @@
                     <h3 class="panel-title">操作</h3>
                 </div>
                 <div class="panel-body">
+                    [<a href="${ctx_path}/my/newProject.htm?parentID=${project.id}">创建子项目</a>]
                     [<a>删除项目</a>]
                     [<a>推送到首页</a>]
                     [<a>转移</a>]

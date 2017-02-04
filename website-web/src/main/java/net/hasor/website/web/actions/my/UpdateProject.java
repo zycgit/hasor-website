@@ -55,6 +55,7 @@ public class UpdateProject extends BaseMyProject {
         }
         //
         // .更新项目信息
+        infoDO.setName(projectInfoDO.getName());
         infoDO.setSubtitle(projectInfoDO.getSubtitle());
         infoDO.setContentFormat(ContentFormat.MD.formType(projectInfoDO.getContentFormatType()));
         infoDO.setPresent(projectInfoDO.getPresentContent());

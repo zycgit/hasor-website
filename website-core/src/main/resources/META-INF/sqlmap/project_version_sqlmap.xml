@@ -68,6 +68,7 @@
             PROJECT_VERSION
         where 1=1
             and project_id = #{projectID}
+            and status    != 4
         order by
             release_time desc
     </select>

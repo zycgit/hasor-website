@@ -18,6 +18,12 @@ import net.hasor.web.Invoker;
 import net.hasor.web.annotation.*;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.website.domain.enums.ContentFormat;
+import net.hasor.website.domain.enums.ProjectStatus;
+import net.hasor.website.domain.enums.SourceType;
+import net.hasor.website.domain.futures.ProjectFutures;
+import net.hasor.website.web.forms.ProjectInfoForm;
+import org.more.bizcommon.Result;
 
 import java.io.IOException;
 /**
@@ -37,15 +43,44 @@ public class NewProject extends BaseMyProject {
         // .页面必须的列表元素
         super.fillInfo();
         //
+        Result<ProjectInfoDO> projectByID = this.projectManager.queryProjectByID(parentID);
+        //
         Owner userOwner = getUser();
-        putData("project", null);
+        putData("project", null);//清空默认选择
+        putData("parentProject", projectByID.getResult());
         putData("owner", userOwner);
-        putData("parentID", parentID);
     }
     //
     @Post
-    public void newProject(@Params ProjectInfoDO projectInfoDO, Invoker data) throws IOException {
+    public void newProject(@Params ProjectInfoForm projectInfoDO, Invoker data) throws IOException {
+        // .need login
+        if (needLogin()) {
+            return;
+        }
         //
-        data.getClass();
+        ProjectInfoDO newProject = new ProjectInfoDO();
+        Owner owner = getUser();
+        newProject.setOwnerID(owner.getOwnerID());
+        newProject.setOwnerType(owner.getOwnerType());
+        newProject.setParentID(projectInfoDO.getParentID());
+        newProject.setName(projectInfoDO.getName());
+        newProject.setSubtitle(projectInfoDO.getSubtitle());
+        newProject.setContentFormat(ContentFormat.MD.formType(projectInfoDO.getContentFormatType()));
+        newProject.setPresent(projectInfoDO.getPresentContent());
+        newProject.setHomePage(projectInfoDO.getHomePage());
+        newProject.setDownPage(projectInfoDO.getDownPage());
+        newProject.setLanguage(projectInfoDO.getLanguage());
+        newProject.setSourceType(SourceType.Open.formType(projectInfoDO.getSourceTypeEnum()));
+        newProject.setLicense(projectInfoDO.getLicense());
+        newProject.setFutures(new ProjectFutures());
+        newProject.setStatus(ProjectStatus.Init);
+        //
+        Result<Long> project = this.projectManager.newProject(owner, newProject);
+        if (!project.isSuccess()) {
+            sendError(project.firstMessage());
+            return;
+        }
+        //
+        getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectInfoDO.getId());
     }
 }

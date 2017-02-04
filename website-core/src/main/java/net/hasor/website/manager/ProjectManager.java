@@ -105,7 +105,7 @@ public class ProjectManager {
             newProject.setOwnerType(ownerFormDB.getOwnerType());
             newProject.setCreateTime(new Date());
             newProject.setModifyTime(new Date());
-            newProject.setStatus(ProjectStatus.Auditing);
+            newProject.setStatus(ProjectStatus.Init);
             projectID = this.projectInfoDAO.insertProject(newProject);
             if (projectID <= 0) {
                 logger.error(LoggerUtils.create("ERROR_006_0005")//
@@ -123,6 +123,7 @@ public class ProjectManager {
             return failed(ErrorCodes.P_SAVE_PROJECT_FAILED, e);
         }
         // .返回值
+        newProject.setId(projectID);
         return success(projectID);
     }
     //

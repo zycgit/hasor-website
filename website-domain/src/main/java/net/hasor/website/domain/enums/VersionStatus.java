@@ -23,10 +23,10 @@ import org.more.util.StringUtils;
  */
 public enum VersionStatus implements GeneralEnumParsing<VersionStatus> {
     DesignPlan(0, "设计"),//
-    Developing(1, "开发"),//
-    Release(2, "发布"),//
-    Recovery(3, "回收"),//
-    Delete(4, "已删除"),//
+    Developing(1, "开发"),// 变迁：0 -> 1
+    Release(2, "发布"),// 变迁：0,1 -> 2
+    Recovery(3, "回收"),// 变迁：0,1,2 -> 3
+    Delete(-1, "已删除"),// 变迁：3 -> -1
     ;
     //
     private int    type;

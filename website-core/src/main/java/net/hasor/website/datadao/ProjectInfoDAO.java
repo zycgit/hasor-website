@@ -130,4 +130,7 @@ public class ProjectInfoDAO extends AbstractDao {
             throw e;
         }
     }
+    /***/
+    public void queryPublishList() {
+    }
 }

@@ -133,28 +133,28 @@
                 </div>
                 <div class="list-group">
                     <#list versionList as ver>
-                        <#assign markDelete = ""/>
-                        <#if ver.status.type == 3>
-                            <#assign markDelete = "markDelete"/>
-                        </#if>
                         <div class="list-group-item">
-                            <#if markDelete == ''>
+                            <#if versionUtils.canDelete(ver)>
                                 <a class="flowRight" title="删除，7天后将正式删除" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${ver.id}&method=delete">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
+                            </#if>
+                            <#if versionUtils.canUpdateInfo(ver)>
                                 <a class="flowRight" title="编辑或查看" href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 </a>
-                                <!--<a class="flowRight" title="发布">-->
-                                <!--<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>-->
-                                <!--</a>-->
                             </#if>
-                            <#if markDelete != ''>
+                            <#if versionUtils.canPublish(ver) >
+                                <a class="flowRight" title="发布" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${version.id}&method=publish">
+                                    <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                                </a>
+                            </#if>
+                            <#if versionUtils.canRecovery(ver)>
                                 <a class="flowRight" title="取消删除操作" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${ver.id}&method=recover">
                                     <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                 </a>
                             </#if>
-                            <a href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}" class="versionLink ${markDelete}">
+                            <a href="${ctx_path}/my/updateVersion.htm?projectID=${project.id}&versionID=${ver.id}" class="versionLink ${versionUtils.deleteCSS(ver)}">
                                 <h4 class="list-group-item-heading">${ver.version} - ${ver.subtitle}</h4>
                                 <p class="list-group-item-text">
                                     <span class="col-sm-1 label label-info rightMargin">${ver.status.desc}</span>
@@ -178,7 +178,7 @@
             <!-- 操作 -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">操作</h3>
+                    <h3 class="panel-title">高级操作</h3>
                 </div>
                 <div class="panel-body">
                     [<a href="${ctx_path}/my/newProject.htm?parentID=${project.id}">创建子项目</a>]

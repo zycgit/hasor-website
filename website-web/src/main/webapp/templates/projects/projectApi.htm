@@ -14,8 +14,8 @@ ${rootData.put('navIndex',0)}
 </script>
 <div class="page-header" style="margin: 0px;">
     <h3 style="margin: 0px;">
-        <a href="${ctx_path}/projects/${project.id}">${project.name}</a>
-        <small>${project.subtitle}</small>
+        <a href="${ctx_path}/projects/${project.id}">${escapeHtml.escapeHtml(project.name)}</a>
+        <small>${escapeHtml.escapeHtml(project.subtitle)}</small>
     </h3>
 </div>
 <ul class="nav nav-tabs">
@@ -28,7 +28,7 @@ ${rootData.put('navIndex',0)}
                 <#assign className="active"/>
                 <#assign isTop=true/>
             </#if>
-            <li class="${className}"><a href="${ctx_path}/projects/${project.id}/${versionInfo.version}/api.htm">Hasor-${versionInfo.version!}</a></li>
+            <li class="${className}"><a href="${ctx_path}/projects/${project.id}/${versionInfo.version}/api.htm">Hasor-${escapeHtml.escapeHtml(versionInfo.version)}</a></li>
         </#if>
     </#list>
     <#if isTop == false>
@@ -38,7 +38,7 @@ ${rootData.put('navIndex',0)}
     <#if versionList?size gt 3 >
         <li class="dropdown ${className}">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                其它版本${curTitle}<b class="caret"></b>
+                其它版本Hasor-${escapeHtml.escapeHtml(curTitle)}<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
                 <#list versionList as versionInfo>
@@ -48,7 +48,7 @@ ${rootData.put('navIndex',0)}
                             <#else/>
                             <#assign className=""/>
                         </#if>
-                        <li class="${className}"><a href="${ctx_path}/projects/${project.id}/${versionInfo.version}/api.htm">Hasor-${versionInfo.version!}</a></li>
+                        <li class="${className}"><a href="${ctx_path}/projects/${project.id}/${versionInfo.version}/api.htm">Hasor-${escapeHtml.escapeHtml(versionInfo.version)}</a></li>
                     </#if>
                 </#list>
             </ul>

@@ -68,12 +68,15 @@ public class OperateVersion extends BaseMyProject {
         //
         boolean onError = false;
         if ("delete".equalsIgnoreCase(method)) {
+            // - 删除，正式删除在7日后
             onError = this.doDelete(projectID, versionID);
         }
         if ("recover".equalsIgnoreCase(method)) {
+            // - 恢复删除的数据
             onError = this.doRecover(projectID, versionID);
         }
         if ("publish".equalsIgnoreCase(method)) {
+            // - 版本发布
             onError = this.doPublish(projectID, versionID);
         }
         //
@@ -92,6 +95,16 @@ public class OperateVersion extends BaseMyProject {
     private boolean doPublish(long projectID, long versionID) {
         if (!testVersion(projectID, versionID)) {
             return false;
+        }
+        // .执行删除
+        Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
+        ProjectVersionDO versionDO = versionResult.getResult();
+        if (!VersionStatus.Delete.equals(versionDO.getStatus())) {
+            Result<Boolean> result = this.projectManager.publishVersion(this.getUser(), projectID, versionID);
+            if (!result.isSuccess()) {
+                sendError(result.firstMessage());
+                return false;
+            }
         }
         return true;
     }

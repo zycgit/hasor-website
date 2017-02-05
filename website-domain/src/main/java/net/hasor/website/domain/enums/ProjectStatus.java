@@ -22,10 +22,19 @@ import org.more.util.StringUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum ProjectStatus implements GeneralEnumParsing<ProjectStatus> {
-    Init(0, "初始项目"),//
-    Auditing(1, "递交审核"),//
-    OK(2, "正常"),//
-    Invalid(3, "失效"),//
+    // .个人首页
+    Init(0, "初始筹备"),//
+    Publish(1, "正常活跃"),//变迁：0 -> 1
+    //
+    // .首页产品
+    Auditing(2, "审核"),// 变迁：1 -> 2
+    Recommend(3, "推荐首页"),// 变迁：2 -> 3
+    Clearup(4, "整理期"),// 变迁：3 -> 4
+    Archives(5, "已归档"),// 变迁：5 -> 5
+    //
+    // .尘归尘土归土
+    Recovery(6, "回收"),// 变迁：0,1,5  ->  6
+    Invalid(-1, "失效"),// 变迁：6      -> -1
     ;
     //
     private int    type;

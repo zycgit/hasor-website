@@ -6,14 +6,16 @@ ${rootData.put('navIndex',0)}
 <div class="row home-wrapper">
     <!--begin col-md-12-->
     <div class="col-md-12 text-center">
-        <h1 class="home-title">${project.name}</h1>
-        <p class="home-subtitle">${project.subtitle}</p>
+        <h1 class="home-title">${escapeHtml.escapeHtml(project.name)}</h1>
+        <p class="home-subtitle">${escapeHtml.escapeHtml(project.subtitle)}</p>
 
         <a href="#" class="btn btn-lg">Documentation</a>
         <a href="/projects/${project.id}/projectChangelog.htm" class="btn btn-lg">Changelog</a>
         <!-- -->
         <#if newVersion??>
-            <a href="/projects/${project.id}/${newVersion.version}/api.htm" class="btn btn-lg">APIs: ${newVersion.version}</a>
+            <a href="/projects/${project.id}/${escapeHtml.escapeHtml(newVersion.version)}/api.htm" class="btn btn-lg">
+                APIs: ${escapeHtml.escapeHtml(newVersion.version)}
+            </a>
         </#if>
         <#if !newVersion??>
             <a href="javascript:void(0);" class="btn btn-lg">APIs: Unknown</a>

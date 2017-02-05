@@ -28,7 +28,7 @@
 
     <website-oauth>
         <tencent enable="true"/>
-        <tencent enable="true"/>
-        <tencent enable="true"/>
+        <github enable="true"/>
+        <weibo enable="true"/>
     </website-oauth>
 </config>

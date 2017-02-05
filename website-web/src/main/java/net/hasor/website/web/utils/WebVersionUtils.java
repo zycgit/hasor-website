@@ -13,23 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.web.actions.projects;
-import net.hasor.web.Invoker;
-import net.hasor.web.annotation.MappingTo;
-import net.hasor.website.domain.ProjectInfoDO;
-import org.more.bizcommon.Result;
-
-import java.util.List;
+package net.hasor.website.web.utils;
+import net.hasor.website.domain.ProjectVersionDO;
+import net.hasor.website.utils.VersionUtils;
 /**
- * 总入口
- * @version : 2016年1月1日
+ *
+ * @version : 2016年12月05日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/projects/")
-public class Index extends BaseProjects {
-    //
-    public void execute(Invoker data) {
-        //
-        Result<List<ProjectInfoDO>> result = this.projectManager.queryTopProjectList();
+public class WebVersionUtils extends VersionUtils {
+    public static String deleteCSS(ProjectVersionDO version) {
+        return isDelete(version) ? "markDelete" : "";
     }
 }

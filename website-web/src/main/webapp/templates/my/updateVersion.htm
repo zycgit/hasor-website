@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="${ctx_path}/static/website/css/my_projects.htm.css">
 <#include "/control/project/my_project_list.htm"/>
 <!-- -->
+<#assign readonlyStyle = "readonly='readonly'"/>
+<#assign publishReadonlyStyle = ""/>
+<#if versionUtils.isPublish(version)>
+    <#assign publishReadonlyStyle = "readonly='readonly'"/>
+</#if>
+<!-- -->
 <div style="padding-left: 210px;">
     <form id="versionForm" action="${ctx_path}/my/updateVersion.htm" method="post">
         <#include "/control/project/my_message.htm"/>
@@ -14,10 +20,11 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <a href="${ctx_path}/my/projects.htm?curProjectID=${project.id}">${project.name} - ${version.version}</a> 版本信息
-                    <#if version.status.type != 3>
+                    <#if versionUtils.canUpdateInfo(version)>
+                        <#assign readonlyStyle = ""/>
                         <a href="javascript:void(0)"><span class="badge flowRight" onclick="versionForm.submit();">更新</span></a>
                     </#if>
-                    <#if version.status.type == 3>
+                    <#if versionUtils.isDelete(version) >
                         <span class="label label-warning flowRight">版本已被删除</span>
                     </#if>
                 </h3>
@@ -25,7 +32,7 @@
             <div class="panel-body">
                 <div class="input-group">
                     <span class="input-group-addon">标题</span>
-                    <input name="subtitle" type="text" class="form-control" placeholder="请输入..." value="${version.subtitle}"/>
+                    <input name="subtitle" ${readonlyStyle} ${publishReadonlyStyle} type="text" class="form-control" placeholder="请输入..." value="${version.subtitle}"/>
                     <span class="input-group-addon">
                         <input name="contentFormatType" type="hidden" value="${version.changelogFormat.type}"/>
                         ${version.changelogFormat.desc}
@@ -33,25 +40,25 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">版本</span>
-                    <input name="version" type="text" class="form-control" placeholder="curent version is ${version.version}" value="${version.version}"/>
+                    <input name="version" ${readonlyStyle} ${publishReadonlyStyle} type="text" class="form-control" placeholder="curent version is ${version.version}" value="${version.version}"/>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">下载</span>
-                    <input name="downloadURL" type="text" class="form-control" placeholder="http://" value="${version.futures.downloadURL}"/>
+                    <input name="downloadURL" ${readonlyStyle} type="text" class="form-control" placeholder="http://" value="${version.futures.downloadURL}"/>
                     <span class="input-group-addon">
                         <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                     </span>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">源码</span>
-                    <input name="sourceURL" type="text" class="form-control" placeholder="http://" value="${version.futures.sourceURL}"/>
+                    <input name="sourceURL" ${readonlyStyle} type="text" class="form-control" placeholder="http://" value="${version.futures.sourceURL}"/>
                     <span class="input-group-addon">
                         <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                     </span>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">手册</span>
-                    <input name="apiURL" type="text" class="form-control" placeholder="http://" value="${version.futures.apiURL}"/>
+                    <input name="apiURL" ${readonlyStyle} type="text" class="form-control" placeholder="http://" value="${version.futures.apiURL}"/>
                     <span class="input-group-addon">
                         <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                     </span>
@@ -63,18 +70,20 @@
                 </script>
                 <div id='changelogEditor'>${version.changelog}</div>
                 <div class="input-group">
-                    <script>
-                        $(function () {
-                            $("#releaseTime").datepicker({dateFormat: "yy-mm-dd", defaultDate: $("#releaseTime").val()});
-                        });
-                    </script>
-                    <style>
-                        .ui-datepicker {
-                            z-index: 99999 !important
-                        }
-                    </style>
+                    <#if versionUtils.canPublish(version) >
+                        <script>
+                            $(function () {
+                                $("#releaseTime").datepicker({dateFormat: "yy-mm-dd", defaultDate: $("#releaseTime").val()});
+                            });
+                        </script>
+                        <style>
+                            .ui-datepicker {
+                                z-index: 99999 !important
+                            }
+                        </style>
+                    </#if>
                     <span class="input-group-addon">发布时间</span>
-                    <input id="releaseTime" name="releaseTime" type="text" class="form-control" placeholder="YYYY-MM-DD" value="${version.releaseTime?string('yyyy-MM-dd')}"/>
+                    <input id="releaseTime" name="releaseTime" ${readonlyStyle} ${publishReadonlyStyle} type="text" class="form-control" placeholder="YYYY-MM-DD" value="${version.releaseTime?string('yyyy-MM-dd')}"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -106,18 +115,18 @@
     <#if version.status.type != 4>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">操作</h3>
+                <h3 class="panel-title">高级操作</h3>
             </div>
             <div class="panel-body">
-                <#if version.status.type != 3>
+                <#if versionUtils.canDelete(version)>
                     [<a title="删除，7天后将正式删除" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${version.id}&method=delete&target=detail">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;删除项目</a>]
                 </#if>
-                <#if version.status.type == 0 || version.status.type == 1>
+                <#if versionUtils.canPublish(version) >
                     [<a title="发布" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${version.id}&method=publish&target=detail">
                     <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>&nbsp;版本发布</a>]
                 </#if>
-                <#if version.status.type == 3>
+                <#if versionUtils.canRecovery(version)>
                     [<a title="取消删除操作" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${version.id}&method=recover&target=detail">
                     <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;撤销删除</a>]
                 </#if>

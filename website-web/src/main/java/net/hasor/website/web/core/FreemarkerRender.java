@@ -25,6 +25,7 @@ import net.hasor.web.render.RenderInvoker;
 import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.Service;
 import net.hasor.website.web.utils.LoginUtils;
+import net.hasor.website.web.utils.WebVersionUtils;
 import org.more.util.StringEscapeUtils;
 import org.more.util.StringUtils;
 
@@ -58,6 +59,7 @@ public class FreemarkerRender implements RenderEngine {
         this.configuration.setSharedVariable("escapeHtml", new StringEscapeUtils());//HTML 转译,防止XSS使用。
         this.configuration.setSharedVariable("stringUtils", new StringUtils());
         this.configuration.setSharedVariable("loginUtils", new LoginUtils());
+        this.configuration.setSharedVariable("versionUtils", new WebVersionUtils());
         //
         // - 系统服务
         Set<Class<?>> serviceSet = appContext.getEnvironment().findClass(Service.class);

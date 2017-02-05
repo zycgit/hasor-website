@@ -35,6 +35,7 @@ public enum ErrorCodes {
     U_PROIVTER_REBIND_FAILED(9, "绑定登陆方式失败，请重试或联系管理员。"),//
     U_UPDATE_FAILED(10, "账号更新失败，请重试或联系管理员。"),//
     U_NEED_LOGIN(11, "请先登录。"),//
+    // ------------------------------------------------------------------------
     //
     // .外部登陆接入
     OA_PROIVTER_NOT_EXIST(101, "抱歉我们不支持这种方式的第三方登陆。"),//
@@ -45,27 +46,33 @@ public enum ErrorCodes {
     OA_BIND_FAILED(106, "第三方登陆账号绑定失败，请重试"),//
     //
     LOGIN_ERROR(107, "登陆出错，请重试或联系管理员。"),//
+    // ------------------------------------------------------------------------
     //
     // .表单验证
     V_OAUTH_CALLBACK_FAILED(201, "合作网站登陆回调验证失败。"),//
     V_TOKEN_NEED_LOGIN(202, "token已过期,请重新登录。"),//
     V_CSRF_INVALID(203, "请重新登陆，或者这是一个非法的请求。"),//
     V_FORM_PROJECT_INVALID(204, "项目表单验证不通过，请检查表单值是否正确。"),//
+    // ------------------------------------------------------------------------
     //
     // .项目&版本
     P_OWNER_ERROR(301, "对不起，Owner参数信息错误。"),//
     P_OWNER_TYPE_FAILED(302, "Owner类型错误。"),//
     P_OWNER_NOT_EXIST(303, "对不起，Owner不存在。"),//
-    P_SAVE_PROJECT_FAILED(304, "项目信息保存失败，请稍后重试。"),//
-    P_V_PROJECT_INFO_FAILED(305, "项目信息不完整或错误的表单数据。"),//
-    P_PROJECT_NOT_EXIST(306, "不存在的项目。"),//
-    P_QUERY_ERROR(307, "查询项目信息失败，请重试。"),//
-    P_VERSION_NOT_EXIST(308, "不存在的项目版本。"),//
-    P_OWNER_NOT_YOU(309, "对不起，这个项目的Owner不是您。"),//
-    P_PROJECT_UPDATE_FAILED(310, "更新项目信息失败，请重试。"),//
+    P_OWNER_NOT_YOU(304, "对不起，这个项目的Owner不是您。"),//
+    //
+    P_VERSION_NOT_EXIST(310, "不存在的项目版本。"),//
     P_VERSION_UPDATE_FAILED(311, "更新版本信息失败，请重试。"),//
-    P_DELETE_TIME_TOO_LONG(312, "资源删除的时间太过久远，不能执行该操作。"),//
-    P_VERSION_SAVE_FAILED(313, "项目新增版本失败，请重试。"),//
+    P_VERSION_SAVE_FAILED(312, "项目新增版本失败，请重试。"),//
+    P_VERSION_STATUS_FAILED(313, "该版本当前状态不支持这个操作。"),//
+    //
+    P_PROJECT_NOT_EXIST(320, "不存在的项目。"),//
+    P_PROJECT_UPDATE_FAILED(321, "更新项目信息失败，请重试。"),//
+    P_SAVE_PROJECT_FAILED(322, "项目信息保存失败，请稍后重试。"),//
+    P_V_PROJECT_INFO_FAILED(323, "项目信息不完整或错误的表单数据。"),//
+    //
+    P_QUERY_ERROR(380, "查询项目信息失败，请重试。"),//
+    // ------------------------------------------------------------------------
     //
     SUCCESS(900, "操作成功。"),//
     BAD_PARAMS(901, "错误的调用参数。"),//
@@ -73,6 +80,7 @@ public enum ErrorCodes {
     BAD_REQUEST_PARAMS(903, "错误数据查询参数。"),//
     BAD_RESOURCE_DELETE(904, "资源已经被删除，不能执行该操作。"),//
     BAD_UNKNOWN(999, "未知类型异常: %s");
+    // ------------------------------------------------------------------------
     //
     //
     private MessageTemplate temp = null;

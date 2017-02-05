@@ -3,19 +3,19 @@ ${rootData.put('navIndex',0)}
 <link rel="stylesheet" href="${ctx_path}/static/website/css/projects_public.htm.css">
 <div class="page-header" style="margin: 0px;">
     <h3 style="margin: 0px;">
-        <a href="${ctx_path}/projects/${project.id}">${project.name}</a>
-        <small>${project.subtitle}</small>
+        <a href="${ctx_path}/projects/${project.id}">${escapeHtml.escapeHtml(project.name)}</a>
+        <small>${escapeHtml.escapeHtml(project.subtitle)}</small>
     </h3>
 </div>
 <#if versionList?size == 0>
     <div class="alert alert-warning" role="alert" style="text-align: center;">尚未发布任何版本！</div>
 </#if>
 <#if versionList?size != 0>
-    <p>&nbsp; &nbsp; 这里会按照发布时间远近一次罗列每一个&nbsp;<strong>${project.name}</strong>&nbsp;版本的变化和特性。</p>
+    <p>&nbsp; &nbsp; 这里会按照发布时间远近一次罗列每一个&nbsp;<strong>${escapeHtml.escapeHtml(project.name)}</strong>&nbsp;版本的变化和特性。</p>
 </#if>
 <#list versionList as versionInfo>
     <h3>
-        ${project.name}-${versionInfo.version}
+        ${escapeHtml.escapeHtml(project.name)}-${escapeHtml.escapeHtml(versionInfo.version)}
         <div class="flowRight">
             <div class="dropdown flowRight" style="padding-left: 10px;">
                 <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

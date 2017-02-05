@@ -84,39 +84,37 @@
                                 </#list>
                             </div>
                         </div>
-                        <fieldset ${incubatorReadonlyStyle}>
-                            <div class="input-group">
-                                <span class="input-group-addon">项目类型</span>
-                                <div class="form-control">
-                                    <#list sourceTypeList as sourceType>
-                                        <#assign checked = ""/>
-                                        <#if project.sourceType?? && project.sourceType.type == sourceType.type>
-                                            <#assign checked = "checked='checked'"/>
-                                        </#if>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="sourceTypeEnum" value="${sourceType.type}" ${checked}>${sourceType.desc}
-                                        </label>
-                                    </#list>
-                                </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">项目类型</span>
+                            <div class="form-control">
+                                <#list sourceTypeList as sourceType>
+                                    <#assign checked = ""/>
+                                    <#if project.sourceType?? && project.sourceType.type == sourceType.type>
+                                        <#assign checked = "checked='checked'"/>
+                                    </#if>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sourceTypeEnum" value="${sourceType.type}" ${checked}>${sourceType.desc}
+                                    </label>
+                                </#list>
                             </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">授权协议</span>
-                                <div class="form-control">
-                                    <#list licenseList as license>
-                                        <#assign checked = ""/>
-                                        <#if project.license?? && project.license == license.desc>
-                                            <#assign checked = "checked='checked'"/>
-                                        </#if>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="license" value="${license.desc}" ${checked}>${license.desc}
-                                        </label>
-                                    </#list>
-                                </div>
-                                <span class="input-group-addon">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">授权协议</span>
+                            <div class="form-control">
+                                <#list licenseList as license>
+                                    <#assign checked = ""/>
+                                    <#if project.license?? && project.license == license.desc>
+                                        <#assign checked = "checked='checked'"/>
+                                    </#if>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="license" value="${license.desc}" ${checked}>${license.desc}
+                                    </label>
+                                </#list>
+                            </div>
+                            <span class="input-group-addon">
                                 <a href="https://choosealicense.com/licenses/" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
                             </span>
-                            </div>
-                        </fieldset>
+                        </div>
                         <div class="input-group">
                             <span class="input-group-addon">当前状态</span>
                             <span class="form-control">

@@ -66,6 +66,11 @@ public class OperateVersion extends BaseMyProject {
             @ReqParam("versionID") long versionID, //
             @ReqParam("target") String target) throws IOException {
         //
+        // .need login
+        if (needLogin()) {
+            return;
+        }
+        //
         boolean onError = false;
         if ("delete".equalsIgnoreCase(method)) {
             // - 删除，正式删除在7日后

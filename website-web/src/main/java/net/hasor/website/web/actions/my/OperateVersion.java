@@ -25,7 +25,7 @@ import org.more.bizcommon.Result;
 
 import java.io.IOException;
 /**
- * 版本删除取消删除操作
+ * 版本相关的高级操作
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */

@@ -130,7 +130,25 @@ public class ProjectInfoDAO extends AbstractDao {
             throw e;
         }
     }
-    /***/
-    public void queryPublishList() {
+    /** 按照项目名称排序，获取所有已经发布的项目列表。如果传递了owner参数，那么将会根据owner进行过滤 */
+    public List<ProjectInfoDO> queryPublishList(long ownerID, OwnerType ownerType) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("ownerID", null);
+            parameter.put("ownerType", null);
+            if (ownerType != null && ownerID > 0L) {
+                parameter.put("ownerID", ownerID);
+                parameter.put("ownerType", ownerType.getType());
+            }
+            //
+            List<ProjectInfoDO> result = this.getSqlExecutor().selectList("projectInfo_queryPublishList", parameter);
+            return result;
+        } catch (SQLException e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+                    .addLog("method", "queryPublishList")//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            throw e;
+        }
     }
 }

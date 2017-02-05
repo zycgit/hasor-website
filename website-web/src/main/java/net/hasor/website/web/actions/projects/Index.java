@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.projects;
-import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
+import net.hasor.web.render.RenderInvoker;
 import net.hasor.website.domain.ProjectInfoDO;
 import org.more.bizcommon.Result;
 
@@ -25,11 +25,18 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/projects/")
+@MappingTo("/projects")
 public class Index extends BaseProjects {
     //
-    public void execute(Invoker data) {
+    public void execute(RenderInvoker data) {
         //
-        Result<List<ProjectInfoDO>> result = this.projectManager.queryTopProjectList();
+        Result<List<ProjectInfoDO>> projectList = this.projectManager.queryTopProjectList();
+        if (!projectList.isSuccess()) {
+            sendError(projectList.firstMessage());
+            return;
+        }
+        //
+        data.put("projectList", projectList.getResult());
+        data.renderTo("htm", "/projects/index.htm");
     }
 }

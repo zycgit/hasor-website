@@ -170,11 +170,22 @@ public class ProjectManager {
         }
     }
     //
-    /** 查询首页项目 */
+    /** 查询首页项目，所有已发布的，按照名字排序。 */
     public Result<List<ProjectInfoDO>> queryTopProjectList() {
-        //
-        projectInfoDAO.queryPublishList();
-        return null;// TODO
+        // .查询数据
+        try {
+            List<ProjectInfoDO> projectList = projectInfoDAO.queryPublishList(0L, null);
+            projectList = (projectList == null) ? new ArrayList<ProjectInfoDO>(0) : projectList;
+            return success(projectList);
+        } catch (Exception e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("queryType", "projectInfoDAO.queryPublishList") //
+                    .addLog("ownerID", "all") //
+                    .addLog("ownerType", "all") //
+                    .addLog("error", "query error -> " + e.getMessage()) //
+                    .toJson(), e);
+            return failed(ErrorCodes.P_QUERY_ERROR, e);
+        }
     }
     //
     /** 更新项目信息（不包含：介绍正文、正文格式） */

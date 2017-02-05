@@ -1,3 +1,16 @@
 ${rootData.put('pageTitle','Product')}
 ${rootData.put('navIndex',0)}
 <link rel="stylesheet" href="${ctx_path}/static/website/css/projects_public.htm.css">
+
+
+<div class="list-group">
+    <#list projectList as project>
+        <a href="${ctx_path}/projects/${project.id}.htm" target="_blank" class="list-group-item">
+            <h4 class="list-group-item-heading">${project.name}</h4>
+            <p class="list-group-item-text">
+                ${project.subtitle}
+                <span class="badge flowRight">${project.language}</span>
+            </p>
+        </a>
+    </#list>
+</div>

@@ -102,4 +102,14 @@ public class DaoTest extends AbstractTest {
         //
         logger.info(JSON.toJSONString(projectList));
     }
+    //
+    @Test
+    public void queryAll() throws SQLException {
+        //
+        List<ProjectInfoDO> projectList1 = this.projectInfoDAO.queryPublishList(0L, null);
+        List<ProjectInfoDO> projectList2 = this.projectInfoDAO.queryPublishList(123L, OwnerType.Personal);
+        //
+        logger.info(JSON.toJSONString(projectList1));
+        logger.info(JSON.toJSONString(projectList2));
+    }
 }

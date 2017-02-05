@@ -29,7 +29,7 @@ import java.util.List;
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/projects/{projectID}")
+@MappingTo("/projects/{projectID}.htm")
 public class ProjectIndex extends BaseProjects {
     //
     public void execute(@PathParam("projectID") long projectID, RenderInvoker data) {

@@ -24,7 +24,7 @@ import org.more.util.StringUtils;
 public enum ProjectStatus implements GeneralEnumParsing<ProjectStatus> {
     // .个人首页
     Init(0, "初始筹备"),//
-    Publish(1, "正常活跃"),//变迁：0 -> 1
+    Publish(1, "正常"),//变迁：0 -> 1
     //
     // .首页产品
     Auditing(2, "审核"),// 变迁：1 -> 2

@@ -23,20 +23,12 @@ import org.more.util.StringUtils;
  */
 public enum ProjectStatus implements GeneralEnumParsing<ProjectStatus> {
     // .普通项目
-    Init(0, "初始筹备"),//
-    Publish(1, "正常"),//变迁：0 -> 1 or 6 -> 1
-    //
-    // .孵化项目
-    ApplyIncubator(2, "申请孵化"),// 变迁：1 -> 2
-    Incubator(3, "孵化中"),// 变迁：2 -> 3 or 6 -> 3
-    ApplyGraduate(4, "申请毕业"),// 变迁：3 -> 4
-    Graduate(5, "已毕业"),// 变迁：4 -> 5
-    Clearup(6, "整理期"),// 变迁：4 -> 6
-    Archives(7, "已归档"),// 变迁：3,4,6 -> 7
+    Init(1, "私密"),//
+    Publish(2, "公开"),//
     //
     // .尘归尘土归土
-    Recovery(8, "回收"),// 变迁：0,1,6  ->  7
-    Invalid(-1, "失效"),// 变迁：9 -> -1
+    Recovery(0, "回收"),// 变迁：1,2  -> 0
+    Invalid(-1, "失效"),// 变迁：0 -> -1
     ;
     //
     private int    type;

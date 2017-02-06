@@ -151,4 +151,19 @@ public class ProjectInfoDAO extends AbstractDao {
             throw e;
         }
     }
+    /** 更新状态和扩展信息字段。 */
+    public long updateStatusAndFutures(long projectID, ProjectInfoDO projectInfo) throws SQLException {
+        try {
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("projectID", projectID);
+            parameter.put("projectInfo", projectInfo);
+            return this.getSqlExecutor().update("projectInfo_updateStatusAndFutures", parameter);
+        } catch (SQLException e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
+                    .addLog("method", "updateStatusAndFutures")//
+                    .addLog("error", e.getMessage())//
+                    .toJson(), e);
+            throw e;
+        }
+    }
 }

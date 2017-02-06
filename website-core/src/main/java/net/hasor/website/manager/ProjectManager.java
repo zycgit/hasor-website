@@ -27,8 +27,10 @@ import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.OwnerType;
 import net.hasor.website.domain.enums.ProjectStatus;
 import net.hasor.website.domain.enums.VersionStatus;
+import net.hasor.website.domain.futures.ProjectFutures;
 import net.hasor.website.domain.futures.ProjectVersionFutures;
 import net.hasor.website.utils.LoggerUtils;
+import net.hasor.website.utils.ProjectUtils;
 import net.hasor.website.utils.VersionUtils;
 import org.more.bizcommon.Result;
 import org.more.util.StringUtils;
@@ -328,14 +330,26 @@ public class ProjectManager {
     }
     //
     /** 新增版本 */
-    public Result<Long> newVersion(ProjectInfoDO infoDO, ProjectVersionDO versionInfoDO) {
+    public Result<Long> newVersion(Owner user, long projectID, ProjectVersionDO versionInfoDO) {
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(user, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        //
+        // .状态判断
+        ProjectInfoDO projectInfoDO = projectByID.getResult();
+        if (!ProjectUtils.canVersion(projectInfoDO)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
+        //
         // .保存
         try {
-            versionInfoDO.setProjectID(Hasor.assertIsNotNull(infoDO).getId());
+            versionInfoDO.setProjectID(Hasor.assertIsNotNull(projectInfoDO).getId());
             long versionID = this.projectVersionDAO.insertVersion(versionInfoDO);
             if (versionID <= 0) {
                 logger.error(LoggerUtils.create("ERROR_006_0014")//
-                        .addLog("projectID", infoDO.getId()) //
+                        .addLog("projectID", projectInfoDO.getId()) //
                         .toJson());
                 return failed(ErrorCodes.P_VERSION_SAVE_FAILED);
             } else {
@@ -344,7 +358,7 @@ public class ProjectManager {
             }
         } catch (Exception e) {
             logger.error(LoggerUtils.create("ERROR_999_0003")//
-                    .addLog("projectID", infoDO.getId()) //
+                    .addLog("projectID", projectInfoDO.getId()) //
                     .addLog("error", e.getMessage()) //
                     .toJson(), e);
             return failed(ErrorCodes.P_VERSION_SAVE_FAILED, e);
@@ -352,13 +366,22 @@ public class ProjectManager {
     }
     /** 标记删除版本 */
     public Result<Boolean> deleteVersion(Owner user, long projectID, long versionID) {
-        Result<ProjectVersionDO> versionByID = this.queryOwnerVersion(user, projectID, versionID);
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(user, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        Result<ProjectVersionDO> versionByID = this.queryVersionByID(projectID, versionID);
         if (!versionByID.isSuccess()) {
             return failed(versionByID);
         }
-        ProjectVersionDO versionInfo = versionByID.getResult();
         //
         // .状态判断
+        ProjectInfoDO projectInfoDO = projectByID.getResult();
+        ProjectVersionDO versionInfo = versionByID.getResult();
+        if (!ProjectUtils.canVersion(projectInfoDO)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
         if (!VersionUtils.canDelete(versionInfo)) {
             return failed(ErrorCodes.P_VERSION_STATUS_FAILED);
         }
@@ -393,13 +416,22 @@ public class ProjectManager {
     }
     /** 恢复删除的版本 */
     public Result<Boolean> recoverVersion(Owner user, long projectID, long versionID) {
-        Result<ProjectVersionDO> versionByID = this.queryOwnerVersion(user, projectID, versionID);
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(user, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        Result<ProjectVersionDO> versionByID = this.queryVersionByID(projectID, versionID);
         if (!versionByID.isSuccess()) {
             return failed(versionByID);
         }
-        ProjectVersionDO versionInfo = versionByID.getResult();
         //
         // .状态判断
+        ProjectInfoDO projectInfoDO = projectByID.getResult();
+        ProjectVersionDO versionInfo = versionByID.getResult();
+        if (!ProjectUtils.canVersion(projectInfoDO)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
         if (!VersionUtils.canRecovery(versionInfo)) {
             return failed(ErrorCodes.P_VERSION_STATUS_FAILED);
         }
@@ -429,13 +461,22 @@ public class ProjectManager {
     }
     /** 版本置为发布状态 */
     public Result<Boolean> publishVersion(Owner user, long projectID, long versionID) {
-        Result<ProjectVersionDO> versionByID = this.queryOwnerVersion(user, projectID, versionID);
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(user, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        Result<ProjectVersionDO> versionByID = this.queryVersionByID(projectID, versionID);
         if (!versionByID.isSuccess()) {
             return failed(versionByID);
         }
-        ProjectVersionDO versionInfo = versionByID.getResult();
         //
         // .状态判断
+        ProjectInfoDO projectInfoDO = projectByID.getResult();
+        ProjectVersionDO versionInfo = versionByID.getResult();
+        if (!ProjectUtils.canVersion(projectInfoDO)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
         if (!VersionUtils.canPublish(versionInfo)) {
             return failed(ErrorCodes.P_VERSION_STATUS_FAILED);
         }
@@ -464,21 +505,99 @@ public class ProjectManager {
     }
     //
     //
-    private Result<ProjectVersionDO> queryOwnerVersion(Owner user, long projectID, long versionID) {
-        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
-        if (!projectByID.isSuccess()) {
-            return failed(projectByID);
+    //
+    private Result<Void> testProjectOwner(Owner owner, Result<ProjectInfoDO> projectResult) {
+        if (!projectResult.isSuccess()) {
+            return failed(projectResult);
         }
-        //
-        ProjectInfoDO projectInfo = projectByID.getResult();
-        if (projectInfo.getOwnerID() != user.getOwnerID() || !projectInfo.getOwnerType().equals(user.getOwnerType())) {
+        if (owner == null) {
+            return failed(ErrorCodes.P_OWNER_ERROR);
+        }
+        ProjectInfoDO projectInfo = projectResult.getResult();
+        if (projectInfo == null) {
+            return failed(ErrorCodes.P_PROJECT_NOT_EXIST);
+        }
+        if (projectInfo.getOwnerID() != owner.getOwnerID() || !projectInfo.getOwnerType().equals(owner.getOwnerType())) {
             return failed(ErrorCodes.P_OWNER_NOT_YOU);
         }
-        //
-        Result<ProjectVersionDO> versionByID = this.queryVersionByID(projectID, versionID);
-        if (!versionByID.isSuccess()) {
-            return failed(versionByID);
+        return success(null);
+    }
+    //
+    /** 标记删除项目 */
+    public Result<Boolean> doDeleteProject(Owner operUser, ProjectInfoDO project) {
+        long projectID = project.getId();
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
         }
-        return success(versionByID.getResult());
+        //
+        // .状态判断
+        ProjectInfoDO projectInfo = projectByID.getResult();
+        if (!ProjectUtils.canDelete(projectInfo)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
+        //
+        // .删除
+        try {
+            if (projectInfo.getFutures() == null) {
+                projectInfo.setFutures(new ProjectFutures());
+            }
+            projectInfo.getFutures().setRecoveryStartTime(new Date());
+            projectInfo.getFutures().setRecoveryEndTime(this.environmentConfig.getRecoveryTime(new Date()));
+            projectInfo.getFutures().setRecoveryStatus(projectInfo.getStatus().name());
+            projectInfo.setStatus(ProjectStatus.Recovery);
+            long res = this.projectInfoDAO.updateStatusAndFutures(projectID, projectInfo);
+            if (res <= 0) {
+                logger.error(LoggerUtils.create("ERROR_006_0014")//
+                        .addLog("projectID", projectID) //
+                        .toJson());
+                return failed(ErrorCodes.P_PROJECT_UPDATE_FAILED);
+            } else {
+                return success(true);
+            }
+        } catch (Exception e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("projectID", projectID) //
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return failed(ErrorCodes.P_PROJECT_UPDATE_FAILED, e);
+        }
+    }
+    /** 恢复删除的项目 */
+    public Result<Boolean> doRecoverProject(Owner operUser, ProjectInfoDO project) {
+        long projectID = project.getId();
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        //
+        // .状态判断
+        ProjectInfoDO projectInfo = projectByID.getResult();
+        if (!ProjectUtils.canRecovery(projectInfo)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
+        //
+        // .恢复删除
+        try {
+            String lastStatus = projectInfo.getFutures().getRecoveryStatus();
+            projectInfo.setStatus(ProjectStatus.Init.formName(lastStatus));
+            long res = this.projectInfoDAO.updateStatusAndFutures(projectID, projectInfo);
+            if (res <= 0) {
+                logger.error(LoggerUtils.create("ERROR_006_0014")//
+                        .addLog("projectID", projectID) //
+                        .toJson());
+                return failed(ErrorCodes.P_PROJECT_UPDATE_FAILED);
+            } else {
+                return success(true);
+            }
+        } catch (Exception e) {
+            logger.error(LoggerUtils.create("ERROR_999_0003")//
+                    .addLog("projectID", projectID) //
+                    .addLog("error", e.getMessage()) //
+                    .toJson(), e);
+            return failed(ErrorCodes.P_PROJECT_UPDATE_FAILED, e);
+        }
     }
 }

@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.my;
-import net.hasor.core.Inject;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.enums.ErrorCodes;
-import net.hasor.website.manager.IncubatorManager;
 import org.more.bizcommon.Result;
 
 import java.io.IOException;
@@ -31,8 +29,6 @@ import java.io.IOException;
  */
 @MappingTo("/my/operateProject.do")
 public class OperateProject extends BaseMyProject {
-    @Inject
-    protected IncubatorManager incubatorManager;
     //
     private boolean testOwner(long projectID) {
         //
@@ -71,30 +67,6 @@ public class OperateProject extends BaseMyProject {
             // - 恢复删除的数据
             onError = this.doRecover(projectID);
         }
-        if ("incubator".equalsIgnoreCase(method)) {
-            // - 申请孵化
-            onError = this.doIncubator(projectID);
-        }
-        if ("cancelIncubator".equalsIgnoreCase(method)) {
-            // - 撤销孵化
-            onError = this.doCancelIncubator(projectID);
-        }
-        if ("graduate".equalsIgnoreCase(method)) {
-            // - 申请毕业
-            onError = this.doGraduate(projectID);
-        }
-        if ("cancelGraduate".equalsIgnoreCase(method)) {
-            // - 撤销毕业
-            onError = this.doCancelGraduate(projectID);
-        }
-        if ("archives".equalsIgnoreCase(method)) {
-            // - 归档
-            onError = this.doArchives(projectID);
-        }
-        if ("activate".equalsIgnoreCase(method)) {
-            // - 重启项目
-            onError = this.doActivate(projectID);
-        }
         //
         if (onError) {
             getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectID);
@@ -103,96 +75,6 @@ public class OperateProject extends BaseMyProject {
     }
     //
     //
-    private boolean doActivate(long projectID) {
-        if (!testOwner(projectID)) {
-            return false;
-        }
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doActivate(getUser(), infoDO);
-        //
-        if (!result.isSuccess()) {
-            sendError(result.firstMessage());
-            return false;
-        }
-        return true;
-    }
-    private boolean doArchives(long projectID) {
-        if (!testOwner(projectID)) {
-            return false;
-        }
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doArchives(getUser(), infoDO);
-        //
-        if (!result.isSuccess()) {
-            sendError(result.firstMessage());
-            return false;
-        }
-        return true;
-    }
-    private boolean doCancelGraduate(long projectID) {
-        if (!testOwner(projectID)) {
-            return false;
-        }
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doCancelGraduate(getUser(), infoDO);
-        //
-        if (!result.isSuccess()) {
-            sendError(result.firstMessage());
-            return false;
-        }
-        return true;
-    }
-    private boolean doGraduate(long projectID) {
-        if (!testOwner(projectID)) {
-            return false;
-        }
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doGraduate(getUser(), infoDO);
-        //
-        if (!result.isSuccess()) {
-            sendError(result.firstMessage());
-            return false;
-        }
-        return true;
-    }
-    private boolean doCancelIncubator(long projectID) {
-        if (!testOwner(projectID)) {
-            return false;
-        }
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doCancelIncubator(getUser(), infoDO);
-        //
-        if (!result.isSuccess()) {
-            sendError(result.firstMessage());
-            return false;
-        }
-        return true;
-    }
-    private boolean doIncubator(long projectID) {
-        if (!testOwner(projectID)) {
-            return false;
-        }
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doIncubator(getUser(), infoDO);
-        //
-        if (!result.isSuccess()) {
-            sendError(result.firstMessage());
-            return false;
-        }
-        return true;
-    }
     private boolean doRecover(long projectID) {
         if (!testOwner(projectID)) {
             return false;
@@ -200,7 +82,7 @@ public class OperateProject extends BaseMyProject {
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doRecover(getUser(), infoDO);
+        Result<Boolean> result = this.projectManager.doRecoverProject(getUser(), infoDO);
         //
         if (!result.isSuccess()) {
             sendError(result.firstMessage());
@@ -215,7 +97,7 @@ public class OperateProject extends BaseMyProject {
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         ProjectInfoDO infoDO = projectResult.getResult();
-        Result<Boolean> result = this.incubatorManager.doDelete(getUser(), infoDO);
+        Result<Boolean> result = this.projectManager.doDeleteProject(getUser(), infoDO);
         //
         if (!result.isSuccess()) {
             sendError(result.firstMessage());

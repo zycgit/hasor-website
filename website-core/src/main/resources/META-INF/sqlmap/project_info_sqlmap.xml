@@ -103,6 +103,7 @@
             and id          = #{info.id}
             and owner_id    = #{info.ownerID}
             and owner_type  = #{info.ownerType.type}
+            and status     != -1
         limit 1
     </update>
 
@@ -116,6 +117,7 @@
             and id          = #{info.id}
             and owner_id    = #{info.ownerID}
             and owner_type  = #{info.ownerType.type}
+            and status     != -1
         limit 1
     </update>
 
@@ -139,6 +141,7 @@
         where 1=1
             and owner_id   = #{ownerID}
             and owner_type = #{ownerType}
+            and status    != -1
         order by
             create_time desc
     </select>
@@ -150,7 +153,7 @@
         from
             PROJECT_INFO
         where 1=1
-            and status     = 1
+            and status     = 2
         <if test="ownerID != null and ownerType !=null">
             and owner_id   = #{ownerID}
             and owner_type = #{ownerType}
@@ -159,5 +162,14 @@
             name asc
     </select>
 
-
+    <!-- 更新项目信息（仅包含：介绍正文、正文格式） -->
+    <update id="projectInfo_updateStatusAndFutures">
+        update PROJECT_INFO set
+            futures         = #{projectInfo.futures, typeHandler=net.hasor.website.datadao.convert.ProjectFuturesConvert},
+            status          = #{projectInfo.status, typeHandler=net.hasor.website.datadao.convert.ProjectStatusConvert},
+            modify_time     = now()
+        where 1=1
+            and id          = #{projectID}
+        limit 1
+    </update>
 </mapper>

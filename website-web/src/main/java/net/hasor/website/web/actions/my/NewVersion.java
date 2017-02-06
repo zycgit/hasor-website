@@ -85,21 +85,6 @@ public class NewVersion extends BaseMyProject {
         if (needLoginAjax())
             return;
         //
-        long projectID = versionInfoDO.getProjectID();
-        long versionID = versionInfoDO.getId();
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        if (!projectResult.isSuccess()) {
-            sendError(projectResult.firstMessage());
-            return;
-        }
-        final ProjectInfoDO infoDO = projectResult.getResult();
-        //
-        // .判断项目归属
-        if (!super.isMyProject(infoDO)) {
-            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
-            return;
-        }
-        //
         // .补充信息
         if (versionInfoDO.getFutures() == null)
             versionInfoDO.setFutures(new ProjectVersionFutures());
@@ -110,7 +95,13 @@ public class NewVersion extends BaseMyProject {
         versionInfoDO.setChangelogFormat(ContentFormat.MD.formType(versionInfoDO.getChangelogFormatType()));
         versionInfoDO.setStatus(VersionStatus.DesignPlan);
         //
-        Result<Long> newVersion = this.projectManager.newVersion(infoDO, versionInfoDO);
+        //
+        long projectID = versionInfoDO.getProjectID();
+        Result<Long> newVersion = this.projectManager.newVersion(getUser(), projectID, versionInfoDO);
+        if (!newVersion.isSuccess()) {
+            sendError(newVersion.firstMessage());
+            return;
+        }
         //
         data.getHttpResponse().sendRedirect("/my/updateVersion.htm?projectID=" + projectID + "&versionID=" + newVersion.getResult());
     }

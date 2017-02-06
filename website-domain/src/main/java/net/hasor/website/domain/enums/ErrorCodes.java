@@ -69,7 +69,8 @@ public enum ErrorCodes {
     P_PROJECT_NOT_EXIST(320, "不存在的项目。"),//
     P_PROJECT_UPDATE_FAILED(321, "更新项目信息失败，请重试。"),//
     P_SAVE_PROJECT_FAILED(322, "项目信息保存失败，请稍后重试。"),//
-    P_V_PROJECT_INFO_FAILED(323, "项目信息不完整或错误的表单数据。"),//
+    P_PROJECT_STATUS_FAILED(313, "项目的当前状态不支持这个操作。"),//
+    P_V_PROJECT_INFO_FAILED(324, "项目信息不完整或错误的表单数据。"),//
     //
     P_QUERY_ERROR(380, "查询项目信息失败，请重试。"),//
     // ------------------------------------------------------------------------

@@ -6,10 +6,6 @@
 <#if projectUtils.canUpdateInfo(project)>
     <#assign readonlyStyle = ""/>
 </#if>
-<#assign incubatorReadonlyStyle = ""/>
-<#if projectUtils.isIncubator(project)>
-    <#assign incubatorReadonlyStyle = "readonly='readonly' disabled"/>
-</#if>
 <!-- -->
 <div style="padding-left: 210px;">
     <#include "/control/project/my_message.htm"/>
@@ -20,7 +16,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <a href="${ctx_path}/projects/${project.id}/index.htm" target="_blank">${project.name}</a> 详情
+                            <a href="${ctx_path}/projects/${project.id}.htm" target="_blank">${project.name}</a> 详情
                             <#if projectUtils.canUpdateInfo(project)>
                                 <a href="javascript:void(0)">
                                     <span class="badge flowRight" onclick="projectForm.submit();">更新</span>
@@ -35,7 +31,7 @@
                         <input name="id" type="hidden" value="${project.id}"/>
                         <div class="input-group">
                             <span class="input-group-addon">项目</span>
-                            <input name="name" ${incubatorReadonlyStyle} type="text" class="form-control" value="${project.name}"/>
+                            <input name="name" type="text" class="form-control" value="${project.name}"/>
                             <#if parentProject??>
                         <span class="input-group-addon">
                             <a href="${ctx_path}/my/projects.htm?curProjectID=${parentProject.id}">父项目：${parentProject.name}</a>
@@ -211,31 +207,6 @@
                             <#if projectUtils.canRecovery(project)>
                                 [<a title="取消删除操作" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=recover">
                                 <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;撤销删除</a>]
-                            </#if>
-                            <!-- 孵化的项目 -->
-                            <#if projectUtils.canIncubator(project)>
-                                [<a title="申请孵化项目" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=incubator">
-                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;孵化</a>]
-                            </#if>
-                            <#if projectUtils.canCancelIncubator(project)>
-                                [<a title="撤销孵化申请" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=cancelIncubator">
-                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;撤销孵化</a>]
-                            </#if>
-                            <#if projectUtils.canGraduate(project)>
-                                [<a title="申请毕业" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=graduate">
-                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;申请毕业</a>]
-                            </#if>
-                            <#if projectUtils.canCancelGraduate(project)>
-                                [<a title="撤销毕业申请" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=cancelGraduate">
-                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;撤销毕业</a>]
-                            </#if>
-                            <#if projectUtils.canArchives(project)>
-                                [<a title="不活跃的项目进行归档" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=archives">
-                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;归档</a>]
-                            </#if>
-                            <#if projectUtils.canActivate(project)>
-                                [<a title="重新激活整理期的项目。" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=activate">
-                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;重启</a>]
                             </#if>
                         </div>
                     </div>

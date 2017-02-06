@@ -62,6 +62,7 @@ public class ProjectManager {
     @Inject
     private TransactionService transactionService;
     //
+    //
     /** 新项目 */
     public Result<Long> newProject(Owner owner, ProjectInfoDO newProject) {
         // .入参判断
@@ -108,7 +109,7 @@ public class ProjectManager {
             newProject.setOwnerType(ownerFormDB.getOwnerType());
             newProject.setCreateTime(new Date());
             newProject.setModifyTime(new Date());
-            newProject.setStatus(ProjectStatus.Init);
+            newProject.setStatus(ProjectStatus.Private);
             projectID = this.projectInfoDAO.insertProject(newProject);
             if (projectID <= 0) {
                 logger.error(LoggerUtils.create("ERROR_006_0005")//
@@ -129,7 +130,6 @@ public class ProjectManager {
         newProject.setId(projectID);
         return success(projectID);
     }
-    //
     /** 查询我的项目列表 */
     public Result<List<ProjectInfoDO>> queryMyProjectList(Owner owner) {
         // .owner判断
@@ -152,7 +152,6 @@ public class ProjectManager {
             return failed(ErrorCodes.P_QUERY_ERROR, e);
         }
     }
-    //
     /** 根据项目ID查询项目 */
     public Result<ProjectInfoDO> queryProjectByID(long projectID) {
         try {
@@ -171,7 +170,6 @@ public class ProjectManager {
             return failed(ErrorCodes.P_QUERY_ERROR, e);
         }
     }
-    //
     /** 查询首页项目，所有已发布的，按照名字排序。 */
     public Result<List<ProjectInfoDO>> queryTopProjectList() {
         // .查询数据
@@ -189,7 +187,6 @@ public class ProjectManager {
             return failed(ErrorCodes.P_QUERY_ERROR, e);
         }
     }
-    //
     /** 更新项目信息（不包含：介绍正文、正文格式） */
     public Result<Boolean> updateProjectWithoutContent(ProjectInfoDO project) {
         // .验证
@@ -224,7 +221,6 @@ public class ProjectManager {
             return failed(ErrorCodes.P_SAVE_PROJECT_FAILED, e);
         }
     }
-    //
     /** 更新项目信息（仅包含：介绍正文、正文格式） */
     public Result<Boolean> updateProjectContent(ProjectInfoDO project) {
         // .验证
@@ -284,7 +280,6 @@ public class ProjectManager {
             return failed(ErrorCodes.P_QUERY_ERROR, e);
         }
     }
-    //
     /** 根据ID查询版本信息 */
     public Result<ProjectVersionDO> queryVersionByID(long projectID, long versionID) {
         try {
@@ -304,7 +299,6 @@ public class ProjectManager {
             return failed(ErrorCodes.P_QUERY_ERROR, e);
         }
     }
-    //
     /** 更新版本信息（更新项目版本信息，不会变更版本状态和隶属关系） */
     public Result<Boolean> updateVersionInfo(ProjectVersionDO version) {
         // .保存
@@ -328,6 +322,7 @@ public class ProjectManager {
             return failed(ErrorCodes.P_VERSION_UPDATE_FAILED, e);
         }
     }
+    //
     //
     /** 新增版本 */
     public Result<Long> newVersion(Owner user, long projectID, ProjectVersionDO versionInfoDO) {
@@ -505,6 +500,85 @@ public class ProjectManager {
     }
     //
     //
+    /** 标记删除项目 */
+    public Result<Boolean> doDeleteProject(Owner operUser, ProjectInfoDO project) {
+        long projectID = project.getId();
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        //
+        // .状态判断
+        ProjectInfoDO projectInfo = projectByID.getResult();
+        if (!ProjectUtils.canDelete(projectInfo)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
+        if (projectInfo.getFutures() == null) {
+            projectInfo.setFutures(new ProjectFutures());
+        }
+        projectInfo.getFutures().setRecoveryStartTime(new Date());
+        projectInfo.getFutures().setRecoveryEndTime(this.environmentConfig.getRecoveryTime(new Date()));
+        projectInfo.getFutures().setRecoveryStatus(projectInfo.getStatus().name());
+        projectInfo.setStatus(ProjectStatus.Recovery);
+        //
+        // .删除
+        return updateStatusAndFutures(projectID, projectInfo);
+    }
+    /** 恢复删除的项目 */
+    public Result<Boolean> doRecoverProject(Owner operUser, ProjectInfoDO project) {
+        long projectID = project.getId();
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        // .状态判断
+        ProjectInfoDO projectInfo = projectByID.getResult();
+        if (!ProjectUtils.canRecovery(projectInfo)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
+        //
+        String lastStatus = projectInfo.getFutures().getRecoveryStatus();
+        projectInfo.setStatus(ProjectStatus.Private.formName(lastStatus));
+        return updateStatusAndFutures(projectID, projectInfo);
+    }
+    /** 设置为私有项目 */
+    public Result<Boolean> doPrivateProject(Owner operUser, ProjectInfoDO project) {
+        //
+        long projectID = project.getId();
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        // .状态判断
+        ProjectInfoDO projectInfo = projectByID.getResult();
+        if (!ProjectUtils.canPrivate(projectInfo)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
+        projectInfo.setStatus(ProjectStatus.Private);
+        return updateStatusAndFutures(projectID, projectInfo);
+    }
+    /** 设置为公开项目 */
+    public Result<Boolean> doPublicProject(Owner operUser, ProjectInfoDO project) {
+        //
+        long projectID = project.getId();
+        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
+        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
+        if (!testProject.isSuccess()) {
+            return failed(testProject);
+        }
+        // .状态判断
+        ProjectInfoDO projectInfo = projectByID.getResult();
+        if (!ProjectUtils.canPublic(projectInfo)) {
+            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
+        }
+        //
+        projectInfo.setStatus(ProjectStatus.Public);
+        return updateStatusAndFutures(projectID, projectInfo);
+    }
+    //
     //
     private Result<Void> testProjectOwner(Owner owner, Result<ProjectInfoDO> projectResult) {
         if (!projectResult.isSuccess()) {
@@ -522,67 +596,8 @@ public class ProjectManager {
         }
         return success(null);
     }
-    //
-    /** 标记删除项目 */
-    public Result<Boolean> doDeleteProject(Owner operUser, ProjectInfoDO project) {
-        long projectID = project.getId();
-        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
-        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
-        if (!testProject.isSuccess()) {
-            return failed(testProject);
-        }
-        //
-        // .状态判断
-        ProjectInfoDO projectInfo = projectByID.getResult();
-        if (!ProjectUtils.canDelete(projectInfo)) {
-            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
-        }
-        //
-        // .删除
+    private Result<Boolean> updateStatusAndFutures(long projectID, ProjectInfoDO projectInfo) {
         try {
-            if (projectInfo.getFutures() == null) {
-                projectInfo.setFutures(new ProjectFutures());
-            }
-            projectInfo.getFutures().setRecoveryStartTime(new Date());
-            projectInfo.getFutures().setRecoveryEndTime(this.environmentConfig.getRecoveryTime(new Date()));
-            projectInfo.getFutures().setRecoveryStatus(projectInfo.getStatus().name());
-            projectInfo.setStatus(ProjectStatus.Recovery);
-            long res = this.projectInfoDAO.updateStatusAndFutures(projectID, projectInfo);
-            if (res <= 0) {
-                logger.error(LoggerUtils.create("ERROR_006_0014")//
-                        .addLog("projectID", projectID) //
-                        .toJson());
-                return failed(ErrorCodes.P_PROJECT_UPDATE_FAILED);
-            } else {
-                return success(true);
-            }
-        } catch (Exception e) {
-            logger.error(LoggerUtils.create("ERROR_999_0003")//
-                    .addLog("projectID", projectID) //
-                    .addLog("error", e.getMessage()) //
-                    .toJson(), e);
-            return failed(ErrorCodes.P_PROJECT_UPDATE_FAILED, e);
-        }
-    }
-    /** 恢复删除的项目 */
-    public Result<Boolean> doRecoverProject(Owner operUser, ProjectInfoDO project) {
-        long projectID = project.getId();
-        Result<ProjectInfoDO> projectByID = this.queryProjectByID(projectID);
-        Result<Void> testProject = this.testProjectOwner(operUser, projectByID);
-        if (!testProject.isSuccess()) {
-            return failed(testProject);
-        }
-        //
-        // .状态判断
-        ProjectInfoDO projectInfo = projectByID.getResult();
-        if (!ProjectUtils.canRecovery(projectInfo)) {
-            return failed(ErrorCodes.P_PROJECT_STATUS_FAILED);
-        }
-        //
-        // .恢复删除
-        try {
-            String lastStatus = projectInfo.getFutures().getRecoveryStatus();
-            projectInfo.setStatus(ProjectStatus.Init.formName(lastStatus));
             long res = this.projectInfoDAO.updateStatusAndFutures(projectID, projectInfo);
             if (res <= 0) {
                 logger.error(LoggerUtils.create("ERROR_006_0014")//

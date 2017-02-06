@@ -200,6 +200,14 @@
                                 [<a title="创建子项目" href="${ctx_path}/my/newProject.htm?parentID=${project.id}">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;创建子项目</a>]
                             </#if>
+                            <#if projectUtils.canPrivate(project)>
+                                [<a title="设置项目为私密，私密项目只有您自己能看到" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=private">
+                                <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>&nbsp;设为私密</a>]
+                            </#if>
+                            <#if projectUtils.canPublic(project)>
+                                [<a title="设置项目为公开" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=public">
+                                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;设为公开</a>]
+                            </#if>
                             <#if projectUtils.canDelete(project)>
                                 [<a title="删除，7天后将正式删除" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=delete">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;删除项目</a>]

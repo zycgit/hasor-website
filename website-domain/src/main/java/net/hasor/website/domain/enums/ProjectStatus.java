@@ -23,8 +23,8 @@ import org.more.util.StringUtils;
  */
 public enum ProjectStatus implements GeneralEnumParsing<ProjectStatus> {
     // .普通项目
-    Init(1, "私密"),//
-    Publish(2, "公开"),//
+    Private(1, "私密"),//
+    Public(2, "公开"),//
     //
     // .尘归尘土归土
     Recovery(0, "回收"),// 变迁：1,2  -> 0

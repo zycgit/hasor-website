@@ -67,13 +67,20 @@ public class OperateProject extends BaseMyProject {
             // - 恢复删除的数据
             onError = this.doRecover(projectID);
         }
+        if ("public".equalsIgnoreCase(method)) {
+            // - 设置为公开
+            onError = this.doPublic(projectID);
+        }
+        if ("private".equalsIgnoreCase(method)) {
+            // - 设置为私密
+            onError = this.doPrivate(projectID);
+        }
         //
         if (onError) {
             getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectID);
         }
         sendError(ErrorCodes.BAD_PARAMS.getMsg());
     }
-    //
     //
     private boolean doRecover(long projectID) {
         if (!testOwner(projectID)) {
@@ -98,6 +105,36 @@ public class OperateProject extends BaseMyProject {
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         ProjectInfoDO infoDO = projectResult.getResult();
         Result<Boolean> result = this.projectManager.doDeleteProject(getUser(), infoDO);
+        //
+        if (!result.isSuccess()) {
+            sendError(result.firstMessage());
+            return false;
+        }
+        return true;
+    }
+    private boolean doPrivate(long projectID) {
+        if (!testOwner(projectID)) {
+            return false;
+        }
+        //
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        ProjectInfoDO infoDO = projectResult.getResult();
+        Result<Boolean> result = this.projectManager.doPrivateProject(getUser(), infoDO);
+        //
+        if (!result.isSuccess()) {
+            sendError(result.firstMessage());
+            return false;
+        }
+        return true;
+    }
+    private boolean doPublic(long projectID) {
+        if (!testOwner(projectID)) {
+            return false;
+        }
+        //
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        ProjectInfoDO infoDO = projectResult.getResult();
+        Result<Boolean> result = this.projectManager.doPublicProject(getUser(), infoDO);
         //
         if (!result.isSuccess()) {
             sendError(result.firstMessage());

@@ -57,8 +57,8 @@ public class ProjectUtils {
         if (project == null)
             return false;
         ProjectStatus projectStatus = project.getStatus();
-        boolean testA = ProjectStatus.Init.equals(projectStatus);       // 回收
-        boolean testB = ProjectStatus.Publish.equals(projectStatus);    // 失效
+        boolean testA = ProjectStatus.Private.equals(projectStatus);       // 回收
+        boolean testB = ProjectStatus.Public.equals(projectStatus);    // 失效
         return testA || testB;
     }
     /** 是否可以，删除项目？ */
@@ -66,8 +66,8 @@ public class ProjectUtils {
         if (project == null)
             return false;
         ProjectStatus projectStatus = project.getStatus();
-        boolean testA = ProjectStatus.Init.equals(projectStatus);       // 回收
-        boolean testB = ProjectStatus.Publish.equals(projectStatus);    // 失效
+        boolean testA = ProjectStatus.Private.equals(projectStatus);       // 回收
+        boolean testB = ProjectStatus.Public.equals(projectStatus);    // 失效
         return testA || testB;
     }
     /** 是否可以，取消删除操作？ */
@@ -85,5 +85,17 @@ public class ProjectUtils {
             return false;//时间太过久远
         }
         return true;
+    }
+    /** 是否可以，设置项目为公开？ */
+    public static boolean canPublic(ProjectInfoDO project) {
+        if (project == null)
+            return false;
+        return ProjectStatus.Private.equals(project.getStatus());
+    }
+    /** 是否可以，设置项目为私密？ */
+    public static boolean canPrivate(ProjectInfoDO project) {
+        if (project == null)
+            return false;
+        return ProjectStatus.Public.equals(project.getStatus());
     }
 }

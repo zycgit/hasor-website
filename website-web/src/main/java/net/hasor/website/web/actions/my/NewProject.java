@@ -73,7 +73,7 @@ public class NewProject extends BaseMyProject {
         newProject.setSourceType(SourceType.Open.formType(projectInfoDO.getSourceTypeEnum()));
         newProject.setLicense(projectInfoDO.getLicense());
         newProject.setFutures(new ProjectFutures());
-        newProject.setStatus(ProjectStatus.Init);
+        newProject.setStatus(ProjectStatus.Private);
         //
         Result<Long> project = this.projectManager.newProject(owner, newProject);
         if (!project.isSuccess()) {

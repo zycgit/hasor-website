@@ -198,7 +198,7 @@
                             <!-- 普通的项目 -->
                             <#if projectUtils.canSubProject(project)>
                                 [<a title="创建子项目" href="${ctx_path}/my/newProject.htm?parentID=${project.id}">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;创建子项目</a>]
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;创建子项目</a>]
                             </#if>
                             <#if projectUtils.canDelete(project)>
                                 [<a title="删除，7天后将正式删除" href="${ctx_path}/my/operateProject.do?projectID=${project.id}&method=delete">

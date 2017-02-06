@@ -20,7 +20,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <a href="${ctx_path}/my/projects.htm?curProjectID=${project.id}">${project.name} - ${version.version}</a> 版本信息
-                    <#if versionUtils.canUpdateInfo(version)>
+                    <#if versionUtils.canUpdateInfo(version) && projectUtils.canVersion(project)>
                         <#assign readonlyStyle = ""/>
                         <a href="javascript:void(0)"><span class="badge flowRight" onclick="versionForm.submit();">更新</span></a>
                     </#if>
@@ -112,21 +112,21 @@
         </div>
     </form>
     <!-- 操作 -->
-    <#if version.status.type != 4>
+    <#if version.status.type != -1 && projectUtils.canVersion(project)>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">高级操作</h3>
             </div>
             <div class="panel-body">
-                <#if versionUtils.canDelete(version)>
+                <#if versionUtils.canDelete(version) && projectUtils.canVersion(project)>
                     [<a title="删除，7天后将正式删除" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${version.id}&method=delete&target=detail">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;删除项目</a>]
                 </#if>
-                <#if versionUtils.canPublish(version) >
+                <#if versionUtils.canPublish(version) && projectUtils.canVersion(project)>
                     [<a title="发布" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${version.id}&method=publish&target=detail">
                     <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>&nbsp;版本发布</a>]
                 </#if>
-                <#if versionUtils.canRecovery(version)>
+                <#if versionUtils.canRecovery(version) && projectUtils.canVersion(project)>
                     [<a title="取消删除操作" href="${ctx_path}/my/operateVersion.do?projectID=${project.id}&versionID=${version.id}&method=recover&target=detail">
                     <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;撤销删除</a>]
                 </#if>

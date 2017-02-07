@@ -22,7 +22,10 @@ import org.more.util.StringUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public enum UserStatus implements GeneralEnumParsing<UserStatus> {
-    Normal(0, "正常"), Invalid(1, "失效"), Destroy(2, "销毁"),;
+    Normal(0, "正常"),//
+    Invalid(1, "失效"),//
+    Destroy(2, "删除"),//
+    ;
     //
     private int    type;
     private String desc;

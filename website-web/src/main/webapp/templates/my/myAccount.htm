@@ -1,0 +1,70 @@
+${rootData.put('pageCard', 'accountHome')}
+<link rel="stylesheet" href="${ctx_path}/static/website/css/login.htm.css">
+<!-- -->
+<!-- 账号信息 -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">帐号信息</h3>
+    </div>
+    <div class="panel-body">
+        <div>
+            <span class="col-sm-1 label label-success">UserID</span>&nbsp;${userData.userID}
+        </div>
+        <div>
+            <span class="col-sm-1 label label-success">帐号</span>&nbsp;${userData.account}
+        </div>
+        <div>
+            <span class="col-sm-1 label label-success">密码(密文)</span>&nbsp;${userData.password}
+        </div>
+        <div>
+            <span class="col-sm-1 label label-success">Email</span>&nbsp;${userData.email}
+        </div>
+        <div>
+            <span class="col-sm-1 label label-success">电话</span>&nbsp;${userData.mobilePhone}
+        </div>
+        <div>
+            <span class="col-sm-1 label label-success">帐号类型</span>&nbsp;${userData.type.desc}
+        </div>
+        <div>
+            <span class="col-sm-1 label label-success">帐号绑定</span>&nbsp;
+            <#list infoList as infoData>
+                <#if infoData.allow == true>
+                    <br/>
+                    <a id="${infoData.html_id}" class="${infoData.html_css}"></a>
+                    <#if infoData.bind == true>
+                        ${infoData.nick} -[已绑定，<a href="#" target="_blank">解绑</a>]
+                    </#if>
+                    <#if infoData.bind == false>
+                        [<a href="${infoData.html_href}" target="_blank">绑定</a>]
+                    </#if>
+                </#if>
+            </#list>
+        </div>
+    </div>
+</div>
+<!-- 绑定第三方登录 -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">绑定第三方登录</h3>
+    </div>
+    <div class="panel-body">
+        <#list userData.userSourceList as sourceData>
+            <div>
+                <span class="col-sm-1 label label-success">来源</span>&nbsp;${sourceData.provider}
+            </div>
+            <div>
+                <span class="col-sm-1 label label-success">状态</span>&nbsp;${sourceData.status?string("有效", "无效")}
+            </div>
+            <div>
+                <span class="col-sm-1 label label-success">登录次数</span>&nbsp;${sourceData.loginCount}
+            </div>
+            <div>
+                <span class="col-sm-1 label label-success">首次登陆</span>&nbsp;${sourceData.firstLoginTime?string("yyyy-MM-dd HH:mm:ss")}
+            </div>
+            <div>
+                <span class="col-sm-1 label label-success">最近登陆</span>&nbsp;${sourceData.lastLoginTime?string("yyyy-MM-dd HH:mm:ss")}
+            </div>
+            <hr/>
+        </#list>
+    </div>
+</div>

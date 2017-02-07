@@ -4,11 +4,45 @@
     <title>Hasor - 个人首页</title>
     <#assign navIndex = 7/>
     <#include "/control/head.htm"/>
+    <link rel="stylesheet" href="${ctx_path}/static/website/css/my_projects.htm.css">
 </head>
 <body>
 <#include "/control/nav_top.htm"/>
 <div class="container">
-    ${content_placeholder!}
+    <div class="w200px flowLeft">
+        <div class="list-group">
+            <#if rootData.pageCard =='myHome'     ><#assign myHomeActiveCss="list-group-item-warning"/></#if>
+            <#if rootData.pageCard =='accountHome'><#assign accountHomeActiveCss="list-group-item-warning"/></#if>
+            <a href="${ctx_path}/my/my.htm" class="list-group-item ${myHomeActiveCss}">个人中心</a>
+            <a href="${ctx_path}/my/myAccount.htm" class="list-group-item ${accountHomeActiveCss}">帐号管理</a>
+            <!--<a href="javascript:void(0);" class="list-group-item">我的文章</a>-->
+        </div>
+        <div class="list-group">
+            <#if rootData.pageCard =='newProject'><#assign newProjectActiveCss="list-group-item-warning"/></#if>
+            <a href="${ctx_path}/my/newProject.htm" class="list-group-item ${newProjectActiveCss}">创建新项目</a>
+            <#list projectList as item>
+                <#assign activeCss=""/>
+                <#if project?? && item.id == project.id && rootData.pageCard =='projectInfo'>
+                    <#assign activeCss="list-group-item-warning"/>
+                </#if>
+                <#if projectUtils.isDelete(item)>
+                    <#assign activeCss=activeCss + " markDelete"/>
+                </#if>
+                <a class="list-group-item ${activeCss}" href="${ctx_path}/my/projects.htm?curProjectID=${item.id}">
+                    <#if projectUtils.isDelete(item)>
+                        <span class="label label-warning flowRight">已删除</span>
+                    </#if>
+                    ${item.name}
+                </a>
+            </#list>
+        </div>
+    </div>
+    <div style="padding-left: 210px;">
+        <#if showMessage?? >
+            <div class="alert alert-success" role="alert">提示消息：${showMessageString}</div>
+        </#if>
+        ${content_placeholder!}
+    </div>
 </div>
 <#include "/control/foot.htm"/>
 </body>

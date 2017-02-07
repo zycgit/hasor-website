@@ -29,3 +29,12 @@
 .flowLeft {
     float: left;
 }
+
+.markDelete, .markDelete:hover {
+    text-decoration: line-through !important;
+    color: #a6a6a6;
+}
+
+.markDelete:hover {
+    color: #747474 !important;
+}

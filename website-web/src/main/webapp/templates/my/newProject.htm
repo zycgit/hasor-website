@@ -1,92 +1,89 @@
+${rootData.put('pageCard', 'newProject')}
 <#include "/control/editor_md.htm"/>
 <link rel="stylesheet" href="${ctx_path}/static/website/css/my_projects.htm.css">
-<#include "/control/project/my_project_list.htm"/>
 <!-- -->
-<div style="padding-left: 210px;">
-    <form id="projectForm" action="${ctx_path}/my/newProject.htm" method="post">
-        <#include "/control/project/my_message.htm"/>
-        <!-- 详情 -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">${owner.ownerName} 的新项目
-                    <a href="javascript:void(0);" target="_blank">
-                        <span class="badge flowRight" onclick="projectForm.submit();">保存</span>
-                    </a>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <input type="hidden" value="${parentProject.id}"/>
-                <div class="input-group">
-                    <span class="input-group-addon">项目名称</span>
-                    <input name="name" type="text" class="form-control" placeholder="项目名称请使用英文..."/>
-                    <#if parentProject??>
-                        <span class="input-group-addon">
-                            <input name="parentID" type="hidden" value="${parentProject.id}"/>
-                            <a href="${ctx_path}/my/projects.htm?curProjectID=${parentProject.id}">父项目：${parentProject.name}</a>
-                        </span>
-                    </#if>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon">简明扼要</span>
-                    <input name="subtitle" type="text" class="form-control" placeholder="这里一句话说明项目，下面在详细介绍"/>
+<form id="projectForm" action="${ctx_path}/my/newProject.htm" method="post">
+    <!-- 详情 -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">${owner.ownerName} 的新项目
+                <a href="javascript:void(0);" target="_blank">
+                    <span class="badge flowRight" onclick="projectForm.submit();">保存</span>
+                </a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <input type="hidden" value="${parentProject.id}"/>
+            <div class="input-group">
+                <span class="input-group-addon">项目名称</span>
+                <input name="name" type="text" class="form-control" placeholder="项目名称请使用英文..."/>
+                <#if parentProject??>
                     <span class="input-group-addon">
-                        MD<input name="contentFormatType" type="hidden" value="1"/>
+                        <input name="parentID" type="hidden" value="${parentProject.id}"/>
+                        <a href="${ctx_path}/my/projects.htm?curProjectID=${parentProject.id}">父项目：${parentProject.name}</a>
                     </span>
-                </div>
-                <script>
-                    $(function () {
-                        initEditor("presentEditor");
-                    });
-                </script>
-                <div id='presentEditor'>- 在这里对项目进行详细的描述，它会被展示到项目首页中。</div>
-                <div class="input-group">
-                    <span class="input-group-addon">项目主页</span>
-                    <input name="homePage" type="text" class="form-control" placeholder="http://"/>
-                    <span class="input-group-addon">
+                </#if>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">简明扼要</span>
+                <input name="subtitle" type="text" class="form-control" placeholder="这里一句话说明项目，下面在详细介绍"/>
+                <span class="input-group-addon">
+                    MD<input name="contentFormatType" type="hidden" value="1"/>
+                </span>
+            </div>
+            <script>
+                $(function () {
+                    initEditor("presentEditor");
+                });
+            </script>
+            <div id='presentEditor'>- 在这里对项目进行详细的描述，它会被展示到项目首页中。</div>
+            <div class="input-group">
+                <span class="input-group-addon">项目主页</span>
+                <input name="homePage" type="text" class="form-control" placeholder="http://"/>
+                <span class="input-group-addon">
                     <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                 </span>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon">下载连接</span>
-                    <input name="downPage" type="text" class="form-control" placeholder="http://"/>
-                    <span class="input-group-addon">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">下载连接</span>
+                <input name="downPage" type="text" class="form-control" placeholder="http://"/>
+                <span class="input-group-addon">
                     <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                 </span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">主要语言</span>
+                <div class="form-control">
+                    <#list languageList as language>
+                        <label class="radio-inline">
+                            <input type="radio" name="language" value="${language.desc}">${language.desc}
+                        </label>
+                    </#list>
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon">主要语言</span>
-                    <div class="form-control">
-                        <#list languageList as language>
-                            <label class="radio-inline">
-                                <input type="radio" name="language" value="${language.desc}">${language.desc}
-                            </label>
-                        </#list>
-                    </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">项目类型</span>
+                <div class="form-control">
+                    <#list sourceTypeList as sourceType>
+                        <label class="radio-inline">
+                            <input type="radio" name="sourceTypeEnum" value="${sourceType.type}">${sourceType.desc}
+                        </label>
+                    </#list>
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon">项目类型</span>
-                    <div class="form-control">
-                        <#list sourceTypeList as sourceType>
-                            <label class="radio-inline">
-                                <input type="radio" name="sourceTypeEnum" value="${sourceType.type}">${sourceType.desc}
-                            </label>
-                        </#list>
-                    </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">授权协议</span>
+                <div class="form-control">
+                    <#list licenseList as license>
+                        <label class="radio-inline">
+                            <input type="radio" name="license" value="${license.desc}">${license.desc}
+                        </label>
+                    </#list>
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon">授权协议</span>
-                    <div class="form-control">
-                        <#list licenseList as license>
-                            <label class="radio-inline">
-                                <input type="radio" name="license" value="${license.desc}">${license.desc}
-                            </label>
-                        </#list>
-                    </div>
-                    <span class="input-group-addon">
+                <span class="input-group-addon">
                     <a href="https://choosealicense.com/licenses/" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
                 </span>
-                </div>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>

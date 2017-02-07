@@ -18,20 +18,28 @@ import net.hasor.core.Inject;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.UserDO;
+import net.hasor.website.domain.UserSourceDO;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.login.oauth.OAuthManager;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.utils.LoggerUtils;
+import net.hasor.website.web.model.UserBindInfo;
+import org.more.util.StringUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 个人首页
  * @version : 2016年1月1日
  * @author 赵永春(zyc@hasor.net)
  */
-@MappingTo("/my/my.htm")
-public class My extends BaseMyProject {
+@MappingTo("/my/myAccount.htm")
+public class MyAccount extends BaseMyProject {
     @Inject
-    private UserManager userManager;
+    private OAuthManager oauthManager;
+    @Inject
+    private UserManager  userManager;
     //
     public void execute(Invoker data) throws IOException {
         // .need login
@@ -49,5 +57,26 @@ public class My extends BaseMyProject {
             return;
         }
         this.putData("userData", user);
+        // .
+        List<String> providerList = this.oauthManager.getProviderList();
+        List<UserBindInfo> infoList = new ArrayList<UserBindInfo>();
+        for (String provider : providerList) {
+            UserBindInfo info = new UserBindInfo();
+            info.setAllow(true);
+            info.setBind(false);
+            info.setProvider(provider);
+            info.setHtml_css(provider.toLowerCase());
+            info.setHtml_id(provider.toLowerCase() + "AuthorizationUrl");
+            String ctx_path = data.getHttpRequest().getContextPath();
+            info.setHtml_href(this.oauthManager.evalLoginURL(provider, "", ctx_path + "/account/bind.do"));
+            infoList.add(info);
+            for (UserSourceDO sourceDO : user.getUserSourceList()) {
+                if (StringUtils.equalsIgnoreCase(sourceDO.getProvider(), provider)) {
+                    info.setBind(true);
+                    info.setNick(sourceDO.getAccessInfo().getExternalUserNick());
+                }
+            }
+        }
+        this.putData("infoList", infoList);
     }
 }

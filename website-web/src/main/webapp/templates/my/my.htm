@@ -1,64 +1,4 @@
-<script src="${ctx_path}/static/javascript/jquery.plugins/jsonview-1.0/jquery.jsonview.min.js"></script>
-<link rel="stylesheet" href="${ctx_path}/static/javascript/jquery.plugins/jsonview-1.0/jquery.jsonview.min.css">
-<link rel="stylesheet" href="${ctx_path}/static/website/css/login.htm.css">
-<!-- -->
-<!-- 常规超链接 -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">超链接</h3>
-    </div>
-    <div class="panel-body">
-        [<a href="${ctx_path}/content/edit.htm">编辑器</a>]&nbsp;
-        [<a href="${ctx_path}/my/projects.htm">我的项目</a>]&nbsp;
-    </div>
-</div>
-<!-- 外部账号绑定 -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">账号绑定操作</h3>
-    </div>
-    <div class="panel-body">
-        <#list infoList as infoData>
-            <#if infoData.allow == true>
-                <a id="${infoData.html_id}" class="${infoData.html_css}"></a>
-                <#if infoData.bind == true>
-                    ${infoData.nick} -[已绑定]
-                </#if>
-                <#if infoData.bind == false>
-                    [<a href="${infoData.html_href}" target="_blank">绑定</a>]
-                </#if>
-                <br/>
-            </#if>
-
-        </#list>
-    </div>
-</div>
-<!-- 账号信息 -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">帐号信息</h3>
-    </div>
-    <div class="panel-body">
-        <div>
-            <span class="col-sm-1 label label-success">UserID</span>&nbsp;${userData.userID}
-        </div>
-        <div>
-            <span class="col-sm-1 label label-success">帐号</span>&nbsp;${userData.account}
-        </div>
-        <div>
-            <span class="col-sm-1 label label-success">密码(密文)</span>&nbsp;${userData.password}
-        </div>
-        <div>
-            <span class="col-sm-1 label label-success">Email</span>&nbsp;${userData.email}
-        </div>
-        <div>
-            <span class="col-sm-1 label label-success">电话</span>&nbsp;${userData.mobilePhone}
-        </div>
-        <div>
-            <span class="col-sm-1 label label-success">帐号类型</span>&nbsp;${userData.type.desc}
-        </div>
-    </div>
-</div>
+${rootData.put('pageCard', 'myHome')}
 <!-- 个人信息 -->
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -78,19 +18,17 @@
             <span class="col-sm-1 label label-success">生日</span>&nbsp;${userData.birthday}
         </div>
         <div>
+            <span class="col-sm-1 label label-success">Email</span>&nbsp;${userData.email}
+        </div>
+        <div>
+            <span class="col-sm-1 label label-success">电话</span>&nbsp;${userData.mobilePhone}
+        </div>
+        <div>
             <span class="col-sm-1 label label-success">介绍</span>&nbsp;${userData.present}
         </div>
         <div>
             <span class="col-sm-1 label label-success">头像</span>&nbsp;<img src="${userData.avatar}" width="64" height="64"/>
         </div>
-    </div>
-</div>
-<!-- 状态信息 -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">状态数据</h3>
-    </div>
-    <div class="panel-body">
         <div>
             <span class="col-sm-1 label label-success">状态</span>&nbsp;${userData.status.desc}
         </div>
@@ -109,45 +47,5 @@
         <div>
             <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${userData.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
         </div>
-    </div>
-</div>
-<!-- 绑定第三方登录 -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">绑定第三方登录</h3>
-    </div>
-    <div class="panel-body">
-        <#list userData.userSourceList as sourceData>
-            <div>
-                <span class="col-sm-1 label label-success">来源</span>&nbsp;${sourceData.provider}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">唯一编码</span>&nbsp;${sourceData.uniqueID}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">状态</span>&nbsp;${sourceData.status?string("有效", "无效")}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">登录次数</span>&nbsp;${sourceData.loginCount}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">首次登陆</span>&nbsp;${sourceData.firstLoginTime?string("yyyy-MM-dd HH:mm:ss")}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">最近登陆</span>&nbsp;${sourceData.lastLoginTime?string("yyyy-MM-dd HH:mm:ss")}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">创建时间</span>&nbsp;${sourceData.createTime?string("yyyy-MM-dd HH:mm:ss")}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">修改时间</span>&nbsp;${sourceData.modifyTime?string("yyyy-MM-dd HH:mm:ss")}
-            </div>
-            <div>
-                <span class="col-sm-1 label label-success">原始数据</span>&nbsp;[<a href="javascript:$('#json_${sourceData.sourceID}').toggle()">展现/隐藏</a>]
-                <div id="json_${sourceData.sourceID}" class="warning" style="display: none;">${sourceData.accessInfo.toJson()}</div>
-                <script>$("#json_${sourceData.sourceID}").JSONView($("#json_${sourceData.sourceID}").html());</script>
-            </div>
-            <hr/>
-        </#list>
     </div>
 </div>

@@ -24,12 +24,3 @@ h3[class="panel-title"] > span {
 .rightMargin {
     margin-right: 10px;
 }
-
-.markDelete, .markDelete:hover {
-    text-decoration: line-through !important;
-    color: #a6a6a6;
-}
-
-.markDelete:hover {
-    color: #747474 !important;
-}

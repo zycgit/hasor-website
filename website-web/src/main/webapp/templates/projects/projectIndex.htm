@@ -9,12 +9,11 @@ ${rootData.put('navIndex',0)}
         <h1 class="home-title">${escapeHtml.escapeHtml(project.name)}</h1>
         <p class="home-subtitle">${escapeHtml.escapeHtml(project.subtitle)}</p>
 
-        <a href="#" class="btn btn-lg">Documentation</a>
+        <!--<a href="#" class="btn btn-lg">Documentation</a>-->
         <a href="/projects/${project.id}/projectChangelog.htm" class="btn btn-lg">Changelog</a>
-        <!-- -->
         <#if newVersion??>
             <a href="/projects/${project.id}/${escapeHtml.escapeHtml(newVersion.version)}/api.htm" class="btn btn-lg">
-                APIs: ${escapeHtml.escapeHtml(newVersion.version)}
+                APIs: ${escapeHtml.escapeHtml(newVersion.version)}(last)
             </a>
         </#if>
         <#if !newVersion??>

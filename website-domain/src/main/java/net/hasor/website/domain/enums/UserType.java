@@ -23,10 +23,9 @@ import org.more.util.StringUtils;
  */
 public enum UserType implements GeneralEnumParsing<UserType> {
     /**本地帐号*/
-    Master(1, "主帐号"),//
+    Master(1, "正常"),//
     /**临时帐号*/
-    Temporary(2, "临时帐号"),//
-    ;
+    Temporary(2, "临时帐号"),;
     //
     private int    type;
     private String desc;

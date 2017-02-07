@@ -4,7 +4,7 @@ ${rootData.put('pageCard', 'accountHome')}
 <!-- 账号信息 -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">帐号信息</h3>
+        <h3 class="panel-title">帐号信息[${userData.type.desc}]</h3>
     </div>
     <div class="panel-body">
         <div>
@@ -21,9 +21,6 @@ ${rootData.put('pageCard', 'accountHome')}
         </div>
         <div>
             <span class="col-sm-1 label label-success">电话</span>&nbsp;${userData.mobilePhone}
-        </div>
-        <div>
-            <span class="col-sm-1 label label-success">帐号类型</span>&nbsp;${userData.type.desc}
         </div>
         <div>
             <span class="col-sm-1 label label-success">帐号绑定</span>&nbsp;

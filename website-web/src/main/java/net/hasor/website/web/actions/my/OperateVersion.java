@@ -89,7 +89,7 @@ public class OperateVersion extends BaseMyProject {
             if ("detail".equalsIgnoreCase(target)) {
                 getResponse().sendRedirect("/my/updateVersion.htm?projectID=" + projectID + "&versionID=" + versionID);
             } else {
-                getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectID);
+                getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectID + "#version_" + versionID);
             }
             return;
         }

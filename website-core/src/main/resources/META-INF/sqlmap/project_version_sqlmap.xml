@@ -70,7 +70,7 @@
             and project_id = #{projectID}
             and status    != 4
         order by
-            release_time desc
+            release_time desc,create_time desc
     </select>
 
     <!-- 查询项目版本 -->

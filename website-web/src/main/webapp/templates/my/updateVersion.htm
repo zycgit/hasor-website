@@ -63,12 +63,6 @@
                         <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                     </span>
                 </div>
-                <script>
-                    $(function () {
-                        initEditor("changelogEditor");
-                    });
-                </script>
-                <div id='changelogEditor'>${version.changelog}</div>
                 <div class="input-group">
                     <#if versionUtils.canPublish(version) >
                         <script>
@@ -88,6 +82,12 @@
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
+                <script>
+                    $(function () {
+                        initEditor("changelogEditor");
+                    });
+                </script>
+                <div id='changelogEditor'>${version.changelog}</div>
                 <div class="input-group">
                     <span class="input-group-addon">当前状态</span>
                     <span class="form-control">

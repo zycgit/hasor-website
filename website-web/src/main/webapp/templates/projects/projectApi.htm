@@ -34,6 +34,8 @@ ${rootData.put('navIndex',0)}
     <#if isTop == false>
         <#assign className="active"/>
         <#assign curTitle="(${curVersion.version})"/>
+    <#else/>
+        <#assign className=""/>
     </#if>
     <#if versionList?size gt 3 >
         <li class="dropdown ${className}">

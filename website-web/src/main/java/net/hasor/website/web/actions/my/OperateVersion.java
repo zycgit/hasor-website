@@ -32,34 +32,6 @@ import java.io.IOException;
 @MappingTo("/my/operateVersion.do")
 public class OperateVersion extends BaseMyProject {
     //
-    private boolean testVersion(long projectID, long versionID) {
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        if (!projectResult.isSuccess()) {
-            sendError(projectResult.firstMessage());
-            return false;
-        }
-        ProjectInfoDO infoDO = projectResult.getResult();
-        //
-        // .项目归属
-        if (!super.isMyProject(infoDO)) {
-            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
-            return false;
-        }
-        if (infoDO == null) {
-            sendError(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg());
-            return false;
-        }
-        //
-        // .版本
-        Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
-        if (!versionResult.isSuccess() || versionResult.getResult() == null) {
-            sendError(versionResult.firstMessage());
-            return false;
-        }
-        return true;
-    }
-    //
     public void execute(Invoker data,//
             @ReqParam("method") String method, //
             @ReqParam("projectID") long projectID, //
@@ -96,6 +68,34 @@ public class OperateVersion extends BaseMyProject {
         sendError(ErrorCodes.BAD_PARAMS.getMsg());
     }
     //
+    //
+    private boolean testVersion(long projectID, long versionID) {
+        //
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        if (!projectResult.isSuccess()) {
+            sendError(projectResult.firstMessage());
+            return false;
+        }
+        ProjectInfoDO infoDO = projectResult.getResult();
+        //
+        // .项目归属
+        if (!super.isMyProject(infoDO)) {
+            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
+            return false;
+        }
+        if (infoDO == null) {
+            sendError(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg());
+            return false;
+        }
+        //
+        // .版本
+        Result<ProjectVersionDO> versionResult = this.projectManager.queryVersionByID(projectID, versionID);
+        if (!versionResult.isSuccess() || versionResult.getResult() == null) {
+            sendError(versionResult.firstMessage());
+            return false;
+        }
+        return true;
+    }
     //
     private boolean doPublish(long projectID, long versionID) {
         if (!testVersion(projectID, versionID)) {

@@ -37,9 +37,15 @@ public class UpdateVersion extends BaseMyProject {
     @Get
     public void doShow(@ReqParam("projectID") long projectID, @ReqParam("versionID") long versionID) throws IOException {
         // .need login
+        if (needLogin()) {
+            return;
+        }
+        //
+        // .need login
         if (!super.fillProjectInfo(projectID)) {
             return;
         }
+        //
         super.fillInfo();
         //
         //

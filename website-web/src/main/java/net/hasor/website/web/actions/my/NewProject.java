@@ -18,10 +18,14 @@ import net.hasor.web.Invoker;
 import net.hasor.web.annotation.*;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ContentFormat;
+import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.ProjectStatus;
 import net.hasor.website.domain.enums.SourceType;
 import net.hasor.website.domain.futures.ProjectFutures;
+import net.hasor.website.utils.LoggerUtils;
+import net.hasor.website.utils.UserUtils;
 import net.hasor.website.web.forms.ProjectInfoForm;
 import org.more.bizcommon.Result;
 
@@ -36,6 +40,10 @@ public class NewProject extends BaseMyProject {
     //
     @Get
     public void execute(@ReqParam("parentID") long parentID, Invoker data) throws IOException {
+        // .need login
+        if (needLogin()) {
+            return;
+        }
         // .need login
         if (!super.fillProjectInfo(0L)) {
             return;
@@ -55,6 +63,20 @@ public class NewProject extends BaseMyProject {
     public void newProject(@Params ProjectInfoForm projectInfoDO, Invoker data) throws IOException {
         // .need login
         if (needLogin()) {
+            return;
+        }
+        //
+        UserDO user = this.userManager.getFullUserDataByID(this.getUserID());
+        if (user == null) {
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
+                    .addLog("userID", this.getUserID()) //
+                    .addLog("error", "result is null.") //
+                    .toJson());
+            sendError(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
+            return;
+        }
+        if (!UserUtils.checkCreateProject(user)) {
+            sendError(ErrorCodes.U_OPER_UNAUTHORIZED.getMsg());
             return;
         }
         //

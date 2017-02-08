@@ -15,6 +15,7 @@
  */
 package net.hasor.website.web.utils;
 import net.hasor.website.core.AppConstant;
+import net.hasor.website.core.Service;
 import net.hasor.website.domain.owner.SimpleOwner;
 import org.more.util.StringUtils;
 
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version : 2016年12月05日
  * @author 赵永春(zyc@hasor.net)
  */
+@Service("loginUtils")
 public class LoginUtils {
     //
     /**获取登录用户*/

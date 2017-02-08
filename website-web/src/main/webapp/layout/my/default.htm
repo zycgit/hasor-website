@@ -19,7 +19,9 @@
         </div>
         <div class="list-group">
             <#if rootData.pageCard =='newProject'><#assign newProjectActiveCss="list-group-item-warning"/></#if>
-            <a href="${ctx_path}/my/newProject.htm" class="list-group-item ${newProjectActiveCss}">创建新项目</a>
+            <#if userUtils.checkCreateProject(userFullInfo)>
+                <a href="${ctx_path}/my/newProject.htm" class="list-group-item ${newProjectActiveCss}">创建新项目</a>
+            </#if>
             <#list projectList as item>
                 <#assign activeCss=""/>
                 <#if project?? && item.id == project.id && rootData.pageCard =='projectInfo'>

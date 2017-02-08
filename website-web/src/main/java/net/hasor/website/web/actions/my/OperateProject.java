@@ -30,29 +30,7 @@ import java.io.IOException;
 @MappingTo("/my/operateProject.do")
 public class OperateProject extends BaseMyProject {
     //
-    private boolean testOwner(long projectID) {
-        //
-        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
-        if (!projectResult.isSuccess()) {
-            sendError(projectResult.firstMessage());
-            return false;
-        }
-        ProjectInfoDO infoDO = projectResult.getResult();
-        //
-        // .项目归属
-        if (!super.isMyProject(infoDO)) {
-            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
-            return false;
-        }
-        if (infoDO == null) {
-            sendError(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg());
-            return false;
-        }
-        return true;
-    }
-    //
     public void execute(Invoker data, @ReqParam("method") String method, @ReqParam("projectID") long projectID) throws IOException {
-        //
         // .need login
         if (needLogin()) {
             return;
@@ -80,6 +58,27 @@ public class OperateProject extends BaseMyProject {
             getResponse().sendRedirect("/my/projects.htm?curProjectID=" + projectID);
         }
         sendError(ErrorCodes.BAD_PARAMS.getMsg());
+    }
+    //
+    private boolean testOwner(long projectID) {
+        //
+        Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
+        if (!projectResult.isSuccess()) {
+            sendError(projectResult.firstMessage());
+            return false;
+        }
+        ProjectInfoDO infoDO = projectResult.getResult();
+        //
+        // .项目归属
+        if (!super.isMyProject(infoDO)) {
+            sendError(ErrorCodes.P_OWNER_NOT_YOU.getMsg());
+            return false;
+        }
+        if (infoDO == null) {
+            sendError(ErrorCodes.P_PROJECT_NOT_EXIST.getMsg());
+            return false;
+        }
+        return true;
     }
     //
     private boolean doRecover(long projectID) {

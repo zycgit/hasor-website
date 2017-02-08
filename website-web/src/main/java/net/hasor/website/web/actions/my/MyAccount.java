@@ -21,7 +21,6 @@ import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.UserSourceDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.login.oauth.OAuthManager;
-import net.hasor.website.manager.UserManager;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.model.UserBindInfo;
 import org.more.util.StringUtils;
@@ -38,14 +37,18 @@ import java.util.List;
 public class MyAccount extends BaseMyProject {
     @Inject
     private OAuthManager oauthManager;
-    @Inject
-    private UserManager  userManager;
     //
     public void execute(Invoker data) throws IOException {
+        // .need login
+        if (needLogin()) {
+            return;
+        }
         // .need login
         if (!super.fillProjectInfo(0L)) {
             return;
         }
+        fillInfo();
+        //
         // .user info
         UserDO user = this.userManager.getFullUserDataByID(this.getUserID());
         if (user == null) {

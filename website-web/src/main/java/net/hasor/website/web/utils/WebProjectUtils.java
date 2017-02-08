@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.web.utils;
+import net.hasor.website.core.Service;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.utils.ProjectUtils;
 /**
@@ -21,6 +22,7 @@ import net.hasor.website.utils.ProjectUtils;
  * @version : 2016年12月05日
  * @author 赵永春(zyc@hasor.net)
  */
+@Service("projectUtils")
 public class WebProjectUtils extends ProjectUtils {
     public static String deleteCSS(ProjectInfoDO project) {
         return isDelete(project) ? "markDelete" : "";

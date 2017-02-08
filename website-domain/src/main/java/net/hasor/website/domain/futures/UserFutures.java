@@ -20,9 +20,10 @@ package net.hasor.website.domain.futures;
  * @author 赵永春(zyc@hasor.net)
  */
 public class UserFutures {
-    private String present  = null; // 介绍
-    private String name     = null; // 姓名
-    private String birthday = null; // 生日
+    private String   present  = null; // 介绍
+    private String   name     = null; // 姓名
+    private String   birthday = null; // 生日
+    private UserTags userTags = null; // 标签集
     //
     public String getPresent() {
         return present;
@@ -41,5 +42,11 @@ public class UserFutures {
     }
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+    public UserTags getUserTags() {
+        return userTags;
+    }
+    public void setUserTags(UserTags userTags) {
+        this.userTags = userTags;
     }
 }

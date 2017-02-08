@@ -17,8 +17,10 @@ package net.hasor.website.web.actions.my;
 import net.hasor.core.Inject;
 import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.*;
 import net.hasor.website.manager.ProjectManager;
+import net.hasor.website.manager.UserManager;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
 import org.more.bizcommon.Result;
@@ -34,13 +36,11 @@ import java.util.List;
 public abstract class BaseMyProject extends Action {
     @Inject
     protected ProjectManager projectManager;
+    @Inject
+    protected UserManager    userManager;
     //
     /** 填充我的项目列表(包含：我的列表、当前项目、当前项目的父项目) */
     protected boolean fillProjectInfo(long curProjectID) throws IOException {
-        // .need login
-        if (needLogin()) {
-            return false;
-        }
         //
         // .我的项目
         Owner userOwner = getUser();
@@ -85,6 +85,8 @@ public abstract class BaseMyProject extends Action {
             }
         }
         //
+        fillInfo();
+        //
         return true;
     }
     protected void fillInfo() {
@@ -94,6 +96,10 @@ public abstract class BaseMyProject extends Action {
         putData("licenseList", LicenseEnum.values());
         putData("projectStatusList", ProjectStatus.values());
         putData("versionStatusList", VersionStatus.values());
+        //
+        UserDO user = this.fullUserInfo(this.getUserID());
+        this.putData("userFullInfo", user);
+        //
     }
     public boolean isMyProject(ProjectInfoDO infoDO) {
         if (infoDO == null) {
@@ -105,5 +111,17 @@ public abstract class BaseMyProject extends Action {
     public void showMessage(String msg) {
         putData("showMessage", true);
         putData("showMessageString", msg);
+    }
+    public UserDO fullUserInfo(long userID) {
+        UserDO user = this.userManager.getFullUserDataByID(this.getUserID());
+        if (user == null) {
+            logger.error(LoggerUtils.create("ERROR_002_0001")//
+                    .addLog("userID", this.getUserID()) //
+                    .addLog("error", "result is null.") //
+                    .toJson());
+            sendError(ErrorCodes.U_GET_USER_NOT_EXIST.getMsg());
+            return null;
+        }
+        return user;
     }
 }

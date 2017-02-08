@@ -15,16 +15,12 @@
  */
 package net.hasor.website.web.utils;
 import net.hasor.website.core.Service;
-import net.hasor.website.domain.ProjectVersionDO;
-import net.hasor.website.utils.VersionUtils;
+import net.hasor.website.utils.UserUtils;
 /**
  *
- * @version : 2016年12月05日
+ * @version : 2017年2月08日
  * @author 赵永春(zyc@hasor.net)
  */
-@Service("versionUtils")
-public class WebVersionUtils extends VersionUtils {
-    public static String deleteCSS(ProjectVersionDO version) {
-        return isDelete(version) ? "markDelete" : "";
-    }
+@Service("userUtils")
+public class WebUserUtils extends UserUtils {
 }

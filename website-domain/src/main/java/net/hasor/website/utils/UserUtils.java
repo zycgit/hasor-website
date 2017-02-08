@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.web.utils;
-import net.hasor.website.core.Service;
-import net.hasor.website.domain.ProjectVersionDO;
-import net.hasor.website.utils.VersionUtils;
+package net.hasor.website.utils;
+import net.hasor.website.domain.UserDO;
 /**
- *
- * @version : 2016年12月05日
+ * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)
  */
-@Service("versionUtils")
-public class WebVersionUtils extends VersionUtils {
-    public static String deleteCSS(ProjectVersionDO version) {
-        return isDelete(version) ? "markDelete" : "";
+public class UserUtils {
+    //
+    /** 是否可以使用项目功能 */
+    public static boolean checkCreateProject(UserDO user) {
+        if (user == null || user.getFutures() == null || user.getFutures().getUserTags() == null)
+            return false;
+        return user.getFutures().getUserTags().isNewProject();
     }
 }

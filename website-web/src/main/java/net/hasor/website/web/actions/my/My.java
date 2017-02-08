@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.my;
-import net.hasor.core.Inject;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ErrorCodes;
-import net.hasor.website.manager.UserManager;
 import net.hasor.website.utils.LoggerUtils;
 
 import java.io.IOException;
@@ -30,16 +28,18 @@ import java.io.IOException;
  */
 @MappingTo("/my/my.htm")
 public class My extends BaseMyProject {
-    @Inject
-    private UserManager userManager;
     //
     public void execute(Invoker data) throws IOException {
+        // .need login
+        if (needLogin()) {
+            return;
+        }
         // .need login
         if (!super.fillProjectInfo(0L)) {
             return;
         }
         // .user info
-        UserDO user = this.userManager.getFullUserDataByID(this.getUserID());
+        UserDO user = super.fullUserInfo(this.getUserID());
         if (user == null) {
             logger.error(LoggerUtils.create("ERROR_002_0001")//
                     .addLog("userID", this.getUserID()) //

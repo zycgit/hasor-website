@@ -38,6 +38,10 @@ public class MyProject extends BaseMyProject {
     //
     public void execute(@ReqParam("curProjectID") long curProjectID, Invoker data) throws IOException {
         // .need login
+        if (needLogin()) {
+            return;
+        }
+        // .need login
         if (!super.fillProjectInfo(curProjectID)) {
             return;
         }

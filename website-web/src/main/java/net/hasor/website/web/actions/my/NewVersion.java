@@ -39,11 +39,17 @@ public class NewVersion extends BaseMyProject {
     //
     @Get
     public void execute(@ReqParam("projectID") long projectID, Invoker data) throws IOException {
+        // .need login
+        if (needLogin()) {
+            return;
+        }
         //
         // .need login
         if (!super.fillProjectInfo(projectID)) {
             return;
         }
+        //
+        super.fillInfo();
         //
         Result<ProjectInfoDO> projectResult = this.projectManager.queryProjectByID(projectID);
         if (!projectResult.isSuccess()) {

@@ -16,7 +16,7 @@
 package net.hasor.website.web.core;
 import net.hasor.core.Inject;
 import net.hasor.web.WebController;
-import net.hasor.website.core.AppConstant;
+import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.core.TransactionService;
 import net.hasor.website.domain.JsonResultDO;
 import net.hasor.website.domain.Owner;

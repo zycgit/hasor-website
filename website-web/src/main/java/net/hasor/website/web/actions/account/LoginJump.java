@@ -18,7 +18,7 @@ import net.hasor.core.Inject;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.ReqParam;
-import net.hasor.website.core.AppConstant;
+import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.domain.beans.QuickLoginResult;
 import net.hasor.website.domain.owner.SimpleOwner;
 import net.hasor.website.manager.UserManager;

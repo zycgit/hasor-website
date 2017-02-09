@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.web.utils;
-import net.hasor.website.core.AppConstant;
+import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.core.Service;
 import net.hasor.website.domain.owner.SimpleOwner;
 import org.more.util.StringUtils;

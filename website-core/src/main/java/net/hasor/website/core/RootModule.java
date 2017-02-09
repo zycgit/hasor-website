@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 package net.hasor.website.core;
-import com.google.common.cache.CacheBuilder;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.Module;
+import net.hasor.website.cache.CacheModule;
 import net.hasor.website.oss.AliyunModule;
+import net.hasor.website.provider.ProviderModule;
 import org.more.util.CommonCodeUtils;
-
-import java.util.concurrent.TimeUnit;
 /**
  *
  * @version : 2015年12月25日
  * @author 赵永春(zyc@hasor.net)
  */
-public class CoreModule implements Module {
+public class RootModule implements Module {
     @Override
     public void loadModule(ApiBinder apiBinder) throws Throwable {
         //
@@ -36,31 +35,7 @@ public class CoreModule implements Module {
         // .子模块
         apiBinder.installModule(new DataSourceModule());    // 数据库
         apiBinder.installModule(new AliyunModule());        // 阿里云
-        //
-        // .初始化Cache
-        final com.google.common.cache.Cache<Object, Object> map = CacheBuilder.newBuilder()//
-                .maximumSize(5000)//
-                .expireAfterWrite(30, TimeUnit.MINUTES)//
-                .build();
-        apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_USER).toInstance(new Cache() {
-            public String getName() {
-                return AppConstant.CACHE_USER;
-            }
-            public boolean put(Object key, Object value) {
-                map.put(key, value);
-                return true;
-            }
-            public boolean put(Object key, Object value, int timeout) {
-                map.put(key, value);
-                return true;
-            }
-            public Object get(Object key) {
-                if (key == null) {
-                    return null;
-                }
-                return map.getIfPresent(key);
-            }
-        });
-        //
+        apiBinder.installModule(new CacheModule());         // Cache
+        apiBinder.installModule(new ProviderModule());      // RPC
     }
 }

@@ -22,7 +22,7 @@ import net.hasor.core.AppContext;
 import net.hasor.web.render.Render;
 import net.hasor.web.render.RenderEngine;
 import net.hasor.web.render.RenderInvoker;
-import net.hasor.website.core.AppConstant;
+import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.core.Service;
 import org.more.util.StringEscapeUtils;
 import org.more.util.StringUtils;

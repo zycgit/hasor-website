@@ -16,8 +16,7 @@
 package net.hasor.website.test;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.Module;
-import net.hasor.website.core.CoreModule;
-import net.hasor.website.login.oauth.OAuthModule;
+import net.hasor.website.core.RootModule;
 /**
  * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)
@@ -26,8 +25,7 @@ public class TestModule implements Module {
     @Override
     public void loadModule(ApiBinder apiBinder) throws Throwable {
         //
-        apiBinder.installModule(new OAuthModule());
-        apiBinder.installModule(new CoreModule());
+        apiBinder.installModule(new RootModule());
         //
     }
 }

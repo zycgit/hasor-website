@@ -17,8 +17,8 @@ package net.hasor.website.web.core;
 import net.hasor.web.WebApiBinder;
 import net.hasor.web.WebModule;
 import net.hasor.web.render.RenderApiBinder;
-import net.hasor.website.core.AppConstant;
-import net.hasor.website.core.CoreModule;
+import net.hasor.website.core.RootModule;
+import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.login.oauth.OAuthModule;
 import org.more.convert.ConverterUtils;
 import org.more.convert.convert.DateConverter;
@@ -34,7 +34,7 @@ public class StartModule extends WebModule {
     public void loadModule(WebApiBinder apiBinder) throws Throwable {
         //
         apiBinder.installModule(new OAuthModule());
-        apiBinder.installModule(new CoreModule());
+        apiBinder.installModule(new RootModule());
         //
         apiBinder.setEncodingCharacter("utf-8", "utf-8");
         String contextPath = apiBinder.getServletContext().getContextPath();

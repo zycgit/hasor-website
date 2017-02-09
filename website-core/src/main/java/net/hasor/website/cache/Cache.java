@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.core;
+package net.hasor.website.cache;
 /**
  * 缓存接口
  * @version : 2016年1月11日

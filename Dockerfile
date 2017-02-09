@@ -1,4 +1,4 @@
-FROM openjdk:7-jdk
+FROM java:openjdk-8
 MAINTAINER ZhaoYongChun "zyc@hasor.net"
 
 # maven
@@ -44,6 +44,8 @@ WORKDIR /home/admin/hasorsite/source
 RUN mvn clean package -Dmaven.test.skip=true && \
     mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war && \
     rm -rf $M2_REPO
+
+ENV JAVA_OPTS="-noverify"
 
 WORKDIR $CATALINA_HOME
 CMD ["catalina.sh", "run"]

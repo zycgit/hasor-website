@@ -17,6 +17,7 @@ package net.hasor.website.core;
 import net.hasor.core.Inject;
 import net.hasor.db.jdbc.JdbcOperations;
 import net.hasor.db.orm.mybatis3.SqlExecutorOperations;
+import net.hasor.website.domain.beans.AppConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**

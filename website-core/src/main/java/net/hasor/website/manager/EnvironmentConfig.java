@@ -18,8 +18,8 @@ import net.hasor.core.Inject;
 import net.hasor.core.InjectSettings;
 import net.hasor.core.Singleton;
 import net.hasor.core.Type;
-import net.hasor.website.core.AppConstant;
 import net.hasor.website.core.Service;
+import net.hasor.website.domain.beans.AppConstant;
 import org.more.util.StringUtils;
 
 import java.util.Date;

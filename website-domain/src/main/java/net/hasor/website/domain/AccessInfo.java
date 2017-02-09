@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.domain;
-import net.hasor.website.utils.JsonUtils;
+import com.alibaba.fastjson.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public abstract class AccessInfo {
         return (provider == null ? "NULL" : provider) + ":" + this.getExternalUserID();
     }
     public String toJson() {
-        return JsonUtils.toJsonStringSingleLine(this);
+        return JSON.toJSONString(this);
     }
     public abstract String getExternalUserID();
 

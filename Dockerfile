@@ -7,8 +7,9 @@ RUN curl -fsSL http://project.hasor.net/hasor/develop/tools/apache/maven/$MAVEN_
         && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
         && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 ENV MAVEN_HOME /usr/share/maven
-RUN mkdir -p "/home/admin/maven-repository" && \
-    sed -i '/<!-- localRepository/i\<localRepository>/home/admin/maven-repository</localRepository>' $MAVEN_HOME/conf/settings.xml
+ENV M2_REPO /home/admin/maven-repository
+RUN mkdir -p $M2_REPO && \
+    sed -i '/<!-- localRepository/i\<localRepository>'$M2_REPO'</localRepository>' $MAVEN_HOME/conf/settings.xml
 
 # tomcat
 ENV CATALINA_HOME /usr/local/tomcat
@@ -41,7 +42,8 @@ EXPOSE 8210
 # === project ===
 WORKDIR /home/admin/hasorsite/source
 RUN mvn clean package -Dmaven.test.skip=true && \
-    mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war
+    mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war && \
+    rm -rf $M2_REPO
 
 WORKDIR $CATALINA_HOME
 CMD ["catalina.sh", "run"]

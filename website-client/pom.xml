@@ -9,28 +9,19 @@
 
     <!-- Maven Info -->
     <groupId>net.hasor.website</groupId>
-    <artifactId>website-login</artifactId>
+    <artifactId>website-client</artifactId>
     <version>${website.version}</version>
     <packaging>jar</packaging>
 
-    <!-- 引用依赖 -->
     <dependencies>
         <dependency>
             <groupId>net.hasor.website</groupId>
-            <artifactId>website-core</artifactId>
+            <artifactId>website-domain</artifactId>
         </dependency>
-
-        <!-- Hasor -->
         <dependency>
             <groupId>net.hasor</groupId>
-            <artifactId>hasor-core</artifactId>
+            <artifactId>hasor-rsf</artifactId>
+            <scope>provided</scope>
         </dependency>
-
-        <!-- oauth - QQ -->
-        <dependency>
-            <groupId>connect.qq.com</groupId>
-            <artifactId>sdk4j</artifactId>
-        </dependency>
-
     </dependencies>
 </project>

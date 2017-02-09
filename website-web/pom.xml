@@ -17,10 +17,6 @@
     <dependencies>
         <dependency>
             <groupId>net.hasor.website</groupId>
-            <artifactId>website-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.hasor.website</groupId>
             <artifactId>website-login</artifactId>
         </dependency>
         <dependency>

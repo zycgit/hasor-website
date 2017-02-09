@@ -54,6 +54,7 @@
         <module>website-core</module>
         <module>website-login</module>
         <module>website-web</module>
+        <module>website-client</module>
         <module>website-test</module>
     </modules>
 
@@ -77,12 +78,27 @@
             </dependency>
             <dependency>
                 <groupId>net.hasor.website</groupId>
-                <artifactId>website-login</artifactId>
+                <artifactId>website-client</artifactId>
                 <version>${website.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.hasor.website</groupId>
                 <artifactId>website-core</artifactId>
+                <version>${website.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.hasor.website</groupId>
+                <artifactId>website-login</artifactId>
+                <version>${website.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.hasor.website</groupId>
+                <artifactId>website-web</artifactId>
+                <version>${website.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.hasor.website</groupId>
+                <artifactId>website-test</artifactId>
                 <version>${website.version}</version>
             </dependency>
 
@@ -139,6 +155,13 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.23</version>
+            </dependency>
+
+            <!-- guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>21.0</version>
             </dependency>
 
             <!-- aliyun OSS -->

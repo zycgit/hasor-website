@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 package net.hasor.website.core;
+import com.google.common.cache.CacheBuilder;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.Module;
 import net.hasor.website.oss.AliyunModule;
 import org.more.util.CommonCodeUtils;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 /**
  *
  * @version : 2015年12月25日
@@ -37,7 +38,10 @@ public class CoreModule implements Module {
         apiBinder.installModule(new AliyunModule());        // 阿里云
         //
         // .初始化Cache
-        final ConcurrentHashMap<Object, Object> map = new ConcurrentHashMap<Object, Object>();
+        final com.google.common.cache.Cache<Object, Object> map = CacheBuilder.newBuilder()//
+                .maximumSize(5000)//
+                .expireAfterWrite(30, TimeUnit.MINUTES)//
+                .build();
         apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_USER).toInstance(new Cache() {
             public String getName() {
                 return AppConstant.CACHE_USER;
@@ -54,8 +58,9 @@ public class CoreModule implements Module {
                 if (key == null) {
                     return null;
                 }
-                return map.get(key);
+                return map.getIfPresent(key);
             }
         });
+        //
     }
 }

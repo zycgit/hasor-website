@@ -37,7 +37,9 @@ RUN mkdir -p "$WEBSITE_HOME/target" && \
     rm -rf $CATALINA_HOME/deploys && ln -s $CATALINA_HOME/deploys $WEBSITE_HOME/target/deploys
 
 EXPOSE 8080
-EXPOSE 8210
+EXPOSE 2160
+EXPOSE 2161
+EXPOSE 2162
 
 # === project ===
 WORKDIR /home/admin/hasorsite/source

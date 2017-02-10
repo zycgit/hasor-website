@@ -26,6 +26,8 @@ public class SimpleOwner implements Owner {
     private String    ownerName;
     private OwnerType ownerType;
     //
+    public SimpleOwner() {
+    }
     public SimpleOwner(long ownerID, String ownerName, OwnerType ownerType) {
         this.ownerID = ownerID;
         this.ownerName = ownerName;
@@ -35,6 +37,16 @@ public class SimpleOwner implements Owner {
         this.ownerID = oriOwner.getOwnerID();
         this.ownerType = oriOwner.getOwnerType();
         this.ownerName = ownerName;
+    }
+    //
+    public void setOwnerID(long ownerID) {
+        this.ownerID = ownerID;
+    }
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+    public void setOwnerType(OwnerType ownerType) {
+        this.ownerType = ownerType;
     }
     public String getOwnerName() {
         return ownerName;

@@ -22,6 +22,8 @@ import net.hasor.website.client.EchoService;
 import net.hasor.website.client.ProjectService;
 import net.hasor.website.client.RsfResultDO;
 import net.hasor.website.domain.ProjectInfoDO;
+import net.hasor.website.domain.enums.OwnerType;
+import net.hasor.website.domain.owner.SimpleOwner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -44,29 +46,26 @@ public class CustomerTest extends AbstractTest {
     @Test
     public void sayHelloRPCTest() {
         String res = echoService.sayHello("Hello Word");
-        logger.info(res);
+        System.out.println(res);
     }
     @Test
     public void queryProjectRPCTest() {
-        RsfResultDO<List<ProjectInfoDO>> result = this.projectService.queryPublicProject();
-        logger.info(JSON.toJSONString(result));
+        long projectID = 1;
+        RsfResultDO<ProjectInfoDO> result = this.projectService.queryProjectByID(projectID);
+        System.out.println(JSON.toJSONString(result));
     }
-    //
-    //    @Test
-    //    public void queryByOwner() throws SQLException {
-    //        //
-    //        List<ProjectInfoDO> projectList = this.projectInfoDAO.queryByOwner(1L, OwnerType.Personal);
-    //        //
-    //        logger.info(JSON.toJSONString(projectList));
-    //    }
-    //    //
-    //    @Test
-    //    public void queryAll() throws SQLException {
-    //        //
-    //        List<ProjectInfoDO> projectList1 = this.projectInfoDAO.queryPublishList(0L, null);
-    //        List<ProjectInfoDO> projectList2 = this.projectInfoDAO.queryPublishList(123L, OwnerType.Personal);
-    //        //
-    //        logger.info(JSON.toJSONString(projectList1));
-    //        logger.info(JSON.toJSONString(projectList2));
-    //    }
+    @Test
+    public void queryByOwner() {
+        //
+        SimpleOwner owner = new SimpleOwner();
+        owner.setOwnerID(1L);
+        owner.setOwnerType(OwnerType.Personal);
+        RsfResultDO<List<ProjectInfoDO>> result = this.projectService.queryProjectByOwner(owner);
+        System.out.println(JSON.toJSONString(result));
+    }
+    @Test
+    public void queryAllProjectTest() {
+        RsfResultDO<List<ProjectInfoDO>> result = this.projectService.queryPublicProject();
+        System.out.println(JSON.toJSONString(result));
+    }
 }

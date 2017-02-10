@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.test;
+import com.alibaba.fastjson.JSON;
 import hprose.client.HproseClient;
 import hprose.common.HproseResultMode;
 import hprose.common.InvokeSettings;
@@ -43,17 +44,21 @@ public class HproseRpcTest {
     public void sayHelloRPCTest() throws Throwable {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
-        System.out.println(client.invoke(//
+        Object resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.EchoService-1.0.0/sayHello",//
-                new Object[] { "Hello Word." }, String.class, settings));
+                new Object[] { "Hello Word." }, String.class, settings);
+        System.out.println("\n\n\n");
+        System.out.println(JSON.toJSONString(resultDO));
     }
     @Test
     public void queryProjectRPCTest() throws Throwable {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
-        System.out.println(client.invoke(//
+        RsfResultDO resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryProjectByID",//
-                new Object[] { 1L }, RsfResultDO.class, settings));
+                new Object[] { 1L }, RsfResultDO.class, settings);
+        System.out.println("\n\n\n");
+        System.out.println(JSON.toJSONString(resultDO));
     }
     @Test
     public void queryByOwner() throws Throwable {
@@ -63,16 +68,20 @@ public class HproseRpcTest {
         //
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
-        System.out.println(client.invoke(//
+        RsfResultDO resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryProjectByOwner",//
-                new Object[] { owner }, RsfResultDO.class, settings));
+                new Object[] { owner }, RsfResultDO.class, settings);
+        System.out.println("\n\n\n");
+        System.out.println(JSON.toJSONString(resultDO));
     }
     @Test
     public void queryAllProjectTest() throws Throwable {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
-        System.out.println(client.invoke(//
+        RsfResultDO resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryPublicProject",//
-                new Object[0], RsfResultDO.class, settings));
+                new Object[0], RsfResultDO.class, settings);
+        System.out.println("\n\n\n");
+        System.out.println(JSON.toJSONString(resultDO));
     }
 }

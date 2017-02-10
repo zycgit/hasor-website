@@ -52,7 +52,28 @@ Hasor首页项目
 == 发布注意
     1. 分布式部署下，如果模型和逻辑都有变更，请分两次发布，先发模型后发逻辑。
 
-== Bug
+# 代码说明
+    01.web启动入口类是：net.hasor.website.web.core.StartModule，定义它的配置文件是：hasor-config.xml
+    02.test单元测试的启动入口是：net.hasor.website.core.RootModule
+    03.JumpFilter负责处理访问例如：http://xxx.xxx/ 这种目录资源时跳转到对应的 http://xxx.xxx/index.htm
+    04.FreemarkerRender 为模板渲染器，负责处理 htm or html 的渲染请求。
+    05.文件上传之后是直接保存到“阿里云OSS”不会落盘，文件的访问是通过 CDN 代理 OSS。
+    06.负责处理文件上传的类是：UploadToTemp、阿里云OSS初始化代码位于：AliyunModule。
+    07.权限功能：目前用户权限功能是保存到：用户表的扩展信息字段中，该字段是json结构。如要加权限请参考片段：
+        "userTags":{"newProject":true,"admin":true}
+    08.用户登录之后会产生一个快速登录连接，登录过程中通过这个快速登录连接完成用户登录。链接最大有效时间为 1分钟，超时之后必须重新登录。
+    09.用户会话信息保存在 Session 中。
+    10.目前仅支持 OAuth 登录，已经接入第三方认证有：微博、QQ、Github
+    11.可以通过登录（微博、QQ、Github）三个任意一种之后，在个人中心里通过绑定完成混合认证登录。
+    12.目前不支持解绑功能。
+    13.client工程中保留了三个远程服务接口，消费者可以通过 RSF 或 Hprose 执行远程方法调用。
+        端口号是：RSF：2161、Hprose：2162。单元测试模式下远程服务提供者地址为：127.0.0.1位于：env.config配置文件。
+    14.RPC 没有连接到任何注册中心，因此不支持服务自动发现。
+    15.数据库连接 “env.config” 中已经保留日常开发测试数据库信息，线上数据库的信息通过docker部署时环境变量参数形式传入。
+        该功能利用的是 Hasor 模版化配置文件机制实现。
+    16.为了保证安全，开发环境没有配置 OAuth 的密钥，因此本地开发中您不可以使用 OAuth 进行登录。
+
+== Bug或缺陷
     1. http://www.hasor.net/my/newVersion.htm?projectID=1  lastVersion 排序错误  0.0.9 居然大于 0.0.10
     2. 各类表单填写验证，必填项目检测。
     3. 版本详情页在登录之后跳转丢失 projectID 参数。

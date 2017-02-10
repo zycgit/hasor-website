@@ -34,7 +34,7 @@ public class CacheModule implements Module {
         // .初始化Cache
         final com.google.common.cache.Cache<Object, Object> map = CacheBuilder.newBuilder()//
                 .maximumSize(5000)//
-                .expireAfterWrite(30, TimeUnit.MINUTES)//
+                .expireAfterWrite(1, TimeUnit.MINUTES)//
                 .build();
         apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_USER).toInstance(new Cache() {
             public String getName() {

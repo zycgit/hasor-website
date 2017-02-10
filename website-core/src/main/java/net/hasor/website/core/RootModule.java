@@ -18,6 +18,7 @@ import net.hasor.core.ApiBinder;
 import net.hasor.core.Module;
 import net.hasor.website.cache.CacheModule;
 import net.hasor.website.oss.AliyunModule;
+import net.hasor.website.provider.ConsumerModule;
 import net.hasor.website.provider.ProviderModule;
 import org.more.util.CommonCodeUtils;
 /**
@@ -26,6 +27,10 @@ import org.more.util.CommonCodeUtils;
  * @author 赵永春(zyc@hasor.net)
  */
 public class RootModule implements Module {
+    private boolean withoutRPCProvider;
+    public RootModule(boolean withoutRPCProvider) {
+        this.withoutRPCProvider = withoutRPCProvider;
+    }
     @Override
     public void loadModule(ApiBinder apiBinder) throws Throwable {
         //
@@ -36,6 +41,8 @@ public class RootModule implements Module {
         apiBinder.installModule(new DataSourceModule());    // 数据库
         apiBinder.installModule(new AliyunModule());        // 阿里云
         apiBinder.installModule(new CacheModule());         // Cache
-        apiBinder.installModule(new ProviderModule());      // RPC
+        if (this.withoutRPCProvider)
+            apiBinder.installModule(new ProviderModule());  // 服务提供者
+        apiBinder.installModule(new ConsumerModule());      // 服务消费者
     }
 }

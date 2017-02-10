@@ -13,12 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.client;
+package net.hasor.website.provider;
+import net.hasor.rsf.RsfApiBinder;
+import net.hasor.rsf.RsfModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
- * 服务接口
- * @version : 2015年11月27日
+ * RPC 服务注册
+ * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)
  */
-public interface EchoService {
-    public String sayHello(String echo);
+public class ConsumerModule extends RsfModule {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+    @Override
+    public void loadModule(RsfApiBinder apiBinder) throws Throwable {
+        // - 注册服务消费者
+    }
 }

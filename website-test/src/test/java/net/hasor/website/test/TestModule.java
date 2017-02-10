@@ -16,6 +16,9 @@
 package net.hasor.website.test;
 import net.hasor.core.ApiBinder;
 import net.hasor.core.Module;
+import net.hasor.rsf.RsfApiBinder;
+import net.hasor.website.client.EchoService;
+import net.hasor.website.client.ProjectService;
 import net.hasor.website.core.RootModule;
 /**
  * @version : 2016年1月10日
@@ -25,7 +28,17 @@ public class TestModule implements Module {
     @Override
     public void loadModule(ApiBinder apiBinder) throws Throwable {
         //
-        apiBinder.installModule(new RootModule());
+        apiBinder.installModule(new RootModule(false));
         //
+        RsfApiBinder rsfApiBinder = apiBinder.tryCast(RsfApiBinder.class);
+        if (rsfApiBinder != null) {
+            String targetAddress = "rsf://127.0.0.1:2161/default";
+            rsfApiBinder.bindType(EchoService.class).toProvider(rsfApiBinder.converToProvider(//
+                    rsfApiBinder.rsfService(EchoService.class).serialize("Hprose").bindAddress(targetAddress).register()//
+            ));
+            rsfApiBinder.bindType(ProjectService.class).toProvider(rsfApiBinder.converToProvider(//
+                    rsfApiBinder.rsfService(ProjectService.class).serialize("Hprose").bindAddress(targetAddress).register()//
+            ));
+        }
     }
 }

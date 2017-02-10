@@ -23,5 +23,5 @@ import net.hasor.rsf.RsfResult;
  */
 @RsfMessage
 public interface MessageService {
-    public RsfResult sayHello(String echo) throws InterruptedException;
+    public RsfResult sayHello(String echo);
 }

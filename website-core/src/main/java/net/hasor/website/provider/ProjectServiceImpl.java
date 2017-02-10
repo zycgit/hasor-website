@@ -16,12 +16,14 @@
 package net.hasor.website.provider;
 import net.hasor.core.Inject;
 import net.hasor.website.client.ProjectService;
+import net.hasor.website.client.RsfResultDO;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.owner.SimpleOwner;
 import net.hasor.website.manager.ProjectManager;
-import org.more.bizcommon.Result;
 
 import java.util.List;
+
+import static net.hasor.website.utils.ResultUtils.converTo;
 /**
  * RSF 项目查询接口
  * @version : 2015年11月27日
@@ -31,15 +33,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Inject
     private ProjectManager projectManager;
     @Override
-    public Result<List<ProjectInfoDO>> queryPublicProject() {
-        return this.projectManager.queryTopProjectList();
+    public RsfResultDO<List<ProjectInfoDO>> queryPublicProject() {
+        return converTo(this.projectManager.queryTopProjectList());
     }
     @Override
-    public Result<List<ProjectInfoDO>> queryProjectByOwner(SimpleOwner owner) {
-        return this.projectManager.queryMyProjectList(owner);
+    public RsfResultDO<List<ProjectInfoDO>> queryProjectByOwner(SimpleOwner owner) {
+        return converTo(this.projectManager.queryMyProjectList(owner));
     }
     @Override
-    public Result<ProjectInfoDO> queryProjectByID(long projectID) {
-        return this.projectManager.queryProjectByID(projectID);
+    public RsfResultDO<ProjectInfoDO> queryProjectByID(long projectID) {
+        return converTo(this.projectManager.queryProjectByID(projectID));
     }
 }

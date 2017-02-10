@@ -23,7 +23,7 @@ import net.hasor.website.client.MessageService;
  */
 public class MessageServiceImpl implements MessageService {
     @Override
-    public RsfResult sayHello(String echo) throws InterruptedException {
+    public RsfResult sayHello(String echo) {
         return null;
     }
 }

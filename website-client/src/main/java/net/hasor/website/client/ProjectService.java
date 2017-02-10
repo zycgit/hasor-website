@@ -16,7 +16,6 @@
 package net.hasor.website.client;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.owner.SimpleOwner;
-import org.more.bizcommon.Result;
 
 import java.util.List;
 /**
@@ -26,11 +25,11 @@ import java.util.List;
  */
 public interface ProjectService {
     /** 查询所有公开的项目 */
-    public Result<List<ProjectInfoDO>> queryPublicProject();
+    public RsfResultDO<List<ProjectInfoDO>> queryPublicProject();
 
     /** 根据Owner查询项目列表 */
-    public Result<List<ProjectInfoDO>> queryProjectByOwner(SimpleOwner owner);
+    public RsfResultDO<List<ProjectInfoDO>> queryProjectByOwner(SimpleOwner owner);
 
     /** 根据 */
-    public Result<ProjectInfoDO> queryProjectByID(long projectID);
+    public RsfResultDO<ProjectInfoDO> queryProjectByID(long projectID);
 }

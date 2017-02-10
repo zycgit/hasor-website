@@ -34,7 +34,7 @@ public class StartModule extends WebModule {
     public void loadModule(WebApiBinder apiBinder) throws Throwable {
         //
         apiBinder.installModule(new OAuthModule());
-        apiBinder.installModule(new RootModule());
+        apiBinder.installModule(new RootModule(true));
         //
         apiBinder.setEncodingCharacter("utf-8", "utf-8");
         String contextPath = apiBinder.getServletContext().getContextPath();

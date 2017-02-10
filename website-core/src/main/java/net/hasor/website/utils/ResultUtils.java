@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.utils;
+import net.hasor.website.client.RsfResultDO;
 import net.hasor.website.domain.enums.ErrorCodes;
 import org.more.bizcommon.Message;
 import org.more.bizcommon.Result;
@@ -50,11 +51,21 @@ public class ResultUtils {
                 .setSuccess(result.isSuccess())//
                 .setResult(null);
     }
-    //
-    //
     public static <T, D extends T> ResultDO<T> success(D data) {
         return new ResultDO<T>(true)//
                 .setSuccess(true)//
                 .setResult(data);
+    }
+    //
+    public static <T, D extends T> RsfResultDO<T> converTo(Result<D> data) {
+        RsfResultDO<T> resultDO = new RsfResultDO<>();
+        resultDO.setSuccess(data.isSuccess());
+        Message firstMessage = data.firstMessage();
+        if (firstMessage != null) {
+            resultDO.setErrorCode(firstMessage.getType());
+            resultDO.setErrorMessage(firstMessage.getMessage());
+        }
+        resultDO.setResult(data.getResult());
+        return resultDO;
     }
 }

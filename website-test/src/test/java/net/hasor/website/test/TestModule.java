@@ -34,10 +34,10 @@ public class TestModule implements Module {
         if (rsfApiBinder != null) {
             String targetAddress = "rsf://127.0.0.1:2161/default";
             rsfApiBinder.bindType(EchoService.class).toProvider(rsfApiBinder.converToProvider(//
-                    rsfApiBinder.rsfService(EchoService.class).serialize("Hprose").bindAddress(targetAddress).register()//
+                    rsfApiBinder.rsfService(EchoService.class).bindAddress(targetAddress).register()//
             ));
             rsfApiBinder.bindType(ProjectService.class).toProvider(rsfApiBinder.converToProvider(//
-                    rsfApiBinder.rsfService(ProjectService.class).serialize("Hprose").bindAddress(targetAddress).register()//
+                    rsfApiBinder.rsfService(ProjectService.class).bindAddress(targetAddress).register()//
             ));
         }
     }

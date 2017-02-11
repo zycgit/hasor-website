@@ -19,12 +19,12 @@ package net.hasor.website.cache;
  * @version : 2016年1月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public interface Cache {
+public interface Cache<K, V> {
     public String getName();
 
-    public boolean put(Object key, Object value);
+    public boolean put(K key, V value);
 
-    public boolean put(Object key, Object value, int timeout);
+    public boolean put(K key, V value, int timeout);
 
-    public Object get(Object key);
+    public V get(K key);
 }

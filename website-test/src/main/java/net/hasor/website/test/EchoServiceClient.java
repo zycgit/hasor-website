@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.provider;
-import net.hasor.rsf.RsfResult;
-import net.hasor.website.client.MessageService;
+package net.hasor.website.test;
+import hprose.common.ByRef;
+import hprose.common.HproseResultMode;
+import hprose.common.MethodName;
+import hprose.common.ResultMode;
+
+import java.util.List;
 /**
- * 消息接口
- * @version : 2015年11月27日
+ * 服务接口
+ * @version : 2017年02月11日
  * @author 赵永春(zyc@hasor.net)
  */
-public class MessageServiceImpl extends AbstractProvider implements MessageService {
-    @Override
-    public RsfResult sayHello(String echo) {
-        return null;
-    }
+public interface EchoServiceClient {
+    @ByRef
+    @MethodName("call://[RSF]net.hasor.website.client.EchoService-1.0.0/sortList")
+    @ResultMode(HproseResultMode.Normal)
+    public void sort(List<String> stringList);
 }

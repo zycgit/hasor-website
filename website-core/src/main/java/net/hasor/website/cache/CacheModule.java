@@ -31,30 +31,14 @@ public class CacheModule implements Module {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     //
     public void loadModule(ApiBinder apiBinder) throws Throwable {
-        // .初始化Cache
-        final com.google.common.cache.Cache<Object, Object> map = CacheBuilder.newBuilder()//
-                .maximumSize(5000)//
-                .expireAfterWrite(1, TimeUnit.MINUTES)//
-                .build();
-        apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_USER).toInstance(new Cache() {
-            public String getName() {
-                return AppConstant.CACHE_USER;
-            }
-            public boolean put(Object key, Object value) {
-                map.put(key, value);
-                return true;
-            }
-            public boolean put(Object key, Object value, int timeout) {
-                map.put(key, value);
-                return true;
-            }
-            public Object get(Object key) {
-                if (key == null) {
-                    return null;
-                }
-                return map.getIfPresent(key);
-            }
-        });
+        com.google.common.cache.Cache<Object, Object> objectCache = CacheBuilder.newBuilder()//
+                .maximumSize(5000).expireAfterWrite(1, TimeUnit.MINUTES).build();
+        apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_USER)//
+                .toInstance(new CacheInstance<>(AppConstant.CACHE_USER, objectCache));
         //
+        com.google.common.cache.Cache<String, Object> tempCache = CacheBuilder.newBuilder()//
+                .maximumSize(5000).expireAfterWrite(1, TimeUnit.MINUTES).build();
+        apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_TEMP)//
+                .toInstance(new CacheInstance<>(AppConstant.CACHE_TEMP, tempCache));
     }
 }

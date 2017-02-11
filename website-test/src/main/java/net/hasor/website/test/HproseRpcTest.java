@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
 /**
  * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)
@@ -47,8 +49,8 @@ public class HproseRpcTest {
         Object resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.EchoService-1.0.0/sayHello",//
                 new Object[] { "Hello Word." }, String.class, settings);
-        System.out.println("\n\n\n");
-        System.out.println(JSON.toJSONString(resultDO));
+        logger.info("\n\n\n");
+        logger.info(JSON.toJSONString(resultDO));
     }
     @Test
     public void queryProjectRPCTest() throws Throwable {
@@ -57,8 +59,8 @@ public class HproseRpcTest {
         RsfResultDO resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryProjectByID",//
                 new Object[] { 1L }, RsfResultDO.class, settings);
-        System.out.println("\n\n\n");
-        System.out.println(JSON.toJSONString(resultDO));
+        logger.info("\n\n\n");
+        logger.info(JSON.toJSONString(resultDO));
     }
     @Test
     public void queryByOwner() throws Throwable {
@@ -71,8 +73,8 @@ public class HproseRpcTest {
         RsfResultDO resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryProjectByOwner",//
                 new Object[] { owner }, RsfResultDO.class, settings);
-        System.out.println("\n\n\n");
-        System.out.println(JSON.toJSONString(resultDO));
+        logger.info("\n\n\n");
+        logger.info(JSON.toJSONString(resultDO));
     }
     @Test
     public void queryAllProjectTest() throws Throwable {
@@ -81,7 +83,17 @@ public class HproseRpcTest {
         RsfResultDO resultDO = client.invoke(//
                 "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryPublicProject",//
                 new Object[0], RsfResultDO.class, settings);
-        System.out.println("\n\n\n");
-        System.out.println(JSON.toJSONString(resultDO));
+        logger.info("\n\n\n");
+        logger.info(JSON.toJSONString(resultDO));
+    }
+    @Test
+    public void refCallTest() throws Throwable {
+        //
+        EchoServiceClient exam = client.useService(EchoServiceClient.class);
+        List<String> dataList = Arrays.asList("4", "2", "1", "3", "5");
+        //
+        exam.sort(dataList);
+        logger.info("\n\n\n");
+        logger.info(JSON.toJSONString(dataList));
     }
 }

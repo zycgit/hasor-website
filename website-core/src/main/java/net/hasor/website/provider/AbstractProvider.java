@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 package net.hasor.website.provider;
-import net.hasor.rsf.RsfResult;
-import net.hasor.website.client.MessageService;
+import net.hasor.core.Inject;
+import net.hasor.website.cache.Cache;
+import net.hasor.website.domain.beans.AppConstant;
 /**
  * 消息接口
  * @version : 2015年11月27日
  * @author 赵永春(zyc@hasor.net)
  */
-public class MessageServiceImpl extends AbstractProvider implements MessageService {
-    @Override
-    public RsfResult sayHello(String echo) {
-        return null;
-    }
+public abstract class AbstractProvider {
+    @Inject(AppConstant.CACHE_TEMP)
+    protected Cache<String, Object> tempCache;
 }

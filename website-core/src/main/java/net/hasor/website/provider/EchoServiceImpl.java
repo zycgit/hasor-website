@@ -15,13 +15,20 @@
  */
 package net.hasor.website.provider;
 import net.hasor.website.client.EchoService;
+
+import java.util.Collections;
+import java.util.List;
 /**
  * 服务接口
  * @version : 2015年11月27日
  * @author 赵永春(zyc@hasor.net)
  */
-public class EchoServiceImpl implements EchoService {
+public class EchoServiceImpl extends AbstractProvider implements EchoService {
     public String sayHello(String echo) {
         return "you say :" + echo;
+    }
+    //
+    public void sortList(List<String> stringList) {
+        Collections.sort(stringList);
     }
 }

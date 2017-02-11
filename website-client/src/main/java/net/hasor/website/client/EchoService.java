@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.client;
+import java.util.List;
 /**
  * 服务接口
  * @version : 2015年11月27日
@@ -21,4 +22,6 @@ package net.hasor.website.client;
  */
 public interface EchoService {
     public String sayHello(String echo);
+
+    public void sortList(List<String> stringList);
 }

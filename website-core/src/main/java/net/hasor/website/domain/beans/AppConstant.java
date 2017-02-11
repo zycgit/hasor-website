@@ -24,6 +24,7 @@ public interface AppConstant {
     public static final String DB_MYSQL                    = "MYSQL";
     //
     public static final String CACHE_USER                  = "CACHE_USER";
+    public static final String CACHE_TEMP                  = "CACHE_TEMP";
     //
     public static final String SESSION_KEY_USER            = "user_id";
     public static final String SESSION_KEY_USER_AVATAR     = "user_avatar";

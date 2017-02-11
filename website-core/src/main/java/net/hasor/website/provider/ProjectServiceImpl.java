@@ -29,19 +29,38 @@ import static net.hasor.website.utils.ResultUtils.converTo;
  * @version : 2015年11月27日
  * @author 赵永春(zyc@hasor.net)
  */
-public class ProjectServiceImpl implements ProjectService {
+public class ProjectServiceImpl extends AbstractProvider implements ProjectService {
     @Inject
     private ProjectManager projectManager;
+    //
     @Override
     public RsfResultDO<List<ProjectInfoDO>> queryPublicProject() {
-        return converTo(this.projectManager.queryTopProjectList());
+        Object result = this.tempCache.get("queryPublicProject");
+        if (result != null) {
+            return (RsfResultDO<List<ProjectInfoDO>>) result;
+        }
+        RsfResultDO<List<ProjectInfoDO>> resultDO = converTo(this.projectManager.queryTopProjectList());
+        this.tempCache.put("queryPublicProject", resultDO);
+        return resultDO;
     }
     @Override
     public RsfResultDO<List<ProjectInfoDO>> queryProjectByOwner(SimpleOwner owner) {
-        return converTo(this.projectManager.queryMyProjectList(owner));
+        Object result = this.tempCache.get("queryProjectByOwner_" + owner.toString());
+        if (result != null) {
+            return (RsfResultDO<List<ProjectInfoDO>>) result;
+        }
+        RsfResultDO<List<ProjectInfoDO>> resultDO = converTo(this.projectManager.queryMyProjectList(owner));
+        this.tempCache.put("queryProjectByOwner_" + owner.toString(), resultDO);
+        return resultDO;
     }
     @Override
     public RsfResultDO<ProjectInfoDO> queryProjectByID(long projectID) {
-        return converTo(this.projectManager.queryProjectByID(projectID));
+        Object result = this.tempCache.get("queryProjectByID_" + projectID);
+        if (result != null) {
+            return (RsfResultDO<ProjectInfoDO>) result;
+        }
+        RsfResultDO<ProjectInfoDO> resultDO = converTo(this.projectManager.queryProjectByID(projectID));
+        this.tempCache.put("queryProjectByID_" + projectID, resultDO);
+        return resultDO;
     }
 }

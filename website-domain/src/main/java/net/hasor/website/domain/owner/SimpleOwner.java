@@ -59,4 +59,9 @@ public class SimpleOwner implements Owner {
     public OwnerType getOwnerType() {
         return this.ownerType;
     }
+    //
+    @Override
+    public String toString() {
+        return this.ownerID + "_" + this.ownerType;
+    }
 }

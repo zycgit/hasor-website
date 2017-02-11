@@ -40,7 +40,7 @@ public class HproseRpcTest {
     //
     @Before
     public void init() throws IOException, URISyntaxException {
-        this.client = HproseClient.create("http://127.0.0.1:2162/");
+        this.client = HproseClient.create("http://www.hasor.net:2162/");
     }
     @Test
     public void sayHelloRPCTest() throws Throwable {

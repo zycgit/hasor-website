@@ -18,9 +18,9 @@
             <ALIYUN_OSS_BUCKET_NAME>www-hasor</ALIYUN_OSS_BUCKET_NAME>
 
             <!-- 错开端口，防止冲突 -->
-            <RSF_CONSOLE_PORT>2170</RSF_CONSOLE_PORT>
-            <RSF_SERVICE_PORT>2171</RSF_SERVICE_PORT>
-            <HPROSE_SERVICE_PORT>2172</HPROSE_SERVICE_PORT>
+            <RSF_CONSOLE_PORT>2160</RSF_CONSOLE_PORT>
+            <RSF_SERVICE_PORT>2161</RSF_SERVICE_PORT>
+            <HPROSE_SERVICE_PORT>2162</HPROSE_SERVICE_PORT>
         </environmentVar>
     </hasor>
 

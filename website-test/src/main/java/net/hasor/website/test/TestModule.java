@@ -25,13 +25,20 @@ import net.hasor.website.core.RootModule;
  * @author 赵永春(zyc@hasor.net)
  */
 public class TestModule implements Module {
+    private boolean withoutRPCProvider;
+    public TestModule() {
+        this(false);
+    }
+    public TestModule(boolean withoutRPCProvider) {
+        this.withoutRPCProvider = withoutRPCProvider;
+    }
     @Override
     public void loadModule(ApiBinder apiBinder) throws Throwable {
         //
-        apiBinder.installModule(new RootModule(false));
+        apiBinder.installModule(new RootModule(this.withoutRPCProvider));
         //
         RsfApiBinder rsfApiBinder = apiBinder.tryCast(RsfApiBinder.class);
-        if (rsfApiBinder != null) {
+        if (rsfApiBinder != null && !this.withoutRPCProvider) {
             String targetAddress = "rsf://127.0.0.1:2161/default";
             rsfApiBinder.bindType(EchoService.class).toProvider(rsfApiBinder.converToProvider(//
                     rsfApiBinder.rsfService(EchoService.class).bindAddress(targetAddress).register()//

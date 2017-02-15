@@ -40,14 +40,14 @@ public class HproseRpcTest {
     //
     @Before
     public void init() throws IOException, URISyntaxException {
-        this.client = HproseClient.create("http://www.hasor.net:2162/[RSF]net.hasor.website.client.EchoService-1.0.0");
+        this.client = HproseClient.create("http://127.0.0.1:2162/");
     }
     @Test
     public void sayHelloRPCTest() throws Throwable {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
         Object resultDO = client.invoke(//
-                "sayHello",//
+                "call://[RSF]net.hasor.website.client.EchoService-1.0.0/sayHello?a=a",//
                 new Object[] { "Hello Word." }, String.class, settings);
         logger.info("\n\n\n");
         logger.info(JSON.toJSONString(resultDO));

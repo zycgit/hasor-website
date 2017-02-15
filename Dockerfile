@@ -47,7 +47,5 @@ RUN mvn clean package -Dmaven.test.skip=true && \
     mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war && \
     rm -rf $M2_REPO
 
-ENV JAVA_OPTS="-noverify"
-
 WORKDIR $CATALINA_HOME
 CMD ["catalina.sh", "run"]

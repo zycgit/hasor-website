@@ -18,9 +18,9 @@ import net.hasor.core.Inject;
 import net.hasor.db.transaction.TransactionCallback;
 import net.hasor.db.transaction.TransactionTemplate;
 import net.hasor.website.domain.beans.AppConstant;
+import net.hasor.website.domain.result.Result;
+import net.hasor.website.domain.result.ResultDO;
 import net.hasor.website.utils.LoggerUtils;
-import org.more.bizcommon.Result;
-import org.more.bizcommon.ResultDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**

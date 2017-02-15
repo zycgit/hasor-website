@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 数据的状态是删除还是正常。
  * @version : 2016年08月11日
@@ -47,7 +46,7 @@ public enum DataStatus implements GeneralEnumParsing<DataStatus> {
     }
     public DataStatus formName(String name) {
         for (DataStatus item : DataStatus.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

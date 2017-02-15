@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 package net.hasor.website.domain.enums;
-import net.hasor.website.domain.MessageTemplateString;
-import org.more.bizcommon.Message;
-import org.more.bizcommon.MessageTemplate;
+import net.hasor.website.domain.message.MessageTemplateString;
+import net.hasor.website.domain.message.Message;
+import net.hasor.website.domain.message.MessageTemplate;
 /**
  *
  * @version : 2016年1月1日

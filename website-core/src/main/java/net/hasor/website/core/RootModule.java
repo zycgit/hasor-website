@@ -20,7 +20,7 @@ import net.hasor.website.cache.CacheModule;
 import net.hasor.website.oss.AliyunModule;
 import net.hasor.website.provider.ConsumerModule;
 import net.hasor.website.provider.ProviderModule;
-import org.more.util.CommonCodeUtils;
+import net.hasor.website.utils.CommonCodeUtils;
 /**
  *
  * @version : 2015年12月25日

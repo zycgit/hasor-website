@@ -21,7 +21,6 @@ import net.hasor.db.jdbc.core.JdbcTemplate;
 import net.hasor.db.orm.mybatis3.MyBatisModule;
 import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.manager.EnvironmentConfig;
-import org.more.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +65,7 @@ public class DataSourceModule implements LifeModule {
         //
         // .日常环境下自动初始化数据库
         EnvironmentConfig config = appContext.getInstance(EnvironmentConfig.class);
-        if (StringUtils.equalsIgnoreCase("daily", config.getEnvType())) {
+        if ("daily".equalsIgnoreCase(config.getEnvType())) {
             logger.info("loadSQL for daily.");
             JdbcTemplate dailyTemplate = appContext.findBindingBean(AppConstant.DB_MYSQL, JdbcTemplate.class);
             //

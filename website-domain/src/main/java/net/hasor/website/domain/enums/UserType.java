@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 帐号类型
  * @version : 2016年08月11日
@@ -50,7 +49,7 @@ public enum UserType implements GeneralEnumParsing<UserType> {
     }
     public UserType formName(String name) {
         for (UserType item : UserType.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

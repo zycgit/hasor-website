@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 package net.hasor.website.domain;
-import org.more.util.StringUtils;
-
 import java.util.Set;
 /**
  * 公开类型
@@ -42,13 +40,13 @@ public class ContentModifier {
     //
     //
     public boolean isPublic() {
-        return StringUtils.endsWithIgnoreCase(this.modifier, "public");
+        return "public".equalsIgnoreCase(this.modifier);
     }
     public boolean isPrivate() {
-        return StringUtils.endsWithIgnoreCase(this.modifier, "private");
+        return "private".equalsIgnoreCase(this.modifier);
     }
     public boolean isFollow() {
-        return StringUtils.endsWithIgnoreCase(this.modifier, "follow");
+        return "follow".equalsIgnoreCase(this.modifier);
     }
     public boolean isFollow(String followMenber) {
         if (this.isPublic()) {

@@ -19,7 +19,7 @@ import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.enums.ErrorCodes;
-import org.more.bizcommon.Result;
+import net.hasor.website.domain.result.Result;
 
 import java.io.IOException;
 /**

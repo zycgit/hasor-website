@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 语言类型
  * @version : 2016年08月11日
@@ -52,7 +51,7 @@ public enum LanguageEnum implements GeneralEnumParsing<LanguageEnum> {
     }
     public LanguageEnum formName(String name) {
         for (LanguageEnum item : LanguageEnum.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

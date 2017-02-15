@@ -23,8 +23,8 @@ import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.enums.ContentFormat;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.SourceType;
+import net.hasor.website.domain.result.Result;
 import net.hasor.website.web.forms.ProjectInfoForm;
-import org.more.bizcommon.Result;
 
 import java.io.IOException;
 /**

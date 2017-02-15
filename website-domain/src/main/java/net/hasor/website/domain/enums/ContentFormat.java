@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 文章格式类型
  * @version : 2016年08月11日
@@ -51,7 +50,7 @@ public enum ContentFormat implements GeneralEnumParsing<ContentFormat> {
     }
     public ContentFormat formName(String name) {
         for (ContentFormat item : ContentFormat.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

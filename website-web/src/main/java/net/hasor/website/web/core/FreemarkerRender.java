@@ -22,10 +22,9 @@ import net.hasor.core.AppContext;
 import net.hasor.web.render.Render;
 import net.hasor.web.render.RenderEngine;
 import net.hasor.web.render.RenderInvoker;
-import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.core.Service;
-import org.more.util.StringEscapeUtils;
-import org.more.util.StringUtils;
+import net.hasor.website.domain.beans.AppConstant;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletContext;
 import java.io.File;
@@ -54,7 +53,6 @@ public class FreemarkerRender implements RenderEngine {
         this.configuration.setClassicCompatible(true);//null值测处理配置
         //
         // - 各种工具
-        this.configuration.setSharedVariable("escapeHtml", new StringEscapeUtils());//HTML 转译,防止XSS使用。
         this.configuration.setSharedVariable("stringUtils", new StringUtils());
         //
         // - 系统服务

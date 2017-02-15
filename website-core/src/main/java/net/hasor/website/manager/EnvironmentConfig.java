@@ -20,7 +20,6 @@ import net.hasor.core.Singleton;
 import net.hasor.core.Type;
 import net.hasor.website.core.Service;
 import net.hasor.website.domain.beans.AppConstant;
-import org.more.util.StringUtils;
 
 import java.util.Date;
 /**
@@ -56,7 +55,7 @@ public class EnvironmentConfig {
     //
     /**是否为日常开发环境*/
     public boolean isDaily() {
-        return StringUtils.equalsBlankIgnoreCase("daily", this.envType);
+        return "daily".equalsIgnoreCase(this.envType);
     }
     //
     /**主机地址*/

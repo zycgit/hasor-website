@@ -22,11 +22,11 @@ import net.hasor.website.core.Service;
 import net.hasor.website.domain.AccessInfo;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.domain.result.Result;
+import net.hasor.website.domain.result.ResultDO;
 import net.hasor.website.utils.JsonUtils;
 import net.hasor.website.utils.LoggerUtils;
-import org.more.bizcommon.Result;
-import org.more.bizcommon.ResultDO;
-import org.more.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

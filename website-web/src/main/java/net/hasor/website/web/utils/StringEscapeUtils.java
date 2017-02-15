@@ -13,25 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.website.domain;
-import org.more.bizcommon.MessageTemplate;
+package net.hasor.website.web.utils;
+import net.hasor.website.core.Service;
 /**
- * 消息。
- * @version : 2014年10月25日
+ *
+ * @version : 2016年12月05日
  * @author 赵永春(zyc@hasor.net)
  */
-public class MessageTemplateString implements MessageTemplate {
-    private static final long serialVersionUID = -4678293554961623796L;
-    private String messageTemplate;
-    private int    messageType;
-    public MessageTemplateString(int messageType, String messageTemplate) {
-        this.messageTemplate = messageTemplate;
-        this.messageType = messageType;
-    }
-    public String getMessageTemplate() {
-        return this.messageTemplate;
-    }
-    public int getMessageType() {
-        return this.messageType;
+@Service("escapeHtml")
+public class StringEscapeUtils extends org.apache.commons.lang3.StringEscapeUtils {
+    public static final String escapeHtml(final String input) {
+        return escapeHtml4(input);
     }
 }

@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 项目状态
  * @version : 2016年08月11日
@@ -52,7 +51,7 @@ public enum VersionStatus implements GeneralEnumParsing<VersionStatus> {
     }
     public VersionStatus formName(String name) {
         for (VersionStatus item : VersionStatus.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

@@ -19,11 +19,11 @@ import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.*;
+import net.hasor.website.domain.result.Result;
 import net.hasor.website.manager.ProjectManager;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
-import org.more.bizcommon.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;

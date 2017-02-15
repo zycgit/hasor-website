@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 源码类型,开源 or 闭源
  * @version : 2016年08月11日
@@ -48,7 +47,7 @@ public enum SourceType implements GeneralEnumParsing<SourceType> {
     }
     public SourceType formName(String name) {
         for (SourceType item : SourceType.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

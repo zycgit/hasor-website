@@ -15,14 +15,17 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 性别
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
 public enum GenderType implements GeneralEnumParsing<GenderType> {
-    None(0, "未知"), Male(1, "男性"), Female(2, "女性"), Neutral(3, "中性"), Secret(4, "秘密"),;
+    None(0, "未知"), //
+    Male(1, "男性"), //
+    Female(2, "女性"), //
+    Neutral(3, "中性"), //
+    Secret(4, "秘密"),;
     //
     private int    type;
     private String desc;
@@ -47,7 +50,7 @@ public enum GenderType implements GeneralEnumParsing<GenderType> {
     }
     public GenderType formName(String name) {
         for (GenderType item : GenderType.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

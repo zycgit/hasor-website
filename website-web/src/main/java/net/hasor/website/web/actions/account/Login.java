@@ -25,7 +25,7 @@ import net.hasor.website.domain.UserDO;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginForm;
-import org.more.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 /**

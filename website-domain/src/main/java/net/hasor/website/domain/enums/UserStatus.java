@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 用户状态
  * @version : 2016年08月11日
@@ -50,7 +49,7 @@ public enum UserStatus implements GeneralEnumParsing<UserStatus> {
     }
     public UserStatus formName(String name) {
         for (UserStatus item : UserStatus.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

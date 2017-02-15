@@ -23,7 +23,7 @@ import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.login.oauth.OAuthManager;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.model.UserBindInfo;
-import org.more.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

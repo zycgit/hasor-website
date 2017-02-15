@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 package net.hasor.website.manager;
+import com.alibaba.fastjson.JSONObject;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
 import net.hasor.db.Transactional;
@@ -28,12 +29,11 @@ import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.domain.beans.QuickLoginResult;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.UserType;
+import net.hasor.website.domain.result.Result;
+import net.hasor.website.utils.CommonCodeUtils;
 import net.hasor.website.utils.JsonUtils;
 import net.hasor.website.utils.LoggerUtils;
-import org.more.bizcommon.Result;
-import org.more.bizcommon.json.JSON;
-import org.more.util.CommonCodeUtils;
-import org.more.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -342,7 +342,7 @@ public class UserManager {
         quickInfo.put("redirectURL", redirectURL);
         quickInfo.put("atTime", String.valueOf(new Date().getTime()));
         quickInfo.put("lostTime", String.valueOf(new Date().getTime() + 6 * 1000));
-        String quickJson = JSON.toString(quickInfo);
+        String quickJson = JSONObject.toJSONString(quickInfo);
         //
         String userIDHex = toHexString(userID);
         String key = null;

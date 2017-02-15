@@ -16,9 +16,9 @@
 package net.hasor.website.utils;
 import net.hasor.website.client.RsfResultDO;
 import net.hasor.website.domain.enums.ErrorCodes;
-import org.more.bizcommon.Message;
-import org.more.bizcommon.Result;
-import org.more.bizcommon.ResultDO;
+import net.hasor.website.domain.message.Message;
+import net.hasor.website.domain.result.Result;
+import net.hasor.website.domain.result.ResultDO;
 /**
  * @version : 2016年1月10日
  * @author 赵永春(zyc@hasor.net)

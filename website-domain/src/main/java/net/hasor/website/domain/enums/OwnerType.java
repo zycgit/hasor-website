@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 项目类型
  * @version : 2016年08月11日
@@ -48,7 +47,7 @@ public enum OwnerType implements GeneralEnumParsing<OwnerType> {
     }
     public OwnerType formName(String name) {
         for (OwnerType item : OwnerType.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

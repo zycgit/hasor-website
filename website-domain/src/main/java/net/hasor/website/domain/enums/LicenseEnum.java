@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 授权协议类型
  * @version : 2016年08月11日
@@ -55,7 +54,7 @@ public enum LicenseEnum implements GeneralEnumParsing<LicenseEnum> {
     }
     public LicenseEnum formName(String name) {
         for (LicenseEnum item : LicenseEnum.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

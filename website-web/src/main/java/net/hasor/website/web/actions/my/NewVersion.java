@@ -22,8 +22,8 @@ import net.hasor.website.domain.enums.ContentFormat;
 import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.VersionStatus;
 import net.hasor.website.domain.futures.ProjectVersionFutures;
+import net.hasor.website.domain.result.Result;
 import net.hasor.website.web.forms.ProjectVersionForm;
-import org.more.bizcommon.Result;
 
 import java.io.IOException;
 import java.util.Collections;

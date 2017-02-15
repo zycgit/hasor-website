@@ -21,14 +21,14 @@ import net.hasor.web.FileItem;
 import net.hasor.web.annotation.Async;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.domain.result.Result;
+import net.hasor.website.domain.result.ResultDO;
 import net.hasor.website.manager.EnvironmentConfig;
 import net.hasor.website.oss.AliyunOSSClient;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
-import org.more.bizcommon.Result;
-import org.more.bizcommon.ResultDO;
-import org.more.util.StringUtils;
-import org.more.util.io.FilenameUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;

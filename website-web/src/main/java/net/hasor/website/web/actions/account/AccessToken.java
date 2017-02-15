@@ -21,13 +21,13 @@ import net.hasor.web.valid.Valid;
 import net.hasor.web.valid.ValidInvoker;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.domain.result.Result;
 import net.hasor.website.login.oauth.OAuthManager;
 import net.hasor.website.manager.UserManager;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.web.core.Action;
 import net.hasor.website.web.forms.LoginCallBackForm;
-import org.more.bizcommon.Result;
-import org.more.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 /**

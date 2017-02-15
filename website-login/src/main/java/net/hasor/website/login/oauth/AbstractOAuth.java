@@ -22,7 +22,7 @@ import net.hasor.core.InjectSettings;
 import net.hasor.website.domain.AccessInfo;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.UserSourceDO;
-import org.more.bizcommon.ResultDO;
+import net.hasor.website.domain.result.ResultDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**

@@ -17,7 +17,7 @@ package net.hasor.website.web.actions.projects;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.render.RenderInvoker;
 import net.hasor.website.domain.ProjectInfoDO;
-import org.more.bizcommon.Result;
+import net.hasor.website.domain.result.Result;
 
 import java.util.List;
 /**

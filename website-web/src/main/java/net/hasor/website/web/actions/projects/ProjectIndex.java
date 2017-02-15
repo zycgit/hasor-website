@@ -19,7 +19,7 @@ import net.hasor.web.annotation.PathParam;
 import net.hasor.web.render.RenderInvoker;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
-import org.more.bizcommon.Result;
+import net.hasor.website.domain.result.Result;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 

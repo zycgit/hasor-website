@@ -21,9 +21,9 @@ import net.hasor.website.domain.Owner;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.ProjectVersionDO;
 import net.hasor.website.domain.enums.ErrorCodes;
+import net.hasor.website.domain.message.Message;
+import net.hasor.website.domain.result.Result;
 import net.hasor.website.utils.LoggerUtils;
-import org.more.bizcommon.Message;
-import org.more.bizcommon.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;

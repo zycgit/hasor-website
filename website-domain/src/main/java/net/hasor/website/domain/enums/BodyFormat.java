@@ -15,14 +15,15 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 文章内容格式
  * @version : 2016年08月11日
  * @author 赵永春(zyc@hasor.net)
  */
 public enum BodyFormat implements GeneralEnumParsing<BodyFormat> {
-    Text(0, "纯文本"), Markdown(1, "Markdown"),;
+    Text(0, "纯文本"),//
+    Markdown(1, "Markdown"),//
+    ;
     //
     private int    type;
     private String desc;
@@ -47,7 +48,7 @@ public enum BodyFormat implements GeneralEnumParsing<BodyFormat> {
     }
     public BodyFormat formName(String name) {
         for (BodyFormat item : BodyFormat.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

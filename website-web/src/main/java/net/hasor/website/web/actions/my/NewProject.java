@@ -24,10 +24,10 @@ import net.hasor.website.domain.enums.ErrorCodes;
 import net.hasor.website.domain.enums.ProjectStatus;
 import net.hasor.website.domain.enums.SourceType;
 import net.hasor.website.domain.futures.ProjectFutures;
+import net.hasor.website.domain.result.Result;
 import net.hasor.website.utils.LoggerUtils;
 import net.hasor.website.utils.UserUtils;
 import net.hasor.website.web.forms.ProjectInfoForm;
-import org.more.bizcommon.Result;
 
 import java.io.IOException;
 /**

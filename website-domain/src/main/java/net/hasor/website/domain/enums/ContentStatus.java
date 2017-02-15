@@ -15,7 +15,6 @@
  */
 package net.hasor.website.domain.enums;
 import net.hasor.website.domain.GeneralEnumParsing;
-import org.more.util.StringUtils;
 /**
  * 帖子状态
  * @version : 2016年08月11日
@@ -48,7 +47,7 @@ public enum ContentStatus implements GeneralEnumParsing<ContentStatus> {
     @Override
     public ContentStatus formName(String name) {
         for (ContentStatus item : ContentStatus.values()) {
-            if (StringUtils.equalsIgnoreCase(item.name(), name)) {
+            if (item.name().equalsIgnoreCase(name)) {
                 return item;
             }
         }

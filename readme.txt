@@ -11,6 +11,7 @@ Hasor首页项目
     1. 本地开发：配置位于 “website-web” 项目中 “env.config” 配置文件中。
     2. 开发环境：位于 /conf/work_home/daily。
     3. 线上环境：位于 /conf/work_home/online。
+    4. 使用 openjdk 1.8
 
 == 工程关系
            website-domain       // 模型定义

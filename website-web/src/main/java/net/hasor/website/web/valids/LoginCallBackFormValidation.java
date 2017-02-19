@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.web.valids;
-import net.hasor.web.valid.ValidErrors;
+import net.hasor.web.valid.ValidInvoker;
 import net.hasor.web.valid.Validation;
 import net.hasor.website.web.forms.LoginCallBackForm;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LoginCallBackFormValidation implements Validation<LoginCallBackForm> {
     @Override
-    public void doValidation(String validType, LoginCallBackForm dataForm, ValidErrors errors) {
+    public void doValidation(String validType, LoginCallBackForm dataForm, ValidInvoker errors) {
         if (StringUtils.equalsIgnoreCase(validType, "AccessToken")) {
             doValidAccessToken(dataForm, errors);
             return;
@@ -35,7 +35,7 @@ public class LoginCallBackFormValidation implements Validation<LoginCallBackForm
             return;
         }
     }
-    private void doValidAccessToken(LoginCallBackForm dataForm, ValidErrors errors) {
+    private void doValidAccessToken(LoginCallBackForm dataForm, ValidInvoker errors) {
         String provider = dataForm.getProvider();
         //
         // GitHub 官方的回调包含异常情况
@@ -62,7 +62,7 @@ public class LoginCallBackFormValidation implements Validation<LoginCallBackForm
         }
     }
     //
-    private void doValidCallback(LoginCallBackForm dataForm, ValidErrors errors) {
+    private void doValidCallback(LoginCallBackForm dataForm, ValidInvoker errors) {
         //dataForm.setCode(StringEscapeUtils.escapeHtml(dataForm.getCode()));
         return;
     }

@@ -18,6 +18,9 @@
             <ALIYUN_OSS_ENDPOINT>http://oss-cn-hangzhou.aliyuncs.com</ALIYUN_OSS_ENDPOINT>
             <ALIYUN_OSS_BUCKET_PATH>/uploader_daily/</ALIYUN_OSS_BUCKET_PATH>
             <ALIYUN_OSS_BUCKET_NAME>www-hasor</ALIYUN_OSS_BUCKET_NAME>
+
+            <!-- 启用站点文件布局 -->
+            <HASOR_RESTFUL_LAYOUT>true</HASOR_RESTFUL_LAYOUT>
         </environmentVar>
     </hasor>
 

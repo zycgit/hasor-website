@@ -15,7 +15,7 @@
  */
 package net.hasor.website.web.actions.admins;
 import net.hasor.web.annotation.MappingTo;
-import net.hasor.web.render.RenderInvoker;
+import net.hasor.web.RenderInvoker;
 import net.hasor.website.domain.ProjectInfoDO;
 import net.hasor.website.domain.result.Result;
 

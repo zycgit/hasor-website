@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package net.hasor.website.web.valids;
-import net.hasor.web.valid.ValidErrors;
+import net.hasor.web.valid.ValidInvoker;
 import net.hasor.web.valid.Validation;
 import net.hasor.website.web.forms.LoginForm;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LoginFormValidation implements Validation<LoginForm> {
     @Override
-    public void doValidation(String validType, LoginForm dataForm, ValidErrors errors) {
+    public void doValidation(String validType, LoginForm dataForm, ValidInvoker errors) {
         if (StringUtils.isBlank(dataForm.getLogin())) {
             errors.addError("login", "帐号不能为空！");
             return;

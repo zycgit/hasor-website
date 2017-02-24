@@ -47,7 +47,7 @@ public class HproseRpcTest {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
         Object resultDO = client.invoke(//
-                "call://[RSF]net.hasor.website.client.EchoService-1.0.0/sayHello?a=a",//
+                "echoService_sayHello",//
                 new Object[] { "Hello Word." }, String.class, settings);
         logger.info("\n\n\n");
         logger.info(JSON.toJSONString(resultDO));
@@ -57,7 +57,7 @@ public class HproseRpcTest {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
         RsfResultDO resultDO = client.invoke(//
-                "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryProjectByID",//
+                "projectService_queryProjectByID",//
                 new Object[] { 1L }, RsfResultDO.class, settings);
         logger.info("\n\n\n");
         logger.info(JSON.toJSONString(resultDO));
@@ -71,7 +71,7 @@ public class HproseRpcTest {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
         RsfResultDO resultDO = client.invoke(//
-                "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryProjectByOwner",//
+                "projectService_queryProjectByOwner",//
                 new Object[] { owner }, RsfResultDO.class, settings);
         logger.info("\n\n\n");
         logger.info(JSON.toJSONString(resultDO));
@@ -81,7 +81,7 @@ public class HproseRpcTest {
         InvokeSettings settings = new InvokeSettings();
         settings.setMode(HproseResultMode.Normal);
         RsfResultDO resultDO = client.invoke(//
-                "call://[RSF]net.hasor.website.client.ProjectService-1.0.0/queryPublicProject",//
+                "projectService_queryPublicProject",//
                 new Object[0], RsfResultDO.class, settings);
         logger.info("\n\n\n");
         logger.info(JSON.toJSONString(resultDO));

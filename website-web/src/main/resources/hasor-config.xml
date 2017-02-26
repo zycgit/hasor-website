@@ -4,10 +4,8 @@
     <hasor>
         <!-- 包扫描路径 -->
         <loadPackages>net.hasor.website.*</loadPackages>
-        <!-- 模块 -->
-        <modules>
-            <module>net.hasor.website.web.core.StartModule</module>
-        </modules>
+        <!-- 启动入口 -->
+        <startup>net.hasor.website.web.core.StartModule</startup>
         <!-- 环境变量 -->
         <environmentVar>
             <APP_REDIRECT_URI>/account/callback.do</APP_REDIRECT_URI>

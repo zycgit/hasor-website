@@ -52,8 +52,8 @@ public class DataSourceModule implements LifeModule {
         //
         DataSource mysqlDataSource = createDataSource(driverString, urlString, userString, pwdString);
         apiBinder.installModule(new DBModule(AppConstant.DB_MYSQL, mysqlDataSource));
-        apiBinder.installModule(new MyBatisModule(AppConstant.DB_MYSQL, "ibatis-sqlmap.xml") {
-        });//MyBatis使用数据源2
+        apiBinder.installModule(new MyBatisModule(AppConstant.DB_MYSQL, "ibatis-sqlmap.xml"));
+        //MyBatis使用数据源2
     }
     @Override
     public void onStart(AppContext appContext) throws Throwable {

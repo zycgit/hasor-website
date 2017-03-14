@@ -34,9 +34,9 @@ RUN apt-get update && apt-get install -y nginx
 ADD . /home/admin/hasorsite/source
 ENV WEBSITE_HOME /home/admin/hasorsite
 RUN mkdir -p "$WEBSITE_HOME/target" && \
-    cp $WEBSITE_HOME/source/conf/env/online/env.config $WEBSITE_HOME/ && \
-    cp $WEBSITE_HOME/source/conf/tomcat                $WEBSITE_HOME/tomcat && \
-    cp $WEBSITE_HOME/source/conf/nginx                 $WEBSITE_HOME/nginx
+    cp -R -f $WEBSITE_HOME/source/conf/env/online/env.config $WEBSITE_HOME/ && \
+    cp -R -f $WEBSITE_HOME/source/conf/tomcat                $WEBSITE_HOME/tomcat && \
+    cp -R -f $WEBSITE_HOME/source/conf/nginx                 $WEBSITE_HOME/nginx
 
 # ------------------------------------- Setup Software
 # tomcat
@@ -45,8 +45,9 @@ RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat   $CATALINA_HOME
     rm -rf $CATALINA_HOME/deploys && ln -s $CATALINA_HOME/deploys $WEBSITE_HOME/target/deploys
 
 # nginx
-RUN rm -rf /etc/nginx     && ln -s /etc/nginx     $WEBSITE_HOME/nginx && \
-    rm -rf /var/log/nginx && ln -s /var/log/nginx $WEBSITE_HOME/logs/nginx && \
+RUN mkdir -p "$WEBSITE_HOME/nginx/log" && \
+    rm -rf /etc/nginx     && ln -s /etc/nginx     $WEBSITE_HOME/nginx && \
+    rm -rf /var/log/nginx && ln -s /var/log/nginx $WEBSITE_HOME/nginx/log && \
     rm -rf /var/www/html  && ln -s /var/www/html  $WEBSITE_HOME/nginx/www
 
 # project

@@ -36,16 +36,29 @@ RUN mkdir -p "$WEBSITE_HOME/target" && \
     rm -rf $CATALINA_HOME/logs    && ln -s $CATALINA_HOME/logs    $WEBSITE_HOME/logs && \
     rm -rf $CATALINA_HOME/deploys && ln -s $CATALINA_HOME/deploys $WEBSITE_HOME/target/deploys
 
+# Nginx.
+RUN apt-get update && apt-get install -y nginx && \
+    mkdir -p "$WEBSITE_HOME/nginx" && \
+    mkdir -p "$WEBSITE_HOME/logs/nginx" && \
+    mkdir -p "$WEBSITE_HOME/www" && \
+    rm -rf /etc/nginx     && ln -s /etc/nginx     $WEBSITE_HOME/nginx && \
+    rm -rf /var/log/nginx && ln -s /var/log/nginx $WEBSITE_HOME/logs/nginx && \
+    rm -rf /var/www/html  && ln -s /var/www/html  $WEBSITE_HOME/www
+
 EXPOSE 8080
 EXPOSE 2160
 EXPOSE 2161
 EXPOSE 2162
 
+#VOLUME /home/admin/hasorsite/logs
+#VOLUME /home/admin/hasorsite/rsf
+#VOLUME /home/admin/hasorsite/nginx
 # === project ===
-WORKDIR /home/admin/hasorsite/source
-RUN mvn clean package -Dmaven.test.skip=true && \
+RUN cd /home/admin/hasorsite/source && \
+    mvn clean package -Dmaven.test.skip=true && \
     mv `find . -name *.war` $WEBSITE_HOME/target/ROOT.war && \
-    rm -rf $M2_REPO
+    rm -rf $M2_REPO && \
+    rm -rf $WEBSITE_HOME/source
 
 WORKDIR $CATALINA_HOME
 CMD ["catalina.sh", "run"]

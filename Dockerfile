@@ -46,7 +46,7 @@ RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat   $CATALINA_HOME
 
 # nginx
 RUN mkdir -p "$WEBSITE_HOME/nginx/log" && \
-    rm -rf /etc/nginx     && ln -s /etc/nginx     $WEBSITE_HOME/nginx && \
+    rm -rf /etc/nginx     && ln -s $WEBSITE_HOME/nginx /etc/nginx && \
     rm -rf /var/log/nginx && ln -s /var/log/nginx $WEBSITE_HOME/nginx/log && \
     rm -rf /var/www/html  && ln -s /var/www/html  $WEBSITE_HOME/nginx/www
 

@@ -46,9 +46,9 @@ RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat   $CATALINA_HOME
 
 # nginx
 RUN mkdir -p "$WEBSITE_HOME/nginx/log" && \
-    rm -rf /etc/nginx     && ln -s $WEBSITE_HOME/nginx /etc/nginx && \
-    rm -rf /var/log/nginx && ln -s /var/log/nginx $WEBSITE_HOME/nginx/log && \
-    rm -rf /var/www/html  && ln -s /var/www/html  $WEBSITE_HOME/nginx/www
+    rm -rf /etc/nginx     && ln -s $WEBSITE_HOME/nginx     /etc/nginx && \
+    rm -rf /var/log/nginx && ln -s $WEBSITE_HOME/log/nginx /var/log/nginx && \
+    rm -rf /var/www/html  && ln -s $WEBSITE_HOME/nginx/www /var/www/html
 
 # project
 ENV WORK_HOME /home/admin/hasorsite

@@ -78,3 +78,10 @@ Hasor首页项目
     1. http://www.hasor.net/my/newVersion.htm?projectID=1  lastVersion 排序错误  0.0.9 居然大于 0.0.10
     2. 各类表单填写验证，必填项目检测。
     3. 版本详情页在登录之后跳转丢失 projectID 参数。
+
+=== Nginx
+    1. 安装 BCRE [Mac: brew install pcre]
+    2. 站点通过 nginx 代理提供
+
+=== 保留路径
+    1. /docs/  -> Nginx 反向代理： http://project.hasor.net/docs

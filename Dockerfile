@@ -8,7 +8,7 @@ RUN curl -fsSL http://project.hasor.net/hasor/develop/tools/apache/maven/$MAVEN_
         && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
         && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 ENV MAVEN_HOME /usr/share/maven
-ENV M2_REPO /home/admin/maven-repository
+ENV M2_REPO /home/admin/software/maven-repository
 RUN mkdir -p $M2_REPO && \
     sed -i '/<!-- localRepository/i\<localRepository>'$M2_REPO'</localRepository>' $MAVEN_HOME/conf/settings.xml
 
@@ -27,7 +27,16 @@ RUN set -x && \
 	rm tomcat.tar.gz*
 
 # Nginx.
-RUN apt-get update && apt-get install -y nginx
+RUN mkdir -p "/home/admin/software/nginx"
+WORKDIR "/home/admin/software/nginx"
+ENV NGINX_VERSION 1.10.3
+ENV NGINX_TGZ_URL http://project.hasor.net/hasor/develop/tools/nginx/$NGINX_VERSION/nginx-$NGINX_VERSION.tar.gz
+RUN set -x && \
+	curl -fSL "$NGINX_TGZ_URL" -o nginx.tar.gz && \
+	tar -xvf nginx.tar.gz --strip-components=1 && \
+	rm nginx.tar.gz* && \
+	apt-get update && apt-get install -y gcc make libpcre3 libpcre3-dev zlib1g-dev
+RUN ./configure --with-http_sub_module && make && make install
 
 # ------------------------------------- Config WORK_HOME
 # work_home
@@ -45,10 +54,9 @@ RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat   $CATALINA_HOME
     rm -rf $CATALINA_HOME/deploys && ln -s $CATALINA_HOME/deploys $WEBSITE_HOME/target/deploys
 
 # nginx
-RUN mkdir -p "$WEBSITE_HOME/log/nginx" && \
-    rm -rf /etc/nginx     && ln -s $WEBSITE_HOME/nginx     /etc/nginx && \
-    rm -rf /var/log/nginx && ln -s $WEBSITE_HOME/log/nginx /var/log/nginx && \
-    rm -rf /var/www/html  && ln -s $WEBSITE_HOME/nginx/www /var/www/html
+RUN rm -rf /usr/local/nginx/conf && ln -s $WEBSITE_HOME/nginx      /usr/local/nginx/conf && \
+    rm -rf /usr/local/nginx/logs && ln -s $WEBSITE_HOME/log/nginx  /usr/local/nginx/logs && \
+    rm -rf /usr/local/nginx/html  && ln -s $WEBSITE_HOME/nginx/www /usr/local/nginx/html
 
 # project
 ENV WORK_HOME /home/admin/hasorsite

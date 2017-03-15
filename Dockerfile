@@ -36,7 +36,7 @@ RUN set -x && \
 	tar -xvf nginx.tar.gz --strip-components=1 && \
 	rm nginx.tar.gz* && \
 	apt-get update && apt-get install -y gcc make libpcre3 libpcre3-dev zlib1g-dev
-RUN cd nginx && ./configure --with-http_sub_module && make && make install
+RUN ls && ./configure --with-http_sub_module && make && make install
 
 # ------------------------------------- Config WORK_HOME
 # work_home

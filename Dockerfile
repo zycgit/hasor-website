@@ -54,9 +54,10 @@ RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat   $CATALINA_HOME
     rm -rf $CATALINA_HOME/deploys && ln -s $CATALINA_HOME/deploys $WEBSITE_HOME/target/deploys
 
 # nginx
-RUN rm -rf /usr/local/nginx/conf && ln -s $WEBSITE_HOME/nginx      /usr/local/nginx/conf && \
+RUN mkdir -p "$WEBSITE_HOME/log/nginx" && \
+    rm -rf /usr/local/nginx/conf && ln -s $WEBSITE_HOME/nginx      /usr/local/nginx/conf && \
     rm -rf /usr/local/nginx/logs && ln -s $WEBSITE_HOME/log/nginx  /usr/local/nginx/logs && \
-    rm -rf /usr/local/nginx/html  && ln -s $WEBSITE_HOME/nginx/www /usr/local/nginx/html
+    rm -rf /usr/local/nginx/html && ln -s $WEBSITE_HOME/nginx/www  /usr/local/nginx/html
 
 # project
 ENV WORK_HOME /home/admin/hasorsite
@@ -68,7 +69,7 @@ RUN cd /home/admin/hasorsite/source && \
 
 # ------------------------------------- Run App
 WORKDIR $CATALINA_HOME
-EXPOSE 8080
+EXPOSE 80
 EXPOSE 2160
 EXPOSE 2161
 EXPOSE 2162

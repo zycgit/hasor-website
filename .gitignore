@@ -7,7 +7,6 @@ target
 */*.iml
 .idea
 test-work
-bin
 .DS_Store
 node_modules
 build

@@ -67,14 +67,12 @@ RUN cd /home/admin/hasorsite/source && \
     rm -rf $WEBSITE_HOME/source
 
 # ------------------------------------- Run App
-WORKDIR $CATALINA_HOME
 EXPOSE 80
 EXPOSE 2160
 EXPOSE 2161
 EXPOSE 2162
 
 VOLUME /home/admin/hasorsite/logs
-#VOLUME /home/admin/hasorsite/rsf
-#VOLUME /home/admin/hasorsite/nginx
 
-CMD ["catalina.sh", "run"]
+WORKDIR $WORK_HOME
+CMD ["./bin/startup.sh", "run"]

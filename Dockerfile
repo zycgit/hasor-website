@@ -45,7 +45,8 @@ ENV WEBSITE_HOME /home/admin/hasorsite
 RUN mkdir -p "$WEBSITE_HOME/target" && \
     cp -R -f $WEBSITE_HOME/source/conf/env/online/env.config $WEBSITE_HOME/ && \
     cp -R -f $WEBSITE_HOME/source/conf/tomcat                $WEBSITE_HOME/tomcat && \
-    cp -R -f $WEBSITE_HOME/source/conf/nginx                 $WEBSITE_HOME/nginx
+    cp -R -f $WEBSITE_HOME/source/conf/nginx                 $WEBSITE_HOME/nginx && \
+    cp -R -f $WEBSITE_HOME/source/conf/bin                   $WEBSITE_HOME/bin
 
 # ------------------------------------- Setup Software
 # tomcat

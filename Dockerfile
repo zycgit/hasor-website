@@ -50,9 +50,9 @@ RUN mkdir -p "$WEBSITE_HOME/target" && \
 
 # ------------------------------------- Setup Software
 # tomcat
-RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat         $CATALINA_HOME/conf && \
-    rm -rf $CATALINA_HOME/logs    && ln -s $WEBSITE_HOME/logs           $CATALINA_HOME/logs && \
-    rm -rf $CATALINA_HOME/deploys && ln -s $WEBSITE_HOME/target/deploys $CATALINA_HOME/deploys
+RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat $CATALINA_HOME/conf && \
+    rm -rf $CATALINA_HOME/logs    && ln -s $WEBSITE_HOME/logs   $CATALINA_HOME/logs && \
+    rm -rf $CATALINA_HOME/deploys && ln -s $WEBSITE_HOME/target $CATALINA_HOME/deploys
 
 # nginx
 RUN rm -rf /usr/local/nginx/conf && ln -s $WEBSITE_HOME/nginx      /usr/local/nginx/conf && \

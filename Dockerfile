@@ -49,14 +49,13 @@ RUN mkdir -p "$WEBSITE_HOME/target" && \
 
 # ------------------------------------- Setup Software
 # tomcat
-RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat   $CATALINA_HOME/conf && \
-    rm -rf $CATALINA_HOME/logs    && ln -s $CATALINA_HOME/logs    $WEBSITE_HOME/logs && \
-    rm -rf $CATALINA_HOME/deploys && ln -s $CATALINA_HOME/deploys $WEBSITE_HOME/target/deploys
+RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat         $CATALINA_HOME/conf && \
+    rm -rf $CATALINA_HOME/logs    && ln -s $WEBSITE_HOME/logs           $CATALINA_HOME/logs && \
+    rm -rf $CATALINA_HOME/deploys && ln -s $WEBSITE_HOME/target/deploys $CATALINA_HOME/deploys
 
 # nginx
-RUN mkdir -p "$WEBSITE_HOME/log/nginx" && \
-    rm -rf /usr/local/nginx/conf && ln -s $WEBSITE_HOME/nginx      /usr/local/nginx/conf && \
-    rm -rf /usr/local/nginx/logs && ln -s $WEBSITE_HOME/log/nginx  /usr/local/nginx/logs && \
+RUN rm -rf /usr/local/nginx/conf && ln -s $WEBSITE_HOME/nginx      /usr/local/nginx/conf && \
+    rm -rf /usr/local/nginx/logs && ln -s $WEBSITE_HOME/logs       /usr/local/nginx/logs && \
     rm -rf /usr/local/nginx/html && ln -s $WEBSITE_HOME/nginx/www  /usr/local/nginx/html
 
 # project
@@ -74,7 +73,7 @@ EXPOSE 2160
 EXPOSE 2161
 EXPOSE 2162
 
-#VOLUME /home/admin/hasorsite/logs
+VOLUME /home/admin/hasorsite/logs
 #VOLUME /home/admin/hasorsite/rsf
 #VOLUME /home/admin/hasorsite/nginx
 

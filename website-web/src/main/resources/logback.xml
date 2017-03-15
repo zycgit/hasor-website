@@ -9,7 +9,7 @@
     <!-- 文件输出 -->
     <appender name="file_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${WORK_HOME:-.}/logs/rsf-console.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>${WORK_HOME:-.}/logs/console.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <Encoding>UTF-8</Encoding>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -20,7 +20,7 @@
     <!-- Telnet日志 -->
     <appender name="rsfTelnet_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${WORK_HOME:-.}/logs/rsf-telnet.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>${WORK_HOME:-.}/logs/rsf/rsf-telnet.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <Encoding>UTF-8</Encoding>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -29,7 +29,7 @@
     </appender>
     <appender name="rsfTelnetRTXD_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${WORK_HOME:-.}/logs/rsf-telnet-rtxd.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>${WORK_HOME:-.}/logs/rsf/rsf-telnet-rtxd.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <Encoding>UTF-8</Encoding>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -39,7 +39,7 @@
     <!-- Invoker日志 -->
     <appender name="rsfInvoker_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${WORK_HOME:-.}/logs/rsf-invoker.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>${WORK_HOME:-.}/logs/rsf/rsf-invoker.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <Encoding>UTF-8</Encoding>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -49,7 +49,7 @@
     <!-- 地址本更新日志 -->
     <appender name="rsfAddress_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${WORK_HOME:-.}/logs/rsf-address.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>${WORK_HOME:-.}/logs/rsf/rsf-address.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <Encoding>UTF-8</Encoding>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -59,7 +59,7 @@
     <!-- 注册中心数据接收器日志 -->
     <appender name="rsfCenterReceiver_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${WORK_HOME:-.}/logs/rsf-center-receiver.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>${WORK_HOME:-.}/logs/rsf/rsf-center-receiver.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <Encoding>UTF-8</Encoding>
         <layout class="ch.qos.logback.classic.PatternLayout">

@@ -39,7 +39,7 @@ public class StartModule extends WebModule {
         String contextPath = apiBinder.getServletContext().getContextPath();
         apiBinder.bindType(String.class).nameWith(AppConstant.VAR_CONTEXT_PATH).toInstance(contextPath);
         //
-        apiBinder.scanAnnoRender();
+        apiBinder.suffix("htm").bind(MyFreemarkerRender.class);//设置 Freemarker 渲染器
         apiBinder.scanMappingTo();
         //
         // .Webs

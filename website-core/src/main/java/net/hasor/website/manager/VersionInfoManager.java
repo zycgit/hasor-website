@@ -16,7 +16,7 @@
 package net.hasor.website.manager;
 import net.hasor.core.Inject;
 import net.hasor.core.Singleton;
-import net.hasor.db.jdbc.core.JdbcTemplate;
+import net.hasor.data.jdbc.core.JdbcTemplate;
 import net.hasor.website.core.Service;
 import net.hasor.website.domain.VersionInfoDO;
 import net.hasor.website.domain.beans.AppConstant;

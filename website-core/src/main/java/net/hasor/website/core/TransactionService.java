@@ -15,8 +15,8 @@
  */
 package net.hasor.website.core;
 import net.hasor.core.Inject;
-import net.hasor.db.transaction.TransactionCallback;
-import net.hasor.db.transaction.TransactionTemplate;
+import net.hasor.data.transaction.TransactionCallback;
+import net.hasor.data.transaction.TransactionTemplate;
 import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.domain.result.Result;
 import net.hasor.website.domain.result.ResultDO;

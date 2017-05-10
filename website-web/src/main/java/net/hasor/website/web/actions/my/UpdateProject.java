@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package net.hasor.website.web.actions.my;
-import net.hasor.db.transaction.TransactionCallback;
-import net.hasor.db.transaction.TransactionStatus;
+import net.hasor.data.transaction.TransactionCallback;
+import net.hasor.data.transaction.TransactionStatus;
 import net.hasor.web.Invoker;
 import net.hasor.web.annotation.MappingTo;
 import net.hasor.web.annotation.Params;

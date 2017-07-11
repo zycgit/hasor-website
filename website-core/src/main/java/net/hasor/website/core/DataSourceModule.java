@@ -16,7 +16,7 @@
 package net.hasor.website.core;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import net.hasor.core.*;
-import net.hasor.db.DataApiBinder;
+import net.hasor.db.DBApiBinder;
 import net.hasor.db.jdbc.core.JdbcTemplate;
 import net.hasor.db.orm.mybatis3.MyBatisModule;
 import net.hasor.website.domain.beans.AppConstant;
@@ -40,7 +40,7 @@ public class DataSourceModule implements LifeModule {
     public void loadModule(ApiBinder apiBinder) throws Throwable {
         // .内置数据(数据源一)
         DataSource dataSource = createDataSource("org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:example_memdb", "sa", "");
-        apiBinder.tryCast(DataApiBinder.class).addDataSource(AppConstant.DB_HSQL, dataSource);
+        apiBinder.tryCast(DBApiBinder.class).addDataSource(AppConstant.DB_HSQL, dataSource);
         //
         // .外置数据(数据源二)
         Environment env = apiBinder.getEnvironment();
@@ -51,7 +51,7 @@ public class DataSourceModule implements LifeModule {
         String pwdString = env.evalString(settings.getString("jdbcSettings.userPassword", ""));
         //
         DataSource mysqlDataSource = createDataSource(driverString, urlString, userString, pwdString);
-        apiBinder.tryCast(DataApiBinder.class).addDataSource(AppConstant.DB_MYSQL, mysqlDataSource);
+        apiBinder.tryCast(DBApiBinder.class).addDataSource(AppConstant.DB_MYSQL, mysqlDataSource);
         apiBinder.installModule(new MyBatisModule(AppConstant.DB_MYSQL, "ibatis-sqlmap.xml"));
         //MyBatis使用数据源2
     }

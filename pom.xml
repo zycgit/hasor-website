@@ -13,6 +13,7 @@
     <!-- 配置属性 -->
     <properties>
         <website.version>1.0.0-SNAPSHOT</website.version>
+        <hasor.version>3.2.0-SNAPSHOT</hasor.version>
         <wtpversion>2.0</wtpversion>
         <downloadSources>true</downloadSources>
         <downloadJavadocs>true</downloadJavadocs>
@@ -106,19 +107,32 @@
             <dependency>
                 <groupId>net.hasor</groupId>
                 <artifactId>hasor-core</artifactId>
-                <version>3.2.0-SNAPSHOT</version>
+                <version>${hasor.version}</version>
             </dependency>
-            <!-- RSF -->
+            <dependency>
+                <groupId>net.hasor</groupId>
+                <artifactId>hasor-web</artifactId>
+                <version>${hasor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.hasor</groupId>
+                <artifactId>hasor-db</artifactId>
+                <version>${hasor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.hasor</groupId>
+                <artifactId>hasor-plugins</artifactId>
+                <version>${hasor.version}</version>
+            </dependency>
             <dependency>
                 <groupId>net.hasor</groupId>
                 <artifactId>hasor-rsf</artifactId>
-                <version>1.3.1</version>
+                <version>${hasor.version}</version>
             </dependency>
-            <!-- Center -->
             <dependency>
                 <groupId>net.hasor</groupId>
                 <artifactId>hasor-registry</artifactId>
-                <version>1.3.1</version>
+                <version>${hasor.version}</version>
             </dependency>
 
             <dependency>

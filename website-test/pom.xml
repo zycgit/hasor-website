@@ -23,7 +23,7 @@
         <!-- Hasor -->
         <dependency>
             <groupId>net.hasor</groupId>
-            <artifactId>hasor-core</artifactId>
+            <artifactId>hasor-db</artifactId>
         </dependency>
 
         <dependency>

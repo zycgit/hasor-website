@@ -27,14 +27,16 @@
         <!-- Hasor -->
         <dependency>
             <groupId>net.hasor</groupId>
-            <artifactId>hasor-core</artifactId>
+            <artifactId>hasor-db</artifactId>
         </dependency>
-        <!-- RSF -->
+        <dependency>
+            <groupId>net.hasor</groupId>
+            <artifactId>hasor-plugins</artifactId>
+        </dependency>
         <dependency>
             <groupId>net.hasor</groupId>
             <artifactId>hasor-rsf</artifactId>
         </dependency>
-        <!-- Center -->
         <dependency>
             <groupId>net.hasor</groupId>
             <artifactId>hasor-registry</artifactId>

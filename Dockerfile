@@ -26,18 +26,6 @@ RUN set -x && \
 	rm bin/*.bat && \
 	rm tomcat.tar.gz*
 
-# Nginx.
-RUN mkdir -p "/home/admin/software/nginx"
-WORKDIR "/home/admin/software/nginx"
-ENV NGINX_VERSION 1.10.3
-ENV NGINX_TGZ_URL http://project.hasor.net/hasor/develop/tools/nginx/$NGINX_VERSION/nginx-$NGINX_VERSION.tar.gz
-RUN set -x && \
-	curl -fSL "$NGINX_TGZ_URL" -o nginx.tar.gz && \
-	tar -xvf nginx.tar.gz --strip-components=1 && \
-	rm nginx.tar.gz* && \
-	apt-get update && apt-get install -y gcc make libpcre3 libpcre3-dev zlib1g-dev
-RUN ls && ./configure --with-http_sub_module && make && make install
-
 # ------------------------------------- Config WORK_HOME
 # work_home
 ADD . /home/admin/hasorsite/source
@@ -53,11 +41,6 @@ RUN mkdir -p "$WEBSITE_HOME/target" && \
 RUN rm -rf $CATALINA_HOME/conf    && ln -s $WEBSITE_HOME/tomcat $CATALINA_HOME/conf && \
     rm -rf $CATALINA_HOME/logs    && ln -s $WEBSITE_HOME/logs   $CATALINA_HOME/logs && \
     rm -rf $CATALINA_HOME/deploys && ln -s $WEBSITE_HOME/target $CATALINA_HOME/deploys
-
-# nginx
-RUN rm -rf /usr/local/nginx/conf && ln -s $WEBSITE_HOME/nginx      /usr/local/nginx/conf && \
-    rm -rf /usr/local/nginx/logs && ln -s $WEBSITE_HOME/logs       /usr/local/nginx/logs && \
-    rm -rf /usr/local/nginx/html && ln -s $WEBSITE_HOME/nginx/www  /usr/local/nginx/html
 
 # project
 ENV WORK_HOME /home/admin/hasorsite

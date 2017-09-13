@@ -23,7 +23,7 @@ import net.hasor.core.ApiBinder;
 import net.hasor.core.InjectSettings;
 import net.hasor.core.Settings;
 import net.hasor.core.Singleton;
-import net.hasor.core.utils.ExceptionUtils;
+import net.hasor.utils.ExceptionUtils;
 import net.hasor.website.domain.AccessInfo;
 import net.hasor.website.domain.UserDO;
 import net.hasor.website.domain.UserSourceDO;

@@ -31,14 +31,14 @@ public class CacheModule implements Module {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     //
     public void loadModule(ApiBinder apiBinder) throws Throwable {
-        com.google.common.cache.Cache<Object, Object> objectCache = CacheBuilder.newBuilder()//
+        com.google.common.cache.Cache<String, Object> objectCache = CacheBuilder.newBuilder()//
                 .maximumSize(5000).expireAfterWrite(1, TimeUnit.MINUTES).build();
         apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_USER)//
-                .toInstance(new CacheInstance<>(AppConstant.CACHE_USER, objectCache));
+                .toInstance(new CacheInstance<String, Object>(AppConstant.CACHE_USER, objectCache));
         //
         com.google.common.cache.Cache<String, Object> tempCache = CacheBuilder.newBuilder()//
                 .maximumSize(5000).expireAfterWrite(1, TimeUnit.MINUTES).build();
         apiBinder.bindType(Cache.class).nameWith(AppConstant.CACHE_TEMP)//
-                .toInstance(new CacheInstance<>(AppConstant.CACHE_TEMP, tempCache));
+                .toInstance(new CacheInstance<String, Object>(AppConstant.CACHE_TEMP, tempCache));
     }
 }

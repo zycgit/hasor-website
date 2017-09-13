@@ -58,7 +58,7 @@ public class ResultUtils {
     }
     //
     public static <T, D extends T> RsfResultDO<T> converTo(Result<D> data) {
-        RsfResultDO<T> resultDO = new RsfResultDO<>();
+        RsfResultDO<T> resultDO = new RsfResultDO<T>();
         resultDO.setSuccess(data.isSuccess());
         Message firstMessage = data.firstMessage();
         if (firstMessage != null) {

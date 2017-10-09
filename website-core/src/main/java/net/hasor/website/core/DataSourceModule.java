@@ -19,7 +19,7 @@ import net.hasor.core.*;
 import net.hasor.db.JdbcModule;
 import net.hasor.db.Level;
 import net.hasor.db.jdbc.core.JdbcTemplate;
-import net.hasor.db.orm.mybatis3.MyBatisModule;
+import net.hasor.plugins.mybatis3.MyBatisModule;
 import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.manager.EnvironmentConfig;
 import org.slf4j.Logger;

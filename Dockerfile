@@ -33,7 +33,6 @@ ENV WEBSITE_HOME /home/admin/hasorsite
 RUN mkdir -p "$WEBSITE_HOME/target" && \
     cp -R -f $WEBSITE_HOME/source/conf/env/online/env.config $WEBSITE_HOME/ && \
     cp -R -f $WEBSITE_HOME/source/conf/tomcat                $WEBSITE_HOME/tomcat && \
-    cp -R -f $WEBSITE_HOME/source/conf/nginx                 $WEBSITE_HOME/nginx && \
     cp -R -f $WEBSITE_HOME/source/conf/bin                   $WEBSITE_HOME/bin
 
 # ------------------------------------- Setup Software
@@ -51,7 +50,7 @@ RUN cd /home/admin/hasorsite/source && \
     rm -rf $WEBSITE_HOME/source
 
 # ------------------------------------- Run App
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 2160
 EXPOSE 2161
 EXPOSE 2162

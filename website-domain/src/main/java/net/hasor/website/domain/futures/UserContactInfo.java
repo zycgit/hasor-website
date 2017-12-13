@@ -17,7 +17,7 @@ package net.hasor.website.domain.futures;
 /**
  * 各种联系渠道
  * @version : 2016年08月08日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class UserContactInfo {
     private String             mobilePhone   = null; //电话

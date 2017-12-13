@@ -28,7 +28,7 @@ import static net.hasor.website.utils.ResultUtils.success;
 /**
  *
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public abstract class BaseProjects extends Action {
     @Inject

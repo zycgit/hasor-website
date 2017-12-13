@@ -33,7 +33,7 @@ import java.io.IOException;
 /**
  * OAuth : 服务器获取 AccessToken
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/account/access_token.do")
 public class AccessToken extends Action {

@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 性别
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum GenderType implements GeneralEnumParsing<GenderType> {
     None(0, "未知"), //

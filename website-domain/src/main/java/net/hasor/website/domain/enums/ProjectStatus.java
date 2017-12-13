@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 项目状态
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum ProjectStatus implements GeneralEnumParsing<ProjectStatus> {
     // .普通项目

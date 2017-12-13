@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * 数据库链接 & DAO
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class DataSourceModule implements LifeModule {
     protected Logger logger = LoggerFactory.getLogger(getClass());

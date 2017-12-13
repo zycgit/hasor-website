@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * 项目的首页入口
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/projects/{projectID}/projectChangelog.htm")
 public class ProjectChangelog extends BaseProjects {

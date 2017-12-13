@@ -44,7 +44,7 @@ import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 封装新浪微博登陆
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Singleton
 public class WeiboOAuth extends AbstractOAuth {

@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * 项目相关的高级操作
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/operateProject.do")
 public class OperateProject extends BaseMyProject {

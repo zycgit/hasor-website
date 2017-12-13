@@ -46,7 +46,7 @@ import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 用户Manager
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Singleton
 public class UserManager {

@@ -29,7 +29,7 @@ import java.io.IOException;
 /**
  * 扩展 QQ 的 HttpClient 提供一个能够正常返回 response error code 的 post 方法。
  * @version : 2016年08月13日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Singleton
 public class HttpClientUtil extends com.qq.connect.utils.http.HttpClient {

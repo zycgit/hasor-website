@@ -30,7 +30,7 @@ import java.io.IOException;
 /**
  * 更新项目
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/updateProject.do")
 public class UpdateProject extends BaseMyProject {

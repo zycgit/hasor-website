@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  *
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class LoginCallBackFormValidation implements Validation<LoginCallBackForm> {
     @Override

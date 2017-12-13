@@ -17,7 +17,7 @@ package net.hasor.website.domain.message;
 /**
  * 消息。
  * @version : 2014年10月25日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class MessageTemplateString implements MessageTemplate {
     private static final long serialVersionUID = -4678293554961623786L;

@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * 个人首页
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/myAccount.htm")
 public class MyAccount extends BaseMyProject {

@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * 用户外部登陆信息
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class UserSourceDO {
     private long       sourceID       = 0;    // UserSourceID（PK，自增）

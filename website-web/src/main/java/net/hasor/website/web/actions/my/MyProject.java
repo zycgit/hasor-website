@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * 我的项目，项目详情。
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/projects.htm")
 public class MyProject extends BaseMyProject {

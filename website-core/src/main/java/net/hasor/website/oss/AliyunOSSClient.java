@@ -18,7 +18,7 @@ import com.aliyun.oss.OSSClient;
 /**
  *
  * @version : 2016年12月02日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class AliyunOSSClient extends OSSClient {
     private String bucketPath;

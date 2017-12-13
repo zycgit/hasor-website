@@ -17,7 +17,7 @@ package net.hasor.website.cache;
 /**
  * 缓存接口
  * @version : 2016年1月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public interface Cache<K, V> {
     public String getName();

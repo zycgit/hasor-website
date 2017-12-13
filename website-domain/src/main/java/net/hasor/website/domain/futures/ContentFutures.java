@@ -18,7 +18,7 @@ import java.util.List;
 /**
  *
  * @version : 2016年08月08日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ContentFutures {
     private String       oriAuthor = null;  // 原作者

@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  * 帖子
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ContentDO {
     private long            id            = 0;      // 内容ID（PK，自增)

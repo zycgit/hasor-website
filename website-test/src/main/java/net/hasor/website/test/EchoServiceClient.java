@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 服务接口
  * @version : 2017年02月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public interface EchoServiceClient {
     @ByRef

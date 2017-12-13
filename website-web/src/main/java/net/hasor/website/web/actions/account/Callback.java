@@ -25,7 +25,7 @@ import net.hasor.website.web.forms.LoginCallBackForm;
 /**
  * OAuth : 登录回调地址
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/account/callback.do")
 public class Callback extends Action {

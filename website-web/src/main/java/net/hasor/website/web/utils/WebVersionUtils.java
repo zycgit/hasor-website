@@ -20,7 +20,7 @@ import net.hasor.website.utils.VersionUtils;
 /**
  *
  * @version : 2016年12月05日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Service("versionUtils")
 public class WebVersionUtils extends VersionUtils {

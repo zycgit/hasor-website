@@ -17,7 +17,7 @@ package net.hasor.website.client;
 /**
  * 项目接口
  * @version : 2015年11月27日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class RsfResultDO<T> {
     private boolean success;

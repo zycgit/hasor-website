@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * 给当前登陆账号绑定登陆
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/account/bind.do")
 public class Bind extends Action {

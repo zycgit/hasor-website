@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 翻页
  * @version : 2014年10月25日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class Paginator {
     /**满足条件的总记录数*/

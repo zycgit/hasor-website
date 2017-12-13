@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  *
  * @version : 2016年1月3日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class MyFreemarkerRender extends FreemarkerRender {
     @Override

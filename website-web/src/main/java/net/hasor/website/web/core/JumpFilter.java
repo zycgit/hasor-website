@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * 负责跳转index.htm
  * @version : 2016年1月5日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class JumpFilter implements Filter {
     @Override

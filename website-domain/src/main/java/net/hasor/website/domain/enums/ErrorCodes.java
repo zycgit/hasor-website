@@ -20,7 +20,7 @@ import net.hasor.website.domain.message.MessageTemplate;
 /**
  *
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum ErrorCodes {
     // .用户系统

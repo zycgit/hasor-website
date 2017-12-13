@@ -26,7 +26,7 @@ import net.hasor.website.login.oauth.weibo.WeiboOAuth;
 /**
  * 集成第三方登陆 & CAS 等
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class OAuthModule implements Module {
     @Override

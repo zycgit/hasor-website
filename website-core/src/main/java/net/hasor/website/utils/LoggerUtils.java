@@ -28,7 +28,7 @@ import java.util.Properties;
 import java.util.TreeMap;
 /**
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class LoggerUtils {
     private static Logger     logger    = LoggerFactory.getLogger(LoggerUtils.class);

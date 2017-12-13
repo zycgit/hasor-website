@@ -28,7 +28,7 @@ import java.sql.SQLException;
 /**
  *
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public abstract class AbstractJsonConvert<T> extends BaseTypeHandler<T> {
     private Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -18,7 +18,7 @@ import net.hasor.website.core.Service;
 /**
  *
  * @version : 2016年12月05日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Service("escapeHtml")
 public class StringEscapeUtils extends org.apache.commons.lang3.StringEscapeUtils {

@@ -20,7 +20,7 @@ import net.hasor.website.web.core.Action;
 /**
  *
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public abstract class BaseAdmin extends Action {
     @Inject

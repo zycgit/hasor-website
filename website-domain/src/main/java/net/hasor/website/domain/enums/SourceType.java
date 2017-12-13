@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 源码类型,开源 or 闭源
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum SourceType implements GeneralEnumParsing<SourceType> {
     Open(0, "开源"),//

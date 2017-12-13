@@ -16,7 +16,7 @@
 package net.hasor.website.domain;
 /**
  * @version : 2016年08月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class JsonResultDO {
     private boolean success;

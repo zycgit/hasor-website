@@ -23,7 +23,7 @@ import java.lang.reflect.Type;
 /**
  *
  * @version : 2016年12月13日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class AbstractQuery<T> extends Paginator {
     protected Logger logger = LoggerFactory.getLogger(getClass());

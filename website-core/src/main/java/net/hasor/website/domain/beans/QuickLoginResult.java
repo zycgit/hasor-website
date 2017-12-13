@@ -17,7 +17,7 @@ import net.hasor.website.domain.UserDO;
 /**
  * 快速登陆返回值
  * @version : 2016年12月05日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class QuickLoginResult {
     private UserDO userDO;

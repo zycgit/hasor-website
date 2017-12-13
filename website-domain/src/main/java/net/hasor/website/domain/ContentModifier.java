@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * 公开类型
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ContentModifier {
     private Set<String> memberSet;

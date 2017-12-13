@@ -19,7 +19,7 @@ import com.alibaba.fastjson.JSON;
 import java.util.Map;
 /**
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class JsonUtils {
     //

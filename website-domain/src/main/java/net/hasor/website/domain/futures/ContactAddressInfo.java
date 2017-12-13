@@ -17,7 +17,7 @@ package net.hasor.website.domain.futures;
 /**
  *
  * @version : 2016年08月08日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ContactAddressInfo {
     private String countryCode  = null; //国家代码

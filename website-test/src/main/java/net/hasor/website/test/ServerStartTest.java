@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 /**
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @ContextConfiguration(value = "server-hasor-config.xml", loadModules = ServerStartTest.class)
 @RunWith(HasorUnitRunner.class)

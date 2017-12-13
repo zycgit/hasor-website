@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * RPC 服务注册
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ProviderModule extends RsfModule {
     protected Logger logger = LoggerFactory.getLogger(getClass());

@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 授权协议类型
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum LicenseEnum implements GeneralEnumParsing<LicenseEnum> {
     Private(0, "私有协议"),//

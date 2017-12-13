@@ -50,7 +50,7 @@ import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 封装腾讯登陆
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Singleton
 public class TencentOAuth extends AbstractOAuth {

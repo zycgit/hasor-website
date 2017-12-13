@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 结果集
  * @version : 2014年10月25日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ResultDO<T> implements Result<T> {
     private static final long          serialVersionUID = -4678893554960623786L;

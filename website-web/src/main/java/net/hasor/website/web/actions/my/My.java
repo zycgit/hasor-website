@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * 个人首页
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/my.htm")
 public class My extends BaseMyProject {

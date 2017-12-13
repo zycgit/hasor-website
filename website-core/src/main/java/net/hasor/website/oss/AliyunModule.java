@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 阿里云 OSS
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class AliyunModule implements LifeModule {
     protected Logger logger = LoggerFactory.getLogger(getClass());

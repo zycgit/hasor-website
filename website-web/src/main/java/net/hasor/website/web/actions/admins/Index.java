@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 总入口
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/admins/index.htm")
 public class Index extends BaseAdmin {

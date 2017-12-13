@@ -19,7 +19,7 @@ import net.hasor.website.utils.UserUtils;
 /**
  *
  * @version : 2017年2月08日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Service("userUtils")
 public class WebUserUtils extends UserUtils {

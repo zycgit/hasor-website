@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * 内容分类Manager
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Singleton
 public class CategoryManager {

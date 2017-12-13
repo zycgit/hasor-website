@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Cache
  * @version : 2017年2月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class CacheInstance<K, V> implements Cache<K, V> {
     protected Logger logger = LoggerFactory.getLogger(getClass());

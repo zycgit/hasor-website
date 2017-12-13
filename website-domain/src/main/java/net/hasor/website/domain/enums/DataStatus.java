@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 数据的状态是删除还是正常。
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum DataStatus implements GeneralEnumParsing<DataStatus> {
     OK(0, "正常"), Delete(-1, "删除"),;

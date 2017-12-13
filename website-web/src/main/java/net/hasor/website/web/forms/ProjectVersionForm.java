@@ -18,7 +18,7 @@ import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.domain.ProjectVersionDO;
 /**
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ProjectVersionForm extends ProjectVersionDO {
     @ReqParam("contentFormatType")

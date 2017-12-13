@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 帖子状态
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum ContentStatus implements GeneralEnumParsing<ContentStatus> {
     OK(0, "正常"), Delete(1, "删除"), Draft(2, "草稿"),;

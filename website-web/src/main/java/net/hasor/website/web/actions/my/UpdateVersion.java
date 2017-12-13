@@ -29,7 +29,7 @@ import java.io.IOException;
 /**
  * 版本详情 & 版本更新
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/updateVersion.htm")
 public class UpdateVersion extends BaseMyProject {

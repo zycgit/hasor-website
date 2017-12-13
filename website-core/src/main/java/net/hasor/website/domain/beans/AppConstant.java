@@ -17,7 +17,7 @@ package net.hasor.website.domain.beans;
 /**
  *
  * @version : 2016年1月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public interface AppConstant {
     public static final String DB_HSQL                     = "HSQL";

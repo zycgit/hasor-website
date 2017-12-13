@@ -24,7 +24,7 @@ import java.util.Date;
 /**
  *
  * @version : 2016年10月07日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ProjectInfoDO {
     private long           id            = 0;     //项目ID（PK，自增）

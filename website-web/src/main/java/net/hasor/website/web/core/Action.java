@@ -34,7 +34,7 @@ import java.security.SecureRandom;
 /**
  * 基类
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class Action extends WebController {
     protected Logger       logger       = LoggerFactory.getLogger(getClass());

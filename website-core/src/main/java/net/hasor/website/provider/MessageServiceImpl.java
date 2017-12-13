@@ -19,7 +19,7 @@ import net.hasor.website.client.MessageService;
 /**
  * 消息接口
  * @version : 2015年11月27日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class MessageServiceImpl extends AbstractProvider implements MessageService {
     @Override

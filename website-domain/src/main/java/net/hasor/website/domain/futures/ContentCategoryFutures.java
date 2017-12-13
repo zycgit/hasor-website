@@ -17,7 +17,7 @@ package net.hasor.website.domain.futures;
 /**
  * 帖子所属分类扩展信息
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ContentCategoryFutures {
 }

@@ -27,7 +27,7 @@ import static net.hasor.website.utils.ResultUtils.converTo;
 /**
  * RSF 项目查询接口
  * @version : 2015年11月27日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ProjectServiceImpl extends AbstractProvider implements ProjectService {
     @Inject

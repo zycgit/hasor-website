@@ -20,7 +20,7 @@ import net.hasor.website.domain.beans.AppConstant;
 /**
  * 消息接口
  * @version : 2015年11月27日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public abstract class AbstractProvider {
     @Inject(AppConstant.CACHE_TEMP)

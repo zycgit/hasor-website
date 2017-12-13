@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * 我的项目列表
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public abstract class BaseMyProject extends Action {
     @Inject

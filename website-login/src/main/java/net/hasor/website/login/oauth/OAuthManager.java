@@ -37,7 +37,7 @@ import static net.hasor.website.utils.ResultUtils.success;
 /**
  * 集成第三方登陆 & CAS 等
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Singleton
 @Service("oauth")

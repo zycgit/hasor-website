@@ -27,7 +27,7 @@ import java.sql.SQLException;
 /**
  *
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public abstract class AbstractEnumByTypeConvert<T extends Enum<?>> extends BaseTypeHandler<T> {
     private Logger logger = LoggerFactory.getLogger(getClass());

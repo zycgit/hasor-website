@@ -18,7 +18,7 @@ import net.hasor.web.annotation.ReqParam;
 import net.hasor.website.domain.ProjectInfoDO;
 /**
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ProjectInfoForm extends ProjectInfoDO {
     @ReqParam("contentFormatType")

@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  *
  * @version : 2016年08月08日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ProjectVersionDAO extends AbstractDao {
     //

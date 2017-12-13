@@ -26,7 +26,7 @@ import java.util.Date;
 /**
  *
  * @version : 2015年12月25日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class StartModule extends WebModule {
     @Override

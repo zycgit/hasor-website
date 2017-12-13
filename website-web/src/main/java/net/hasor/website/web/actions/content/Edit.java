@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * blog页面
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/content/edit.{action}")
 public class Edit extends Action {

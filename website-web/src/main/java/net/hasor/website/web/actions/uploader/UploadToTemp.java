@@ -40,7 +40,7 @@ import java.util.Random;
 /**
  * OAuth : 服务器获取 AccessToken
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Async
 @MappingTo("/uploader/upload_to_temp.do")

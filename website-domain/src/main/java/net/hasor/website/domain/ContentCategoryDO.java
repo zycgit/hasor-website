@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * 帖子所属分类
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class ContentCategoryDO {
     private long                   id         = 0;      // 分类ID（PK，自增)

@@ -19,7 +19,7 @@ import net.hasor.website.domain.enums.OwnerType;
 /**
  * Owner
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class SimpleOwner implements Owner {
     private long      ownerID;

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 用于封装结果集
  * @version : 2015年1月8日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public interface Result<T> extends Serializable {
     /**返回操作是否成功。*/

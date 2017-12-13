@@ -17,7 +17,7 @@ package net.hasor.website.domain.futures;
 /**
  * 用户扩展信息数据结构
  * @version : 2017年02月08日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class UserTags {
     private boolean admin      = false;

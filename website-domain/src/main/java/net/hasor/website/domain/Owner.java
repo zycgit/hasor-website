@@ -18,7 +18,7 @@ import net.hasor.website.domain.enums.OwnerType;
 /**
  *
  * @version : 2016年1月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public interface Owner {
     public long getOwnerID();

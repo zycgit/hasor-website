@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 文章类型
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum ContentType implements GeneralEnumParsing<ContentType> {
     Starting(0, "首发"), Original(1, "原创"), Reprinted(2, "转载"),;

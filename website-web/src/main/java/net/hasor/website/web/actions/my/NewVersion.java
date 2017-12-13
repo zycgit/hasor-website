@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * 新版本
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/newVersion.htm")
 public class NewVersion extends BaseMyProject {

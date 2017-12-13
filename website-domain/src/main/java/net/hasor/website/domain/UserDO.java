@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * 用户数据
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class UserDO implements Owner {
     private long               userID         = 0;    // UserID（PK，自增）

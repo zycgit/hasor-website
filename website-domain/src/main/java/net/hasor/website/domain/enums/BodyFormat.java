@@ -18,7 +18,7 @@ import net.hasor.website.domain.GeneralEnumParsing;
 /**
  * 文章内容格式
  * @version : 2016年08月11日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public enum BodyFormat implements GeneralEnumParsing<BodyFormat> {
     Text(0, "纯文本"),//

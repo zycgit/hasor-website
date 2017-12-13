@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * 版本相关的高级操作
  * @version : 2016年1月1日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @MappingTo("/my/operateVersion.do")
 public class OperateVersion extends BaseMyProject {

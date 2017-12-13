@@ -29,7 +29,7 @@ import java.util.List;
 /**
  *
  * @version : 2016年1月10日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 @Singleton
 @Service("versionMap")

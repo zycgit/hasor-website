@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 带有翻页信息的结果集
  * @version : 2014年10月25日
- * @author 赵永春(zyc@hasor.net)
+ * @author 赵永春 (zyc@hasor.net)
  */
 public class PageResult<T> extends Paginator implements Result<List<T>> {
     private static final long              serialVersionUID = -4678893554960623786L;

@@ -85,3 +85,9 @@ Hasor首页项目
 
 === 保留路径
     1. /docs/  -> Nginx 反向代理： http://project.hasor.net/docs
+
+
+图标库
+	https://fontawesome.com/icons?d=gallery
+hugo
+	https://gohugo.io/commands/hugo_gen/

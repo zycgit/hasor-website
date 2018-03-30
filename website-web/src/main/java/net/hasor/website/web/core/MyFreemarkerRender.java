@@ -17,7 +17,7 @@ package net.hasor.website.web.core;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateModelException;
 import net.hasor.core.AppContext;
-import net.hasor.plugins.render.FreemarkerRender;
+import net.hasor.plugins.freemarker.render.FreemarkerRender;
 import net.hasor.website.core.Service;
 import org.apache.commons.lang3.StringUtils;
 

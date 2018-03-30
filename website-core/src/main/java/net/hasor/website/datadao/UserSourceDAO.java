@@ -32,7 +32,7 @@ public class UserSourceDAO extends AbstractDao {
     /** 新增外部登录 */
     public long insertUserSource(UserSourceDO sourceDO) throws SQLException {
         try {
-            int result = this.getSqlExecutor().insert("userSource_insert", sourceDO);
+            int result = this.getSqlExecutor().insertStatement("userSource_insert", sourceDO);
             if (result > 0) {
                 return sourceDO.getUserID();
             }
@@ -52,7 +52,7 @@ public class UserSourceDAO extends AbstractDao {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("provider", provider);
             parameter.put("userID", userID);
-            int result = this.getSqlExecutor().update("userSource_loginUpdateByUserID", parameter);
+            int result = this.getSqlExecutor().updateStatement("userSource_loginUpdateByUserID", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
@@ -70,7 +70,7 @@ public class UserSourceDAO extends AbstractDao {
             parameter.put("provider", provider);
             parameter.put("userID", userID);
             parameter.put("sourceInfo", sourceDO);
-            int result = this.getSqlExecutor().update("userSource_updateInfo", parameter);
+            int result = this.getSqlExecutor().updateStatement("userSource_updateInfo", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//
@@ -88,7 +88,7 @@ public class UserSourceDAO extends AbstractDao {
             parameter.put("userID", userID);
             parameter.put("provider", provider);
             parameter.put("newUserID", newUserID);
-            int result = this.getSqlExecutor().update("userSource_updateBindUser", parameter);
+            int result = this.getSqlExecutor().updateStatement("userSource_updateBindUser", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_source_dao")//

@@ -18,11 +18,13 @@ import net.hasor.utils.convert.ConverterUtils;
 import net.hasor.utils.convert.convert.DateConverter;
 import net.hasor.web.WebApiBinder;
 import net.hasor.web.WebModule;
+import net.hasor.web.annotation.MappingTo;
 import net.hasor.website.core.RootModule;
 import net.hasor.website.domain.beans.AppConstant;
 import net.hasor.website.login.oauth.OAuthModule;
 
 import java.util.Date;
+import java.util.Set;
 /**
  *
  * @version : 2015年12月25日
@@ -40,7 +42,10 @@ public class StartModule extends WebModule {
         apiBinder.bindType(String.class).nameWith(AppConstant.VAR_CONTEXT_PATH).toInstance(contextPath);
         //
         apiBinder.suffix("htm").bind(MyFreemarkerRender.class);//设置 Freemarker 渲染器
-        apiBinder.scanMappingTo();
+        // 扫描所有带有 @MappingTo 特征类
+        Set<Class<?>> aClass = apiBinder.findClass(MappingTo.class);
+        // 对 aClass 集合进行发现并自动配置控制器
+        apiBinder.loadMappingTo(aClass);
         //
         // .Webs
         apiBinder.jeeFilter("/*").through(0, new JumpFilter());

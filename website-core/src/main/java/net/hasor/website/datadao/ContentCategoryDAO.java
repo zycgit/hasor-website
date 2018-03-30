@@ -33,7 +33,7 @@ public class ContentCategoryDAO extends AbstractDao {
     /** 新增分类登录类型 */
     public long insertCategory(ContentCategoryDO categoryDO) throws SQLException {
         try {
-            int result = this.getSqlExecutor().insert("contentCategory_insert", categoryDO);
+            int result = this.getSqlExecutor().insertStatement("contentCategory_insert", categoryDO);
             if (result > 0) {
                 return categoryDO.getId();
             }
@@ -69,7 +69,7 @@ public class ContentCategoryDAO extends AbstractDao {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("category", categoryDO);
-            int result = this.getSqlExecutor().update("contentCategory_update", parameter);
+            int result = this.getSqlExecutor().updateStatement("contentCategory_update", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "content_category_dao")//

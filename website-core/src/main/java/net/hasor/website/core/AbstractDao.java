@@ -15,7 +15,6 @@
  */
 package net.hasor.website.core;
 import net.hasor.core.Inject;
-import net.hasor.db.jdbc.JdbcOperations;
 import net.hasor.plugins.mybatis3.SqlExecutorOperations;
 import net.hasor.website.domain.beans.AppConstant;
 import org.slf4j.Logger;
@@ -25,18 +24,12 @@ import org.slf4j.LoggerFactory;
  * @author 赵永春 (zyc@hasor.net)
  */
 public abstract class AbstractDao<T> {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger                logger = LoggerFactory.getLogger(getClass());
     @Inject(AppConstant.DB_MYSQL)
-    private JdbcOperations        jdbcTemplate;
-    @Inject(AppConstant.DB_MYSQL)
-    private SqlExecutorOperations executorTemplate;
+    private   SqlExecutorOperations executorTemplate;
     //
     protected SqlExecutorOperations getSqlExecutor() {
         return this.executorTemplate;
-    }
-    //
-    protected JdbcOperations getJdbcTemplate() {
-        return this.jdbcTemplate;
     }
     //
 }

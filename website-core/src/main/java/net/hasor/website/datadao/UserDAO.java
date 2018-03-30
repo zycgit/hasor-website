@@ -31,7 +31,7 @@ public class UserDAO extends AbstractDao {
     /** 新增用户 */
     public long insertUser(UserDO userDO) throws SQLException {
         try {
-            int result = this.getSqlExecutor().insert("user_insert", userDO);
+            int result = this.getSqlExecutor().insertStatement("user_insert", userDO);
             if (result > 0) {
                 return userDO.getUserID();
             }
@@ -51,7 +51,7 @@ public class UserDAO extends AbstractDao {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("userID", userID);
             parameter.put("userInfo", userDO);
-            int result = this.getSqlExecutor().update("user_updateInfo", parameter);
+            int result = this.getSqlExecutor().updateStatement("user_updateInfo", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
@@ -67,7 +67,7 @@ public class UserDAO extends AbstractDao {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("userID", userID);
-            int result = this.getSqlExecutor().update("user_loginUpdate", parameter);
+            int result = this.getSqlExecutor().updateStatement("user_loginUpdate", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//
@@ -82,7 +82,7 @@ public class UserDAO extends AbstractDao {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("userID", userID);
-            int result = this.getSqlExecutor().update("user_invalidUser", parameter);
+            int result = this.getSqlExecutor().updateStatement("user_invalidUser", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "user_dao")//

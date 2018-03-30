@@ -14,4 +14,9 @@
         <filter-name>rootFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <context-param>
+        <param-name>hasor-hconfig-name</param-name>
+        <param-value>hasor-config.xml</param-value>
+    </context-param>
 </web-app>

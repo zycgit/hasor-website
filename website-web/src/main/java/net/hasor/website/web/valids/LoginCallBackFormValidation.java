@@ -15,6 +15,7 @@
  */
 package net.hasor.website.web.valids;
 import net.hasor.web.valid.ValidInvoker;
+import net.hasor.web.valid.ValidStrategy;
 import net.hasor.web.valid.Validation;
 import net.hasor.website.web.forms.LoginCallBackForm;
 import org.apache.commons.lang3.StringUtils;
@@ -25,15 +26,16 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LoginCallBackFormValidation implements Validation<LoginCallBackForm> {
     @Override
-    public void doValidation(String validType, LoginCallBackForm dataForm, ValidInvoker errors) {
+    public ValidStrategy doValidation(String validType, LoginCallBackForm dataForm, ValidInvoker errors) {
         if (StringUtils.equalsIgnoreCase(validType, "AccessToken")) {
             doValidAccessToken(dataForm, errors);
-            return;
+            return ValidStrategy.DEFAULT_CONTINUE;
         }
         if (StringUtils.equalsIgnoreCase(validType, "Callback")) {
             doValidCallback(dataForm, errors);
-            return;
+            return ValidStrategy.DEFAULT_CONTINUE;
         }
+        return ValidStrategy.DEFAULT_CONTINUE;
     }
     private void doValidAccessToken(LoginCallBackForm dataForm, ValidInvoker errors) {
         String provider = dataForm.getProvider();

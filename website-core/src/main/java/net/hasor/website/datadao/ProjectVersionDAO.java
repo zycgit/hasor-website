@@ -33,7 +33,7 @@ public class ProjectVersionDAO extends AbstractDao {
     /** 新增版本 */
     public long insertVersion(ProjectVersionDO versionDO) throws SQLException {
         try {
-            int result = this.getSqlExecutor().insert("projectVersion_insert", versionDO);
+            int result = this.getSqlExecutor().insertStatement("projectVersion_insert", versionDO);
             if (result > 0) {
                 return versionDO.getId();
             }
@@ -87,7 +87,7 @@ public class ProjectVersionDAO extends AbstractDao {
     /** 更新项目版本信息，不会变更版本状态和隶属关系 */
     public int updateVersionInfo(ProjectVersionDO version) throws SQLException {
         try {
-            return this.getSqlExecutor().update("projectVersion_updateVersion", version);
+            return this.getSqlExecutor().updateStatement("projectVersion_updateVersion", version);
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "updateVersionInfo")//
@@ -102,7 +102,7 @@ public class ProjectVersionDAO extends AbstractDao {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("projectID", projectID);
             parameter.put("versionInfo", versionInfo);
-            return this.getSqlExecutor().update("projectVersion_updateStatusAndFutures", parameter);
+            return this.getSqlExecutor().updateStatement("projectVersion_updateStatusAndFutures", parameter);
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "updateStatusAndFutures")//
@@ -117,7 +117,7 @@ public class ProjectVersionDAO extends AbstractDao {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("projectID", projectID);
             parameter.put("versionInfo", versionInfo);
-            return this.getSqlExecutor().update("projectVersion_updateStatus", parameter);
+            return this.getSqlExecutor().updateStatement("projectVersion_updateStatus", parameter);
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_version_dao")//
                     .addLog("method", "updateStatus")//

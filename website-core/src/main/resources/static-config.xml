@@ -10,7 +10,7 @@
 
     <appExample>
         <!-- 当前最新版本 -->
-        <curentVersion>3.0.2</curentVersion>
+        <curentVersion>3.2.3</curentVersion>
         <!-- 所属环境:daily、online -->
         <envType>${APP_ENV_TYPE}</envType>
         <!-- 主机名称 -->

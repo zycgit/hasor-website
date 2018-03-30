@@ -1,0 +1,4 @@
+weight: 7
+name: "tConsole"
+icon: "fa fa-desktop"
+description: "一个 Telnet 环境支持，给予没有界面类的应用一个可以通过命令行进行交互的工具。"

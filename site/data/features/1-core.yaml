@@ -1,0 +1,5 @@
+weight: 1
+name: "Core"
+icon: "fa fa-cube"
+description: "基于 Java 语言的应用程序开发框架，它的核心设计目标是提供一个简单、且必要的环境给开发者。开发者可以在此基础上构建更加完善的应用。"
+href : "www.baidu.com"

@@ -34,7 +34,7 @@ public class ProjectInfoDAO extends AbstractDao {
     /** 新增项目 */
     public long insertProject(ProjectInfoDO projectDO) throws SQLException {
         try {
-            int result = this.getSqlExecutor().insert("projectInfo_insert", projectDO);
+            int result = this.getSqlExecutor().insertStatement("projectInfo_insert", projectDO);
             if (result > 0) {
                 return projectDO.getId();
             }
@@ -98,7 +98,7 @@ public class ProjectInfoDAO extends AbstractDao {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("info", project);
-            int result = this.getSqlExecutor().update("projectInfo_updateWithoutContent", parameter);
+            int result = this.getSqlExecutor().updateStatement("projectInfo_updateWithoutContent", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
@@ -120,7 +120,7 @@ public class ProjectInfoDAO extends AbstractDao {
         try {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("info", project);
-            int result = this.getSqlExecutor().update("projectInfo_updateContent", parameter);
+            int result = this.getSqlExecutor().updateStatement("projectInfo_updateContent", parameter);
             return result;
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
@@ -157,7 +157,7 @@ public class ProjectInfoDAO extends AbstractDao {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("projectID", projectID);
             parameter.put("projectInfo", projectInfo);
-            return this.getSqlExecutor().update("projectInfo_updateStatusAndFutures", parameter);
+            return this.getSqlExecutor().updateStatement("projectInfo_updateStatusAndFutures", parameter);
         } catch (SQLException e) {
             logger.error(LoggerUtils.create("ERROR_999_0003").addLog("dao", "project_dao")//
                     .addLog("method", "updateStatusAndFutures")//

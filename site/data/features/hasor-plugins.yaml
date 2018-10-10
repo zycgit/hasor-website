@@ -1,4 +1,5 @@
-weight: 8
+weight: 7
 name: "Plugins"
 icon: "fa fa-desktop"
 description: "各种插件"
+href : "project/hasor-plugins/index.html"

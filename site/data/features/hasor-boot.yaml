@@ -1,4 +1,5 @@
-weight: 6
+weight: 5
 name: "Boot"
 icon: "fa fa-rocket"
 description: "用来简化新 Hasor 应用的初始搭建以及开发过程，使用 Boot 您只需要 “just run”即可。当然 Hasor 意外的应用也可以使用 Boot 运行。"
+href : "project/hasor-boot/index.html"

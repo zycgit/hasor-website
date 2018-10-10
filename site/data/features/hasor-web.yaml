@@ -2,3 +2,4 @@ weight: 2
 name: "Web"
 icon: "fa fa-code"
 description: "Web 类型项目，提供 restful 风格的 mvc 开发方式。支持表单、自定义渲染引擎、并且内置上传组建。使用它将会快速提升Web项目开发。"
+href : "project/hasor-web/index.html"

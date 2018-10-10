@@ -1,4 +1,5 @@
-weight: 4
+weight: 101
 name: "RSF"
 icon: "fa fa-retweet"
 description: "一个高可用、高性能、轻量级的分布式服务框架。支持容灾、负载均衡、集群。一个典型的应用场景是，将同一个服务部署在多个服务器上。"
+href : "project/rsf-framework/index.html"

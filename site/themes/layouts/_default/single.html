@@ -1,75 +1,71 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
+{{ partial "head.html" . }}
+<body>
 
-  {{ partial "head.html" . }}
+<div id="all">
 
-  <body>
+    <header>
+        {{ partial "nav.html" . }}
+    </header>
 
-    <div id="all">
+    {{ partial "breadcrumbs.html" . }}
 
-        <header>
+    <div id="content">
+        <div class="container">
 
-          {{ partial "nav.html" . }}
+            <div class="row">
 
-        </header>
+                <!-- *** LEFT COLUMN *** -->
 
-        {{ partial "breadcrumbs.html" . }}
+                <div class="col-md-9" id="blog-post">
 
-        <div id="content">
-            <div class="container">
+                    <p class="text-muted text-uppercase mb-small text-right">{{ if .Params.author }}{{ i18n "authorBy" }} <a href="#">{{ .Params.author }}</a> | {{ end }}{{ .Date.Format .Site.Params.date_format }}</p>
 
-                <div class="row">
-
-                    <!-- *** LEFT COLUMN *** -->
-
-                    <div class="col-md-9" id="blog-post">
-
-                        <p class="text-muted text-uppercase mb-small text-right">{{ if .Params.author }}{{ i18n "authorBy" }} <a href="#">{{ .Params.author }}</a> | {{ end }}{{ .Date.Format .Site.Params.date_format }}</p>
-
-                        <div id="post-content">
-                          {{ .Content }}
-                        </div>
-                        <!-- /#post-content -->
-                        {{ if .Site.DisqusShortname }}
-                        <div id="comments">
-                            {{ template "_internal/disqus.html" . }}
-                        </div>
-                        {{ end }}
-
+                    <div id="post-content">
+                        {{ .Content }}
                     </div>
-                    <!-- /#blog-post -->
-
-                    <!-- *** LEFT COLUMN END *** -->
-
-                    <!-- *** RIGHT COLUMN *** -->
-
-                    <div class="col-md-3">
-
-                        <!-- *** MENUS AND WIDGETS *** -->
-
-                        {{ partial "sidebar.html" . }}
-
-                        <!-- *** MENUS AND FILTERS END *** -->
-
+                    <!-- /#post-content -->
+                    {{ if .Site.DisqusShortname }}
+                    <div id="comments">
+                        {{ template "_internal/disqus.html" . }}
                     </div>
-                    <!-- /.col-md-3 -->
-
-                    <!-- *** RIGHT COLUMN END *** -->
+                    {{ end }}
 
                 </div>
-                <!-- /.row -->
+                <!-- /#blog-post -->
+
+                <!-- *** LEFT COLUMN END *** -->
+
+                <!-- *** RIGHT COLUMN *** -->
+
+                <div class="col-md-3">
+
+                    <!-- *** MENUS AND WIDGETS *** -->
+
+                    {{ partial "sidebar.html" . }}
+
+                    <!-- *** MENUS AND FILTERS END *** -->
+
+                </div>
+                <!-- /.col-md-3 -->
+
+                <!-- *** RIGHT COLUMN END *** -->
 
             </div>
-            <!-- /.container -->
+            <!-- /.row -->
+
         </div>
-        <!-- /#content -->
-
-        {{ partial "footer.html" . }}
-
+        <!-- /.container -->
     </div>
-    <!-- /#all -->
+    <!-- /#content -->
 
-    {{ partial "scripts.html" . }}
+    {{ partial "footer.html" . }}
 
-  </body>
+</div>
+<!-- /#all -->
+
+{{ partial "scripts.html" . }}
+
+</body>
 </html>

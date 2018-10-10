@@ -1,4 +1,5 @@
-weight: 5
+weight: 4
 name: "DataQL"
 icon: "fa fa-braille"
 description: "一款服务查询框架，你可以把任意各服务通过 DataQL 进行聚合查询，从而形成新的数据结果。您还可以任意变换数据结果结构。"
+href : "project/hasor-dataql/index.html"
